@@ -131,6 +131,22 @@ table.tbl td input{padding:6px;font-size:13px}
 .gate .opt:hover{transform:translateY(-2px);transition:transform .12s}
 .gate .opt:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 
+/* data tab tiles */
+.data-grid{display:grid;gap:14px;grid-template-columns:repeat(3,1fr)}
+.data-grid.two{grid-template-columns:repeat(2,1fr);max-width:640px;margin:0 auto 20px}
+.data-grid.three{grid-template-columns:repeat(3,1fr);margin-bottom:20px}
+@media(max-width:760px){.data-grid{grid-template-columns:1fr 1fr}.data-grid.two{grid-template-columns:1fr 1fr}}
+.data-tile{background:#fff;border:1px solid var(--rule);border-top:4px solid var(--accent);padding:22px 14px;cursor:pointer;
+  font-family:'Archivo';color:var(--blueprint);box-shadow:var(--shadow);text-align:center;transition:transform .12s}
+.data-tile:hover{transform:translateY(-2px)}
+.data-tile:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.data-tile .ic{font-size:32px;line-height:1;margin-bottom:8px}
+.data-tile .t{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--blueprint)}
+.data-tile .s{display:block;font-size:11px;color:var(--ink-2);margin-top:5px;font-weight:600;letter-spacing:.03em}
+.back-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:12px;flex-wrap:wrap}
+.back-row h2.crumb{margin:0;font-family:'Archivo';font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--blueprint)}
+button.btn.back{padding:7px 12px;font-size:11px}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -169,7 +185,7 @@ table.tbl td input{padding:6px;font-size:13px}
   <nav class="tabs" role="tablist">
     <button role="tab" data-tab="est" aria-selected="true">Estimate</button>
     <button role="tab" data-tab="prev" aria-selected="false">Preview &amp; Export</button>
-    <button role="tab" data-tab="data" aria-selected="false">Roads &amp; Rates</button>
+    <button role="tab" data-tab="data" aria-selected="false">Data</button>
   </nav>
 </header>
 
@@ -271,64 +287,183 @@ table.tbl td input{padding:6px;font-size:13px}
 </section>
 
 <section id="tab-data" hidden>
-  <div class="card">
-    <h2 id="roadsCardTitle">Road list</h2>
-    <div class="row-actions">
-      <input type="file" id="fileRoads" accept=".xls,.xlsx,.csv" style="max-width:300px">
-      <button class="btn ghost" id="btnAddRoad">Add road</button>
-      <button class="btn ghost" id="btnResetData">Reset to built-in</button>
-    </div>
-    <p class="hint">Built-in list already loaded. Excel upload karoge to add ho jayengi.</p>
-    <div id="roadsTable" style="margin-top:14px"></div>
+
+  <!-- ===== landing grid ===== -->
+  <div id="dataGrid" class="data-grid">
+    <button class="data-tile" data-nav="rate">
+      <div class="ic">💰</div><div class="t">Rate</div>
+      <span class="s">ARC &amp; SOR rates</span>
+    </button>
+    <button class="data-tile" data-nav="roads">
+      <div class="ic">🛣️</div><div class="t">Road list</div>
+      <span class="s"><span id="cRoads">0</span> entries</span>
+    </button>
+    <button class="data-tile" data-nav="buildings">
+      <div class="ic">🏢</div><div class="t">Building list</div>
+      <span class="s"><span id="cBldg">0</span> entries</span>
+    </button>
+    <button class="data-tile" data-nav="people">
+      <div class="ic">👤</div><div class="t">Engineer Names</div>
+      <span class="s">Prepared / Checked by</span>
+    </button>
+    <button class="data-tile" data-nav="workdesc">
+      <div class="ic">📝</div><div class="t">Work Description</div>
+      <span class="s">Dropdown options</span>
+    </button>
+    <button class="data-tile" data-nav="office">
+      <div class="ic">🏛️</div><div class="t">Office Block</div>
+      <span class="s">Division / general desc.</span>
+    </button>
   </div>
 
-  <div class="card">
-    <h2 id="buildingsCardTitle">Building list</h2>
-    <div class="row-actions">
-      <input type="file" id="fileBuildings" accept=".xls,.xlsx,.csv" style="max-width:300px">
-      <button class="btn ghost" id="btnAddBuilding">Add building</button>
-    </div>
-    <p class="hint">Building estimate ke liye — building / work locations yaha add karo.</p>
-    <div id="buildingsTable" style="margin-top:14px"></div>
-  </div>
+  <!-- ===== detail wrapper ===== -->
+  <div id="dataDetail" hidden>
 
-  <div class="card">
-    <h2>Work descriptions (dropdown)</h2>
-    <div class="row-actions">
-      <button class="btn ghost" id="btnAddWD">Add work description</button>
-    </div>
-    <p class="hint">Ye options “Work description” dropdown me dikhte hain. Type = road / building / both.</p>
-    <div id="wdTable" style="margin-top:14px"></div>
-  </div>
+    <!-- Rate view -->
+    <div class="data-view" data-view="rate" hidden>
+      <div class="back-row">
+        <button class="btn ghost back" id="btnDataBack">← Back to Data</button>
+        <h2 class="crumb" id="rateCrumb">Rate</h2>
+      </div>
 
-  <div class="card">
-    <h2>Names — prepared / checked by</h2>
-    <div class="row-actions">
-      <button class="btn ghost" id="btnAddPerson">Add name</button>
-    </div>
-    <p class="hint">Ye names dono dropdowns (prepared by &amp; checked by) me dikhte hain.</p>
-    <div id="peopleTable" style="margin-top:14px"></div>
-  </div>
+      <div id="rateMenu" class="data-grid two">
+        <button class="data-tile" data-rate="arc">
+          <div class="ic">📗</div><div class="t">ARC</div>
+          <span class="s">Annual Rate Contract</span>
+        </button>
+        <button class="data-tile" data-rate="sor">
+          <div class="ic">📘</div><div class="t">SOR</div>
+          <span class="s">Schedule of Rates</span>
+        </button>
+      </div>
 
-  <div class="card">
-    <h2>Item &amp; approved rate list</h2>
-    <div class="row-actions">
-      <input type="file" id="fileItems" accept=".xls,.xlsx,.csv" style="max-width:300px">
-      <button class="btn ghost" id="btnAddItem">Add item</button>
-    </div>
-    <div id="itemsTable" style="margin-top:14px"></div>
-  </div>
+      <div id="arcMenu" class="data-grid three" hidden>
+        <button class="data-tile" data-arccat="Hotmix / Road works">
+          <div class="ic">🛣️</div><div class="t">Hotmix</div>
+          <span class="s">Road works items</span>
+        </button>
+        <button class="data-tile" data-arccat="Jungle cutting & Geru">
+          <div class="ic">🌿</div><div class="t">Jungle &amp; Geruchuno</div>
+          <span class="s">Site preparation</span>
+        </button>
+        <button class="data-tile" data-arccat="Resi / Non-Resi Building">
+          <div class="ic">🏢</div><div class="t">Building</div>
+          <span class="s">Building items</span>
+        </button>
+      </div>
 
-  <div class="card">
-    <h2>Office block</h2>
-    <div class="grid g2">
-      <div><label for="divName">Division</label><input id="divName"></div>
-      <div><label for="subDivName">Sub-Division</label><input id="subDivName"></div>
+      <div id="arcItems" hidden>
+        <div class="card">
+          <h2 id="arcCatTitle">Items</h2>
+          <div class="row-actions">
+            <input type="file" id="fileItems" accept=".xls,.xlsx,.csv" style="max-width:300px">
+            <button class="btn ghost" id="btnAddItem">Add item</button>
+          </div>
+          <p class="hint">Excel upload karoge to import mapper khulega.</p>
+          <div id="itemsTable" style="margin-top:14px"></div>
+        </div>
+      </div>
+
+      <div id="sorView" hidden>
+        <div class="card">
+          <h2>SOR — Schedule of Rates</h2>
+          <div class="row-actions">
+            <input type="file" id="fileSor" accept=".xls,.xlsx,.csv" style="max-width:300px">
+            <button class="btn ghost" id="btnAddSor">Add SOR item</button>
+            <button class="btn danger" id="btnClearSor">Clear all</button>
+          </div>
+          <p class="hint">SOR Excel file yaha upload karo — columns map karke items import ho jayenge. Baad me estimate me use kar sakte ho.</p>
+          <div id="sorTable" style="margin-top:14px"></div>
+        </div>
+      </div>
     </div>
-    <div style="margin-top:12px">
-      <label for="genDesc">General description</label>
-      <textarea id="genDesc" rows="5"></textarea>
+
+    <!-- Roads view -->
+    <div class="data-view" data-view="roads" hidden>
+      <div class="back-row">
+        <button class="btn ghost back" id="btnDataBack2">← Back to Data</button>
+        <h2 class="crumb">Road List</h2>
+      </div>
+      <div class="card">
+        <h2 id="roadsCardTitle">Road list</h2>
+        <div class="row-actions">
+          <input type="file" id="fileRoads" accept=".xls,.xlsx,.csv" style="max-width:300px">
+          <button class="btn ghost" id="btnAddRoad">Add road</button>
+          <button class="btn ghost" id="btnResetData">Reset to built-in</button>
+        </div>
+        <p class="hint">Built-in list already loaded. Excel upload karoge to add ho jayengi.</p>
+        <div id="roadsTable" style="margin-top:14px"></div>
+      </div>
     </div>
+
+    <!-- Buildings view -->
+    <div class="data-view" data-view="buildings" hidden>
+      <div class="back-row">
+        <button class="btn ghost back" id="btnDataBack3">← Back to Data</button>
+        <h2 class="crumb">Building List</h2>
+      </div>
+      <div class="card">
+        <h2 id="buildingsCardTitle">Building list</h2>
+        <div class="row-actions">
+          <input type="file" id="fileBuildings" accept=".xls,.xlsx,.csv" style="max-width:300px">
+          <button class="btn ghost" id="btnAddBuilding">Add building</button>
+        </div>
+        <p class="hint">Building estimate ke liye — building / work locations yaha add karo.</p>
+        <div id="buildingsTable" style="margin-top:14px"></div>
+      </div>
+    </div>
+
+    <!-- People view -->
+    <div class="data-view" data-view="people" hidden>
+      <div class="back-row">
+        <button class="btn ghost back" id="btnDataBack4">← Back to Data</button>
+        <h2 class="crumb">Engineer Names</h2>
+      </div>
+      <div class="card">
+        <h2>Names — prepared / checked by</h2>
+        <div class="row-actions">
+          <button class="btn ghost" id="btnAddPerson">Add name</button>
+        </div>
+        <p class="hint">Ye names dono dropdowns (prepared by &amp; checked by) me dikhte hain.</p>
+        <div id="peopleTable" style="margin-top:14px"></div>
+      </div>
+    </div>
+
+    <!-- Work description view -->
+    <div class="data-view" data-view="workdesc" hidden>
+      <div class="back-row">
+        <button class="btn ghost back" id="btnDataBack5">← Back to Data</button>
+        <h2 class="crumb">Work Descriptions</h2>
+      </div>
+      <div class="card">
+        <h2>Work descriptions (dropdown)</h2>
+        <div class="row-actions">
+          <button class="btn ghost" id="btnAddWD">Add work description</button>
+        </div>
+        <p class="hint">Ye options “Work description” dropdown me dikhte hain. Type = road / building / both.</p>
+        <div id="wdTable" style="margin-top:14px"></div>
+      </div>
+    </div>
+
+    <!-- Office view -->
+    <div class="data-view" data-view="office" hidden>
+      <div class="back-row">
+        <button class="btn ghost back" id="btnDataBack6">← Back to Data</button>
+        <h2 class="crumb">Office Block</h2>
+      </div>
+      <div class="card">
+        <h2>Office block</h2>
+        <div class="grid g2">
+          <div><label for="divName">Division</label><input id="divName"></div>
+          <div><label for="subDivName">Sub-Division</label><input id="subDivName"></div>
+        </div>
+        <div style="margin-top:12px">
+          <label for="genDesc">General description</label>
+          <textarea id="genDesc" rows="5"></textarea>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 

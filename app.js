@@ -17,6 +17,7 @@ const FRAMED = 'Estimate framed in the office of the Executive Engineer, Dahod (
 
 let roads     = store.get('rnb_roads', null)     || ROADS_SEED.slice();
 let items     = store.get('rnb_items', null)     || ITEMS_SEED.slice();
+let sorItems  = store.get('rnb_sor_items', null) || [];
 let buildings = store.get('rnb_buildings', null) || (typeof BUILDINGS_SEED !== 'undefined' ? BUILDINGS_SEED.slice() : []);
 let workDescs = store.get('rnb_workdescs', null) || (typeof WORKDESCS_SEED !== 'undefined' ? WORKDESCS_SEED.map(x=>({...x})) : []);
 let people    = store.get('rnb_people', null)    || (typeof PEOPLE_SEED !== 'undefined' ? PEOPLE_SEED.slice() : []);
@@ -25,6 +26,7 @@ let est       = store.get('rnb_est', null) ||
              { mode:'', road:'', roadKm:'', workDesc:'', wcFrom:'', wcTo:'', prepBy:'', chkBy:'', qc:1, lc:0, lines:[] };
 if(est.mode === undefined) est.mode = '';
 let catFilter = '';
+let dataItemsCat = '';   // Data tab: which ARC category is currently shown in items table
 
 /* ------------------------------- mode config ------------------------------- */
 const MODE = {
@@ -80,7 +82,7 @@ $$('nav.tabs button').forEach(b => b.onclick = () => {
   $$('nav.tabs button').forEach(x => x.setAttribute('aria-selected', x === b));
   ['est','prev','data'].forEach(t => $('#tab-'+t).hidden = (t !== b.dataset.tab));
   if(b.dataset.tab === 'prev') renderPreview();
-  if(b.dataset.tab === 'data'){ renderRoadsTable(); renderBuildingsTable(); renderItemsTable(); renderWDTable(); renderPeopleTable(); }
+  if(b.dataset.tab === 'data'){ showDataGrid(); }
   window.scrollTo(0,0);
 });
 
@@ -299,17 +301,19 @@ function renderBuildingsTable(){
 }
 function renderItemsTable(){
   const box = $('#itemsTable');
-  if(!items.length){ box.innerHTML = '<div class="empty">Item list khali hai.</div>'; return; }
+  if(!box) return;
+  const view = items.map((it,i) => ({it,i})).filter(x => !dataItemsCat || (x.it.cat||'') === dataItemsCat);
+  if(!view.length){ box.innerHTML = '<div class="empty">' + (dataItemsCat ? 'Is category me koi item nahi. “Add item” dabao.' : 'Item list khali hai.') + '</div>'; return; }
   box.innerHTML = `<div class="scroll"><table class="tbl" style="min-width:760px">
       <tr><th style="width:7%">It. No.</th><th style="width:50%">Item of work</th><th style="width:12%">Approved rate</th><th style="width:9%">Unit</th><th style="width:16%">Group</th><th></th></tr>` +
-    items.map((it,i)=>`<tr>
+    view.map(x=>{ const it=x.it, i=x.i; return `<tr>
       <td><input class="mono" data-ii="${i}" data-ik="itemNo" value="${esc(it.itemNo||'')}"></td>
       <td><textarea rows="2" data-ii="${i}" data-ik="desc">${esc(it.desc)}</textarea></td>
       <td><input class="num mono" type="number" step="any" data-ii="${i}" data-ik="rate" value="${it.rate ?? ''}"></td>
       <td><input class="mono" data-ii="${i}" data-ik="unit" value="${esc(it.unit||'')}"></td>
       <td><input data-ii="${i}" data-ik="cat" value="${esc(it.cat||'')}"></td>
-      <td><button class="btn danger" style="padding:4px 8px" data-idel="${i}">×</button></td></tr>`).join('') +
-    `</table></div><p class="hint">${items.length} items.</p>`;
+      <td><button class="btn danger" style="padding:4px 8px" data-idel="${i}">×</button></td></tr>`;}).join('') +
+    `</table></div><p class="hint">${view.length} of ${items.length} items${dataItemsCat ? ' (filtered)' : ''}.</p>`;
   box.querySelectorAll('input,textarea').forEach(i => i.oninput = e => {
     items[+e.target.dataset.ii][e.target.dataset.ik] = e.target.value; store.set('rnb_items', items); });
   box.querySelectorAll('[data-idel]').forEach(b => b.onclick = () => {
@@ -367,7 +371,12 @@ const MAPS = {
           {k:'rate', lbl:'Approved rate', hints:['approved','rate']},
           {k:'unit', lbl:'Unit', hints:['unit','per']},
           {k:'itemNo', lbl:'Item no. (optional)', hints:['item no','sr','sl'], opt:true},
-          {k:'cat', lbl:'Group (optional)', hints:['group','category','cat'], opt:true}]
+          {k:'cat', lbl:'Group (optional)', hints:['group','category','cat'], opt:true}],
+  sor:   [{k:'desc', lbl:'Item of work / description', hints:['description','item of work','particular']},
+          {k:'rate', lbl:'Rate', hints:['rate','amount']},
+          {k:'unit', lbl:'Unit', hints:['unit','per']},
+          {k:'itemNo', lbl:'SOR No. (optional)', hints:['sor no','item no','sr','sl','no'], opt:true},
+          {k:'cat', lbl:'Group (optional)', hints:['group','category','cat','chapter'], opt:true}]
 };
 function readSheet(file, cb){
   const fr = new FileReader();
@@ -392,7 +401,9 @@ function openMapper(kind, sheet){
   pendingRows = sheet.rows.slice(hr + 1);
   $('#mapTitle').textContent =
     kind === 'roads' ? 'Road list — match the columns' :
-    kind === 'buildings' ? 'Building list — match the columns' : 'Item list — match the columns';
+    kind === 'buildings' ? 'Building list — match the columns' :
+    kind === 'sor' ? 'SOR — match the columns' :
+    'Item list — match the columns';
   $('#mapFields').innerHTML = MAPS[kind].map(f => {
     let sel = -1;
     headers.forEach((h,i)=>{ if(sel < 0 && f.hints.some(x => h.toLowerCase().includes(x))) sel = i; });
@@ -411,14 +422,15 @@ $('#mapOk').onclick = () => {
   pendingRows.forEach(r => {
     const o = {};
     spec.forEach(f => o[f.k] = map[f.k] >= 0 ? String(r[map[f.k]] ?? '').replace(/\s+/g,' ').trim() : '');
-    const key = pendingKind === 'items' ? o.desc : o.name;
+    const key = (pendingKind === 'items' || pendingKind === 'sor') ? o.desc : o.name;
     if(!key || key.length < 3) return;
-    if(pendingKind === 'items'){ o.rate = r2(n(String(o.rate).replace(/[^0-9.\-]/g,''))); if(!o.rate) return; }
+    if(pendingKind === 'items' || pendingKind === 'sor'){ o.rate = r2(n(String(o.rate).replace(/[^0-9.\-]/g,''))); if(!o.rate) return; }
     out.push(o);
   });
   if(!out.length){ toast('Valid data nahi mila.'); return; }
   if(pendingKind === 'roads'){ roads = roads.concat(out); store.set('rnb_roads', roads); renderRoadsTable(); }
   else if(pendingKind === 'buildings'){ buildings = buildings.concat(out); store.set('rnb_buildings', buildings); renderBuildingsTable(); }
+  else if(pendingKind === 'sor'){ sorItems = sorItems.concat(out); store.set('rnb_sor_items', sorItems); renderSorTable(); }
   else { items = items.concat(out); store.set('rnb_items', items); renderItemsTable(); renderCatChips(); }
   $('#mapModal').style.display = 'none';
   toast(`${out.length} ${pendingKind} import ho gaye.`); refreshHints();
@@ -426,9 +438,93 @@ $('#mapOk').onclick = () => {
 $('#fileRoads').onchange = e => { if(e.target.files[0]) readSheet(e.target.files[0], s => s && openMapper('roads', s)); e.target.value = ''; };
 $('#fileBuildings').onchange = e => { if(e.target.files[0]) readSheet(e.target.files[0], s => s && openMapper('buildings', s)); e.target.value = ''; };
 $('#fileItems').onchange = e => { if(e.target.files[0]) readSheet(e.target.files[0], s => s && openMapper('items', s)); e.target.value = ''; };
+$('#fileSor').onchange = e => { if(e.target.files[0]) readSheet(e.target.files[0], s => s && openMapper('sor', s)); e.target.value = ''; };
+
+/* ------------------------------- SOR items table ------------------------------- */
+function renderSorTable(){
+  const box = $('#sorTable');
+  if(!box) return;
+  if(!sorItems.length){ box.innerHTML = '<div class="empty">SOR list khali hai — Excel upload karo ya “Add SOR item” dabao.</div>'; return; }
+  box.innerHTML = `<div class="scroll"><table class="tbl" style="min-width:760px">
+      <tr><th style="width:7%">SOR No.</th><th style="width:50%">Item of work</th><th style="width:12%">Rate</th><th style="width:9%">Unit</th><th style="width:16%">Group</th><th></th></tr>` +
+    sorItems.map((it,i)=>`<tr>
+      <td><input class="mono" data-si="${i}" data-sk="itemNo" value="${esc(it.itemNo||'')}"></td>
+      <td><textarea rows="2" data-si="${i}" data-sk="desc">${esc(it.desc)}</textarea></td>
+      <td><input class="num mono" type="number" step="any" data-si="${i}" data-sk="rate" value="${it.rate ?? ''}"></td>
+      <td><input class="mono" data-si="${i}" data-sk="unit" value="${esc(it.unit||'')}"></td>
+      <td><input data-si="${i}" data-sk="cat" value="${esc(it.cat||'')}"></td>
+      <td><button class="btn danger" style="padding:4px 8px" data-sdel="${i}">×</button></td></tr>`).join('') +
+    `</table></div><p class="hint">${sorItems.length} SOR items.</p>`;
+  box.querySelectorAll('input,textarea').forEach(i => i.oninput = e => {
+    sorItems[+e.target.dataset.si][e.target.dataset.sk] = e.target.value; store.set('rnb_sor_items', sorItems); });
+  box.querySelectorAll('[data-sdel]').forEach(b => b.onclick = () => {
+    sorItems.splice(+b.dataset.sdel,1); store.set('rnb_sor_items', sorItems); renderSorTable(); });
+}
+$('#btnAddSor').onclick = () => { sorItems.unshift({itemNo:'', desc:'', rate:'', unit:'MT', cat:''}); store.set('rnb_sor_items', sorItems); renderSorTable(); };
+$('#btnClearSor').onclick = () => {
+  if(!sorItems.length) return;
+  if(!confirm('Saare SOR items delete karne hain?')) return;
+  sorItems = []; store.set('rnb_sor_items', sorItems); renderSorTable(); toast('SOR list clear ho gayi.');
+};
+
+/* ------------------------------- Data-tab navigation ------------------------------- */
+function showDataGrid(){
+  $('#dataGrid').hidden = false;
+  $('#dataDetail').hidden = true;
+  $$('.data-view').forEach(el => el.hidden = true);
+  const cR = $('#cRoads'), cB = $('#cBldg');
+  if(cR) cR.textContent = roads.length;
+  if(cB) cB.textContent = buildings.length;
+}
+function showDataView(name){
+  $('#dataGrid').hidden = true;
+  $('#dataDetail').hidden = false;
+  $$('.data-view').forEach(el => el.hidden = el.dataset.view !== name);
+  if(name === 'rate'){ showRateSub('menu'); }
+  else if(name === 'roads') renderRoadsTable();
+  else if(name === 'buildings') renderBuildingsTable();
+  else if(name === 'people') renderPeopleTable();
+  else if(name === 'workdesc') renderWDTable();
+  window.scrollTo(0,0);
+}
+function showRateSub(sub){
+  $('#rateMenu').hidden = sub !== 'menu';
+  $('#arcMenu').hidden  = sub !== 'arc-menu';
+  $('#arcItems').hidden = sub !== 'arc-items';
+  $('#sorView').hidden  = sub !== 'sor';
+  const crumb = $('#rateCrumb');
+  if(crumb) crumb.textContent =
+    sub === 'menu'      ? 'Rate' :
+    sub === 'arc-menu'  ? 'Rate › ARC' :
+    sub === 'arc-items' ? 'Rate › ARC › ' + (dataItemsCat || '') :
+    sub === 'sor'       ? 'Rate › SOR' : 'Rate';
+  if(sub === 'arc-items'){
+    const t = $('#arcCatTitle');
+    if(t) t.textContent = (dataItemsCat || 'Items') + ' — Approved Rate List';
+    renderItemsTable();
+  }
+  if(sub === 'sor') renderSorTable();
+  window.scrollTo(0,0);
+}
+$$('#dataGrid .data-tile').forEach(b => b.onclick = () => showDataView(b.dataset.nav));
+$$('#tab-data .back').forEach(b => b.onclick = () => showDataGrid());
+$$('#rateMenu .data-tile').forEach(b => b.onclick = () => {
+  showRateSub(b.dataset.rate === 'arc' ? 'arc-menu' : 'sor');
+});
+$$('#arcMenu .data-tile').forEach(b => b.onclick = () => {
+  dataItemsCat = b.dataset.arccat; showRateSub('arc-items');
+});
+// override the generic "back" on Rate view so it goes step-by-step
+$$('.data-view[data-view="rate"] .back').forEach(b => b.onclick = () => {
+  // if inside a rate sub-view, step back one level; else go to grid
+  if(!$('#arcItems').hidden){ showRateSub('arc-menu'); return; }
+  if(!$('#arcMenu').hidden){ showRateSub('menu'); return; }
+  if(!$('#sorView').hidden){ showRateSub('menu'); return; }
+  showDataGrid();
+});
 $('#btnAddRoad').onclick = () => { roads.unshift({name:'', km:''}); store.set('rnb_roads', roads); renderRoadsTable(); };
 $('#btnAddBuilding').onclick = () => { buildings.unshift({name:''}); store.set('rnb_buildings', buildings); renderBuildingsTable(); };
-$('#btnAddItem').onclick = () => { items.unshift({itemNo:'', desc:'', rate:'', unit:'MT', cat:''}); store.set('rnb_items', items); renderItemsTable(); };
+$('#btnAddItem').onclick = () => { items.unshift({itemNo:'', desc:'', rate:'', unit:'MT', cat: dataItemsCat || ''}); store.set('rnb_items', items); renderItemsTable(); };
 $('#btnAddWD').onclick = () => { workDescs.unshift({text:'', type: est.mode || 'both'}); store.set('rnb_workdescs', workDescs); renderWDTable(); };
 $('#btnAddPerson').onclick = () => { people.unshift(''); store.set('rnb_people', people); renderPeopleTable(); };
 $('#btnResetData').onclick = () => {
