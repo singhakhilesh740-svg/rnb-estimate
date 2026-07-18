@@ -847,6 +847,34 @@ function put(ws, addr, val, font, align, border, numFmt){
 }
 function widths(ws, arr){ arr.forEach((w,i) => ws.getColumn(i+1).width = w); }
 
+/* estimate the row height needed to show `text` inside a cell/merge that is
+   `colChars` Excel-width-units wide, at the given font size (pt). Accounts for
+   word-wrap and explicit newlines. Arial ~ 1 char ≈ 1 width-unit; a line ≈ size*1.35 pt. */
+function textHeight(text, colChars, size){
+  const s = String(text == null ? '' : text);
+  const perLine = Math.max(4, Math.floor(colChars * 0.92));   // chars that fit on one line
+  let lines = 0;
+  s.split(/\r?\n/).forEach(para => {
+    // wrap each paragraph on word boundaries roughly by perLine
+    const words = para.split(/\s+/);
+    let cur = 0, used = false;
+    words.forEach(w => {
+      const add = (cur ? 1 : 0) + w.length;
+      if(cur + add > perLine && cur > 0){ lines++; cur = w.length; }
+      else cur += add;
+      used = true;
+    });
+    lines += (cur > 0 || !used) ? 1 : 0;
+  });
+  lines = Math.max(1, lines);
+  const lineH = size * 1.35;
+  return Math.ceil(lines * lineH + 4);   // + small padding
+}
+/* set a single row's height to fit its text (never below `min`) */
+function fitRow(ws, rowNo, text, colChars, size, min){
+  ws.getRow(rowNo).height = Math.max(min || 14.25, textHeight(text, colChars, size || 11));
+}
+
 async function buildWorkbook(){
   const p  = previewData();
   const wb = new ExcelJS.Workbook();
@@ -873,6 +901,10 @@ async function buildWorkbook(){
   f.mergeCells('B9:F9');   put(f, 'B9', '                            ' + FRAMED, ARIAL(11), JUST);
   f.mergeCells('B10:F10'); put(f, 'B10', NAME, ARIAL(12, true), CTR);
   f.mergeCells('B11:F11'); put(f, 'B11', p.t.say, ARIAL(12, true), CTR, null, RS_FMT);
+  // B9..F9 spans cols B-F ≈ 28.45+4.31+15.10+9.17+18.74 = 75.77 wide
+  const faceWide = 75.77;
+  fitRow(f, 9,  '                            ' + FRAMED, faceWide, 11, 40);
+  fitRow(f, 10, NAME, faceWide, 12, 30);
   put(f, 'B12', 'Administrtively approved under No.', ARIAL(11), {vertical:'top'});
   put(f, 'B13', 'Technically sanctioned under No.',   ARIAL(11), {vertical:'top'});
   put(f, 'B14', 'Estimate prepared by    ', ARIAL(11), {vertical:'top'});
@@ -882,6 +914,7 @@ async function buildWorkbook(){
   put(f, 'B16', 'Call or Authority            ', ARIAL(11), {vertical:'top'});
   f.mergeCells('A17:F17'); put(f, 'A17', 'GENERAL DESCRIPTION', ARIAL(11, true), CTRC);
   f.mergeCells('B18:F18'); put(f, 'B18', '           ' + office.desc, ARIAL(11), JUST);
+  fitRow(f, 18, '           ' + office.desc, faceWide, 11, 40);
 
   /* ---------- abst. ---------- */
   const a = wb.addWorksheet('abst.', { pageSetup:{ paperSize:9, orientation:'portrait', fitToPage:true, fitToWidth:1, fitToHeight:0 } });
@@ -911,11 +944,11 @@ async function buildWorkbook(){
     put(a, 'D'+(top+3), n(est.lc), ARIAL(12), CTR, {left:THIN, right:THIN}, '0.00');
     put(a, 'C'+(top+4), 'Approved Rate no ' + (l.appRateNo || l.itemNo), ARIAL(12), CTR, {left:THIN, right:THIN, bottom:THIN});
     put(a, 'D'+(top+4), n(l.rate), ARIAL(12), CTR, {left:THIN, right:THIN, bottom:THIN}, '0.00');
-    // description merges C{top}:C{top+2} (3 rows). top & top+1 stay ~20 (hold say/unit),
-    // the 3rd row absorbs the remaining text height so there's no big blank gap.
-    const descLines = Math.max(1, Math.ceil((l.desc || '').length / 42));
-    const descTotal = descLines * 15.6 + 6;               // total height the text needs
-    const thirdRowH = Math.min(260, Math.max(14, descTotal - 40.2));  // minus the two 20.1 rows
+    // description merges C{top}:C{top+2} (3 rows). Compute exact height for the text
+    // (col C width = 42.61) and distribute: top & top+1 hold say/unit (~20 each),
+    // 3rd row absorbs the remainder so text fits with no cut and no big blank gap.
+    const descH = textHeight(l.desc, 42.61, 12);
+    const thirdRowH = Math.max(14, descH - 40.2);   // minus the two 20.1 rows above
     for(let i = top; i <= bot; i++) a.getRow(i).height = (i === top + 2) ? thirdRowH : 20.1;
     r = bot + 1;
   });
@@ -936,7 +969,7 @@ async function buildWorkbook(){
     .forEach((t,i) => { a.mergeCells(`D${sg+i}:F${sg+i}`); put(a, 'D'+(sg+i), t, ARIAL(12), CTRC); });
 
   /* ---------- MES ---------- */
-  const m = wb.addWorksheet('MES ', { pageSetup:{ paperSize:9, orientation:'landscape', fitToPage:true, fitToWidth:1, fitToHeight:0 } });
+  const m = wb.addWorksheet('MES ', { pageSetup:{ paperSize:9, orientation:'portrait', fitToPage:true, fitToWidth:1, fitToHeight:0 } });
   widths(m, [12.14, 4.99, 12.41, 8.09, 2.56, 9.57, 2.56, 9.84, 2.43, 10.11, 3.10, 9.44, 13.08, 7.95]);
   m.getRow(1).height = 15; m.getRow(2).height = 42; m.getRow(3).height = 21; m.getRow(4).height = 20.25;
   m.mergeCells('A1:N2'); put(m, 'A1', NAME, ARIAL(16), CTR);
@@ -944,6 +977,7 @@ async function buildWorkbook(){
 
   const COLS = { nos:'D', len:'F', wid:'H', thk:'J', den:'L' };
   const XCOL = { nos:'E', len:'G', wid:'I', thk:'K' };
+  const mesWide = 108.27;   // A:N total width units
   let mr = 6;
   p.lines.forEach(l => {
     const kind = unitKind(l.unit), fl = FIELDS[kind], mUnit = measuredUnit(kind), div = unitDivisor(l.unit);
@@ -951,7 +985,7 @@ async function buildWorkbook(){
     put(m, 'B'+mr, l.itemNo,   ARIAL(12, true), {horizontal:'center'});
     mr++;
     m.mergeCells(`A${mr}:N${mr}`); put(m, 'A'+mr, l.desc, ARIAL(12), JUST);
-    m.getRow(mr).height = 109.5; mr++;
+    fitRow(m, mr, l.desc, mesWide, 12, 18); mr++;
     put(m, 'A'+mr, 'Chainage ', ARIAL(12, true), {horizontal:'center'});
     fl.forEach(k => put(m, COLS[k] + mr, FLABEL[k], ARIAL(12, true), {horizontal:'center'}));
     mr++;
@@ -967,7 +1001,7 @@ async function buildWorkbook(){
       });
       put(m, 'M'+mr, r2(rowQty(row, kind)), ARIAL(12), CTRC, null, '0.00');
       put(m, 'N'+mr, mUnit, ARIAL(12), CTRC);
-      m.getRow(mr).height = 60; mr++;
+      fitRow(m, mr, row.ch || '', 29.5, 12, 18); mr++;   // fit chainage text, min 18pt
     });
     put(m, 'L'+mr, div !== 1 ? 'Total ('+mUnit+')' : 'Total', ARIAL(12, true), CTRC);
     put(m, 'M'+mr, l.measured, ARIAL(12, true), CTRC, null, '0.00');
@@ -1109,14 +1143,14 @@ $('#btnPdf').onclick = () => {
   });
   signature(doc.lastAutoTable.finalY + 44, M + 390);   // right side (under Rate/Per/Amount block)
 
-  /* ================= MES (landscape, gridded) ================= */
-  doc.addPage('a4','landscape');
-  W = doc.internal.pageSize.getWidth(); M = 30;
+  /* ================= MES (portrait, gridded) ================= */
+  doc.addPage('a4','portrait');
+  W = doc.internal.pageSize.getWidth(); M = 34;
   y = sheetTitle('MEASUREMENT', W, M);
 
   p.lines.forEach(l => {
     const kind = unitKind(l.unit), fl = FIELDS[kind], mUnit = measuredUnit(kind), div = unitDivisor(l.unit);
-    if(y > doc.internal.pageSize.getHeight() - 120){ doc.addPage('a4','landscape'); y = sheetTitle('MEASUREMENT', W, M); }
+    if(y > doc.internal.pageSize.getHeight() - 120){ doc.addPage('a4','portrait'); y = sheetTitle('MEASUREMENT', W, M); }
     doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.text('Item No. ' + l.itemNo, M, y); y += 12;
     doc.setFont('helvetica','normal'); doc.setFontSize(8);
     const d = doc.splitTextToSize(l.desc, W - 2*M); doc.text(d, M, y, {maxWidth:W - 2*M, align:'justify'}); y += d.length*9 + 6;
@@ -1139,7 +1173,7 @@ $('#btnPdf').onclick = () => {
                 { content:fmt(l.measured), styles:{halign:'center', fontStyle:'bold'} },
                 { content:mUnit, styles:{halign:'center', fontStyle:'bold'} } ]);
     if(div !== 1){
-      body.push([ { content:'÷ '+fmt0(div)+' ('+mUnit+' → '+l.unit+')', colSpan:preQty, styles:{halign:'right', fontStyle:'bold', textColor:[179,64,42]} },
+      body.push([ { content:'÷ '+fmt0(div)+' ('+mUnit+' -> '+l.unit+')', colSpan:preQty, styles:{halign:'right', fontStyle:'bold', textColor:[179,64,42]} },
                   { content:fmt(l.qty), styles:{halign:'center', fontStyle:'bold'} },
                   { content:l.unit, styles:{halign:'center', fontStyle:'bold'} } ]);
     }
@@ -1147,17 +1181,18 @@ $('#btnPdf').onclick = () => {
                 { content:fmt(l.say), styles:{halign:'center', fontStyle:'bold'} },
                 { content:l.unit, styles:{halign:'center', fontStyle:'bold'} } ]);
 
-    const usable = W - 2*M, xW = 14, qtyW = 72, unitW = 52, chainW = 150;
-    const fieldW = (usable - chainW - qtyW - unitW - xW*(fl.length-1) - 1) / fl.length;
+    // portrait fit: usable ≈ 527pt. Thin separators, compact chainage/qty/unit.
+    const usable = W - 2*M, xW = 9, qtyW = 54, unitW = 38, chainW = 96;
+    const fieldW = Math.max(28, (usable - chainW - qtyW - unitW - xW*(fl.length-1) - 1) / fl.length);
     const colStyles = {};
     cols.forEach((c,i) => colStyles[i] = { cellWidth:
       c.t==='chain'?chainW : c.t==='x'?xW : c.t==='qty'?qtyW : c.t==='unit'?unitW : fieldW });
 
     doc.autoTable({ startY:y, margin:{left:M, right:M}, theme:'grid',
-      head:[header], body, styles:GRID, headStyles:HEAD, columnStyles:colStyles });
+      head:[header], body, styles:{...GRID, fontSize:7, cellPadding:2}, headStyles:HEAD, columnStyles:colStyles });
     y = doc.lastAutoTable.finalY + 16;
   });
-  signature(y + 12, W - M - 120);
+  signature(y + 12, W - M - 130);
 
   doc.save(safeName() + '.pdf');
 };
