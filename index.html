@@ -26,9 +26,15 @@ body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 Arial,Helve
 h1,h2,h3,.disp{font-family:'Archivo',Arial,sans-serif;letter-spacing:-.01em}
 
 header.top{background:var(--blueprint);color:#fff;padding:calc(14px + env(safe-area-inset-top)) 16px 0;position:sticky;top:0;z-index:50}
-.top-inner{max-width:1120px;margin:0 auto}
+.top-inner{max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .top h1{margin:0;font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 .top p{margin:3px 0 12px;font-size:11px;color:#a9c4dd;letter-spacing:.08em;text-transform:uppercase}
+.mode-badge{flex-shrink:0;margin-top:2px;display:flex;align-items:center;gap:8px}
+.mode-badge .lbl{font-family:'Archivo';font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+  background:var(--accent);color:#fff;padding:5px 10px}
+.mode-badge button{border:1px solid #4d6f95;background:transparent;color:#cfe0f0;font-family:'Archivo';
+  font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;padding:5px 8px;cursor:pointer}
+.mode-badge button:hover{color:#fff;border-color:#cfe0f0}
 .rule-thick{height:3px;background:#fff}
 .rule-thin{height:1px;background:#fff;margin-top:2px;opacity:.7}
 nav.tabs{max-width:1120px;margin:0 auto;display:flex;gap:2px;padding:0 16px;overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -50,8 +56,9 @@ input.mono,textarea.mono{font-family:'IBM Plex Mono',monospace}
 input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:-1px;background:#fff}
 .grid{display:grid;gap:12px}
 .g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:repeat(3,1fr)}
 .g4{grid-template-columns:repeat(4,1fr)}
-@media(max-width:760px){.g2,.g4{grid-template-columns:1fr}}
+@media(max-width:760px){.g2,.g3,.g4{grid-template-columns:1fr}}
 button.btn{font-family:'Archivo';font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;
   padding:10px 14px;border:1px solid var(--blueprint);background:var(--blueprint);color:#fff;cursor:pointer;border-radius:0}
 button.btn.ghost{background:transparent;color:var(--blueprint)}
@@ -107,17 +114,58 @@ table.tbl td input{padding:6px;font-size:13px}
 .sheetprev h4{font-family:'Archivo';margin:14px 0 8px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--accent);border-bottom:1px solid var(--rule);padding-bottom:5px}
 .sheetprev h4:first-child{margin-top:0}
+
+/* mode gate */
+.gate{position:fixed;inset:0;background:var(--blueprint);z-index:120;display:none;flex-direction:column;
+  align-items:center;justify-content:center;padding:24px;text-align:center}
+.gate.open{display:flex}
+.gate h2{color:#fff;font-size:15px;text-transform:uppercase;letter-spacing:.12em;margin:0 0 4px}
+.gate p{color:#a9c4dd;font-size:12px;letter-spacing:.06em;margin:0 0 26px}
+.gate .grp{display:grid;gap:16px;grid-template-columns:1fr 1fr;width:100%;max-width:460px}
+@media(max-width:520px){.gate .grp{grid-template-columns:1fr}}
+.gate .opt{background:#fff;border:0;border-top:4px solid var(--accent);padding:26px 16px;cursor:pointer;
+  font-family:'Archivo';color:var(--blueprint);box-shadow:var(--shadow)}
+.gate .opt .ic{font-size:34px;line-height:1;margin-bottom:10px}
+.gate .opt .t{font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.gate .opt .s{display:block;font-size:11px;color:var(--ink-2);margin-top:6px;font-weight:600;letter-spacing:.04em}
+.gate .opt:hover{transform:translateY(-2px);transition:transform .12s}
+.gate .opt:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
 
+<!-- ==== mode gate (shows on open) ==== -->
+<div class="gate" id="modeGate">
+  <h2>R &amp; B Sub Division, Dahod</h2>
+  <p>Estimate Builder — kis type ka estimate banana hai?</p>
+  <div class="grp">
+    <button class="opt" data-mode="road">
+      <div class="ic">🛣️</div>
+      <div class="t">Road</div>
+      <span class="s">Hotmix, WMM, GSB, patta, patchwork</span>
+    </button>
+    <button class="opt" data-mode="building">
+      <div class="ic">🏢</div>
+      <div class="t">Building</div>
+      <span class="s">Resi / Non-Resi building works</span>
+    </button>
+  </div>
+</div>
+
 <header class="top">
   <div class="top-inner">
-    <h1>Estimate Builder</h1>
-    <p>R &amp; B Sub Division, Dahod</p>
-    <div class="rule-thick"></div><div class="rule-thin"></div>
+    <div>
+      <h1>Estimate Builder</h1>
+      <p>R &amp; B Sub Division, Dahod</p>
+    </div>
+    <div class="mode-badge">
+      <span class="lbl" id="modeLbl">—</span>
+      <button id="btnMode">Change</button>
+    </div>
   </div>
+  <div class="rule-thick"></div><div class="rule-thin"></div>
   <nav class="tabs" role="tablist">
     <button role="tab" data-tab="est" aria-selected="true">Estimate</button>
     <button role="tab" data-tab="prev" aria-selected="false">Preview &amp; Export</button>
@@ -131,29 +179,48 @@ table.tbl td input{padding:6px;font-size:13px}
   <div class="card">
     <h2>Work details</h2>
     <div>
-      <label for="roadInput">Road name</label>
+      <label for="roadInput" id="roadInputLbl">Road name</label>
       <div class="combo">
         <input id="roadInput" autocomplete="off" placeholder="Type any word — Jhalod, Limkheda, SH.62, Sanjeli…">
         <div class="combo-list" id="roadList"></div>
       </div>
       <p class="hint" id="roadHint"></p>
     </div>
+
     <div class="grid g2" style="margin-top:12px">
-      <div>
+      <div class="road-only">
         <label for="roadKm">Km (only if not already in road name)</label>
         <input id="roadKm" class="mono" placeholder="0/0-8/700">
       </div>
       <div>
         <label for="workDesc">Work description</label>
-        <input id="workDesc" placeholder="Providing SDBC Paver Patta">
+        <div class="combo">
+          <input id="workDesc" autocomplete="off" placeholder="Choose or type — Providing SDBC Paver Patta…">
+          <div class="combo-list" id="workDescList"></div>
+        </div>
+        <p class="hint">Dropdown se choose karo, ya naya type karo. Naye options “Roads &amp; Rates” tab me add hote hain.</p>
       </div>
     </div>
+
     <div class="grid g4" style="margin-top:12px">
-      <div><label for="wcFrom">Working chainage — from</label><input id="wcFrom" class="mono" placeholder="7/700"></div>
-      <div><label for="wcTo">Working chainage — to</label><input id="wcTo" class="mono" placeholder="8/00"></div>
-      <div><label for="prepBy">Estimate prepared by</label><input id="prepBy" placeholder="Akhilesh sinh (A.E)"></div>
-      <div><label for="chkBy">Estimate checked by</label><input id="chkBy" placeholder="Sanjay Palas (AE) P.B."></div>
+      <div class="road-only"><label for="wcFrom">Working chainage — from</label><input id="wcFrom" class="mono" placeholder="7/700"></div>
+      <div class="road-only"><label for="wcTo">Working chainage — to</label><input id="wcTo" class="mono" placeholder="8/00"></div>
+      <div>
+        <label for="prepBy">Estimate prepared by</label>
+        <div class="combo">
+          <input id="prepBy" autocomplete="off" placeholder="Choose or type a name">
+          <div class="combo-list" id="prepList"></div>
+        </div>
+      </div>
+      <div>
+        <label for="chkBy">Estimate checked by</label>
+        <div class="combo">
+          <input id="chkBy" autocomplete="off" placeholder="Choose or type a name">
+          <div class="combo-list" id="chkList"></div>
+        </div>
+      </div>
     </div>
+
     <div class="worktitle"><div class="thin">
       <span class="lbl">Name of Work</span>
       <div class="val" id="workName">—</div>
@@ -195,7 +262,7 @@ table.tbl td input{padding:6px;font-size:13px}
       <button class="btn" id="btnPdf">Download PDF</button>
       <button class="btn ghost" id="btnNew">New estimate</button>
     </div>
-    <p class="hint">Teen sheets: <b>FACE</b>, <b>abst.</b>, <b>MES</b> — aapke original file ke exact format me.</p>
+    <p class="hint">Teen sheets: <b>FACE</b>, <b>abst.</b>, <b>MES</b> — Excel aur PDF dono aapke original file ke exact format me.</p>
   </div>
   <div class="card">
     <h2>Preview</h2>
@@ -205,7 +272,7 @@ table.tbl td input{padding:6px;font-size:13px}
 
 <section id="tab-data" hidden>
   <div class="card">
-    <h2>Road list</h2>
+    <h2 id="roadsCardTitle">Road list</h2>
     <div class="row-actions">
       <input type="file" id="fileRoads" accept=".xls,.xlsx,.csv" style="max-width:300px">
       <button class="btn ghost" id="btnAddRoad">Add road</button>
@@ -214,6 +281,35 @@ table.tbl td input{padding:6px;font-size:13px}
     <p class="hint">Built-in list already loaded. Excel upload karoge to add ho jayengi.</p>
     <div id="roadsTable" style="margin-top:14px"></div>
   </div>
+
+  <div class="card">
+    <h2 id="buildingsCardTitle">Building list</h2>
+    <div class="row-actions">
+      <input type="file" id="fileBuildings" accept=".xls,.xlsx,.csv" style="max-width:300px">
+      <button class="btn ghost" id="btnAddBuilding">Add building</button>
+    </div>
+    <p class="hint">Building estimate ke liye — building / work locations yaha add karo.</p>
+    <div id="buildingsTable" style="margin-top:14px"></div>
+  </div>
+
+  <div class="card">
+    <h2>Work descriptions (dropdown)</h2>
+    <div class="row-actions">
+      <button class="btn ghost" id="btnAddWD">Add work description</button>
+    </div>
+    <p class="hint">Ye options “Work description” dropdown me dikhte hain. Type = road / building / both.</p>
+    <div id="wdTable" style="margin-top:14px"></div>
+  </div>
+
+  <div class="card">
+    <h2>Names — prepared / checked by</h2>
+    <div class="row-actions">
+      <button class="btn ghost" id="btnAddPerson">Add name</button>
+    </div>
+    <p class="hint">Ye names dono dropdowns (prepared by &amp; checked by) me dikhte hain.</p>
+    <div id="peopleTable" style="margin-top:14px"></div>
+  </div>
+
   <div class="card">
     <h2>Item &amp; approved rate list</h2>
     <div class="row-actions">
@@ -222,6 +318,7 @@ table.tbl td input{padding:6px;font-size:13px}
     </div>
     <div id="itemsTable" style="margin-top:14px"></div>
   </div>
+
   <div class="card">
     <h2>Office block</h2>
     <div class="grid g2">

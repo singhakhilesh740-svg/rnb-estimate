@@ -15,12 +15,30 @@ const OFFICE_DEFAULT = {
 };
 const FRAMED = 'Estimate framed in the office of the Executive Engineer, Dahod (R&B ) Division , Dahod , for the probale expenses that will be incurred in  ';
 
-let roads  = store.get('rnb_roads', null) || ROADS_SEED.slice();
-let items  = store.get('rnb_items', null) || ITEMS_SEED.slice();
-let office = store.get('rnb_office', null) || {...OFFICE_DEFAULT};
-let est    = store.get('rnb_est', null) ||
-             { road:'', roadKm:'', workDesc:'', wcFrom:'', wcTo:'', prepBy:'', chkBy:'', qc:1, lc:0, lines:[] };
+let roads     = store.get('rnb_roads', null)     || ROADS_SEED.slice();
+let items     = store.get('rnb_items', null)     || ITEMS_SEED.slice();
+let buildings = store.get('rnb_buildings', null) || (typeof BUILDINGS_SEED !== 'undefined' ? BUILDINGS_SEED.slice() : []);
+let workDescs = store.get('rnb_workdescs', null) || (typeof WORKDESCS_SEED !== 'undefined' ? WORKDESCS_SEED.map(x=>({...x})) : []);
+let people    = store.get('rnb_people', null)    || (typeof PEOPLE_SEED !== 'undefined' ? PEOPLE_SEED.slice() : []);
+let office    = store.get('rnb_office', null)     || {...OFFICE_DEFAULT};
+let est       = store.get('rnb_est', null) ||
+             { mode:'', road:'', roadKm:'', workDesc:'', wcFrom:'', wcTo:'', prepBy:'', chkBy:'', qc:1, lc:0, lines:[] };
+if(est.mode === undefined) est.mode = '';
 let catFilter = '';
+
+/* ------------------------------- mode config ------------------------------- */
+const MODE = {
+  road: {
+    label:'Road', nameLabel:'Road name',
+    namePh:'Type any word — Jhalod, Limkheda, SH.62, Sanjeli…',
+    cats:['Hotmix / Road works','Jungle cutting & Geru'], list:()=>roads
+  },
+  building: {
+    label:'Building', nameLabel:'Building / Work name',
+    namePh:'Type building / work location…',
+    cats:['Resi / Non-Resi Building'], list:()=>buildings
+  }
+};
 
 /* ------------------------------- helpers ------------------------------- */
 const $  = s => document.querySelector(s);
@@ -34,12 +52,35 @@ function toast(m){ const t = $('#toast'); t.textContent = m; t.style.display='bl
   clearTimeout(t._t); t._t = setTimeout(()=> t.style.display='none', 2800); }
 function save(){ store.set('rnb_est', est); }
 
+/* ------------------------------- mode gate ------------------------------- */
+function openGate(){ $('#modeGate').classList.add('open'); }
+function closeGate(){ $('#modeGate').classList.remove('open'); }
+function setMode(m){
+  est.mode = m; save(); closeGate(); applyModeUI();
+  toast(MODE[m].label + ' estimate mode.');
+}
+$$('#modeGate .opt').forEach(b => b.onclick = () => setMode(b.dataset.mode));
+$('#btnMode').onclick = openGate;
+
+function applyModeUI(){
+  const m = MODE[est.mode];
+  $('#modeLbl').textContent = m ? m.label : '—';
+  $('#roadInputLbl').textContent = m ? m.nameLabel : 'Name';
+  $('#roadInput').placeholder = m ? m.namePh : '';
+  $('#roadsCardTitle').textContent = 'Road list';
+  $('#buildingsCardTitle').textContent = 'Building list';
+  const showRoad = est.mode === 'road';
+  $$('.road-only').forEach(el => el.style.display = showRoad ? '' : 'none');
+  renderCatChips();
+  refreshWorkName();
+}
+
 /* ------------------------------- tabs ------------------------------- */
 $$('nav.tabs button').forEach(b => b.onclick = () => {
   $$('nav.tabs button').forEach(x => x.setAttribute('aria-selected', x === b));
   ['est','prev','data'].forEach(t => $('#tab-'+t).hidden = (t !== b.dataset.tab));
   if(b.dataset.tab === 'prev') renderPreview();
-  if(b.dataset.tab === 'data'){ renderRoadsTable(); renderItemsTable(); }
+  if(b.dataset.tab === 'data'){ renderRoadsTable(); renderBuildingsTable(); renderItemsTable(); renderWDTable(); renderPeopleTable(); }
   window.scrollTo(0,0);
 });
 
@@ -62,7 +103,7 @@ function makeCombo(input, list, getData, onPick){
     list._data = data; idx = -1;
     list.innerHTML = data.length
       ? data.map((d,i)=>`<div class="combo-opt" data-i="${i}">${highlight(d.label,q)}${d.meta?`<span class="meta">${esc(d.meta)}</span>`:''}</div>`).join('')
-      : '<div class="combo-empty">Kuch nahi mila.</div>';
+      : '<div class="combo-empty">Kuch nahi mila — jo type kiya wahi use hoga.</div>';
     list.classList.add('open');
     list.querySelectorAll('.combo-opt').forEach(el =>
       el.onmousedown = e => { e.preventDefault(); list.classList.remove('open'); onPick(data[+el.dataset.i]); });
@@ -84,6 +125,11 @@ function makeCombo(input, list, getData, onPick){
       e.preventDefault(); list.classList.remove('open'); onPick(list._data[idx]);
     } else if(e.key === 'Escape'){ list.classList.remove('open'); }
   });
+}
+/* free-typing capture (coexists with makeCombo) */
+function freeText(input, key, cb){
+  input.value = est[key] ?? '';
+  input.addEventListener('input', () => { est[key] = input.value; save(); cb && cb(); });
 }
 
 /* ------------------------------- units ------------------------------- */
@@ -108,6 +154,11 @@ const blankRow = () => ({ ch:'', nos:'', len:'', wid:'', thk:'', den:'' });
 /* ------------------------------- name of work ------------------------------- */
 function buildWorkName(){
   if(!est.road) return '—';
+  if(est.mode === 'building'){
+    const wd = est.workDesc ? est.workDesc + ' — ' : '';
+    const wc = (est.wcFrom || est.wcTo) ? ` (${est.wcFrom}-${est.wcTo})` : '';
+    return `${wd}${est.road}${wc}`.trim();
+  }
   const km = est.roadKm ? ` Km.${est.roadKm}` : '';
   const wc = (est.wcFrom || est.wcTo) ? `(working chainage ${est.wcFrom}-${est.wcTo})` : '';
   const wd = est.workDesc ? `(${est.workDesc})` : '';
@@ -233,6 +284,19 @@ function renderRoadsTable(){
   box.querySelectorAll('[data-rdel]').forEach(b => b.onclick = () => {
     roads.splice(+b.dataset.rdel,1); store.set('rnb_roads', roads); renderRoadsTable(); refreshHints(); });
 }
+function renderBuildingsTable(){
+  const box = $('#buildingsTable');
+  if(!buildings.length){ box.innerHTML = '<div class="empty">Building list khali hai — “Add building” dabao.</div>'; return; }
+  box.innerHTML = `<div class="scroll"><table class="tbl"><tr><th>Building / Work name</th><th></th></tr>` +
+    buildings.map((r,i)=>`<tr>
+      <td><input data-bi="${i}" value="${esc(r.name)}"></td>
+      <td><button class="btn danger" style="padding:4px 8px" data-bdel="${i}">×</button></td></tr>`).join('') +
+    `</table></div><p class="hint">${buildings.length} buildings.</p>`;
+  box.querySelectorAll('input').forEach(i => i.oninput = e => {
+    buildings[+e.target.dataset.bi].name = e.target.value; store.set('rnb_buildings', buildings); });
+  box.querySelectorAll('[data-bdel]').forEach(b => b.onclick = () => {
+    buildings.splice(+b.dataset.bdel,1); store.set('rnb_buildings', buildings); renderBuildingsTable(); });
+}
 function renderItemsTable(){
   const box = $('#itemsTable');
   if(!items.length){ box.innerHTML = '<div class="empty">Item list khali hai.</div>'; return; }
@@ -251,8 +315,38 @@ function renderItemsTable(){
   box.querySelectorAll('[data-idel]').forEach(b => b.onclick = () => {
     items.splice(+b.dataset.idel,1); store.set('rnb_items', items); renderItemsTable(); renderCatChips(); });
 }
+function renderWDTable(){
+  const box = $('#wdTable');
+  if(!workDescs.length){ box.innerHTML = '<div class="empty">Koi work description nahi — “Add work description” dabao.</div>'; return; }
+  box.innerHTML = `<div class="scroll"><table class="tbl"><tr><th style="width:70%">Work description</th><th>Type</th><th></th></tr>` +
+    workDescs.map((w,i)=>`<tr>
+      <td><input data-wi="${i}" data-wk="text" value="${esc(w.text)}"></td>
+      <td><select data-wi="${i}" data-wk="type">
+        ${['road','building','both'].map(t=>`<option value="${t}" ${w.type===t?'selected':''}>${t}</option>`).join('')}
+      </select></td>
+      <td><button class="btn danger" style="padding:4px 8px" data-wdel="${i}">×</button></td></tr>`).join('') +
+    `</table></div><p class="hint">${workDescs.length} entries.</p>`;
+  box.querySelectorAll('input,select').forEach(i => i.oninput = e => {
+    workDescs[+e.target.dataset.wi][e.target.dataset.wk] = e.target.value; store.set('rnb_workdescs', workDescs); });
+  box.querySelectorAll('[data-wdel]').forEach(b => b.onclick = () => {
+    workDescs.splice(+b.dataset.wdel,1); store.set('rnb_workdescs', workDescs); renderWDTable(); });
+}
+function renderPeopleTable(){
+  const box = $('#peopleTable');
+  if(!people.length){ box.innerHTML = '<div class="empty">Koi name nahi — “Add name” dabao.</div>'; return; }
+  box.innerHTML = `<div class="scroll"><table class="tbl"><tr><th>Name</th><th></th></tr>` +
+    people.map((p,i)=>`<tr>
+      <td><input data-pi="${i}" value="${esc(p)}"></td>
+      <td><button class="btn danger" style="padding:4px 8px" data-pdel="${i}">×</button></td></tr>`).join('') +
+    `</table></div><p class="hint">${people.length} names.</p>`;
+  box.querySelectorAll('input').forEach(i => i.oninput = e => {
+    people[+e.target.dataset.pi] = e.target.value; store.set('rnb_people', people); });
+  box.querySelectorAll('[data-pdel]').forEach(b => b.onclick = () => {
+    people.splice(+b.dataset.pdel,1); store.set('rnb_people', people); renderPeopleTable(); });
+}
 function renderCatChips(){
-  const cats = [...new Set(items.map(i => i.cat).filter(Boolean))];
+  const allow = MODE[est.mode] ? MODE[est.mode].cats : [];
+  const cats = [...new Set(items.map(i => i.cat).filter(c => c && allow.includes(c)))];
   $('#catChips').innerHTML = cats.map(c =>
     `<button class="chip" data-cat="${esc(c)}" aria-pressed="${catFilter === c}">${esc(c)}</button>`).join('') +
     (catFilter ? `<button class="chip" data-cat="" aria-pressed="false">Show all</button>` : '');
@@ -261,13 +355,14 @@ function renderCatChips(){
     renderCatChips(); $('#itemInput').focus();
   });
 }
-function refreshHints(){ $('#roadHint').textContent = `${roads.length} roads · ${items.length} items loaded.`; }
+function refreshHints(){ $('#roadHint').textContent = `${roads.length} roads · ${buildings.length} buildings · ${items.length} items loaded.`; }
 
 /* ------------------------------- excel import ------------------------------- */
 let pendingRows = null, pendingKind = null;
 const MAPS = {
   roads: [{k:'name', lbl:'Road name', hints:['road','name','work']},
           {k:'km', lbl:'Km (optional)', hints:['km','chainage'], opt:true}],
+  buildings: [{k:'name', lbl:'Building / Work name', hints:['building','name','work','location']}],
   items: [{k:'desc', lbl:'Item of work / description', hints:['item description','description','item of work','particular']},
           {k:'rate', lbl:'Approved rate', hints:['approved','rate']},
           {k:'unit', lbl:'Unit', hints:['unit','per']},
@@ -295,7 +390,9 @@ function openMapper(kind, sheet){
   sheet.rows.slice(0,15).forEach((r,i)=>{ const s = r.filter(c => String(c).trim() !== '').length; if(s > bs){ bs = s; hr = i; } });
   const headers = sheet.rows[hr].map((h,i)=> String(h).replace(/\s+/g,' ').trim() || `Column ${i+1}`);
   pendingRows = sheet.rows.slice(hr + 1);
-  $('#mapTitle').textContent = kind === 'roads' ? 'Road list — match the columns' : 'Item list — match the columns';
+  $('#mapTitle').textContent =
+    kind === 'roads' ? 'Road list — match the columns' :
+    kind === 'buildings' ? 'Building list — match the columns' : 'Item list — match the columns';
   $('#mapFields').innerHTML = MAPS[kind].map(f => {
     let sel = -1;
     headers.forEach((h,i)=>{ if(sel < 0 && f.hints.some(x => h.toLowerCase().includes(x))) sel = i; });
@@ -314,21 +411,26 @@ $('#mapOk').onclick = () => {
   pendingRows.forEach(r => {
     const o = {};
     spec.forEach(f => o[f.k] = map[f.k] >= 0 ? String(r[map[f.k]] ?? '').replace(/\s+/g,' ').trim() : '');
-    const key = pendingKind === 'roads' ? o.name : o.desc;
+    const key = pendingKind === 'items' ? o.desc : o.name;
     if(!key || key.length < 3) return;
     if(pendingKind === 'items'){ o.rate = r2(n(String(o.rate).replace(/[^0-9.\-]/g,''))); if(!o.rate) return; }
     out.push(o);
   });
   if(!out.length){ toast('Valid data nahi mila.'); return; }
   if(pendingKind === 'roads'){ roads = roads.concat(out); store.set('rnb_roads', roads); renderRoadsTable(); }
+  else if(pendingKind === 'buildings'){ buildings = buildings.concat(out); store.set('rnb_buildings', buildings); renderBuildingsTable(); }
   else { items = items.concat(out); store.set('rnb_items', items); renderItemsTable(); renderCatChips(); }
   $('#mapModal').style.display = 'none';
   toast(`${out.length} ${pendingKind} import ho gaye.`); refreshHints();
 };
 $('#fileRoads').onchange = e => { if(e.target.files[0]) readSheet(e.target.files[0], s => s && openMapper('roads', s)); e.target.value = ''; };
+$('#fileBuildings').onchange = e => { if(e.target.files[0]) readSheet(e.target.files[0], s => s && openMapper('buildings', s)); e.target.value = ''; };
 $('#fileItems').onchange = e => { if(e.target.files[0]) readSheet(e.target.files[0], s => s && openMapper('items', s)); e.target.value = ''; };
 $('#btnAddRoad').onclick = () => { roads.unshift({name:'', km:''}); store.set('rnb_roads', roads); renderRoadsTable(); };
+$('#btnAddBuilding').onclick = () => { buildings.unshift({name:''}); store.set('rnb_buildings', buildings); renderBuildingsTable(); };
 $('#btnAddItem').onclick = () => { items.unshift({itemNo:'', desc:'', rate:'', unit:'MT', cat:''}); store.set('rnb_items', items); renderItemsTable(); };
+$('#btnAddWD').onclick = () => { workDescs.unshift({text:'', type: est.mode || 'both'}); store.set('rnb_workdescs', workDescs); renderWDTable(); };
+$('#btnAddPerson').onclick = () => { people.unshift(''); store.set('rnb_people', people); renderPeopleTable(); };
 $('#btnResetData').onclick = () => {
   if(!confirm('Built-in roads aur items wapas load karein? Aapke manual changes chale jayenge.')) return;
   roads = ROADS_SEED.slice(); items = ITEMS_SEED.slice();
@@ -337,12 +439,9 @@ $('#btnResetData').onclick = () => {
 };
 
 /* ------------------------------- bind form ------------------------------- */
-function bind(sel, key, cb){
-  const el = $(sel); el.value = est[key] ?? '';
-  el.oninput = () => { est[key] = el.value; save(); cb && cb(); };
-}
-['roadKm','workDesc','wcFrom','wcTo'].forEach(k => bind('#'+k, k, refreshWorkName));
-bind('#prepBy','prepBy'); bind('#chkBy','chkBy');
+$('#roadKm').value = est.roadKm || ''; $('#roadKm').oninput = () => { est.roadKm = $('#roadKm').value; save(); refreshWorkName(); };
+$('#wcFrom').value = est.wcFrom || ''; $('#wcFrom').oninput = () => { est.wcFrom = $('#wcFrom').value; save(); refreshWorkName(); };
+$('#wcTo').value   = est.wcTo   || ''; $('#wcTo').oninput   = () => { est.wcTo   = $('#wcTo').value;   save(); refreshWorkName(); };
 $('#qcPct').value = est.qc; $('#qcPct').oninput = e => { est.qc = n(e.target.value); save(); refreshTotals(); };
 $('#lcRate').value = est.lc; $('#lcRate').oninput = e => { est.lc = n(e.target.value); save(); };
 $('#roadInput').value = est.road || '';
@@ -353,14 +452,37 @@ function bindOffice(sel, key){
 }
 bindOffice('#divName','div'); bindOffice('#subDivName','sub'); bindOffice('#genDesc','desc');
 
+/* road / building name combo — dynamic source + free text */
+freeText($('#roadInput'), 'road', refreshWorkName);
 makeCombo($('#roadInput'), $('#roadList'),
-  () => roads.map(r => ({ label:r.name, meta: r.km ? 'Km ' + r.km : '', search: r.name + ' ' + (r.km||''), raw:r })),
+  () => (MODE[est.mode] ? MODE[est.mode].list() : []).map(r => ({
+    label:r.name, meta: r.km ? 'Km ' + r.km : '', search: r.name + ' ' + (r.km||''), raw:r })),
   d => { est.road = d.raw.name;
          if(d.raw.km){ est.roadKm = d.raw.km; $('#roadKm').value = d.raw.km; }
-         $('#roadInput').value = d.raw.name; save(); refreshWorkName(); $('#wcFrom').focus(); });
+         $('#roadInput').value = d.raw.name; save(); refreshWorkName();
+         if(est.mode === 'road') $('#wcFrom').focus(); });
 
+/* work description combo — dropdown + free text */
+freeText($('#workDesc'), 'workDesc', refreshWorkName);
+makeCombo($('#workDesc'), $('#workDescList'),
+  () => workDescs.filter(w => w.text && (w.type === est.mode || w.type === 'both'))
+                 .map(w => ({ label:w.text, search:w.text, raw:w })),
+  d => { est.workDesc = d.raw.text; $('#workDesc').value = d.raw.text; save(); refreshWorkName(); });
+
+/* prepared-by / checked-by combos — dropdown + free text */
+freeText($('#prepBy'), 'prepBy');
+makeCombo($('#prepBy'), $('#prepList'),
+  () => people.filter(Boolean).map(p => ({ label:p, search:p, raw:p })),
+  d => { est.prepBy = d.raw; $('#prepBy').value = d.raw; save(); });
+freeText($('#chkBy'), 'chkBy');
+makeCombo($('#chkBy'), $('#chkList'),
+  () => people.filter(Boolean).map(p => ({ label:p, search:p, raw:p })),
+  d => { est.chkBy = d.raw; $('#chkBy').value = d.raw; save(); });
+
+/* item combo — filtered by mode + category chip */
 makeCombo($('#itemInput'), $('#itemList'),
-  () => items.filter(it => !catFilter || it.cat === catFilter).map(it => ({
+  () => items.filter(it => (!MODE[est.mode] || MODE[est.mode].cats.includes(it.cat))
+                        && (!catFilter || it.cat === catFilter)).map(it => ({
     label: it.desc.length > 150 ? it.desc.slice(0,150) + '…' : it.desc,
     meta: `No.${it.itemNo} · ₹ ${fmt(n(it.rate))} / ${it.unit}${it.cat ? ' · ' + it.cat : ''}`,
     search: [it.desc, it.unit, it.itemNo, it.cat].join(' '), raw: it })),
@@ -375,7 +497,7 @@ const previewData = () => ({ name: buildWorkName(), t: totals(),
 
 function renderPreview(){
   if(!est.road || !est.lines.length){
-    $('#previewBox').innerHTML = '<div class="empty">Pehle road aur item select karo.</div>'; return; }
+    $('#previewBox').innerHTML = '<div class="empty">Pehle name aur item select karo.</div>'; return; }
   const p = previewData();
   $('#previewBox').innerHTML = `
     <h4>FACE</h4>
@@ -477,7 +599,6 @@ async function buildWorkbook(){
     .forEach((h,i) => put(a, String.fromCharCode(65+i) + '5', h, ARIAL(12, true), CTRC, BOX));
   [1,2,3,4,5,6].forEach((v,i) => put(a, String.fromCharCode(65+i) + '6', v, ARIAL(12), CTRC, BOX));
 
-  // one 5-row block per item, mirroring the original merge pattern
   let r = 7;
   p.lines.forEach(l => {
     const top = r, bot = r + 4;
@@ -520,7 +641,6 @@ async function buildWorkbook(){
   m.mergeCells('A1:N2'); put(m, 'A1', NAME, ARIAL(16), CTR);
   m.mergeCells('A4:N4'); put(m, 'A4', 'MEASUREMENT', ARIAL(16, true), {horizontal:'center'});
 
-  // Nos | x | Length | x | Width | x | Thick | x | Density  -> cols D,E,F,G,H,I,J,K,L
   const COLS = { nos:'D', len:'F', wid:'H', thk:'J', den:'L' };
   const XCOL = { nos:'E', len:'G', wid:'I', thk:'K' };
   let mr = 6;
@@ -573,7 +693,7 @@ function download(blob, name){
   a.remove(); setTimeout(()=> URL.revokeObjectURL(url), 4000);
 }
 $('#btnXlsx').onclick = async () => {
-  if(!est.road || !est.lines.length){ toast('Road aur kam se kam ek item select karo.'); return; }
+  if(!est.road || !est.lines.length){ toast('Name aur kam se kam ek item select karo.'); return; }
   const b = $('#btnXlsx'); b.disabled = true; b.textContent = 'Building…';
   try{
     const wb = await buildWorkbook();
@@ -583,91 +703,157 @@ $('#btnXlsx').onclick = async () => {
   b.disabled = false; b.textContent = 'Download Excel';
 };
 
-/* ------------------------------- pdf export ------------------------------- */
+/* ------------------------------- pdf export (mirrors the Excel sheets) ------------------------------- */
 $('#btnPdf').onclick = () => {
-  if(!est.road || !est.lines.length){ toast('Road aur kam se kam ek item select karo.'); return; }
+  if(!est.road || !est.lines.length){ toast('Name aur kam se kam ek item select karo.'); return; }
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit:'pt', format:'a4' });
-  const p = previewData(), W = doc.internal.pageSize.getWidth(), M = 36;
+  const doc = new jsPDF({ unit:'pt', format:'a4', orientation:'portrait' });
+  const p = previewData();
+  const GRID = { font:'helvetica', fontSize:8, cellPadding:3, lineColor:[0,0,0], lineWidth:0.5,
+                 textColor:[0,0,0], valign:'middle', overflow:'linebreak' };
+  const HEAD = { fillColor:[255,255,255], textColor:[0,0,0], fontStyle:'bold', halign:'center',
+                 lineColor:[0,0,0], lineWidth:0.5 };
 
-  function head(title){
-    doc.setFont('helvetica','bold'); doc.setFontSize(13);
-    doc.text('ESTIMATE', W/2, 48, {align:'center'});
+  /* ---- centered title above a sheet ---- */
+  function sheetTitle(title, W, M){
+    const y0 = 46;
+    doc.setFont('helvetica','bold'); doc.setFontSize(9);
+    const nm = doc.splitTextToSize('Name of Work : - ' + p.name, W - 2*M);
+    doc.text(nm, W/2, y0, {align:'center'});
+    const y1 = y0 + nm.length*11 + 6;
+    doc.setFontSize(14); doc.text(title, W/2, y1, {align:'center'});
+    return y1 + 14;
+  }
+  function signature(y, xCenter){
     doc.setFont('helvetica','normal'); doc.setFontSize(9);
-    doc.text(office.div, W/2, 62, {align:'center'});
-    doc.setLineWidth(2);   doc.line(M, 70, W-M, 70);
-    doc.setLineWidth(0.5); doc.line(M, 74, W-M, 74);
-    doc.setFont('helvetica','bold'); doc.setFontSize(10);
-    doc.text(title, W/2, 90, {align:'center'});
-    doc.setFont('helvetica','bold'); doc.setFontSize(8);
-    const t = doc.splitTextToSize('Name of Work :- ' + p.name, W - 2*M);
-    doc.text(t, M, 106);
-    doc.setFont('helvetica','normal');
-    return 106 + t.length*10 + 8;
-  }
-  function sign(y){
-    const H = doc.internal.pageSize.getHeight();
-    if(y > H - 66) return;
-    const x = W * 0.72;
-    doc.setFontSize(9);
-    doc.text('Deputy Executive Engineer', x, y, {align:'center'});
-    doc.text('R & B Sub Division,', x, y+12, {align:'center'});
-    doc.text('Dahod.', x, y+24, {align:'center'});
+    doc.text('Deputy Executive Engineer', xCenter, y,      {align:'center'});
+    doc.text('R & B Sub Division,',        xCenter, y + 12, {align:'center'});
+    doc.text('Dahod.',                     xCenter, y + 24, {align:'center'});
   }
 
-  // FACE
-  let y = head('FACE');
-  doc.autoTable({ startY:y, theme:'grid', styles:{font:'helvetica', fontSize:9, cellPadding:4},
-    columnStyles:{ 0:{cellWidth:190, fontStyle:'bold'} },
-    body:[ ['Division', office.div], ['Sub - Division', office.sub], ['Service Head', 'R & B'],
-           ['Amount (Rs.)', fmt(p.t.say)], ['Administratively approved under No.', ''],
-           ['Technically sanctioned under No.', ''], ['Estimate prepared by', est.prepBy],
-           ['Estimate checked by', est.chkBy] ] });
-  y = doc.lastAutoTable.finalY + 18;
-  doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.text('GENERAL DESCRIPTION', M, y);
-  doc.setFont('helvetica','normal'); doc.setFontSize(8);
-  doc.text(doc.splitTextToSize(office.desc, W - 2*M), M, y + 14);
+  /* ================= FACE (portrait, text only — no grid, like Excel) ================= */
+  let W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight(), M = 46;
+  doc.setFont('helvetica','bold'); doc.setFontSize(18);
+  doc.text('ESTIMATE', W/2, 60, {align:'center'});
+  let y = 92; const lx = M + 6, cx = M + 150, vx = M + 165, lh = 20;
+  doc.setFontSize(11);
+  [['Division', office.div], ['Sub - Division', office.sub], ['Fund Head',''],
+   ['Major Head',''], ['Minor Head',''], ['Service Head','R & B'], ['Department Head','']]
+   .forEach(([lbl,val]) => {
+     doc.setFont('helvetica','normal');
+     doc.text(lbl, lx, y); doc.text(':', cx, y);
+     if(val) doc.text(String(val), vx, y);
+     y += lh;
+   });
+  y += 6;
+  doc.setFont('helvetica','normal'); doc.setFontSize(10);
+  const framed = doc.splitTextToSize('        ' + FRAMED, W - 2*M);
+  doc.text(framed, M, y, {maxWidth:W - 2*M, align:'justify'}); y += framed.length*13 + 8;
+  doc.setFont('helvetica','bold'); doc.setFontSize(11);
+  const nmF = doc.splitTextToSize('Name of Work : - ' + p.name, W - 2*M);
+  doc.text(nmF, W/2, y, {align:'center'}); y += nmF.length*14 + 6;
+  doc.setFontSize(12); doc.text('Rs. ' + fmt0(p.t.say), W/2, y, {align:'center'}); y += 24;
+  doc.setFont('helvetica','normal'); doc.setFontSize(11);
+  doc.text('Administrtively approved under No.', lx, y); y += lh;
+  doc.text('Technically sanctioned under No.',   lx, y); y += lh;
+  doc.text('Estimate prepared by', lx, y); doc.text(':', cx, y); if(est.prepBy) doc.text(String(est.prepBy), vx, y); y += lh;
+  doc.text('Estimate checked by',  lx, y); doc.text(':', cx, y); if(est.chkBy)  doc.text(String(est.chkBy),  vx, y); y += lh;
+  doc.text('Call or Authority', lx, y); y += lh + 8;
+  doc.setFont('helvetica','bold'); doc.text('GENERAL DESCRIPTION', W/2, y, {align:'center'}); y += 16;
+  doc.setFont('helvetica','normal'); doc.setFontSize(10);
+  const gd = doc.splitTextToSize('        ' + office.desc, W - 2*M);
+  doc.text(gd, M, y, {maxWidth:W - 2*M, align:'justify'});
 
-  // ABSTRACT
-  doc.addPage(); y = head('ABSTRACT');
-  doc.autoTable({ startY:y, theme:'grid',
+  /* ================= abst. (portrait, gridded) ================= */
+  doc.addPage('a4','portrait');
+  W = doc.internal.pageSize.getWidth(); M = 40;
+  y = sheetTitle('ABSTRACT', W, M);
+
+  const abody = [];
+  abody.push(['1','2','3','4','5','6'].map(v => ({ content:v, styles:{halign:'center'} })));
+  p.lines.forEach(l => {
+    abody.push([
+      { content:String(l.itemNo), rowSpan:5, styles:{halign:'center', valign:'middle'} },
+      { content:fmt(l.say),       styles:{halign:'center'} },
+      { content:l.desc, rowSpan:3, styles:{halign:'left', valign:'top'} },
+      { content:fmt(n(l.rate)), rowSpan:3, styles:{halign:'center', valign:'middle'} },
+      { content:l.unit, rowSpan:5, styles:{halign:'center', valign:'middle'} },
+      { content:fmt(l.amount), rowSpan:5, styles:{halign:'right', valign:'middle'} }
+    ]);
+    abody.push([ { content:l.unit, rowSpan:4, styles:{halign:'center', valign:'middle'} } ]);
+    abody.push([]);
+    abody.push([ { content:'L.C. included in approved rate', styles:{halign:'center'} },
+                 { content:fmt(n(est.lc)), styles:{halign:'center'} } ]);
+    abody.push([ { content:'Approved Rate no ' + (l.appRateNo || l.itemNo), styles:{halign:'center'} },
+                 { content:fmt(n(l.rate)), styles:{halign:'center'} } ]);
+  });
+  const B = fs => ({ fontStyle:'bold' , halign:'right', ...fs });
+  abody.push([ { content:'Total', colSpan:5, styles:B() }, { content:fmt(p.t.total), styles:B() } ]);
+  abody.push([ { content:'', colSpan:3, styles:{} }, { content:est.qc + ' % Q C', colSpan:2, styles:B() }, { content:fmt(p.t.qc), styles:B() } ]);
+  abody.push([ { content:'', colSpan:4, styles:{} }, { content:'Total', styles:B() }, { content:fmt(p.t.grand), styles:B() } ]);
+  abody.push([ { content:'Say', colSpan:5, styles:B() }, { content:fmt0(p.t.say), styles:B() } ]);
+
+  doc.autoTable({
+    startY:y, margin:{left:M, right:M}, theme:'grid',
     head:[['Item No.','Qty. & Unit','Item of Work','Rate','Per','Amount']],
-    body: p.lines.map(l => [l.itemNo, fmt(l.say) + ' ' + l.unit, l.desc, fmt(n(l.rate)), l.unit, fmt(l.amount)]),
-    foot: [ ['','','','','Total', fmt(p.t.total)], ['','','','', est.qc + ' % Q C', fmt(p.t.qc)],
-            ['','','','','Total', fmt(p.t.grand)], ['','','','','Say', fmt0(p.t.say)] ],
-    styles:{font:'helvetica', fontSize:7, cellPadding:3, valign:'middle', overflow:'linebreak'},
-    headStyles:{fillColor:[18,58,94], textColor:255, fontSize:8, halign:'center'},
-    footStyles:{fillColor:[238,243,248], textColor:20, fontStyle:'bold', halign:'right'},
-    columnStyles:{ 0:{cellWidth:36, halign:'center'}, 1:{cellWidth:54, halign:'right'},
-                   3:{cellWidth:46, halign:'right'}, 4:{cellWidth:30, halign:'center'},
-                   5:{cellWidth:64, halign:'right'} } });
-  sign(doc.lastAutoTable.finalY + 40);
+    body:abody, styles:GRID, headStyles:HEAD,
+    columnStyles:{ 0:{cellWidth:40, halign:'center'}, 1:{cellWidth:58, halign:'center'},
+                   2:{cellWidth:235}, 3:{cellWidth:52, halign:'center'},
+                   4:{cellWidth:38, halign:'center'}, 5:{cellWidth:92, halign:'right'} }
+  });
+  signature(doc.lastAutoTable.finalY + 44, M + 40 + 58 + 235/2);
 
-  // MEASUREMENT
-  doc.addPage(); y = head('MEASUREMENT');
+  /* ================= MES (landscape, gridded) ================= */
+  doc.addPage('a4','landscape');
+  W = doc.internal.pageSize.getWidth(); M = 30;
+  y = sheetTitle('MEASUREMENT', W, M);
+
   p.lines.forEach(l => {
     const kind = unitKind(l.unit), fl = FIELDS[kind];
-    if(y > doc.internal.pageSize.getHeight() - 140){ doc.addPage(); y = head('MEASUREMENT'); }
-    doc.setFont('helvetica','bold'); doc.setFontSize(8); doc.text('Item No. ' + l.itemNo, M, y); y += 11;
-    doc.setFont('helvetica','normal'); doc.setFontSize(7);
-    const d = doc.splitTextToSize(l.desc, W - 2*M); doc.text(d, M, y); y += d.length*8 + 6;
-    doc.autoTable({ startY:y, theme:'grid',
-      head:[['Chainage', ...fl.map(k => FLABEL[k]), 'Qty', 'Unit']],
-      body: l.rows.map(r => [r.ch, ...fl.map(k => r[k] === '' ? '' : n(r[k])), fmt(rowQty(r, kind)), l.unit]),
-      foot: [ ['Total', ...fl.map(()=>''), fmt(l.qty), l.unit], ['Say', ...fl.map(()=>''), fmt(l.say), l.unit] ],
-      styles:{font:'helvetica', fontSize:7.5, cellPadding:3, halign:'center'},
-      headStyles:{fillColor:[18,58,94], textColor:255},
-      footStyles:{fillColor:[238,243,248], textColor:20, fontStyle:'bold'},
-      columnStyles:{ 0:{cellWidth:140, halign:'left'} } });
+    if(y > doc.internal.pageSize.getHeight() - 120){ doc.addPage('a4','landscape'); y = sheetTitle('MEASUREMENT', W, M); }
+    doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.text('Item No. ' + l.itemNo, M, y); y += 12;
+    doc.setFont('helvetica','normal'); doc.setFontSize(8);
+    const d = doc.splitTextToSize(l.desc, W - 2*M); doc.text(d, M, y, {maxWidth:W - 2*M, align:'justify'}); y += d.length*9 + 6;
+
+    // build columns: Chainage | (field | x)... | Qty | Unit
+    const cols = [{t:'chain'}];
+    fl.forEach((k,i) => { cols.push({t:'field', k}); if(i < fl.length - 1) cols.push({t:'x'}); });
+    cols.push({t:'qty'}); cols.push({t:'unit'});
+    const header = cols.map(c => c.t==='chain'?'Chainage':c.t==='field'?FLABEL[c.k]:c.t==='x'?'':c.t==='qty'?'Qty':'Unit');
+    const preQty = cols.length - 2;
+
+    const body = l.rows.map(row => cols.map(c => {
+      if(c.t==='chain') return { content:row.ch || '', styles:{halign:'left'} };
+      if(c.t==='field') return { content:row[c.k]===''?'':String(n(row[c.k])), styles:{halign:'center'} };
+      if(c.t==='x')     return { content:'x', styles:{halign:'center'} };
+      if(c.t==='qty')   return { content:fmt(rowQty(row, kind)), styles:{halign:'center'} };
+      return { content:l.unit, styles:{halign:'center'} };
+    }));
+    body.push([ { content:'Total', colSpan:preQty, styles:{halign:'right', fontStyle:'bold'} },
+                { content:fmt(l.qty), styles:{halign:'center', fontStyle:'bold'} },
+                { content:l.unit, styles:{halign:'center', fontStyle:'bold'} } ]);
+    body.push([ { content:'Say', colSpan:preQty, styles:{halign:'right', fontStyle:'bold'} },
+                { content:fmt(l.say), styles:{halign:'center', fontStyle:'bold'} },
+                { content:l.unit, styles:{halign:'center', fontStyle:'bold'} } ]);
+
+    const usable = W - 2*M, xW = 14, qtyW = 72, unitW = 52, chainW = 150;
+    const fieldW = (usable - chainW - qtyW - unitW - xW*(fl.length-1) - 1) / fl.length;
+    const colStyles = {};
+    cols.forEach((c,i) => colStyles[i] = { cellWidth:
+      c.t==='chain'?chainW : c.t==='x'?xW : c.t==='qty'?qtyW : c.t==='unit'?unitW : fieldW });
+
+    doc.autoTable({ startY:y, margin:{left:M, right:M}, theme:'grid',
+      head:[header], body, styles:GRID, headStyles:HEAD, columnStyles:colStyles });
     y = doc.lastAutoTable.finalY + 16;
   });
-  sign(y + 20);
+  signature(y + 12, W - M - 120);
+
   doc.save(safeName() + '.pdf');
 };
 
 $('#btnNew').onclick = () => {
   if(!confirm('Naya estimate shuru karein? Abhi ka data clear ho jayega.')) return;
-  est = { road:'', roadKm:'', workDesc:'', wcFrom:'', wcTo:'', prepBy:est.prepBy, chkBy:est.chkBy, qc:1, lc:0, lines:[] };
+  est = { mode:est.mode, road:'', roadKm:'', workDesc:'', wcFrom:'', wcTo:'', prepBy:est.prepBy, chkBy:est.chkBy, qc:1, lc:0, lines:[] };
   save();
   ['roadInput','roadKm','workDesc','wcFrom','wcTo'].forEach(id => $('#'+id).value = '');
   refreshWorkName(); renderItemBlocks(); renderPreview();
@@ -676,4 +862,9 @@ $('#btnNew').onclick = () => {
 
 /* ------------------------------- init ------------------------------- */
 store.set('rnb_roads', roads); store.set('rnb_items', items);
-refreshHints(); refreshWorkName(); renderItemBlocks(); renderCatChips();
+store.set('rnb_buildings', buildings); store.set('rnb_workdescs', workDescs); store.set('rnb_people', people);
+$('#workDesc').value = est.workDesc || '';
+$('#prepBy').value = est.prepBy || '';
+$('#chkBy').value = est.chkBy || '';
+refreshHints(); refreshWorkName(); renderItemBlocks(); applyModeUI();
+if(!est.mode) openGate();
