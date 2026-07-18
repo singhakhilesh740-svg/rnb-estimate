@@ -366,13 +366,14 @@ button.btn.back{padding:7px 12px;font-size:11px}
 
       <div id="sorView" hidden>
         <div class="card">
-          <h2>SOR — Schedule of Rates</h2>
+          <h2>SOR — Schedule of Rates 2024-25, Dahod</h2>
           <div class="row-actions">
             <input type="file" id="fileSor" accept=".xls,.xlsx,.csv" style="max-width:300px">
             <button class="btn ghost" id="btnAddSor">Add SOR item</button>
             <button class="btn danger" id="btnClearSor">Clear all</button>
           </div>
-          <p class="hint">SOR Excel file yaha upload karo — columns map karke items import ho jayenge. Baad me estimate me use kar sakte ho.</p>
+          <div id="sorCatChips" class="chips" style="margin-top:10px"></div>
+          <p class="hint">SOR 2024-25 Dahod: 1,301 items pre-loaded. Category filter karke search karo.</p>
           <div id="sorTable" style="margin-top:14px"></div>
         </div>
       </div>

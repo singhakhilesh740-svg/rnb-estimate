@@ -17,7 +17,7 @@ const FRAMED = 'Estimate framed in the office of the Executive Engineer, Dahod (
 
 let roads     = store.get('rnb_roads', null)     || ROADS_SEED.slice();
 let items     = store.get('rnb_items', null)     || ITEMS_SEED.slice();
-let sorItems  = store.get('rnb_sor_items', null) || [];
+let sorItems  = store.get('rnb_sor_items', null) || (typeof SOR_SEED !== 'undefined' ? SOR_SEED.map(x=>({...x})) : []);
 let buildings = store.get('rnb_buildings', null) || (typeof BUILDINGS_SEED !== 'undefined' ? BUILDINGS_SEED.slice() : []);
 let workDescs = store.get('rnb_workdescs', null) || (typeof WORKDESCS_SEED !== 'undefined' ? WORKDESCS_SEED.map(x=>({...x})) : []);
 let people    = store.get('rnb_people', null)    || (typeof PEOPLE_SEED !== 'undefined' ? PEOPLE_SEED.slice() : []);
@@ -430,7 +430,7 @@ $('#mapOk').onclick = () => {
   if(!out.length){ toast('Valid data nahi mila.'); return; }
   if(pendingKind === 'roads'){ roads = roads.concat(out); store.set('rnb_roads', roads); renderRoadsTable(); }
   else if(pendingKind === 'buildings'){ buildings = buildings.concat(out); store.set('rnb_buildings', buildings); renderBuildingsTable(); }
-  else if(pendingKind === 'sor'){ sorItems = sorItems.concat(out); store.set('rnb_sor_items', sorItems); renderSorTable(); }
+  else if(pendingKind === 'sor'){ sorItems = sorItems.concat(out); store.set('rnb_sor_items', sorItems); renderSorCatChips(); renderSorTable(); }
   else { items = items.concat(out); store.set('rnb_items', items); renderItemsTable(); renderCatChips(); }
   $('#mapModal').style.display = 'none';
   toast(`${out.length} ${pendingKind} import ho gaye.`); refreshHints();
@@ -441,30 +441,45 @@ $('#fileItems').onchange = e => { if(e.target.files[0]) readSheet(e.target.files
 $('#fileSor').onchange = e => { if(e.target.files[0]) readSheet(e.target.files[0], s => s && openMapper('sor', s)); e.target.value = ''; };
 
 /* ------------------------------- SOR items table ------------------------------- */
+let sorCatFilter = '';
+
+function renderSorCatChips(){
+  const box = $('#sorCatChips');
+  if(!box) return;
+  const cats = [...new Set(sorItems.map(i => i.cat).filter(Boolean))].sort();
+  box.innerHTML = cats.map(c =>
+    `<button class="chip" data-scat="${esc(c)}" aria-pressed="${sorCatFilter===c}">${esc(c.replace(/^CH-\d+[A-Z]?: /,''))}</button>`
+  ).join('') + (sorCatFilter ? `<button class="chip" data-scat="" aria-pressed="false">Show all</button>` : '');
+  box.querySelectorAll('.chip').forEach(b => b.onclick = () => {
+    sorCatFilter = (b.dataset.scat === sorCatFilter) ? '' : b.dataset.scat;
+    renderSorCatChips(); renderSorTable();
+  });
+}
 function renderSorTable(){
   const box = $('#sorTable');
   if(!box) return;
-  if(!sorItems.length){ box.innerHTML = '<div class="empty">SOR list khali hai — Excel upload karo ya “Add SOR item” dabao.</div>'; return; }
-  box.innerHTML = `<div class="scroll"><table class="tbl" style="min-width:760px">
-      <tr><th style="width:7%">SOR No.</th><th style="width:50%">Item of work</th><th style="width:12%">Rate</th><th style="width:9%">Unit</th><th style="width:16%">Group</th><th></th></tr>` +
-    sorItems.map((it,i)=>`<tr>
+  const view = sorItems.map((it,i) => ({it,i})).filter(x => !sorCatFilter || (x.it.cat||'') === sorCatFilter);
+  if(!view.length){ box.innerHTML = '<div class="empty">SOR list khali hai — category select karo ya "Add SOR item" dabao.</div>'; return; }
+  box.innerHTML = `<div class="scroll"><table class="tbl" style="min-width:800px">
+      <tr><th style="width:7%">SOR No.</th><th style="width:48%">Item of work</th><th style="width:10%">Rate</th><th style="width:8%">Unit</th><th style="width:20%">Chapter</th><th></th></tr>` +
+    view.map(x=>{ const it=x.it, i=x.i; return `<tr>
       <td><input class="mono" data-si="${i}" data-sk="itemNo" value="${esc(it.itemNo||'')}"></td>
       <td><textarea rows="2" data-si="${i}" data-sk="desc">${esc(it.desc)}</textarea></td>
-      <td><input class="num mono" type="number" step="any" data-si="${i}" data-sk="rate" value="${it.rate ?? ''}"></td>
+      <td><input class="num mono" type="number" step="any" data-si="${i}" data-sk="rate" value="${it.rate??''}"></td>
       <td><input class="mono" data-si="${i}" data-sk="unit" value="${esc(it.unit||'')}"></td>
       <td><input data-si="${i}" data-sk="cat" value="${esc(it.cat||'')}"></td>
-      <td><button class="btn danger" style="padding:4px 8px" data-sdel="${i}">×</button></td></tr>`).join('') +
-    `</table></div><p class="hint">${sorItems.length} SOR items.</p>`;
+      <td><button class="btn danger" style="padding:4px 8px" data-sdel="${i}">×</button></td></tr>`;}).join('') +
+    `</table></div><p class="hint">${view.length}${sorCatFilter?' (filtered)':''} of ${sorItems.length} SOR items.</p>`;
   box.querySelectorAll('input,textarea').forEach(i => i.oninput = e => {
     sorItems[+e.target.dataset.si][e.target.dataset.sk] = e.target.value; store.set('rnb_sor_items', sorItems); });
   box.querySelectorAll('[data-sdel]').forEach(b => b.onclick = () => {
-    sorItems.splice(+b.dataset.sdel,1); store.set('rnb_sor_items', sorItems); renderSorTable(); });
+    sorItems.splice(+b.dataset.sdel,1); store.set('rnb_sor_items', sorItems); renderSorTable(); renderSorCatChips(); });
 }
 $('#btnAddSor').onclick = () => { sorItems.unshift({itemNo:'', desc:'', rate:'', unit:'MT', cat:''}); store.set('rnb_sor_items', sorItems); renderSorTable(); };
 $('#btnClearSor').onclick = () => {
   if(!sorItems.length) return;
   if(!confirm('Saare SOR items delete karne hain?')) return;
-  sorItems = []; store.set('rnb_sor_items', sorItems); renderSorTable(); toast('SOR list clear ho gayi.');
+  sorItems = []; store.set('rnb_sor_items', sorItems); sorCatFilter=''; renderSorCatChips(); renderSorTable(); toast('SOR list clear ho gayi.');
 };
 
 /* ------------------------------- Data-tab navigation ------------------------------- */
@@ -503,7 +518,7 @@ function showRateSub(sub){
     if(t) t.textContent = (dataItemsCat || 'Items') + ' — Approved Rate List';
     renderItemsTable();
   }
-  if(sub === 'sor') renderSorTable();
+  if(sub === 'sor'){ renderSorCatChips(); renderSorTable(); }
   window.scrollTo(0,0);
 }
 $$('#dataGrid .data-tile').forEach(b => b.onclick = () => showDataView(b.dataset.nav));
