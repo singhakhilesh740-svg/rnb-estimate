@@ -38,9 +38,14 @@ let workDescs = store.get('rnb_workdescs', null) || (typeof WORKDESCS_SEED !== '
 let people    = store.get('rnb_people', null)    || (typeof PEOPLE_SEED !== 'undefined' ? PEOPLE_SEED.slice() : []);
 let office    = store.get('rnb_office', null)     || {...OFFICE_DEFAULT};
 let est       = store.get('rnb_est', null) ||
-             { mode:'', rateSource:'arc', road:'', roadKm:'', workDesc:'', wcFrom:'', wcTo:'', prepBy:'', chkBy:'', qc:1, lc:0, lines:[] };
+             { mode:'', rateSource:'', road:'', roadKm:'', workDesc:'', wcFrom:'', wcTo:'', prepBy:'', chkBy:'', qc:1, lc:0, lines:[] };
 if(est.mode === undefined) est.mode = '';
-if(est.rateSource === undefined) est.rateSource = 'arc';
+if(est.rateSource === undefined) est.rateSource = '';
+/* one-time: users who set a mode before the Based→Mode wizard existed get asked once */
+if(!store.get('rnb_wizard_seen', false)){
+  store.set('rnb_wizard_seen', true);
+  est.rateSource = '';   // clear so the gate opens at the Based step on this load
+}
 let catFilter = '';
 let dataItemsCat = '';   // Data tab: which ARC category is currently shown in items table
 
@@ -1120,11 +1125,13 @@ $('#btnPdf').onclick = () => {
 
 $('#btnNew').onclick = () => {
   if(!confirm('Naya estimate shuru karein? Abhi ka data clear ho jayega.')) return;
-  est = { mode:est.mode, road:'', roadKm:'', workDesc:'', wcFrom:'', wcTo:'', prepBy:est.prepBy, chkBy:est.chkBy, qc:1, lc:0, lines:[] };
+  est = { mode:'', rateSource:'', road:'', roadKm:'', workDesc:'', wcFrom:'', wcTo:'', prepBy:est.prepBy, chkBy:est.chkBy, qc:1, lc:0, lines:[] };
   save();
-  ['roadInput','roadKm','workDesc','wcFrom','wcTo'].forEach(id => $('#'+id).value = '');
+  ['roadInput','roadKm','workDesc','wcFrom','wcTo'].forEach(id => { const el = $('#'+id); if(el) el.value = ''; });
+  const wdf = $('#workDescFree'); if(wdf) wdf.value = '';
   refreshWorkName(); renderItemBlocks(); renderPreview();
-  $$('nav.tabs button')[0].click(); toast('Naya estimate ready.');
+  $$('nav.tabs button')[0].click();
+  openGate('based');   // fresh estimate → ask Based, then Road/Building
 };
 
 /* ------------------------------- init ------------------------------- */
@@ -1134,4 +1141,4 @@ $('#workDesc').value = est.workDesc || '';
 $('#prepBy').value = est.prepBy || '';
 $('#chkBy').value = est.chkBy || '';
 refreshHints(); refreshWorkName(); renderItemBlocks(); applyModeUI();
-if(!est.mode) openGate();
+if(!est.mode || !est.rateSource) openGate('based');
