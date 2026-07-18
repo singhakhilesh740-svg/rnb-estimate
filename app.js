@@ -872,7 +872,7 @@ async function buildWorkbook(){
   });
   f.mergeCells('B9:F9');   put(f, 'B9', '                            ' + FRAMED, ARIAL(11), JUST);
   f.mergeCells('B10:F10'); put(f, 'B10', NAME, ARIAL(12, true), CTR);
-  f.mergeCells('C11:E11'); put(f, 'C11', p.t.say, ARIAL(12, true), CTR, null, RS_FMT);
+  f.mergeCells('B11:F11'); put(f, 'B11', p.t.say, ARIAL(12, true), CTR, null, RS_FMT);
   put(f, 'B12', 'Administrtively approved under No.', ARIAL(11), {vertical:'top'});
   put(f, 'B13', 'Technically sanctioned under No.',   ARIAL(11), {vertical:'top'});
   put(f, 'B14', 'Estimate prepared by    ', ARIAL(11), {vertical:'top'});
@@ -911,7 +911,12 @@ async function buildWorkbook(){
     put(a, 'D'+(top+3), n(est.lc), ARIAL(12), CTR, {left:THIN, right:THIN}, '0.00');
     put(a, 'C'+(top+4), 'Approved Rate no ' + (l.appRateNo || l.itemNo), ARIAL(12), CTR, {left:THIN, right:THIN, bottom:THIN});
     put(a, 'D'+(top+4), n(l.rate), ARIAL(12), CTR, {left:THIN, right:THIN, bottom:THIN}, '0.00');
-    for(let i = top; i <= bot; i++) a.getRow(i).height = (i === top + 2) ? 219.75 : 20.1;
+    // description merges C{top}:C{top+2} (3 rows). top & top+1 stay ~20 (hold say/unit),
+    // the 3rd row absorbs the remaining text height so there's no big blank gap.
+    const descLines = Math.max(1, Math.ceil((l.desc || '').length / 42));
+    const descTotal = descLines * 15.6 + 6;               // total height the text needs
+    const thirdRowH = Math.min(260, Math.max(14, descTotal - 40.2));  // minus the two 20.1 rows
+    for(let i = top; i <= bot; i++) a.getRow(i).height = (i === top + 2) ? thirdRowH : 20.1;
     r = bot + 1;
   });
   const rTot = r, rQc = r + 1, rGrand = r + 2, rSay = r + 4;
@@ -928,7 +933,7 @@ async function buildWorkbook(){
   for(let i = rTot; i <= rSay; i++) a.getRow(i).height = 14.25;
   const sg = rSay + 8;
   ['Deputy Executive Engineer','R&B Sub Division','Dahod']
-    .forEach((t,i) => put(a, 'C'+(sg+i), t, ARIAL(12), CTRC));
+    .forEach((t,i) => { a.mergeCells(`D${sg+i}:F${sg+i}`); put(a, 'D'+(sg+i), t, ARIAL(12), CTRC); });
 
   /* ---------- MES ---------- */
   const m = wb.addWorksheet('MES ', { pageSetup:{ paperSize:9, orientation:'landscape', fitToPage:true, fitToWidth:1, fitToHeight:0 } });
@@ -1102,7 +1107,7 @@ $('#btnPdf').onclick = () => {
                    2:{cellWidth:235}, 3:{cellWidth:52, halign:'center'},
                    4:{cellWidth:38, halign:'center'}, 5:{cellWidth:92, halign:'right'} }
   });
-  signature(doc.lastAutoTable.finalY + 44, M + 40 + 58 + 235/2);
+  signature(doc.lastAutoTable.finalY + 44, M + 390);   // right side (under Rate/Per/Amount block)
 
   /* ================= MES (landscape, gridded) ================= */
   doc.addPage('a4','landscape');
