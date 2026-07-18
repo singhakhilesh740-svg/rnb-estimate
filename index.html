@@ -205,6 +205,7 @@ button.btn.back{padding:7px 12px;font-size:11px}
   <nav class="tabs" role="tablist">
     <button role="tab" data-tab="est" aria-selected="true">Estimate</button>
     <button role="tab" data-tab="prev" aria-selected="false">Preview &amp; Export</button>
+    <button role="tab" data-tab="saved" aria-selected="false">Saved</button>
     <button role="tab" data-tab="data" aria-selected="false">Data</button>
   </nav>
 </header>
@@ -308,15 +309,29 @@ button.btn.back{padding:7px 12px;font-size:11px}
   <div class="card">
     <h2>Export</h2>
     <div class="row-actions">
-      <button class="btn accent" id="btnXlsx">Download Excel</button>
+      <button class="btn accent" id="btnSave">💾 Save estimate</button>
+      <button class="btn" id="btnXlsx">Download Excel</button>
       <button class="btn" id="btnPdf">Download PDF</button>
       <button class="btn ghost" id="btnNew">New estimate</button>
     </div>
-    <p class="hint">Teen sheets: <b>FACE</b>, <b>abst.</b>, <b>MES</b> — Excel aur PDF dono aapke original file ke exact format me.</p>
+    <p class="hint">Teen sheets: <b>FACE</b>, <b>abst.</b>, <b>MES</b> — Excel aur PDF dono aapke original file ke exact format me. <b>Save</b> se estimate app me store hoga (Saved tab me).</p>
   </div>
   <div class="card">
     <h2>Preview</h2>
     <div id="previewBox" class="sheetprev">—</div>
+  </div>
+</section>
+
+<section id="tab-saved" hidden>
+  <div class="card">
+    <h2>Saved estimates</h2>
+    <div class="row-actions">
+      <input id="savedSearch" placeholder="Search by name / work…" autocomplete="off" style="max-width:320px">
+      <button class="btn ghost" id="btnExportAll">⬇ Backup all (JSON)</button>
+      <input type="file" id="fileImportSaved" accept=".json" style="max-width:240px">
+    </div>
+    <p class="hint">Estimates yahaan app me localStorage me save hote hain. <b>Load</b> = edit karne ke liye kholo · <b>Excel</b> = us estimate ka file download · <b>Backup</b> = sab estimates ek JSON me (dusre device pe le jaane ke liye).</p>
+    <div id="savedTable" style="margin-top:14px"></div>
   </div>
 </section>
 

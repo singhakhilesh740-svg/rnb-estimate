@@ -145,9 +145,10 @@ $$('#rateSrcChips .chip').forEach(b => b.onclick = () => {
 /* ------------------------------- tabs ------------------------------- */
 $$('nav.tabs button').forEach(b => b.onclick = () => {
   $$('nav.tabs button').forEach(x => x.setAttribute('aria-selected', x === b));
-  ['est','prev','data'].forEach(t => $('#tab-'+t).hidden = (t !== b.dataset.tab));
+  ['est','prev','saved','data'].forEach(t => $('#tab-'+t).hidden = (t !== b.dataset.tab));
   if(b.dataset.tab === 'prev') renderPreview();
   if(b.dataset.tab === 'data'){ showDataGrid(); }
+  if(b.dataset.tab === 'saved') renderSavedTable();
   window.scrollTo(0,0);
 });
 
@@ -1156,8 +1157,162 @@ $('#btnPdf').onclick = () => {
   doc.save(safeName() + '.pdf');
 };
 
+/* ------------------------------- saved estimates (localStorage) ------------------------------- */
+let savedEstimates = store.get('rnb_saved', null) || [];
+let currentSavedId = null;   // if the loaded estimate came from a saved record
+
+function persistSaved(){ store.set('rnb_saved', savedEstimates); }
+function estStamp(){ return new Date().toISOString(); }
+function prettyDate(iso){
+  try{ const d = new Date(iso);
+    return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}) + ' ' +
+           d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+  }catch(e){ return iso; }
+}
+
+$('#btnSave').onclick = () => {
+  if(!est.lines.length && !est.road){ toast('Pehle estimate banao, phir save karo.'); return; }
+  const defName = buildWorkName() === '—' ? (est.road || 'Estimate') : buildWorkName();
+  const name = prompt('Estimate ka naam (save ke liye):', currentSavedId
+    ? (savedEstimates.find(s=>s.id===currentSavedId)?.name || defName)
+    : defName);
+  if(name === null) return;   // cancelled
+  const t = totals();
+  const snapshot = JSON.parse(JSON.stringify(est));   // deep copy
+  const nm = (name || defName).trim() || defName;
+
+  if(currentSavedId){
+    // update existing
+    const rec = savedEstimates.find(s => s.id === currentSavedId);
+    if(rec){ rec.name = nm; rec.est = snapshot; rec.updated = estStamp();
+             rec.amount = t.say; rec.workName = buildWorkName(); rec.mode = est.mode; rec.rateSource = est.rateSource;
+             persistSaved(); toast('Estimate update ho gaya: ' + nm); renderSavedTable(); return; }
+  }
+  const id = 'e' + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+  savedEstimates.unshift({
+    id, name: nm, est: snapshot, created: estStamp(), updated: estStamp(),
+    amount: t.say, workName: buildWorkName(), mode: est.mode, rateSource: est.rateSource
+  });
+  currentSavedId = id;
+  persistSaved();
+  toast('Estimate save ho gaya: ' + nm);
+  renderSavedTable();
+};
+
+function loadSaved(id){
+  const rec = savedEstimates.find(s => s.id === id);
+  if(!rec) return;
+  est = JSON.parse(JSON.stringify(rec.est));
+  if(est.mode === undefined) est.mode = '';
+  if(est.rateSource === undefined) est.rateSource = 'arc';
+  currentSavedId = id;
+  save();
+  // repopulate inputs
+  $('#roadInput').value = est.road || '';
+  $('#roadKm').value = est.roadKm || '';
+  $('#workDesc').value = est.workDesc || '';
+  const wdf = $('#workDescFree'); if(wdf) wdf.value = est.workDesc || '';
+  $('#wcFrom').value = est.wcFrom || '';
+  $('#wcTo').value = est.wcTo || '';
+  $('#prepBy').value = est.prepBy || '';
+  $('#chkBy').value = est.chkBy || '';
+  applyModeUI(); refreshHints(); refreshWorkName(); renderItemBlocks(); renderPreview();
+  $$('nav.tabs button')[0].click();
+  toast('Loaded: ' + rec.name);
+}
+
+function deleteSaved(id){
+  const rec = savedEstimates.find(s => s.id === id);
+  if(!rec) return;
+  if(!confirm('Delete "' + rec.name + '"? Wapas nahi aayega.')) return;
+  savedEstimates = savedEstimates.filter(s => s.id !== id);
+  if(currentSavedId === id) currentSavedId = null;
+  persistSaved(); renderSavedTable();
+  toast('Deleted.');
+}
+
+async function downloadSavedExcel(id){
+  const rec = savedEstimates.find(s => s.id === id);
+  if(!rec) return;
+  const prevEst = est, prevId = currentSavedId;
+  est = JSON.parse(JSON.stringify(rec.est));      // temporarily swap in
+  try{
+    const wb = await buildWorkbook();
+    const buf = await wb.xlsx.writeBuffer();
+    const safe = (rec.name || 'Estimate').replace(/[^\w\- ]+/g,'').replace(/\s+/g,'_').slice(0,55);
+    download(new Blob([buf], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}), safe + '.xlsx');
+  }catch(e){ toast('Excel banane me dikkat aayi.'); }
+  finally{ est = prevEst; currentSavedId = prevId; }
+}
+
+let savedSearchQ = '';
+function renderSavedTable(){
+  const box = $('#savedTable');
+  if(!box) return;
+  const q = savedSearchQ.trim().toLowerCase();
+  const view = savedEstimates.filter(s =>
+    !q || (s.name||'').toLowerCase().includes(q) || (s.workName||'').toLowerCase().includes(q));
+  if(!savedEstimates.length){
+    box.innerHTML = '<div class="empty">Abhi koi estimate save nahi. Preview & Export tab me "Save estimate" dabao.</div>';
+    return;
+  }
+  if(!view.length){ box.innerHTML = '<div class="empty">Search se kuch match nahi hua.</div>'; return; }
+  box.innerHTML = `<div class="scroll"><table class="tbl" style="min-width:820px"><tr>
+      <th style="width:34%">Name</th><th style="width:10%">Type</th><th style="width:13%">Amount ₹</th>
+      <th style="width:18%">Saved</th><th style="width:25%">Actions</th></tr>` +
+    view.map(s => {
+      const cur = s.id === currentSavedId;
+      return `<tr${cur?' style="background:#fff3e0"':''}>
+        <td><b>${esc(s.name)}</b>${cur?' <span class="pill" style="padding:1px 6px">current</span>':''}
+            <div style="font-size:10px;color:var(--ink-2)">${esc((s.workName||'').slice(0,80))}</div></td>
+        <td style="font-size:11px">${esc((s.mode||'').slice(0,4))}${s.rateSource?' / '+esc(s.rateSource.toUpperCase()):''}</td>
+        <td class="num mono">${fmt0(s.amount||0)}</td>
+        <td style="font-size:11px">${esc(prettyDate(s.updated||s.created))}</td>
+        <td>
+          <button class="btn ghost" style="padding:4px 8px" data-load="${s.id}">Load</button>
+          <button class="btn" style="padding:4px 8px" data-xls="${s.id}">Excel</button>
+          <button class="btn danger" style="padding:4px 8px" data-sdel="${s.id}">×</button>
+        </td></tr>`;
+    }).join('') +
+    `</table></div><p class="hint">${view.length}${q?' (filtered)':''} of ${savedEstimates.length} saved.</p>`;
+  box.querySelectorAll('[data-load]').forEach(b => b.onclick = () => loadSaved(b.dataset.load));
+  box.querySelectorAll('[data-xls]').forEach(b => b.onclick = () => downloadSavedExcel(b.dataset.xls));
+  box.querySelectorAll('[data-sdel]').forEach(b => b.onclick = () => deleteSaved(b.dataset.sdel));
+}
+
+$('#savedSearch').oninput = e => { savedSearchQ = e.target.value; renderSavedTable(); };
+
+$('#btnExportAll').onclick = () => {
+  if(!savedEstimates.length){ toast('Kuch save nahi hai.'); return; }
+  const blob = new Blob([JSON.stringify(savedEstimates, null, 2)], {type:'application/json'});
+  download(blob, 'RNB_estimates_backup_' + new Date().toISOString().slice(0,10) + '.json');
+};
+
+$('#fileImportSaved').onchange = e => {
+  const f = e.target.files[0]; e.target.value = '';
+  if(!f) return;
+  const fr = new FileReader();
+  fr.onload = () => {
+    try{
+      const arr = JSON.parse(fr.result);
+      if(!Array.isArray(arr)) throw 0;
+      let added = 0;
+      arr.forEach(rec => {
+        if(rec && rec.id && rec.est){
+          if(!savedEstimates.some(s => s.id === rec.id)){ savedEstimates.push(rec); added++; }
+        }
+      });
+      persistSaved(); renderSavedTable();
+      toast(added + ' estimate import ho gaye.');
+    }catch(err){ toast('Invalid backup file.'); }
+  };
+  fr.readAsText(f);
+};
+
+/* new estimate → clear current-saved link and reset */
 $('#btnNew').onclick = () => {
   if(!confirm('Naya estimate shuru karein? Abhi ka data clear ho jayega.')) return;
+  currentSavedId = null;
   est = { mode:'', rateSource:'', road:'', roadKm:'', workDesc:'', wcFrom:'', wcTo:'', prepBy:est.prepBy, chkBy:est.chkBy, qc:1, lc:0, lines:[] };
   save();
   ['roadInput','roadKm','workDesc','wcFrom','wcTo'].forEach(id => { const el = $('#'+id); if(el) el.value = ''; });
