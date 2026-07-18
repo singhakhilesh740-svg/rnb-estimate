@@ -38,9 +38,14 @@ let workDescs = store.get('rnb_workdescs', null) || (typeof WORKDESCS_SEED !== '
 let people    = store.get('rnb_people', null)    || (typeof PEOPLE_SEED !== 'undefined' ? PEOPLE_SEED.slice() : []);
 let office    = store.get('rnb_office', null)     || {...OFFICE_DEFAULT};
 let est       = store.get('rnb_est', null) ||
-             { mode:'', rateSource:'', road:'', roadKm:'', workDesc:'', wcFrom:'', wcTo:'', prepBy:'', chkBy:'', qc:1, lc:0, lines:[] };
+             { mode:'', rateSource:'', road:'', roadList:[], workDesc:'', prepBy:'', chkBy:'', qc:1, lc:0, lines:[] };
 if(est.mode === undefined) est.mode = '';
 if(est.rateSource === undefined) est.rateSource = '';
+/* migrate old single-road fields → roadList array */
+if(!Array.isArray(est.roadList)) est.roadList = [];
+if(est.roadList.length === 0 && est.mode === 'road' && (est.road || est.roadKm || est.wcFrom || est.wcTo)){
+  est.roadList = [{ name: est.road || '', km: est.roadKm || '', wcFrom: est.wcFrom || '', wcTo: est.wcTo || '' }];
+}
 /* one-time: users who set a mode before the Based→Mode wizard existed get asked once */
 if(!store.get('rnb_wizard_seen', false)){
   store.set('rnb_wizard_seen', true);
@@ -108,9 +113,65 @@ function applyModeUI(){
   $('#buildingsCardTitle').textContent = 'Building list';
   const showRoad = est.mode === 'road';
   $$('.road-only').forEach(el => el.style.display = showRoad ? '' : 'none');
+  $$('.building-only').forEach(el => el.hidden = showRoad);
+  if(showRoad){
+    if(!est.roadList || !est.roadList.length) est.roadList = [{ name:'', km:'', wcFrom:'', wcTo:'' }];
+    renderRoadEntries();
+  }
   applyRateSourceUI();
   renderCatChips();
   refreshWorkName();
+}
+
+/* ---- multi-road entries (road mode) ---- */
+function fillRoadsDatalist(){
+  const dl = $('#roadsDatalist');
+  if(!dl) return;
+  dl.innerHTML = roads.map(r => `<option value="${esc(r.name)}"></option>`).join('');
+}
+function renderRoadEntries(){
+  const box = $('#roadEntries');
+  if(!box) return;
+  fillRoadsDatalist();
+  box.innerHTML = est.roadList.map((r, i) => `
+    <div class="road-entry">
+      <div class="re-head">
+        <span class="re-num">Road ${i + 1}</span>
+        ${est.roadList.length > 1 ? `<button class="btn danger" style="padding:3px 9px" data-rrm="${i}">Remove</button>` : ''}
+      </div>
+      <div class="re-grid">
+        <div>
+          <label style="margin-bottom:3px">Road name</label>
+          <input list="roadsDatalist" data-rk="name" data-ri="${i}" value="${esc(r.name || '')}"
+                 placeholder="Jhalod, Limkheda, SH.62…" autocomplete="off">
+        </div>
+        <div>
+          <label style="margin-bottom:3px">Km</label>
+          <input class="mono" data-rk="km" data-ri="${i}" value="${esc(r.km || '')}" placeholder="0/0-8/700">
+        </div>
+        <div>
+          <label style="margin-bottom:3px">Chainage from</label>
+          <input class="mono" data-rk="wcFrom" data-ri="${i}" value="${esc(r.wcFrom || '')}" placeholder="7/700">
+        </div>
+        <div>
+          <label style="margin-bottom:3px">Chainage to</label>
+          <input class="mono" data-rk="wcTo" data-ri="${i}" value="${esc(r.wcTo || '')}" placeholder="8/00">
+        </div>
+      </div>
+    </div>`).join('');
+  box.querySelectorAll('input[data-rk]').forEach(inp => inp.oninput = e => {
+    const i = +e.target.dataset.ri, k = e.target.dataset.rk;
+    est.roadList[i][k] = e.target.value;
+    // keep est.road in sync with first road (used for filenames / guards)
+    est.road = (est.roadList[0] && est.roadList[0].name) || '';
+    save(); refreshWorkName();
+  });
+  box.querySelectorAll('[data-rrm]').forEach(b => b.onclick = () => {
+    est.roadList.splice(+b.dataset.rrm, 1);
+    if(!est.roadList.length) est.roadList = [{ name:'', km:'', wcFrom:'', wcTo:'' }];
+    est.road = (est.roadList[0] && est.roadList[0].name) || '';
+    save(); renderRoadEntries(); refreshWorkName();
+  });
 }
 
 function applyRateSourceUI(){
@@ -234,14 +295,22 @@ const blankRow = () => ({ ch:'', nos:'', len:'', wid:'', thk:'', den:'' });
 
 /* ------------------------------- name of work ------------------------------- */
 function buildWorkName(){
-  if(!est.road) return '—';
   if(est.mode === 'building'){
+    if(!est.road) return '—';
     return String(est.road).trim();
   }
-  const km = est.roadKm ? ` Km.${est.roadKm}` : '';
-  const wc = (est.wcFrom || est.wcTo) ? `(working chainage ${est.wcFrom}-${est.wcTo})` : '';
-  const wd = est.workDesc ? `(${est.workDesc})` : '';
-  return `C.R. to ${est.road}${km}${wc}${wd}`;
+  // road mode — one or more roads, each with its own km + working chainage
+  const list = (est.roadList || []).filter(r => (r.name || '').trim());
+  if(!list.length) return '—';
+  const wd = est.workDesc ? ` (${est.workDesc})` : '';
+  const part = r => {
+    const km = r.km ? ` Km.${r.km}` : '';
+    const wc = (r.wcFrom || r.wcTo) ? `(working chainage ${r.wcFrom || ''}-${r.wcTo || ''})` : '';
+    return `${r.name.trim()}${km}${wc}`;
+  };
+  if(list.length === 1) return `C.R. to ${part(list[0])}${wd}`;
+  const joined = list.map((r,i) => `(${i+1}) ${part(r)}`).join('  ');
+  return `C.R. to ${joined}${wd}`;
 }
 const refreshWorkName = () => $('#workName').textContent = buildWorkName();
 
@@ -712,12 +781,13 @@ $('#btnResetData').onclick = () => {
 };
 
 /* ------------------------------- bind form ------------------------------- */
-$('#roadKm').value = est.roadKm || ''; $('#roadKm').oninput = () => { est.roadKm = $('#roadKm').value; save(); refreshWorkName(); };
-$('#wcFrom').value = est.wcFrom || ''; $('#wcFrom').oninput = () => { est.wcFrom = $('#wcFrom').value; save(); refreshWorkName(); };
-$('#wcTo').value   = est.wcTo   || ''; $('#wcTo').oninput   = () => { est.wcTo   = $('#wcTo').value;   save(); refreshWorkName(); };
 $('#qcPct').value = est.qc; $('#qcPct').oninput = e => { est.qc = n(e.target.value); save(); refreshTotals(); };
 $('#lcRate').value = est.lc; $('#lcRate').oninput = e => { est.lc = n(e.target.value); save(); };
 $('#roadInput').value = est.road || '';
+$('#btnAddRoadEntry').onclick = () => {
+  est.roadList.push({ name:'', km:'', wcFrom:'', wcTo:'' });
+  save(); renderRoadEntries(); refreshWorkName();
+};
 
 function bindOffice(sel, key){
   const el = $(sel); el.value = office[key];
@@ -725,15 +795,13 @@ function bindOffice(sel, key){
 }
 bindOffice('#divName','div'); bindOffice('#subDivName','sub'); bindOffice('#genDesc','desc');
 
-/* road / building name combo — dynamic source + free text */
+/* building name combo — dynamic source + free text (building mode) */
 freeText($('#roadInput'), 'road', refreshWorkName);
 makeCombo($('#roadInput'), $('#roadList'),
   () => (MODE[est.mode] ? MODE[est.mode].list() : []).map(r => ({
     label:r.name, meta: r.km ? 'Km ' + r.km : '', search: r.name + ' ' + (r.km||''), raw:r })),
   d => { est.road = d.raw.name;
-         if(d.raw.km){ est.roadKm = d.raw.km; $('#roadKm').value = d.raw.km; }
-         $('#roadInput').value = d.raw.name; save(); refreshWorkName();
-         if(est.mode === 'road') $('#wcFrom').focus(); });
+         $('#roadInput').value = d.raw.name; save(); refreshWorkName(); });
 
 /* work description combo — dropdown + free text (ARC mode) */
 freeText($('#workDesc'), 'workDesc', refreshWorkName);
@@ -1024,8 +1092,10 @@ async function buildWorkbook(){
   return wb;
 }
 function safeName(){
-  return (est.road || 'Estimate').replace(/[^\w\- ]+/g,'').replace(/\s+/g,'_').slice(0,55)
-    + (est.wcFrom ? '_' + (est.wcFrom + '-' + est.wcTo).replace(/\//g,'.') : '');
+  const first = (est.roadList && est.roadList[0]) || {};
+  const wc = first.wcFrom || first.wcTo;
+  return (est.road || first.name || 'Estimate').replace(/[^\w\- ]+/g,'').replace(/\s+/g,'_').slice(0,55)
+    + (wc ? '_' + ((first.wcFrom||'') + '-' + (first.wcTo||'')).replace(/\//g,'.') : '');
 }
 function download(blob, name){
   const url = URL.createObjectURL(blob), a = document.createElement('a');
@@ -1245,15 +1315,16 @@ function loadSaved(id){
   est = JSON.parse(JSON.stringify(rec.est));
   if(est.mode === undefined) est.mode = '';
   if(est.rateSource === undefined) est.rateSource = 'arc';
+  if(!Array.isArray(est.roadList)) est.roadList = [];
+  if(est.roadList.length === 0 && est.mode === 'road' && (est.road || est.roadKm || est.wcFrom || est.wcTo)){
+    est.roadList = [{ name: est.road || '', km: est.roadKm || '', wcFrom: est.wcFrom || '', wcTo: est.wcTo || '' }];
+  }
   currentSavedId = id;
   save();
   // repopulate inputs
   $('#roadInput').value = est.road || '';
-  $('#roadKm').value = est.roadKm || '';
   $('#workDesc').value = est.workDesc || '';
   const wdf = $('#workDescFree'); if(wdf) wdf.value = est.workDesc || '';
-  $('#wcFrom').value = est.wcFrom || '';
-  $('#wcTo').value = est.wcTo || '';
   $('#prepBy').value = est.prepBy || '';
   $('#chkBy').value = est.chkBy || '';
   applyModeUI(); refreshHints(); refreshWorkName(); renderItemBlocks(); renderPreview();
@@ -1353,9 +1424,9 @@ $('#fileImportSaved').onchange = e => {
 $('#btnNew').onclick = () => {
   if(!confirm('Naya estimate shuru karein? Abhi ka data clear ho jayega.')) return;
   currentSavedId = null;
-  est = { mode:'', rateSource:'', road:'', roadKm:'', workDesc:'', wcFrom:'', wcTo:'', prepBy:est.prepBy, chkBy:est.chkBy, qc:1, lc:0, lines:[] };
+  est = { mode:'', rateSource:'', road:'', roadList:[], workDesc:'', prepBy:est.prepBy, chkBy:est.chkBy, qc:1, lc:0, lines:[] };
   save();
-  ['roadInput','roadKm','workDesc','wcFrom','wcTo'].forEach(id => { const el = $('#'+id); if(el) el.value = ''; });
+  ['roadInput','workDesc'].forEach(id => { const el = $('#'+id); if(el) el.value = ''; });
   const wdf = $('#workDescFree'); if(wdf) wdf.value = '';
   refreshWorkName(); renderItemBlocks(); renderPreview();
   $$('nav.tabs button')[0].click();
