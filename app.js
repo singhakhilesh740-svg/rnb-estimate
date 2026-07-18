@@ -23,8 +23,9 @@ let workDescs = store.get('rnb_workdescs', null) || (typeof WORKDESCS_SEED !== '
 let people    = store.get('rnb_people', null)    || (typeof PEOPLE_SEED !== 'undefined' ? PEOPLE_SEED.slice() : []);
 let office    = store.get('rnb_office', null)     || {...OFFICE_DEFAULT};
 let est       = store.get('rnb_est', null) ||
-             { mode:'', road:'', roadKm:'', workDesc:'', wcFrom:'', wcTo:'', prepBy:'', chkBy:'', qc:1, lc:0, lines:[] };
+             { mode:'', rateSource:'arc', road:'', roadKm:'', workDesc:'', wcFrom:'', wcTo:'', prepBy:'', chkBy:'', qc:1, lc:0, lines:[] };
 if(est.mode === undefined) est.mode = '';
+if(est.rateSource === undefined) est.rateSource = 'arc';
 let catFilter = '';
 let dataItemsCat = '';   // Data tab: which ARC category is currently shown in items table
 
@@ -73,9 +74,37 @@ function applyModeUI(){
   $('#buildingsCardTitle').textContent = 'Building list';
   const showRoad = est.mode === 'road';
   $$('.road-only').forEach(el => el.style.display = showRoad ? '' : 'none');
+  applyRateSourceUI();
   renderCatChips();
   refreshWorkName();
 }
+
+function applyRateSourceUI(){
+  const rs = est.rateSource || 'arc';
+  $$('#rateSrcChips .chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.rs === rs));
+  const isArc = rs === 'arc';
+  $$('.arc-only').forEach(el => el.hidden = !isArc);
+  $$('.sor-only').forEach(el => el.hidden = isArc);
+  // Sync workDesc value into whichever input is visible
+  const wd = est.workDesc || '';
+  if($('#workDesc')) $('#workDesc').value = wd;
+  if($('#workDescFree')) $('#workDescFree').value = wd;
+  // Update item combo placeholder + hint
+  const inp = $('#itemInput');
+  if(inp){
+    inp.placeholder = rs === 'sor' ? 'Search SOR items — code, chapter, description…'
+                   : rs === 'ra'  ? 'Rate-analysis list khali hai — baad me add karenge.'
+                   : 'Search any word — SDBC, wetmix, hotmix, WMM, GSB, tack coat…';
+  }
+  const cc = $('#catChips');
+  if(cc){ cc.innerHTML = ''; if(isArc) renderCatChips(); }
+}
+
+$$('#rateSrcChips .chip').forEach(b => b.onclick = () => {
+  est.rateSource = b.dataset.rs; save();
+  applyRateSourceUI();
+  refreshWorkName();
+});
 
 /* ------------------------------- tabs ------------------------------- */
 $$('nav.tabs button').forEach(b => b.onclick = () => {
@@ -504,36 +533,46 @@ function showDataView(name){
 }
 function showRateSub(sub){
   $('#rateMenu').hidden = sub !== 'menu';
-  $('#arcMenu').hidden  = sub !== 'arc-menu';
   $('#arcItems').hidden = sub !== 'arc-items';
   $('#sorView').hidden  = sub !== 'sor';
   const crumb = $('#rateCrumb');
   if(crumb) crumb.textContent =
     sub === 'menu'      ? 'Rate' :
-    sub === 'arc-menu'  ? 'Rate › ARC' :
-    sub === 'arc-items' ? 'Rate › ARC › ' + (dataItemsCat || '') :
+    sub === 'arc-items' ? 'Rate › ARC' + (dataItemsCat ? ' › ' + dataItemsCat : '') :
     sub === 'sor'       ? 'Rate › SOR' : 'Rate';
   if(sub === 'arc-items'){
     const t = $('#arcCatTitle');
-    if(t) t.textContent = (dataItemsCat || 'Items') + ' — Approved Rate List';
+    if(t) t.textContent = 'ARC — Approved Rate List' + (dataItemsCat ? ' · ' + dataItemsCat : '');
+    renderArcCatChips();
     renderItemsTable();
   }
   if(sub === 'sor'){ renderSorCatChips(); renderSorTable(); }
   window.scrollTo(0,0);
 }
+
+function renderArcCatChips(){
+  const box = $('#arcCatChips');
+  if(!box) return;
+  const cats = [...new Set(items.map(i => i.cat).filter(Boolean))].sort();
+  box.innerHTML = cats.map(c =>
+    `<button class="chip" data-acat="${esc(c)}" aria-pressed="${dataItemsCat===c}">${esc(c)}</button>`
+  ).join('') + (dataItemsCat ? `<button class="chip" data-acat="" aria-pressed="false">Show all</button>` : '');
+  box.querySelectorAll('.chip').forEach(b => b.onclick = () => {
+    dataItemsCat = (b.dataset.acat === dataItemsCat) ? '' : b.dataset.acat;
+    renderArcCatChips(); renderItemsTable();
+    const t = $('#arcCatTitle'); if(t) t.textContent = 'ARC — Approved Rate List' + (dataItemsCat ? ' · ' + dataItemsCat : '');
+    const crumb = $('#rateCrumb'); if(crumb) crumb.textContent = 'Rate › ARC' + (dataItemsCat ? ' › ' + dataItemsCat : '');
+  });
+}
+
 $$('#dataGrid .data-tile').forEach(b => b.onclick = () => showDataView(b.dataset.nav));
 $$('#tab-data .back').forEach(b => b.onclick = () => showDataGrid());
 $$('#rateMenu .data-tile').forEach(b => b.onclick = () => {
-  showRateSub(b.dataset.rate === 'arc' ? 'arc-menu' : 'sor');
-});
-$$('#arcMenu .data-tile').forEach(b => b.onclick = () => {
-  dataItemsCat = b.dataset.arccat; showRateSub('arc-items');
+  showRateSub(b.dataset.rate === 'arc' ? 'arc-items' : 'sor');
 });
 // override the generic "back" on Rate view so it goes step-by-step
 $$('.data-view[data-view="rate"] .back').forEach(b => b.onclick = () => {
-  // if inside a rate sub-view, step back one level; else go to grid
-  if(!$('#arcItems').hidden){ showRateSub('arc-menu'); return; }
-  if(!$('#arcMenu').hidden){ showRateSub('menu'); return; }
+  if(!$('#arcItems').hidden){ showRateSub('menu'); return; }
   if(!$('#sorView').hidden){ showRateSub('menu'); return; }
   showDataGrid();
 });
@@ -573,12 +612,21 @@ makeCombo($('#roadInput'), $('#roadList'),
          $('#roadInput').value = d.raw.name; save(); refreshWorkName();
          if(est.mode === 'road') $('#wcFrom').focus(); });
 
-/* work description combo — dropdown + free text */
+/* work description combo — dropdown + free text (ARC mode) */
 freeText($('#workDesc'), 'workDesc', refreshWorkName);
 makeCombo($('#workDesc'), $('#workDescList'),
   () => workDescs.filter(w => w.text && (w.type === est.mode || w.type === 'both'))
                  .map(w => ({ label:w.text, search:w.text, raw:w })),
   d => { est.workDesc = d.raw.text; $('#workDesc').value = d.raw.text; save(); refreshWorkName(); });
+
+/* work description free-text (SOR / RA mode) — same est.workDesc key */
+{
+  const fi = $('#workDescFree');
+  if(fi){
+    fi.value = est.workDesc || '';
+    fi.addEventListener('input', () => { est.workDesc = fi.value; save(); refreshWorkName(); });
+  }
+}
 
 /* prepared-by / checked-by combos — dropdown + free text */
 freeText($('#prepBy'), 'prepBy');
@@ -590,13 +638,26 @@ makeCombo($('#chkBy'), $('#chkList'),
   () => people.filter(Boolean).map(p => ({ label:p, search:p, raw:p })),
   d => { est.chkBy = d.raw; $('#chkBy').value = d.raw; save(); });
 
-/* item combo — filtered by mode + category chip */
+/* item combo — source depends on est.rateSource (arc / sor / ra) */
 makeCombo($('#itemInput'), $('#itemList'),
-  () => items.filter(it => (!MODE[est.mode] || MODE[est.mode].cats.includes(it.cat))
-                        && (!catFilter || it.cat === catFilter)).map(it => ({
-    label: it.desc.length > 150 ? it.desc.slice(0,150) + '…' : it.desc,
-    meta: `No.${it.itemNo} · ₹ ${fmt(n(it.rate))} / ${it.unit}${it.cat ? ' · ' + it.cat : ''}`,
-    search: [it.desc, it.unit, it.itemNo, it.cat].join(' '), raw: it })),
+  () => {
+    const rs = est.rateSource || 'arc';
+    if(rs === 'sor'){
+      return sorItems.filter(it => it.desc).map(it => ({
+        label: it.desc.length > 150 ? it.desc.slice(0,150) + '…' : it.desc,
+        meta: `SOR ${it.itemNo} · ₹ ${fmt(n(it.rate))} / ${it.unit}${it.cat ? ' · ' + it.cat.replace(/^CH-/,'CH-') : ''}`,
+        search: [it.desc, it.unit, it.itemNo, it.cat].join(' '), raw: it }));
+    }
+    if(rs === 'ra'){
+      return [];  // RA list to be added later
+    }
+    // ARC (default) — filter by mode categories + optional chip
+    return items.filter(it => (!MODE[est.mode] || MODE[est.mode].cats.includes(it.cat))
+                          && (!catFilter || it.cat === catFilter)).map(it => ({
+      label: it.desc.length > 150 ? it.desc.slice(0,150) + '…' : it.desc,
+      meta: `No.${it.itemNo} · ₹ ${fmt(n(it.rate))} / ${it.unit}${it.cat ? ' · ' + it.cat : ''}`,
+      search: [it.desc, it.unit, it.itemNo, it.cat].join(' '), raw: it }));
+  },
   d => { const it = d.raw;
     est.lines.push({ appRateNo: it.itemNo || '', desc: it.desc, rate: it.rate,
                      unit: it.unit || 'MT', cat: it.cat || '', sayOverride: null, rows:[blankRow()] });
