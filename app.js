@@ -16,7 +16,7 @@ const OFFICE_DEFAULT = {
 const FRAMED = 'Estimate framed in the office of the Executive Engineer, Dahod (R&B ) Division , Dahod , for the probale expenses that will be incurred in  ';
 
 /* seed data versions — bump when data.js seeds change, to force-refresh stale localStorage */
-const SEED_VERSIONS = { buildings: 3, sor: 2 };
+const SEED_VERSIONS = { buildings: 4, sor: 2 };
 function seedGet(key, seedName, seed){
   const verKey = 'rnb_seedver_' + seedName;
   const savedVer = store.get(verKey, 0);
@@ -92,7 +92,7 @@ function setMode(m){
 $$('#gateStepBased .opt').forEach(b => b.onclick = () => setBased(b.dataset.based));
 $$('#gateStepMode .opt').forEach(b => b.onclick = () => setMode(b.dataset.mode));
 $('#gateBack').onclick = () => showGateStep('based');
-$('#btnMode').onclick = () => openGate('mode');   // "Change" button = mode-only
+$('#btnMode').onclick = () => openGate('based');   // "Change" = full wizard from Based step
 
 function applyModeUI(){
   const m = MODE[est.mode];
@@ -110,6 +110,8 @@ function applyModeUI(){
 
 function applyRateSourceUI(){
   const rs = est.rateSource || 'arc';
+  const bl = $('#basedLbl');
+  if(bl) bl.textContent = rs === 'sor' ? 'SOR & RA' : rs === 'ra' ? 'RA' : 'ARC';
   $$('#rateSrcChips .chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.rs === rs));
   const isArc = rs === 'arc';
   $$('.arc-only').forEach(el => el.hidden = !isArc);
@@ -342,36 +344,70 @@ function renderRoadsTable(){
   box.querySelectorAll('[data-rdel]').forEach(b => b.onclick = () => {
     roads.splice(+b.dataset.rdel,1); store.set('rnb_roads', roads); renderRoadsTable(); refreshHints(); });
 }
-let buildingKindFilter = '';  // '' | 'R' | 'NR'
+let buildingKindFilter = '';    // '' | 'R' | 'NR'
+let buildingTalukaFilter = '';  // '' | taluka
+let buildingDeptFilter = '';    // '' | dept
 
 function renderBuildingsTable(){
   const box = $('#buildingsTable');
+  // Apply all three filters
+  const applyF = b => (!buildingKindFilter   || (b.kind||'')===buildingKindFilter)
+                   && (!buildingTalukaFilter || (b.taluka||'')===buildingTalukaFilter)
+                   && (!buildingDeptFilter   || (b.dept||'')===buildingDeptFilter);
+
   const chipBox = $('#buildingKindChips');
   if(chipBox){
-    const counts = { R: buildings.filter(b=>b.kind==='R').length,
-                     NR: buildings.filter(b=>b.kind==='NR').length,
-                     '': buildings.length };
+    const R  = buildings.filter(b=>b.kind==='R').length;
+    const NR = buildings.filter(b=>b.kind==='NR').length;
+    const talukas = [...new Set(buildings.map(b=>b.taluka).filter(Boolean))].sort();
+    const depts   = [...new Set(buildings.map(b=>b.dept).filter(Boolean))].sort();
     chipBox.innerHTML =
-      `<button class="chip" data-bk="" aria-pressed="${buildingKindFilter===''}">All (${counts['']})</button>` +
-      `<button class="chip" data-bk="R" aria-pressed="${buildingKindFilter==='R'}">Residential (${counts.R})</button>` +
-      `<button class="chip" data-bk="NR" aria-pressed="${buildingKindFilter==='NR'}">Non-Residential (${counts.NR})</button>`;
+      `<div class="chips" style="margin-bottom:8px">
+        <button class="chip" data-bk="" aria-pressed="${buildingKindFilter===''}">All (${buildings.length})</button>
+        <button class="chip" data-bk="R" aria-pressed="${buildingKindFilter==='R'}">Residential (${R})</button>
+        <button class="chip" data-bk="NR" aria-pressed="${buildingKindFilter==='NR'}">Non-Residential (${NR})</button>
+      </div>
+      <div class="grid g2" style="gap:8px;margin-bottom:4px">
+        <div>
+          <label style="margin-bottom:3px">Taluka filter</label>
+          <select id="bTalukaSel">
+            <option value="">All talukas</option>
+            ${talukas.map(t=>`<option value="${esc(t)}"${buildingTalukaFilter===t?' selected':''}>${esc(t)}</option>`).join('')}
+          </select>
+        </div>
+        <div>
+          <label style="margin-bottom:3px">Department filter</label>
+          <select id="bDeptSel">
+            <option value="">All departments</option>
+            ${depts.map(d=>`<option value="${esc(d)}"${buildingDeptFilter===d?' selected':''}>${esc(d)}</option>`).join('')}
+          </select>
+        </div>
+      </div>`;
     chipBox.querySelectorAll('.chip').forEach(b => b.onclick = () => {
       buildingKindFilter = b.dataset.bk; renderBuildingsTable();
     });
+    const tSel = $('#bTalukaSel'), dSel = $('#bDeptSel');
+    if(tSel) tSel.onchange = () => { buildingTalukaFilter = tSel.value; renderBuildingsTable(); };
+    if(dSel) dSel.onchange = () => { buildingDeptFilter = dSel.value; renderBuildingsTable(); };
   }
+
   if(!box) return;
-  const view = buildings.map((r,i)=>({r,i})).filter(x => !buildingKindFilter || (x.r.kind||'')===buildingKindFilter);
-  if(!view.length){ box.innerHTML = '<div class="empty">' + (buildingKindFilter ? 'Is category me koi building nahi.' : 'Building list khali hai — "Add building" dabao.') + '</div>'; return; }
-  box.innerHTML = `<div class="scroll"><table class="tbl" style="min-width:640px"><tr><th style="width:75%">Building / Work name</th><th style="width:15%">Kind</th><th></th></tr>` +
+  const view = buildings.map((r,i)=>({r,i})).filter(x => applyF(x.r));
+  if(!view.length){ box.innerHTML = '<div class="empty">Is filter me koi building nahi.</div>'; return; }
+  box.innerHTML = `<div class="scroll"><table class="tbl" style="min-width:820px"><tr>
+      <th style="width:44%">Building / Work name</th><th style="width:13%">Kind</th>
+      <th style="width:16%">Taluka</th><th style="width:19%">Department</th><th></th></tr>` +
     view.map(x => { const r=x.r, i=x.i; return `<tr>
       <td><input data-bi="${i}" data-bk="name" value="${esc(r.name)}"></td>
       <td><select data-bi="${i}" data-bk="kind">
         <option value=""${!r.kind?' selected':''}>—</option>
-        <option value="R"${r.kind==='R'?' selected':''}>Residential</option>
-        <option value="NR"${r.kind==='NR'?' selected':''}>Non-Residential</option>
+        <option value="R"${r.kind==='R'?' selected':''}>Resi</option>
+        <option value="NR"${r.kind==='NR'?' selected':''}>Non-Resi</option>
       </select></td>
+      <td><input data-bi="${i}" data-bk="taluka" value="${esc(r.taluka||'')}"></td>
+      <td><input data-bi="${i}" data-bk="dept" value="${esc(r.dept||'')}"></td>
       <td><button class="btn danger" style="padding:4px 8px" data-bdel="${i}">×</button></td></tr>`;}).join('') +
-    `</table></div><p class="hint">${view.length}${buildingKindFilter?' (filtered)':''} of ${buildings.length} buildings.</p>`;
+    `</table></div><p class="hint">${view.length}${(buildingKindFilter||buildingTalukaFilter||buildingDeptFilter)?' (filtered)':''} of ${buildings.length} buildings.</p>`;
   box.querySelectorAll('input,select').forEach(i => i.oninput = e => {
     buildings[+e.target.dataset.bi][e.target.dataset.bk] = e.target.value; store.set('rnb_buildings', buildings); });
   box.querySelectorAll('[data-bdel]').forEach(b => b.onclick = () => {
