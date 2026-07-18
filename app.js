@@ -55,15 +55,29 @@ function toast(m){ const t = $('#toast'); t.textContent = m; t.style.display='bl
   clearTimeout(t._t); t._t = setTimeout(()=> t.style.display='none', 2800); }
 function save(){ store.set('rnb_est', est); }
 
-/* ------------------------------- mode gate ------------------------------- */
-function openGate(){ $('#modeGate').classList.add('open'); }
+/* ------------------------------- mode gate (2-step wizard) ------------------------------- */
+function openGate(step){
+  $('#modeGate').classList.add('open');
+  showGateStep(step || 'based');
+}
 function closeGate(){ $('#modeGate').classList.remove('open'); }
+function showGateStep(s){
+  $('#gateStepBased').hidden = s !== 'based';
+  $('#gateStepMode').hidden  = s !== 'mode';
+}
+function setBased(rs){
+  est.rateSource = rs; save();
+  applyRateSourceUI();
+  showGateStep('mode');
+}
 function setMode(m){
   est.mode = m; save(); closeGate(); applyModeUI();
-  toast(MODE[m].label + ' estimate mode.');
+  toast(MODE[m].label + ' estimate (' + (est.rateSource==='sor'?'SOR & RA':'ARC') + ')');
 }
-$$('#modeGate .opt').forEach(b => b.onclick = () => setMode(b.dataset.mode));
-$('#btnMode').onclick = openGate;
+$$('#gateStepBased .opt').forEach(b => b.onclick = () => setBased(b.dataset.based));
+$$('#gateStepMode .opt').forEach(b => b.onclick = () => setMode(b.dataset.mode));
+$('#gateBack').onclick = () => showGateStep('based');
+$('#btnMode').onclick = () => openGate('mode');   // "Change" button = mode-only
 
 function applyModeUI(){
   const m = MODE[est.mode];
@@ -186,9 +200,7 @@ const blankRow = () => ({ ch:'', nos:'', len:'', wid:'', thk:'', den:'' });
 function buildWorkName(){
   if(!est.road) return '—';
   if(est.mode === 'building'){
-    const wd = est.workDesc ? est.workDesc + ' — ' : '';
-    const wc = (est.wcFrom || est.wcTo) ? ` (${est.wcFrom}-${est.wcTo})` : '';
-    return `${wd}${est.road}${wc}`.trim();
+    return String(est.road).trim();
   }
   const km = est.roadKm ? ` Km.${est.roadKm}` : '';
   const wc = (est.wcFrom || est.wcTo) ? `(working chainage ${est.wcFrom}-${est.wcTo})` : '';
@@ -315,16 +327,38 @@ function renderRoadsTable(){
   box.querySelectorAll('[data-rdel]').forEach(b => b.onclick = () => {
     roads.splice(+b.dataset.rdel,1); store.set('rnb_roads', roads); renderRoadsTable(); refreshHints(); });
 }
+let buildingKindFilter = '';  // '' | 'R' | 'NR'
+
 function renderBuildingsTable(){
   const box = $('#buildingsTable');
-  if(!buildings.length){ box.innerHTML = '<div class="empty">Building list khali hai — “Add building” dabao.</div>'; return; }
-  box.innerHTML = `<div class="scroll"><table class="tbl"><tr><th>Building / Work name</th><th></th></tr>` +
-    buildings.map((r,i)=>`<tr>
-      <td><input data-bi="${i}" value="${esc(r.name)}"></td>
-      <td><button class="btn danger" style="padding:4px 8px" data-bdel="${i}">×</button></td></tr>`).join('') +
-    `</table></div><p class="hint">${buildings.length} buildings.</p>`;
-  box.querySelectorAll('input').forEach(i => i.oninput = e => {
-    buildings[+e.target.dataset.bi].name = e.target.value; store.set('rnb_buildings', buildings); });
+  const chipBox = $('#buildingKindChips');
+  if(chipBox){
+    const counts = { R: buildings.filter(b=>b.kind==='R').length,
+                     NR: buildings.filter(b=>b.kind==='NR').length,
+                     '': buildings.length };
+    chipBox.innerHTML =
+      `<button class="chip" data-bk="" aria-pressed="${buildingKindFilter===''}">All (${counts['']})</button>` +
+      `<button class="chip" data-bk="R" aria-pressed="${buildingKindFilter==='R'}">Residential (${counts.R})</button>` +
+      `<button class="chip" data-bk="NR" aria-pressed="${buildingKindFilter==='NR'}">Non-Residential (${counts.NR})</button>`;
+    chipBox.querySelectorAll('.chip').forEach(b => b.onclick = () => {
+      buildingKindFilter = b.dataset.bk; renderBuildingsTable();
+    });
+  }
+  if(!box) return;
+  const view = buildings.map((r,i)=>({r,i})).filter(x => !buildingKindFilter || (x.r.kind||'')===buildingKindFilter);
+  if(!view.length){ box.innerHTML = '<div class="empty">' + (buildingKindFilter ? 'Is category me koi building nahi.' : 'Building list khali hai — "Add building" dabao.') + '</div>'; return; }
+  box.innerHTML = `<div class="scroll"><table class="tbl" style="min-width:640px"><tr><th style="width:75%">Building / Work name</th><th style="width:15%">Kind</th><th></th></tr>` +
+    view.map(x => { const r=x.r, i=x.i; return `<tr>
+      <td><input data-bi="${i}" data-bk="name" value="${esc(r.name)}"></td>
+      <td><select data-bi="${i}" data-bk="kind">
+        <option value=""${!r.kind?' selected':''}>—</option>
+        <option value="R"${r.kind==='R'?' selected':''}>Residential</option>
+        <option value="NR"${r.kind==='NR'?' selected':''}>Non-Residential</option>
+      </select></td>
+      <td><button class="btn danger" style="padding:4px 8px" data-bdel="${i}">×</button></td></tr>`;}).join('') +
+    `</table></div><p class="hint">${view.length}${buildingKindFilter?' (filtered)':''} of ${buildings.length} buildings.</p>`;
+  box.querySelectorAll('input,select').forEach(i => i.oninput = e => {
+    buildings[+e.target.dataset.bi][e.target.dataset.bk] = e.target.value; store.set('rnb_buildings', buildings); });
   box.querySelectorAll('[data-bdel]').forEach(b => b.onclick = () => {
     buildings.splice(+b.dataset.bdel,1); store.set('rnb_buildings', buildings); renderBuildingsTable(); });
 }

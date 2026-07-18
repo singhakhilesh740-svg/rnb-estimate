@@ -152,21 +152,40 @@ button.btn.back{padding:7px 12px;font-size:11px}
 </head>
 <body>
 
-<!-- ==== mode gate (shows on open) ==== -->
+<!-- ==== mode gate (2-step wizard) ==== -->
 <div class="gate" id="modeGate">
-  <h2>R &amp; B Sub Division, Dahod</h2>
-  <p>Estimate Builder — kis type ka estimate banana hai?</p>
-  <div class="grp">
-    <button class="opt" data-mode="road">
-      <div class="ic">🛣️</div>
-      <div class="t">Road</div>
-      <span class="s">Hotmix, WMM, GSB, patta, patchwork</span>
-    </button>
-    <button class="opt" data-mode="building">
-      <div class="ic">🏢</div>
-      <div class="t">Building</div>
-      <span class="s">Resi / Non-Resi building works</span>
-    </button>
+  <div id="gateStepBased">
+    <h2>R &amp; B Sub Division, Dahod</h2>
+    <p>Estimate Builder — Based on kya?</p>
+    <div class="grp">
+      <button class="opt" data-based="arc">
+        <div class="ic">📗</div>
+        <div class="t">ARC</div>
+        <span class="s">Approved Rate Contract items</span>
+      </button>
+      <button class="opt" data-based="sor">
+        <div class="ic">📘</div>
+        <div class="t">SOR &amp; RA</div>
+        <span class="s">SOR 2024-25 + Rate Analysis</span>
+      </button>
+    </div>
+  </div>
+  <div id="gateStepMode" hidden>
+    <h2>Estimate type</h2>
+    <p>Kis type ka estimate banana hai?</p>
+    <div class="grp">
+      <button class="opt" data-mode="road">
+        <div class="ic">🛣️</div>
+        <div class="t">Road</div>
+        <span class="s">Hotmix, WMM, GSB, patta, patchwork</span>
+      </button>
+      <button class="opt" data-mode="building">
+        <div class="ic">🏢</div>
+        <div class="t">Building</div>
+        <span class="s">Resi / Non-Resi building works</span>
+      </button>
+    </div>
+    <button class="btn ghost" id="gateBack" style="margin-top:22px">← Change based</button>
   </div>
 </div>
 
@@ -195,11 +214,10 @@ button.btn.back{padding:7px 12px;font-size:11px}
   <div class="card" id="rateSrcCard">
     <h2>Based on</h2>
     <div class="chips" id="rateSrcChips">
-      <button class="chip" data-rs="arc" aria-pressed="true">ARC (Approved Rate)</button>
-      <button class="chip" data-rs="sor" aria-pressed="false">SOR 2024-25</button>
-      <button class="chip" data-rs="ra"  aria-pressed="false">RA (rate analysis)</button>
+      <button class="chip" data-rs="arc" aria-pressed="true">📗 ARC (Approved Rate)</button>
+      <button class="chip" data-rs="sor" aria-pressed="false">📘 SOR &amp; RA</button>
     </div>
-    <p class="hint" id="rateSrcHint">ARC = approved rate contract items. SOR = Schedule of Rates 2024-25. RA = rate analysis (list will be added later).</p>
+    <p class="hint" id="rateSrcHint">ARC = approved rate contract items with your saved work descriptions. SOR &amp; RA = Schedule of Rates 2024-25 + Rate Analysis (work description per estimate).</p>
   </div>
 
   <div class="card">
@@ -218,7 +236,7 @@ button.btn.back{padding:7px 12px;font-size:11px}
         <label for="roadKm">Km (only if not already in road name)</label>
         <input id="roadKm" class="mono" placeholder="0/0-8/700">
       </div>
-      <div class="arc-only">
+      <div class="arc-only road-only">
         <label for="workDesc">Work description</label>
         <div class="combo">
           <input id="workDesc" autocomplete="off" placeholder="Choose or type — Providing SDBC Paver Patta…">
@@ -226,7 +244,7 @@ button.btn.back{padding:7px 12px;font-size:11px}
         </div>
         <p class="hint">Dropdown se choose karo, ya naya type karo. Naye options “Data” tab me add hote hain.</p>
       </div>
-      <div class="sor-only" hidden>
+      <div class="sor-only road-only" hidden>
         <label for="workDescFree">Work description</label>
         <input id="workDescFree" autocomplete="off" placeholder="Type work description for this SOR-based estimate…">
         <p class="hint">SOR / RA estimate me har baar description manually likho.</p>
@@ -412,7 +430,8 @@ button.btn.back{padding:7px 12px;font-size:11px}
           <input type="file" id="fileBuildings" accept=".xls,.xlsx,.csv" style="max-width:300px">
           <button class="btn ghost" id="btnAddBuilding">Add building</button>
         </div>
-        <p class="hint">Building estimate ke liye — building / work locations yaha add karo.</p>
+        <div id="buildingKindChips" class="chips" style="margin-top:10px"></div>
+        <p class="hint">Building estimate ke liye — Residential / Non-Residential filter kar sakte ho.</p>
         <div id="buildingsTable" style="margin-top:14px"></div>
       </div>
     </div>
