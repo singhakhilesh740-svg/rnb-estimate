@@ -205,11 +205,24 @@ function unitKind(u){
   if(s.startsWith('mt') || s === 'tonne' || s === 'ton') return 'MT';
   if(s.startsWith('cum')) return 'CUM';
   if(s.startsWith('sqm')) return 'SQM';
-  if(s.startsWith('hect')) return 'SQM';
+  if(s.startsWith('hect') || s.startsWith('hac')) return 'SQM';   // hectare measured as area (sqm) then converted
   if(s.startsWith('rmt') || s.startsWith('mtr') || s === 'm' || s.startsWith('km')) return 'RMT';
   if(s.startsWith('no') || s.startsWith('each') || s.startsWith('hrs') || s.startsWith('hour')
      || s.startsWith('day') || s.startsWith('kg') || s.startsWith('ltr')) return 'NOS';
   return 'CUM';
+}
+/* how many measured base-units make ONE output unit.
+   e.g. Hectare: measure area in sqm, then divide by 10000 to get hectares */
+function unitDivisor(u){
+  const s = String(u||'').toLowerCase().replace(/[^a-z]/g,'');
+  if(s.startsWith('hect') || s.startsWith('hac')) return 10000;   // sqm -> hectare
+  if(s.startsWith('km')) return 1000;                              // metre -> km
+  if(s.startsWith('quintal') || s === 'qtl') return 100;          // kg -> quintal (if measured in kg)
+  return 1;
+}
+/* the unit in which the measurement rows are computed (before conversion) */
+function measuredUnit(kind){
+  return { MT:'MT', CUM:'Cu.m', SQM:'Sqm', RMT:'Rmt', NOS:'Nos' }[kind] || 'Cu.m';
 }
 const FIELDS = { MT:['nos','len','wid','thk','den'], CUM:['nos','len','wid','thk'],
                  SQM:['nos','len','wid'], RMT:['nos','len'], NOS:['nos'] };
@@ -234,10 +247,12 @@ const refreshWorkName = () => $('#workName').textContent = buildWorkName();
 /* ------------------------------- totals ------------------------------- */
 function lineTotal(line){
   const kind = unitKind(line.unit);
-  const q = line.rows.reduce((a,r) => a + rowQty(r, kind), 0);
-  const autoSay = Math.ceil(r2(q) * 10) / 10;              // R&B round-up: 111.09 -> 111.10
+  const div = unitDivisor(line.unit);
+  const measured = line.rows.reduce((a,r) => a + rowQty(r, kind), 0);  // in base measured unit (e.g. sqm)
+  const q = measured / div;                                            // converted to output unit (e.g. hectare)
+  const autoSay = Math.ceil(r2(q) * 10) / 10;                          // R&B round-up: 111.09 -> 111.10
   const say = (line.sayOverride == null || line.sayOverride === '') ? autoSay : n(line.sayOverride);
-  return { qty:r2(q), autoSay, say:r2(say), amount:r2(say * n(line.rate)) };
+  return { measured:r2(measured), qty:r2(q), autoSay, say:r2(say), amount:r2(say * n(line.rate)) };
 }
 function totals(){
   const total = r2(est.lines.reduce((a,l) => a + lineTotal(l).amount, 0));
@@ -263,6 +278,9 @@ function renderItemBlocks(){
   }
   box.innerHTML = est.lines.map((l, li) => {
     const kind = unitKind(l.unit), f = FIELDS[kind] || FIELDS.CUM, lt = lineTotal(l);
+    const mUnit = measuredUnit(kind);
+    const div = unitDivisor(l.unit);
+    const converted = div !== 1;
     return `<div class="itemblock">
       <h3><span>Item No. ${li + 1}</span>
         <button class="btn danger" style="padding:4px 9px" data-rmline="${li}">Remove</button></h3>
@@ -274,10 +292,11 @@ function renderItemBlocks(){
           <input data-apr="${li}" value="${esc(l.appRateNo || '')}"
                  style="width:46px;display:inline-block;border:0;background:transparent;padding:3px 0;font-family:'IBM Plex Mono',monospace;font-size:11px"></span>
         ${l.cat ? `<span class="pill">${esc(l.cat)}</span>` : ''}
-        <span class="pill">${f.map(k=>FLABEL[k]).join(' × ')}</span>
+        <span class="pill">${f.map(k=>FLABEL[k]).join(' × ')} → ${esc(mUnit)}</span>
+        ${converted ? `<span class="pill" style="background:#fff3e0;border-color:#e2571f;color:#b3402a">Output ${esc(l.unit)} = ${esc(mUnit)} ÷ ${fmt0(div)}</span>` : ''}
       </div>
       <div class="scroll"><table class="tbl" style="margin-top:8px">
-        <tr><th style="min-width:150px">Chainage</th>${f.map(k=>`<th class="num">${FLABEL[k]}</th>`).join('')}<th class="num">Qty</th><th></th></tr>
+        <tr><th style="min-width:150px">Chainage</th>${f.map(k=>`<th class="num">${FLABEL[k]}</th>`).join('')}<th class="num">Qty (${esc(mUnit)})</th><th></th></tr>
         ${l.rows.map((r, ri) => `<tr>
           <td><input data-l="${li}" data-r="${ri}" data-k="ch" value="${esc(r.ch)}" placeholder="(scattered length )"></td>
           ${f.map(k=>`<td><input class="num mono" type="number" step="any" inputmode="decimal" data-l="${li}" data-r="${ri}" data-k="${k}" value="${r[k] ?? ''}"></td>`).join('')}
@@ -287,7 +306,8 @@ function renderItemBlocks(){
       </table></div>
       <div class="row-actions" style="margin-top:8px">
         <button class="btn ghost" data-addrow="${li}">+ Add row</button>
-        <span class="pill" data-tot="${li}" style="margin-left:auto">Total ${fmt(lt.qty)} ${esc(l.unit)}</span>
+        <span class="pill" data-mtot="${li}">Measured ${fmt(lt.measured)} ${esc(mUnit)}</span>
+        <span class="pill" data-tot="${li}" style="${converted?'background:#fff3e0;border-color:#e2571f;color:#b3402a':''}">Total ${fmt(lt.qty)} ${esc(l.unit)}</span>
         <span class="pill" style="padding:0 7px">Say
           <input class="num mono" type="number" step="any" inputmode="decimal" data-say="${li}"
                  value="${l.sayOverride ?? lt.autoSay}" style="width:80px;display:inline-block;border:0;background:transparent;padding:3px 0">
@@ -299,8 +319,10 @@ function renderItemBlocks(){
 
   function refreshLine(li){
     const l = est.lines[li], lt = lineTotal(l);
+    const kind = unitKind(l.unit), mUnit = measuredUnit(kind);
     const tp = box.querySelector(`[data-tot="${li}"]`), ap = box.querySelector(`[data-amt="${li}"]`),
-          sp = box.querySelector(`[data-say="${li}"]`);
+          sp = box.querySelector(`[data-say="${li}"]`), mp = box.querySelector(`[data-mtot="${li}"]`);
+    if(mp) mp.textContent = `Measured ${fmt(lt.measured)} ${mUnit}`;
     if(tp) tp.textContent = `Total ${fmt(lt.qty)} ${l.unit}`;
     if(ap) ap.textContent = `Amount ₹ ${fmt(lt.amount)}`;
     if(sp && document.activeElement !== sp && (l.sayOverride == null || l.sayOverride === '')) sp.value = lt.autoSay;
@@ -791,13 +813,14 @@ function renderPreview(){
       <tr><td colspan="5" class="num"><b>Say</b></td><td class="num mono"><b>${fmt0(p.t.say)}</b></td></tr>
     </table></div>
     <h4>MES — Measurement</h4>
-    ${p.lines.map(l => { const kind = unitKind(l.unit), f = FIELDS[kind];
+    ${p.lines.map(l => { const kind = unitKind(l.unit), f = FIELDS[kind], mUnit = measuredUnit(kind), div = unitDivisor(l.unit);
       return `<p style="font-size:11px;margin:10px 0 4px"><b>Item No. ${esc(l.itemNo)}</b></p>
       <div class="scroll"><table class="tbl">
         <tr><th>Chainage</th>${f.map(k=>`<th class="num">${FLABEL[k]}</th>`).join('')}<th class="num">Qty</th><th>Unit</th></tr>
         ${l.rows.map(r=>`<tr><td>${esc(r.ch)}</td>${f.map(k=>`<td class="num mono">${r[k]===''?'':n(r[k])}</td>`).join('')}
-          <td class="num mono">${fmt(rowQty(r,kind))}</td><td>${esc(l.unit)}</td></tr>`).join('')}
-        <tr><td class="num"><b>Total</b></td>${f.map(()=>'<td></td>').join('')}<td class="num mono"><b>${fmt(l.qty)}</b></td><td>${esc(l.unit)}</td></tr>
+          <td class="num mono">${fmt(rowQty(r,kind))}</td><td>${esc(mUnit)}</td></tr>`).join('')}
+        <tr><td class="num"><b>Total measured</b></td>${f.map(()=>'<td></td>').join('')}<td class="num mono"><b>${fmt(l.measured)}</b></td><td>${esc(mUnit)}</td></tr>
+        ${div!==1 ? `<tr><td class="num" colspan="${f.length+1}" style="color:#b3402a">÷ ${fmt0(div)} (${esc(mUnit)} → ${esc(l.unit)})</td><td class="num mono"><b>${fmt(l.qty)}</b></td><td>${esc(l.unit)}</td></tr>` : ''}
         <tr><td class="num"><b>Say</b></td>${f.map(()=>'<td></td>').join('')}<td class="num mono"><b>${fmt(l.say)}</b></td><td>${esc(l.unit)}</td></tr>
       </table></div>`; }).join('')}`;
 }
@@ -917,7 +940,7 @@ async function buildWorkbook(){
   const XCOL = { nos:'E', len:'G', wid:'I', thk:'K' };
   let mr = 6;
   p.lines.forEach(l => {
-    const kind = unitKind(l.unit), fl = FIELDS[kind];
+    const kind = unitKind(l.unit), fl = FIELDS[kind], mUnit = measuredUnit(kind), div = unitDivisor(l.unit);
     put(m, 'A'+mr, 'Item No.', ARIAL(12, true), {horizontal:'center'});
     put(m, 'B'+mr, l.itemNo,   ARIAL(12, true), {horizontal:'center'});
     mr++;
@@ -937,12 +960,17 @@ async function buildWorkbook(){
         if(i < fl.length - 1) put(m, XCOL[k] + mr, 'x', ARIAL(12), CTRC);
       });
       put(m, 'M'+mr, r2(rowQty(row, kind)), ARIAL(12), CTRC, null, '0.00');
-      put(m, 'N'+mr, l.unit, ARIAL(12), CTRC);
+      put(m, 'N'+mr, mUnit, ARIAL(12), CTRC);
       m.getRow(mr).height = 60; mr++;
     });
-    put(m, 'L'+mr, 'Total', ARIAL(12, true), CTRC);
-    put(m, 'M'+mr, l.qty, ARIAL(12, true), CTRC, null, '0.00');
-    put(m, 'N'+mr, l.unit, ARIAL(12, true), CTRC); mr++;
+    put(m, 'L'+mr, div !== 1 ? 'Total ('+mUnit+')' : 'Total', ARIAL(12, true), CTRC);
+    put(m, 'M'+mr, l.measured, ARIAL(12, true), CTRC, null, '0.00');
+    put(m, 'N'+mr, mUnit, ARIAL(12, true), CTRC); mr++;
+    if(div !== 1){
+      put(m, 'L'+mr, '÷ '+fmt0(div), ARIAL(12, true), CTRC);
+      put(m, 'M'+mr, l.qty, ARIAL(12, true), CTRC, null, '0.0000');
+      put(m, 'N'+mr, l.unit, ARIAL(12, true), CTRC); mr++;
+    }
     put(m, 'L'+mr, 'Say', ARIAL(12, true), CTRC);
     put(m, 'M'+mr, l.say, ARIAL(12, true), CTRC, null, '0.00');
     put(m, 'N'+mr, l.unit, ARIAL(12, true), CTRC);
@@ -1081,7 +1109,7 @@ $('#btnPdf').onclick = () => {
   y = sheetTitle('MEASUREMENT', W, M);
 
   p.lines.forEach(l => {
-    const kind = unitKind(l.unit), fl = FIELDS[kind];
+    const kind = unitKind(l.unit), fl = FIELDS[kind], mUnit = measuredUnit(kind), div = unitDivisor(l.unit);
     if(y > doc.internal.pageSize.getHeight() - 120){ doc.addPage('a4','landscape'); y = sheetTitle('MEASUREMENT', W, M); }
     doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.text('Item No. ' + l.itemNo, M, y); y += 12;
     doc.setFont('helvetica','normal'); doc.setFontSize(8);
@@ -1099,11 +1127,16 @@ $('#btnPdf').onclick = () => {
       if(c.t==='field') return { content:row[c.k]===''?'':String(n(row[c.k])), styles:{halign:'center'} };
       if(c.t==='x')     return { content:'x', styles:{halign:'center'} };
       if(c.t==='qty')   return { content:fmt(rowQty(row, kind)), styles:{halign:'center'} };
-      return { content:l.unit, styles:{halign:'center'} };
+      return { content:mUnit, styles:{halign:'center'} };
     }));
-    body.push([ { content:'Total', colSpan:preQty, styles:{halign:'right', fontStyle:'bold'} },
-                { content:fmt(l.qty), styles:{halign:'center', fontStyle:'bold'} },
-                { content:l.unit, styles:{halign:'center', fontStyle:'bold'} } ]);
+    body.push([ { content: div!==1 ? 'Total ('+mUnit+')' : 'Total', colSpan:preQty, styles:{halign:'right', fontStyle:'bold'} },
+                { content:fmt(l.measured), styles:{halign:'center', fontStyle:'bold'} },
+                { content:mUnit, styles:{halign:'center', fontStyle:'bold'} } ]);
+    if(div !== 1){
+      body.push([ { content:'÷ '+fmt0(div)+' ('+mUnit+' → '+l.unit+')', colSpan:preQty, styles:{halign:'right', fontStyle:'bold', textColor:[179,64,42]} },
+                  { content:fmt(l.qty), styles:{halign:'center', fontStyle:'bold'} },
+                  { content:l.unit, styles:{halign:'center', fontStyle:'bold'} } ]);
+    }
     body.push([ { content:'Say', colSpan:preQty, styles:{halign:'right', fontStyle:'bold'} },
                 { content:fmt(l.say), styles:{halign:'center', fontStyle:'bold'} },
                 { content:l.unit, styles:{halign:'center', fontStyle:'bold'} } ]);
