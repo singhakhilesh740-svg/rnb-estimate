@@ -15,10 +15,25 @@ const OFFICE_DEFAULT = {
 };
 const FRAMED = 'Estimate framed in the office of the Executive Engineer, Dahod (R&B ) Division , Dahod , for the probale expenses that will be incurred in  ';
 
+/* seed data versions — bump when data.js seeds change, to force-refresh stale localStorage */
+const SEED_VERSIONS = { buildings: 3, sor: 2 };
+function seedGet(key, seedName, seed){
+  const verKey = 'rnb_seedver_' + seedName;
+  const savedVer = store.get(verKey, 0);
+  const wanted = SEED_VERSIONS[seedName];
+  const stored = store.get(key, null);
+  // If seed version changed OR nothing stored, (re)load from seed
+  if(savedVer !== wanted || stored === null){
+    store.set(verKey, wanted);
+    if(seed){ store.set(key, seed); return seed.map(x => (typeof x === 'object' ? {...x} : x)); }
+  }
+  return stored;
+}
+
 let roads     = store.get('rnb_roads', null)     || ROADS_SEED.slice();
 let items     = store.get('rnb_items', null)     || ITEMS_SEED.slice();
-let sorItems  = store.get('rnb_sor_items', null) || (typeof SOR_SEED !== 'undefined' ? SOR_SEED.map(x=>({...x})) : []);
-let buildings = store.get('rnb_buildings', null) || (typeof BUILDINGS_SEED !== 'undefined' ? BUILDINGS_SEED.slice() : []);
+let sorItems  = seedGet('rnb_sor_items', 'sor', typeof SOR_SEED !== 'undefined' ? SOR_SEED : []);
+let buildings = seedGet('rnb_buildings', 'buildings', typeof BUILDINGS_SEED !== 'undefined' ? BUILDINGS_SEED : []);
 let workDescs = store.get('rnb_workdescs', null) || (typeof WORKDESCS_SEED !== 'undefined' ? WORKDESCS_SEED.map(x=>({...x})) : []);
 let people    = store.get('rnb_people', null)    || (typeof PEOPLE_SEED !== 'undefined' ? PEOPLE_SEED.slice() : []);
 let office    = store.get('rnb_office', null)     || {...OFFICE_DEFAULT};
@@ -611,7 +626,17 @@ $$('.data-view[data-view="rate"] .back').forEach(b => b.onclick = () => {
   showDataGrid();
 });
 $('#btnAddRoad').onclick = () => { roads.unshift({name:'', km:''}); store.set('rnb_roads', roads); renderRoadsTable(); };
-$('#btnAddBuilding').onclick = () => { buildings.unshift({name:''}); store.set('rnb_buildings', buildings); renderBuildingsTable(); };
+$('#btnAddBuilding').onclick = () => { buildings.unshift({name:'',kind:''}); store.set('rnb_buildings', buildings); renderBuildingsTable(); };
+$('#btnResetBuildings').onclick = () => {
+  if(typeof BUILDINGS_SEED === 'undefined') return;
+  if(!confirm('PRB Dahod ki 390 buildings wapas load karein? Aapke manual changes chale jayenge.')) return;
+  buildings = BUILDINGS_SEED.map(x=>({...x}));
+  store.set('rnb_buildings', buildings);
+  store.set('rnb_seedver_buildings', SEED_VERSIONS.buildings);
+  buildingKindFilter = '';
+  renderBuildingsTable(); refreshHints();
+  toast('PRB building list reload ho gayi (390 buildings).');
+};
 $('#btnAddItem').onclick = () => { items.unshift({itemNo:'', desc:'', rate:'', unit:'MT', cat: dataItemsCat || ''}); store.set('rnb_items', items); renderItemsTable(); };
 $('#btnAddWD').onclick = () => { workDescs.unshift({text:'', type: est.mode || 'both'}); store.set('rnb_workdescs', workDescs); renderWDTable(); };
 $('#btnAddPerson').onclick = () => { people.unshift(''); store.set('rnb_people', people); renderPeopleTable(); };
