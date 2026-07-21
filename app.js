@@ -46,6 +46,10 @@ if(!Array.isArray(est.roadList)) est.roadList = [];
 if(est.roadList.length === 0 && est.mode === 'road' && (est.road || est.roadKm || est.wcFrom || est.wcTo)){
   est.roadList = [{ name: est.road || '', km: est.roadKm || '', wcFrom: est.wcFrom || '', wcTo: est.wcTo || '' }];
 }
+/* migrate single workDesc string → workDescList array (multiple work descriptions) */
+if(!Array.isArray(est.workDescList)){
+  est.workDescList = (est.workDesc && est.workDesc.trim()) ? [est.workDesc.trim()] : [];
+}
 /* one-time: users who set a mode before the Based→Mode wizard existed get asked once */
 if(!store.get('rnb_wizard_seen', false)){
   store.set('rnb_wizard_seen', true);
@@ -117,6 +121,7 @@ function applyModeUI(){
   if(showRoad){
     if(!est.roadList || !est.roadList.length) est.roadList = [{ name:'', km:'', wcFrom:'', wcTo:'' }];
     renderRoadEntries();
+    renderWorkDescEntries();
   }
   applyRateSourceUI();
   renderCatChips();
@@ -174,6 +179,37 @@ function renderRoadEntries(){
   });
 }
 
+/* ---- multiple work descriptions (road mode) ---- */
+function fillWorkDescDatalist(){
+  const dl = $('#workDescDatalist');
+  if(!dl) return;
+  const opts = workDescs.filter(w => w.text && (w.type === est.mode || w.type === 'both'));
+  dl.innerHTML = opts.map(w => `<option value="${esc(w.text)}"></option>`).join('');
+}
+function renderWorkDescEntries(){
+  const box = $('#workDescEntries');
+  if(!box) return;
+  if(!est.workDescList || !est.workDescList.length) est.workDescList = [''];
+  fillWorkDescDatalist();
+  const ph = (est.rateSource === 'arc')
+    ? 'Choose or type — Providing SDBC Paver Patta…'
+    : 'Type work description for this estimate…';
+  box.innerHTML = est.workDescList.map((d, i) => `
+    <div class="wd-entry">
+      <input list="workDescDatalist" data-wdi="${i}" value="${esc(d || '')}" placeholder="${esc(ph)}" autocomplete="off">
+      ${est.workDescList.length > 1 ? `<button class="btn danger" style="padding:5px 10px" data-wdrm="${i}">×</button>` : ''}
+    </div>`).join('');
+  box.querySelectorAll('input[data-wdi]').forEach(inp => inp.oninput = e => {
+    est.workDescList[+e.target.dataset.wdi] = e.target.value;
+    save(); refreshWorkName();
+  });
+  box.querySelectorAll('[data-wdrm]').forEach(b => b.onclick = () => {
+    est.workDescList.splice(+b.dataset.wdrm, 1);
+    if(!est.workDescList.length) est.workDescList = [''];
+    save(); renderWorkDescEntries(); refreshWorkName();
+  });
+}
+
 function applyRateSourceUI(){
   const rs = est.rateSource || 'arc';
   const bl = $('#basedLbl');
@@ -182,10 +218,8 @@ function applyRateSourceUI(){
   const isArc = rs === 'arc';
   $$('.arc-only').forEach(el => el.hidden = !isArc);
   $$('.sor-only').forEach(el => el.hidden = isArc);
-  // Sync workDesc value into whichever input is visible
-  const wd = est.workDesc || '';
-  if($('#workDesc')) $('#workDesc').value = wd;
-  if($('#workDescFree')) $('#workDescFree').value = wd;
+  // re-render work description entries (placeholder/datalist depend on mode)
+  if(est.mode === 'road') renderWorkDescEntries();
   // Update item combo placeholder + hint
   const inp = $('#itemInput');
   if(inp){
@@ -302,7 +336,8 @@ function buildWorkName(){
   // road mode — one or more roads, each with its own km + working chainage
   const list = (est.roadList || []).filter(r => (r.name || '').trim());
   if(!list.length) return '—';
-  const wd = est.workDesc ? ` (${est.workDesc})` : '';
+  const descs = (est.workDescList || []).map(d => (d || '').trim()).filter(Boolean);
+  const wd = descs.length ? ` (${descs.join(' & ')})` : '';
   const part = r => {
     const km = r.km ? ` Km.${r.km}` : '';
     const wc = (r.wcFrom || r.wcTo) ? `(working chainage ${r.wcFrom || ''}-${r.wcTo || ''})` : '';
@@ -803,21 +838,12 @@ makeCombo($('#roadInput'), $('#roadList'),
   d => { est.road = d.raw.name;
          $('#roadInput').value = d.raw.name; save(); refreshWorkName(); });
 
-/* work description combo — dropdown + free text (ARC mode) */
-freeText($('#workDesc'), 'workDesc', refreshWorkName);
-makeCombo($('#workDesc'), $('#workDescList'),
-  () => workDescs.filter(w => w.text && (w.type === est.mode || w.type === 'both'))
-                 .map(w => ({ label:w.text, search:w.text, raw:w })),
-  d => { est.workDesc = d.raw.text; $('#workDesc').value = d.raw.text; save(); refreshWorkName(); });
-
-/* work description free-text (SOR / RA mode) — same est.workDesc key */
-{
-  const fi = $('#workDescFree');
-  if(fi){
-    fi.value = est.workDesc || '';
-    fi.addEventListener('input', () => { est.workDesc = fi.value; save(); refreshWorkName(); });
-  }
-}
+/* + Add work description button (multiple descriptions per work) */
+$('#btnAddWorkDesc').onclick = () => {
+  if(!Array.isArray(est.workDescList)) est.workDescList = [];
+  est.workDescList.push('');
+  save(); renderWorkDescEntries(); refreshWorkName();
+};
 
 /* prepared-by / checked-by combos — dropdown + free text */
 freeText($('#prepBy'), 'prepBy');
@@ -1319,12 +1345,13 @@ function loadSaved(id){
   if(est.roadList.length === 0 && est.mode === 'road' && (est.road || est.roadKm || est.wcFrom || est.wcTo)){
     est.roadList = [{ name: est.road || '', km: est.roadKm || '', wcFrom: est.wcFrom || '', wcTo: est.wcTo || '' }];
   }
+  if(!Array.isArray(est.workDescList)){
+    est.workDescList = (est.workDesc && est.workDesc.trim()) ? [est.workDesc.trim()] : [];
+  }
   currentSavedId = id;
   save();
   // repopulate inputs
   $('#roadInput').value = est.road || '';
-  $('#workDesc').value = est.workDesc || '';
-  const wdf = $('#workDescFree'); if(wdf) wdf.value = est.workDesc || '';
   $('#prepBy').value = est.prepBy || '';
   $('#chkBy').value = est.chkBy || '';
   applyModeUI(); refreshHints(); refreshWorkName(); renderItemBlocks(); renderPreview();
@@ -1424,10 +1451,9 @@ $('#fileImportSaved').onchange = e => {
 $('#btnNew').onclick = () => {
   if(!confirm('Naya estimate shuru karein? Abhi ka data clear ho jayega.')) return;
   currentSavedId = null;
-  est = { mode:'', rateSource:'', road:'', roadList:[], workDesc:'', prepBy:est.prepBy, chkBy:est.chkBy, qc:1, lc:0, lines:[] };
+  est = { mode:'', rateSource:'', road:'', roadList:[], workDescList:[], prepBy:est.prepBy, chkBy:est.chkBy, qc:1, lc:0, lines:[] };
   save();
-  ['roadInput','workDesc'].forEach(id => { const el = $('#'+id); if(el) el.value = ''; });
-  const wdf = $('#workDescFree'); if(wdf) wdf.value = '';
+  ['roadInput'].forEach(id => { const el = $('#'+id); if(el) el.value = ''; });
   refreshWorkName(); renderItemBlocks(); renderPreview();
   $$('nav.tabs button')[0].click();
   openGate('based');   // fresh estimate → ask Based, then Road/Building
@@ -1436,7 +1462,6 @@ $('#btnNew').onclick = () => {
 /* ------------------------------- init ------------------------------- */
 store.set('rnb_roads', roads); store.set('rnb_items', items);
 store.set('rnb_buildings', buildings); store.set('rnb_workdescs', workDescs); store.set('rnb_people', people);
-$('#workDesc').value = est.workDesc || '';
 $('#prepBy').value = est.prepBy || '';
 $('#chkBy').value = est.chkBy || '';
 refreshHints(); refreshWorkName(); renderItemBlocks(); applyModeUI();

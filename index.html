@@ -89,6 +89,8 @@ button.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .road-entry .re-num{font-family:'Archivo';font-weight:700;font-size:12px;color:var(--blueprint);text-transform:uppercase;letter-spacing:.06em}
 .road-entry .re-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px}
 @media(max-width:760px){.road-entry .re-grid{grid-template-columns:1fr 1fr}}
+.wd-entry{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.wd-entry input{flex:1}
 .worktitle .thin{border-top:1px solid var(--blueprint);padding-top:9px}
 .worktitle .lbl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700}
 .worktitle .val{font-size:15px;font-weight:600;font-family:'Archivo';margin-top:3px;word-break:break-word}
@@ -249,20 +251,12 @@ button.btn.back{padding:7px 12px;font-size:11px}
       <p class="hint">Ek hi work me kai roads add kar sakte ho — har road ka apna Km aur working chainage.</p>
     </div>
 
-    <div class="grid g2" style="margin-top:12px">
-      <div class="arc-only road-only">
-        <label for="workDesc">Work description</label>
-        <div class="combo">
-          <input id="workDesc" autocomplete="off" placeholder="Choose or type — Providing SDBC Paver Patta…">
-          <div class="combo-list" id="workDescList"></div>
-        </div>
-        <p class="hint">Dropdown se choose karo, ya naya type karo. Naye options “Data” tab me add hote hain.</p>
-      </div>
-      <div class="sor-only road-only" hidden>
-        <label for="workDescFree">Work description</label>
-        <input id="workDescFree" autocomplete="off" placeholder="Type work description for this SOR-based estimate…">
-        <p class="hint">SOR / RA estimate me har baar description manually likho.</p>
-      </div>
+    <div class="road-only" style="margin-top:12px">
+      <label>Work description(s)</label>
+      <div id="workDescEntries"></div>
+      <datalist id="workDescDatalist"></datalist>
+      <button class="btn ghost" id="btnAddWorkDesc" style="margin-top:8px">+ Add another description</button>
+      <p class="hint">Ek hi Name of Work me kai work descriptions add kar sakte ho — sab combine ho jayenge. ARC me dropdown se choose ya type; SOR/RA me type karo.</p>
     </div>
 
     <div class="grid g2" style="margin-top:12px">
