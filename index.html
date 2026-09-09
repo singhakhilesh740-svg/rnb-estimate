@@ -290,7 +290,10 @@ button.btn.back{padding:7px 12px;font-size:11px}
       <div class="combo-list" id="itemList"></div>
     </div>
     <div class="chips" id="catChips"></div>
-    <p class="hint">Item chunte hi item no., approved rate, unit auto-fill ho jayenge aur Abstract me copy ho jayega.</p>
+    <div class="row-actions" style="margin-top:10px">
+      <button class="btn ghost" id="btnImportSaved" type="button">⤵ Import from saved estimate</button>
+    </div>
+    <p class="hint">Item chunte hi item no., approved rate, unit auto-fill ho jayenge aur Abstract me copy ho jayega. Purane estimate se items + measurement seedha import bhi kar sakte ho — import ke baad sab edit ho sakta hai.</p>
     <div id="itemBlocks" style="margin-top:16px"></div>
   </div>
 
@@ -514,6 +517,19 @@ button.btn.back{padding:7px 12px;font-size:11px}
 </main>
 
 <div class="toast" id="toast"></div>
+
+<div class="modal" id="impModal" style="position:fixed;inset:0;background:rgba(15,36,56,.55);z-index:80;display:none;align-items:center;justify-content:center;padding:16px">
+  <div style="background:#fff;max-width:640px;width:100%;max-height:88vh;overflow:auto;padding:18px;border-top:4px solid var(--accent)">
+    <h2 class="disp" style="margin:0 0 4px;font-size:16px" id="impTitle">Import from saved estimate</h2>
+    <p class="hint" style="margin:0 0 12px" id="impHint">Kaunse estimate se items lene hai wo chuno.</p>
+    <div id="impBody"></div>
+    <div class="row-actions" style="margin-top:16px">
+      <button class="btn accent" id="impAdd" type="button" hidden>Import selected</button>
+      <button class="btn ghost" id="impBack" type="button" hidden>← Back</button>
+      <button class="btn ghost" id="impCancel" type="button">Cancel</button>
+    </div>
+  </div>
+</div>
 
 <div class="modal" id="mapModal" style="position:fixed;inset:0;background:rgba(15,36,56,.55);z-index:80;display:none;align-items:center;justify-content:center;padding:16px">
   <div style="background:#fff;max-width:560px;width:100%;max-height:86vh;overflow:auto;padding:18px;border-top:4px solid var(--accent)">

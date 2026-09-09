@@ -1475,3 +1475,122 @@ $('#prepBy').value = est.prepBy || '';
 $('#chkBy').value = est.chkBy || '';
 refreshHints(); refreshWorkName(); renderItemBlocks(); applyModeUI();
 if(!est.mode || !est.rateSource) openGate('based');
+
+
+/* ==================== import items from a saved estimate ==================== */
+(function(){
+  const modal = $('#impModal');
+  const btn   = $('#btnImportSaved');
+  if(!modal || !btn) return;
+
+  let pickedId = null;
+
+  const closeImp = () => { modal.style.display = 'none'; };
+  const openImp  = () => { pickedId = null; modal.style.display = 'flex'; renderImp(); };
+
+  function renderImp(){
+    const body = $('#impBody');
+    const rec  = pickedId ? savedEstimates.find(s => s.id === pickedId) : null;
+
+    /* ---- step 1: pick a saved estimate ---- */
+    if(!rec){
+      $('#impTitle').textContent = 'Import from saved estimate';
+      $('#impHint').textContent  = 'Kaunse estimate se items lene hai wo chuno.';
+      $('#impAdd').hidden = true; $('#impBack').hidden = true;
+
+      if(!savedEstimates.length){
+        body.innerHTML = '<div class="empty">Abhi koi estimate save nahi hai. Pehle koi estimate save karo.</div>';
+        return;
+      }
+      body.innerHTML =
+        '<input id="impSearch" placeholder="Saved estimate search — naam ya road…" autocomplete="off">' +
+        '<div class="scroll" style="margin-top:10px;max-height:48vh"><table class="tbl" style="min-width:460px">' +
+        '<tr><th style="width:54%">Name</th><th>Items</th><th>Type</th><th></th></tr>' +
+        savedEstimates.map(s => {
+          const nLines = (s.est && Array.isArray(s.est.lines)) ? s.est.lines.length : 0;
+          const hay = ((s.name || '') + ' ' + (s.workName || '')).toLowerCase();
+          return `<tr data-hay="${esc(hay)}">
+            <td><b>${esc(s.name)}</b>
+                <div style="font-size:10px;color:var(--ink-2)">${esc((s.workName || '').slice(0,70))}</div></td>
+            <td class="num mono">${nLines}</td>
+            <td style="font-size:11px">${esc((s.mode || '').slice(0,4))}${s.rateSource ? ' / ' + esc(s.rateSource.toUpperCase()) : ''}</td>
+            <td><button class="btn ghost" style="padding:4px 8px" data-pick="${s.id}"${nLines ? '' : ' disabled'}>Open</button></td>
+          </tr>`;
+        }).join('') + '</table></div>';
+
+      const si = $('#impSearch');
+      si.oninput = e => {
+        const q = e.target.value.trim().toLowerCase();
+        body.querySelectorAll('tr[data-hay]').forEach(tr => {
+          tr.style.display = (!q || tr.dataset.hay.includes(q)) ? '' : 'none';
+        });
+      };
+      body.querySelectorAll('[data-pick]').forEach(b => b.onclick = () => { pickedId = b.dataset.pick; renderImp(); });
+      return;
+    }
+
+    /* ---- step 2: pick items from that estimate ---- */
+    const lines = Array.isArray(rec.est && rec.est.lines) ? rec.est.lines : [];
+    $('#impTitle').textContent = 'Items — ' + rec.name;
+    $('#impHint').textContent  = 'Jo items chahiye tick karo. Import ke baad sab edit ho sakta hai.';
+    $('#impAdd').hidden = false; $('#impBack').hidden = false;
+
+    body.innerHTML =
+      '<div style="display:flex;flex-wrap:wrap;gap:14px;font-size:12px;margin-bottom:10px">' +
+      '<label><input type="checkbox" id="impAll" checked> Sab select</label>' +
+      '<label><input type="checkbox" id="impMeas" checked> Measurement rows bhi copy karo</label>' +
+      '<label><input type="checkbox" id="impRate"> Rate list se latest rate lo</label>' +
+      '</div><div class="scroll" style="max-height:46vh"><table class="tbl" style="min-width:520px">' +
+      '<tr><th style="width:6%"></th><th style="width:56%">Item</th><th>Unit</th><th>Rate ₹</th><th>Qty</th><th>Rows</th></tr>' +
+      lines.map((l, i) => {
+        let qty = 0;
+        try { qty = lineTotal(l).say; } catch(e){}
+        const nRows = Array.isArray(l.rows) ? l.rows.length : 0;
+        return `<tr>
+          <td><input type="checkbox" data-i="${i}" checked></td>
+          <td style="font-size:12px">${esc(String(l.desc || '').slice(0,150))}
+              ${l.appRateNo ? `<div style="font-size:10px;color:var(--ink-2)">No.${esc(String(l.appRateNo))}</div>` : ''}</td>
+          <td style="font-size:11px">${esc(l.unit || '')}</td>
+          <td class="num mono">${fmt(n(l.rate))}</td>
+          <td class="num mono">${fmt(qty)}</td>
+          <td class="num mono">${nRows}</td>
+        </tr>`;
+      }).join('') + '</table></div>';
+
+    $('#impAll').onchange = e => {
+      body.querySelectorAll('input[data-i]').forEach(c => c.checked = e.target.checked);
+    };
+  }
+
+  btn.onclick = openImp;
+  $('#impCancel').onclick = closeImp;
+  $('#impBack').onclick   = () => { pickedId = null; renderImp(); };
+  modal.onclick = e => { if(e.target === modal) closeImp(); };
+
+  $('#impAdd').onclick = () => {
+    const rec = savedEstimates.find(s => s.id === pickedId);
+    if(!rec) return;
+    const body      = $('#impBody');
+    const withMeas  = $('#impMeas') ? $('#impMeas').checked : true;
+    const useLatest = $('#impRate') ? $('#impRate').checked : false;
+    const picks = Array.from(body.querySelectorAll('input[data-i]:checked')).map(c => +c.dataset.i);
+    if(!picks.length){ toast('Kam se kam ek item select karo.'); return; }
+
+    picks.forEach(i => {
+      const src = rec.est.lines[i];
+      if(!src) return;
+      const cp = JSON.parse(JSON.stringify(src));
+      if(useLatest){
+        const m = items.find(it => it.desc === cp.desc)
+               || items.find(it => String(it.itemNo || '') === String(cp.appRateNo || '') && (it.cat || '') === (cp.cat || ''));
+        if(m){ cp.rate = m.rate; cp.unit = m.unit || cp.unit; cp.appRateNo = m.itemNo || cp.appRateNo; }
+      }
+      if(!withMeas){ cp.rows = [blankRow()]; cp.sayOverride = null; }
+      if(!Array.isArray(cp.rows) || !cp.rows.length) cp.rows = [blankRow()];
+      est.lines.push(cp);
+    });
+
+    save(); renderItemBlocks(); closeImp();
+    toast(picks.length + ' item import ho gaye — ab edit kar sakte ho.');
+  };
+})();
