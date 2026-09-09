@@ -1,11 +1,14 @@
-const CACHE = 'rnb-estimate-v18';
+const CACHE = 'rnb-estimate-v20';
 const CORE = [
-  './', './index.html', './app.js', './data.js', './manifest.json',
+  './', './index.html', './app.js', './data.js', './auth.js', './manifest.json',
   './icon-192.png', './icon-512.png',
   'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
-  'https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js'
+  'https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js',
+  'https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js',
+  'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js',
+  'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js'
 ];
 
 self.addEventListener('install', e => {

@@ -202,10 +202,19 @@ button.btn.back{padding:7px 12px;font-size:11px}
       <h1>Estimate Builder</h1>
       <p>R &amp; B Sub Division, Dahod</p>
     </div>
-    <div class="mode-badge">
-      <span class="lbl" id="basedLbl">ARC</span>
-      <span class="lbl" id="modeLbl">—</span>
-      <button id="btnMode">Change</button>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <div id="userChip" style="display:none;align-items:center;gap:8px;background:rgba(255,255,255,.10);
+           padding:5px 10px;border-radius:2px;font-size:11px;color:#dce8f4">
+        <span id="syncDot" title="cloud sync">☁</span>
+        <span><b id="chipName" style="color:#fff"></b><br><span id="chipPost" style="font-size:10px;opacity:.8"></span></span>
+        <button id="btnEditProfile" style="border:0;background:transparent;color:#ffb37a;cursor:pointer;font-size:11px">Edit</button>
+        <button id="btnSignOut" style="border:0;background:transparent;color:#ffb37a;cursor:pointer;font-size:11px">Sign out</button>
+      </div>
+      <div class="mode-badge">
+        <span class="lbl" id="basedLbl">ARC</span>
+        <span class="lbl" id="modeLbl">—</span>
+        <button id="btnMode">Change</button>
+      </div>
     </div>
   </div>
   <div class="rule-thick"></div><div class="rule-thin"></div>
@@ -518,6 +527,42 @@ button.btn.back{padding:7px 12px;font-size:11px}
 
 <div class="toast" id="toast"></div>
 
+<div id="loginBox" style="position:fixed;inset:0;background:var(--blueprint);z-index:120;display:none;
+     align-items:center;justify-content:center;padding:20px">
+  <div style="background:#fff;max-width:420px;width:100%;padding:26px;border-top:4px solid var(--accent);text-align:center">
+    <img src="icon-192.png" alt="" style="width:60px;height:60px">
+    <h2 class="disp" style="margin:12px 0 4px;font-size:18px">Estimate Builder</h2>
+    <p class="hint" style="margin:0 0 20px">R &amp; B — FACE, Abstract &amp; Measurement sheets.<br>
+       Aage badhne ke liye Google se sign in karo.</p>
+    <button class="btn accent" id="btnGoogle" type="button" style="width:100%;justify-content:center">
+      Sign in with Google</button>
+    <p id="loginErr" style="color:#b3261e;font-size:12px;margin:12px 0 0"></p>
+    <p class="hint" style="margin:14px 0 0;font-size:11px">Aapki saved estimates aapke account me cloud par
+       backup rahengi — kisi bhi device se khul jayengi.</p>
+  </div>
+</div>
+
+<div id="profileBox" style="position:fixed;inset:0;background:rgba(15,36,56,.65);z-index:110;display:none;
+     align-items:center;justify-content:center;padding:16px">
+  <div style="background:#fff;max-width:480px;width:100%;max-height:88vh;overflow:auto;padding:20px;
+       border-top:4px solid var(--accent)">
+    <h2 class="disp" style="margin:0 0 4px;font-size:16px">Aapki detail</h2>
+    <p class="hint" style="margin:0 0 14px">Ye detail estimate ke header aur signature block me apne aap aayegi.</p>
+    <div class="grid">
+      <div><label for="pfName">Naam</label><input id="pfName" autocomplete="off" placeholder="Pura naam"></div>
+      <div><label for="pfPost">Post</label><select id="pfPost"></select></div>
+      <div><label for="pfSub">Sub Division office</label>
+           <input id="pfSub" autocomplete="off" placeholder="R &amp; B Sub Division, Dahod"></div>
+      <div><label for="pfDiv">Division name</label>
+           <input id="pfDiv" autocomplete="off" placeholder="Dahod (R &amp; B) Division, Dahod"></div>
+    </div>
+    <p id="pfErr" style="color:#b3261e;font-size:12px;margin:12px 0 0"></p>
+    <div class="row-actions" style="margin-top:16px">
+      <button class="btn accent" id="pfSave" type="button">Save profile</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal" id="impModal" style="position:fixed;inset:0;background:rgba(15,36,56,.55);z-index:80;display:none;align-items:center;justify-content:center;padding:16px">
   <div style="background:#fff;max-width:640px;width:100%;max-height:88vh;overflow:auto;padding:18px;border-top:4px solid var(--accent)">
     <h2 class="disp" style="margin:0 0 4px;font-size:16px" id="impTitle">Import from saved estimate</h2>
@@ -547,8 +592,12 @@ button.btn.back{padding:7px 12px;font-size:11px}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="data.js"></script>
 <script src="app.js"></script>
+<script src="auth.js"></script>
 <script>
 if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 </script>

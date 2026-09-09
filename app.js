@@ -1068,7 +1068,7 @@ async function buildWorkbook(){
   put(a, 'F'+rSay, p.t.say, ARIAL(12, true), RGT, BOX, '0.00');
   for(let i = rTot; i <= rSay; i++) a.getRow(i).height = 14.25;
   const sg = rSay + 8;
-  ['Deputy Executive Engineer','R&B Sub Division','Dahod']
+  (typeof signBlock === 'function' ? signBlock() : ['Deputy Executive Engineer','R&B Sub Division','Dahod'])
     .forEach((t,i) => { a.mergeCells(`D${sg+i}:F${sg+i}`); put(a, 'D'+(sg+i), t, ARIAL(12), CTRC); });
 
   /* ---------- MES ---------- */
@@ -1171,9 +1171,9 @@ $('#btnPdf').onclick = () => {
   }
   function signature(y, xCenter){
     doc.setFont('helvetica','normal'); doc.setFontSize(9);
-    doc.text('Deputy Executive Engineer', xCenter, y,      {align:'center'});
-    doc.text('R & B Sub Division,',        xCenter, y + 12, {align:'center'});
-    doc.text('Dahod.',                     xCenter, y + 24, {align:'center'});
+    const sb = (typeof signBlock === 'function' ? signBlock()
+                : ['Deputy Executive Engineer','R & B Sub Division,','Dahod.']);
+    sb.forEach((t,i) => { if(t) doc.text(String(t), xCenter, y + i*12, {align:'center'}); });
   }
 
   /* ================= FACE (portrait, text only — no grid, like Excel) ================= */
