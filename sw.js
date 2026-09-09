@@ -1,4 +1,4 @@
-const CACHE = 'rnb-estimate-v20';
+const CACHE = 'rnb-estimate-v21';
 const CORE = [
   './', './index.html', './app.js', './data.js', './auth.js', './manifest.json',
   './icon-192.png', './icon-512.png',

@@ -72,11 +72,14 @@ window.userProfile = store.get('rnb_profile', null);
       $('#loginErr').textContent = 'Login nahi hua: ' + (err && err.code ? err.code : err);
     });
   };
-  const oBtn = $('#btnSignOut');
-  if(oBtn) oBtn.onclick = () => {
-    if(!confirm('Sign out karna hai? Local estimates device par rahengi.')) return;
+  const doSignOut = () => {
+    if(!confirm('Sign out karna hai? Aapki estimates cloud me safe rahengi.')) return;
+    if(profBox) profBox.style.display = 'none';
     auth.signOut();
   };
+  ['#btnSignOut', '#pfSignOut', '#btnSignOut2'].forEach(sel => {
+    const b = $(sel); if(b) b.onclick = doSignOut;
+  });
 
   /* is browser ka local data kis account ka hai */
   const OWNER_KEY = 'rnb_saved_uid';
@@ -114,14 +117,31 @@ window.userProfile = store.get('rnb_profile', null);
     const prevUid = store.get(OWNER_KEY, null);
     if(prevUid && prevUid !== u.uid) wipeLocalForOtherUser();
     store.set(OWNER_KEY, u.uid);
-    let prof = null;
-    try{
-      const snap = await db.collection('users').doc(u.uid).get();
-      if(snap.exists) prof = snap.data();
-    }catch(e){ console.warn('[auth] profile read fail', e); }
 
-    if(!prof || !prof.name || !prof.post){ openProfile(u, prof); }
-    else { setProfile(prof); await pullCloud(); }
+    /* sign-out turant available — chahe cloud chale ya na chale */
+    showChip({ name: u.displayName || u.email || 'User', post: '' });
+
+    /* Firestore agar setup nahi hai to get() latka reh sakta hai — 8 sec ka timeout */
+    let prof = null, timedOut = false;
+    try{
+      const snap = await Promise.race([
+        db.collection('users').doc(u.uid).get(),
+        new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 8000))
+      ]);
+      if(snap && snap.exists) prof = snap.data();
+    }catch(e){
+      timedOut = true;
+      console.warn('[auth] profile read fail/timeout', e);
+    }
+
+    if(!prof || !prof.name || !prof.post){
+      openProfile(u, prof || store.get('rnb_profile', null));
+      if(timedOut) $('#pfErr').textContent =
+        'Cloud abhi connect nahi hua (Firestore database banana baaki hai). Detail bhar lo — device par save ho jayegi.';
+    } else {
+      setProfile(prof);
+      pullCloud();
+    }
   });
 
   /* ------------------------------ profile form ------------------------------ */
@@ -152,14 +172,18 @@ window.userProfile = store.get('rnb_profile', null);
       $('#pfErr').textContent = 'Chaaro field bharna zaroori hai.'; return;
     }
     $('#pfErr').textContent = 'Save ho raha hai…';
+    setProfile(p);                     // local pehle — app kabhi atkega nahi
+    profBox.style.display = 'none';
+    toast('Profile save ho gaya — ' + p.name);
     try{
-      await db.collection('users').doc(me.uid).set(p, { merge:true });
-      profBox.style.display = 'none';
-      setProfile(p);
-      await pullCloud();
-      toast('Profile save ho gaya — ' + p.name);
+      await Promise.race([
+        db.collection('users').doc(me.uid).set(p, { merge:true }),
+        new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 8000))
+      ]);
+      pullCloud();
     }catch(e){
-      $('#pfErr').textContent = 'Save nahi hua: ' + (e && e.code ? e.code : e);
+      console.warn('[auth] profile cloud save fail', e);
+      toast('Profile device par save hua — cloud sync abhi nahi hua.');
     }
   };
   const pfEdit = $('#btnEditProfile');
@@ -175,8 +199,8 @@ window.userProfile = store.get('rnb_profile', null);
   function showChip(p){
     if(!userChip) return;
     userChip.style.display = 'flex';
-    $('#chipName').textContent = p.name;
-    $('#chipPost').textContent = p.post;
+    $('#chipName').textContent = p.name || '';
+    $('#chipPost').textContent = p.post || '';
   }
   function hideChip(){ if(userChip) userChip.style.display = 'none'; }
 
