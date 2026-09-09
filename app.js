@@ -32,6 +32,15 @@ function seedGet(key, seedName, seed){
 
 let roads     = store.get('rnb_roads', null)     || ROADS_SEED.slice();
 let items     = store.get('rnb_items', null)     || ITEMS_SEED.slice();
+/* top-up: naye seed items (jo stored list me nahi hai) add karo — user ke edits safe rehte hain */
+(function topUpItems(){
+  try{
+    const k = it => (it.cat || '') + '||' + (it.itemNo || '');
+    const have = new Set(items.map(k));
+    const add = ITEMS_SEED.filter(it => !have.has(k(it)));
+    if(add.length){ items = items.concat(add.map(x => ({...x}))); store.set('rnb_items', items); }
+  }catch(e){}
+})();
 let sorItems  = seedGet('rnb_sor_items', 'sor', typeof SOR_SEED !== 'undefined' ? SOR_SEED : []);
 let buildings = seedGet('rnb_buildings', 'buildings', typeof BUILDINGS_SEED !== 'undefined' ? BUILDINGS_SEED : []);
 let workDescs = store.get('rnb_workdescs', null) || (typeof WORKDESCS_SEED !== 'undefined' ? WORKDESCS_SEED.map(x=>({...x})) : []);
@@ -63,7 +72,7 @@ const MODE = {
   road: {
     label:'Road', nameLabel:'Road name',
     namePh:'Type any word — Jhalod, Limkheda, SH.62, Sanjeli…',
-    cats:['Hotmix / Road works','Jungle cutting & Geru'], list:()=>roads
+    cats:['Hotmix / Road works','Jungle cutting & Geru','Road Furniture'], list:()=>roads
   },
   building: {
     label:'Building', nameLabel:'Building / Work name',
