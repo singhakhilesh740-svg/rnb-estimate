@@ -264,7 +264,7 @@ if (typeof document !== 'undefined') (function(){
     const n = L.picks.length;
     const lead = L.type === 'ts'
       ? 'Regarding Technical Sanction of'
-      : 'Regarding perusal and Technical Sanction of';
+      : 'Regarding perusal of';
     if (n === 1) return `${lead} estimate for the work "${L.picks[0].name}".`;
     return `${lead} estimates for the below mentioned works of R & B Sub Division, Dahod.`;
   }
