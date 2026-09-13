@@ -398,6 +398,12 @@ table.ltr-tbl tr.tot td{background:#d9d9d9}
       <div><label for="ltrNo">Outward No.</label><input id="ltrNo" placeholder="khaali chhodo to ______ aayega"></div>
       <div><label for="ltrDate">Date</label><input id="ltrDate" placeholder="e.g. 14 / 09 / 2026"></div>
     </div>
+    <div class="grid g2" style="margin-top:10px">
+      <div><label for="ltrTo">To (address block)</label>
+        <textarea id="ltrTo" rows="3"></textarea></div>
+      <div><label for="ltrSign">Signature block</label>
+        <textarea id="ltrSign" rows="3"></textarea></div>
+    </div>
     <div style="margin-top:10px">
       <label for="ltrRef">Reference (optional — Approved Rate letter no.)</label>
       <input id="ltrRef" placeholder="e.g. Approved Rate Letter No. SK/44, dated 06/01/2025.">
@@ -431,12 +437,20 @@ table.ltr-tbl tr.tot td{background:#d9d9d9}
   <div class="card ltr-out">
     <h2>3 · Download</h2>
     <div class="row-actions">
-      <button class="btn accent" id="btnLtrDocx">⬇ Word (.docx)</button>
+      <button class="btn accent" id="btnLtrSave">💾 Save letter</button>
+      <button class="btn" id="btnLtrDocx">⬇ Word (.docx)</button>
       <button class="btn" id="btnLtrPdf">⬇ PDF</button>
       <button class="btn ghost" id="btnLtrPrint">🖨 Print</button>
+      <button class="btn ghost" id="btnLtrNew">New letter</button>
       <button class="btn ghost" id="btnLtrClear">Clear form</button>
     </div>
     <p class="hint">Word file editable hai — No./Date ya koi line office me change karni ho to Word me kar lena.</p>
+  </div>
+
+  <div class="card">
+    <h2>Saved letters</h2>
+    <div id="ltrSaved"></div>
+    <p class="hint"><b>Load</b> = letter wapas kholo aur edit karo · <b>Word</b> = seedha .docx · <b>New letter</b> dabane ke baad save karoge to naya record banega.</p>
   </div>
 
   <div class="card">

@@ -244,10 +244,12 @@ if (typeof document !== 'undefined') (function(){
     subject: '', autoSub: true,
     ref: '', rateWord: 'auto',  // auto | arc | sor
     encl: 'Estimate (2 copies)',
+    toText: '', signText: '',
     intro: '', closing: '', autoBody: true,
     picks: []                   // [{ id, name, amount }]
   };
-  let L = Object.assign({}, DEF, store.get(LKEY, null) || {});
+  const fresh = () => JSON.parse(JSON.stringify(DEF));
+  let L = Object.assign(fresh(), store.get(LKEY, null) || {});
   const saveL = () => store.set(LKEY, L);
   const YEAR = new Date().getFullYear();
 
@@ -287,24 +289,22 @@ if (typeof document !== 'undefined') (function(){
       return `You are, therefore, requested to kindly peruse the above estimate${many ? 's' : ''} and accord ` +
              `Technical Sanction to the same at the earliest.`;
     }
-    return `You are, therefore, requested to kindly peruse the above estimate${many ? 's' : ''} and accord ` +
-           `Technical Sanction as well as Administrative Approval along with the necessary grant at the earliest, ` +
-           `so that further action for execution of the work${many ? 's' : ''} may be taken in time.`;
+    return `You are, therefore, requested to kindly peruse the above estimate${many ? 's' : ''} and do the needful ` +
+           `at the earliest.`;
   }
   const subjectText = () => (L.autoSub || !L.subject) ? autoSubject() : L.subject;
   const introText   = () => (L.autoBody || !L.intro)   ? autoIntro()   : L.intro;
   const closingText = () => (L.autoBody || !L.closing) ? autoClosing() : L.closing;
   const totalAmt    = () => L.picks.reduce((a, p) => a + (Number(p.amount) || 0), 0);
 
-  function signLines(){
-    const p = window.userProfile;
-    if (p && p.post && p.sub) return [p.post, p.sub + ',', 'Dahod.'];
-    return ['Deputy Executive Engineer', 'R & B Sub Division,', 'Dahod.'];
-  }
-  function toLines(){
-    const div = (office && office.div) ? office.div : 'Dahod ( R&B ) Division, Dahod';
-    return ['The Executive Engineer,', div.replace(/,\s*Dahod\s*$/i, ',').trim(), 'Dahod.'];
-  }
+  const SIGN_DEF = ['Deputy Executive Engineer', 'R & B Sub Division,', 'Dahod.'];
+  const TO_DEF   = ['The Executive Engineer,', 'Dahod ( R&B ) Division,', 'Dahod.'];
+  const lines = (txt, def) => {
+    const a = String(txt || '').split('\n').map(x => x.trim()).filter(Boolean);
+    return a.length ? a : def.slice();
+  };
+  const signLines = () => lines(L.signText, SIGN_DEF);
+  const toLines   = () => lines(L.toText, TO_DEF);
 
   function model(){
     return {
@@ -326,6 +326,7 @@ if (typeof document !== 'undefined') (function(){
   /* ---------- UI render ---------- */
   function renderLetter(){
     renderPickList();
+    renderLetterList();
     renderLetterPreview();
   }
   window.renderLetter = renderLetter;
@@ -435,18 +436,129 @@ if (typeof document !== 'undefined') (function(){
       </div>`;
   }
 
+
+  /* ---------- saved letters ---------- */
+  const LLKEY = 'rnb_letters';
+  let letters = store.get(LLKEY, null) || [];
+  let currentLetterId = null;
+  const persistLetters = () => store.set(LLKEY, letters);
+
+  function letterTitle(){
+    const n = L.picks.length;
+    const base = L.type === 'ts' ? 'T.S. letter' : 'Perusal letter';
+    if (!n) return base;
+    return base + ' — ' + (L.picks[0].name || '').slice(0, 45) + (n > 1 ? ' +' + (n - 1) : '');
+  }
+
+  function saveLetter(){
+    if (!L.picks.length) { toast('Pehle koi estimate select karo.'); return; }
+    const def = currentLetterId
+      ? ((letters.find(x => x.id === currentLetterId) || {}).title || letterTitle())
+      : letterTitle();
+    const t = prompt('Letter ka naam:', def);
+    if (t === null) return;
+    const title = (t || def).trim() || def;
+    const snap = JSON.parse(JSON.stringify(L));
+    const rec = currentLetterId && letters.find(x => x.id === currentLetterId);
+    if (rec) {
+      rec.title = title; rec.L = snap; rec.updated = new Date().toISOString();
+      rec.amount = totalAmt(); rec.works = L.picks.length;
+      persistLetters(); renderLetterList(); toast('Letter update ho gaya: ' + title); return;
+    }
+    const id = 'l' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    letters.unshift({ id, title, L: snap, updated: new Date().toISOString(),
+                      amount: totalAmt(), works: L.picks.length, type: L.type });
+    currentLetterId = id;
+    persistLetters(); renderLetterList(); toast('Letter save ho gaya: ' + title);
+  }
+
+  function loadLetter(id){
+    const rec = letters.find(x => x.id === id);
+    if (!rec) return;
+    L = Object.assign(fresh(), JSON.parse(JSON.stringify(rec.L)));
+    currentLetterId = id;
+    saveL();
+    restoreFields();
+    renderLetter();
+    toast('Loaded: ' + rec.title);
+    window.scrollTo(0, 0);
+  }
+
+  function deleteLetter(id){
+    const rec = letters.find(x => x.id === id);
+    if (!rec) return;
+    if (!confirm('Delete "' + rec.title + '"?')) return;
+    letters = letters.filter(x => x.id !== id);
+    if (currentLetterId === id) currentLetterId = null;
+    persistLetters(); renderLetterList(); toast('Deleted.');
+  }
+
+  async function docxOfSaved(id){
+    const rec = letters.find(x => x.id === id);
+    if (!rec) return;
+    if (typeof JSZip === 'undefined') { toast('JSZip load nahi hua — ek baar online refresh karo.'); return; }
+    const prev = L, prevId = currentLetterId;
+    L = Object.assign(fresh(), JSON.parse(JSON.stringify(rec.L)));
+    try { download(await docxBlob(model()), letterFileName() + '.docx'); }
+    catch (e) { toast('Word banane me dikkat aayi.'); }
+    finally { L = prev; currentLetterId = prevId; }
+  }
+
+  function renderLetterList(){
+    const box = $('#ltrSaved');
+    if (!box) return;
+    if (!letters.length) {
+      box.innerHTML = '<div class="empty">Abhi koi letter save nahi. Upar "Save letter" dabao.</div>';
+      return;
+    }
+    box.innerHTML = '<div class="scroll"><table class="tbl" style="min-width:700px"><tr>' +
+      '<th style="width:42%">Letter</th><th style="width:10%">Works</th><th style="width:16%">Amount &#8377;</th>' +
+      '<th style="width:16%">Saved</th><th style="width:16%">Actions</th></tr>' +
+      letters.map(r => {
+        const cur = r.id === currentLetterId;
+        return `<tr${cur ? ' style="background:#fff3e0"' : ''}>
+          <td><b>${esc(r.title)}</b><div style="font-size:10px;color:var(--ink-2)">${esc(r.type === 'ts' ? 'Technical Sanction' : 'Perusal')}</div></td>
+          <td class="num mono">${r.works || 0}</td>
+          <td class="num mono">${money(r.amount || 0)}</td>
+          <td style="font-size:11px">${esc(prettyDate(r.updated))}</td>
+          <td style="white-space:nowrap">
+            <button class="btn ghost" style="padding:4px 8px" data-lload="${r.id}">Load</button>
+            <button class="btn" style="padding:4px 8px" data-ldocx="${r.id}">Word</button>
+            <button class="btn danger" style="padding:4px 8px" data-ldel="${r.id}">&times;</button>
+          </td></tr>`;
+      }).join('') + '</table></div>';
+    box.querySelectorAll('[data-lload]').forEach(b => b.onclick = () => loadLetter(b.dataset.lload));
+    box.querySelectorAll('[data-ldocx]').forEach(b => b.onclick = () => docxOfSaved(b.dataset.ldocx));
+    box.querySelectorAll('[data-ldel]').forEach(b => b.onclick = () => deleteLetter(b.dataset.ldel));
+  }
+
+  function restoreFields(){
+    const setv = (sel, v) => { const e = $(sel); if (e) e.value = v == null ? '' : v; };
+    setv('#ltrNo', L.no); setv('#ltrDate', L.date); setv('#ltrRef', L.ref); setv('#ltrEncl', L.encl);
+    setv('#ltrRate', L.rateWord);
+    setv('#ltrTo', L.toText || TO_DEF.join('\n'));
+    setv('#ltrSign', L.signText || SIGN_DEF.join('\n'));
+    setv('#ltrSubject', L.autoSub ? '' : L.subject);
+    setv('#ltrIntro', L.autoBody ? '' : L.intro);
+    setv('#ltrClosing', L.autoBody ? '' : L.closing);
+    $$('#ltrTypeChips .chip').forEach(x => x.setAttribute('aria-pressed', x.dataset.ltype === L.type));
+  }
+
   /* ---------- exports ---------- */
-  async function makeDocx(){
-    if (typeof JSZip === 'undefined') { toast('JSZip load nahi hua — internet on karke ek baar refresh karo.'); return; }
+  async function docxBlob(M){
     const zip = new JSZip();
     Object.keys(DOCX_PARTS).forEach(k => zip.file(k, DOCX_PARTS[k]));
-    zip.file('word/document.xml', buildLetterXml(model()));
-    const blob = await zip.generateAsync({
+    zip.file('word/document.xml', buildLetterXml(M));
+    return zip.generateAsync({
       type: 'blob',
       mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       compression: 'DEFLATE'
     });
-    download(blob, letterFileName() + '.docx');
+  }
+
+  async function makeDocx(){
+    if (typeof JSZip === 'undefined') { toast('JSZip load nahi hua — internet on karke ek baar refresh karo.'); return; }
+    download(await docxBlob(model()), letterFileName() + '.docx');
     toast('Word letter download ho gaya.');
   }
 
@@ -547,22 +659,22 @@ if (typeof document !== 'undefined') (function(){
     on('#ltrAutoSub', 'onclick', () => { L.autoSub = true; L.subject = ''; saveL(); renderLetterPreview(); toast('Subject auto ho gaya.'); });
     on('#ltrAutoBody', 'onclick', () => { L.autoBody = true; L.intro = ''; L.closing = ''; saveL(); renderLetterPreview(); toast('Body text auto ho gaya.'); });
 
+    on('#ltrTo', 'oninput', e => { L.toText = e.target.value; saveL(); renderLetterPreview(); });
+    on('#ltrSign', 'oninput', e => { L.signText = e.target.value; saveL(); renderLetterPreview(); });
+    on('#btnLtrSave', 'onclick', saveLetter);
+    on('#btnLtrNew', 'onclick', () => { currentLetterId = null; toast('Ab naya letter save hoga (purana waisa hi rahega).'); renderLetterList(); });
     on('#btnLtrDocx', 'onclick', makeDocx);
     on('#btnLtrPdf', 'onclick', makePdf);
     on('#btnLtrPrint', 'onclick', () => window.print());
     on('#btnLtrClear', 'onclick', () => {
       if (!confirm('Letter form khaali karna hai?')) return;
-      L = Object.assign({}, DEF); saveL();
-      ['#ltrNo', '#ltrDate', '#ltrRef', '#ltrSubject', '#ltrIntro', '#ltrClosing'].forEach(s => { const e = $(s); if (e) e.value = ''; });
-      const en = $('#ltrEncl'); if (en) en.value = L.encl;
+      L = fresh(); currentLetterId = null; saveL();
+      restoreFields();
       renderLetter();
     });
 
     /* restore saved values */
-    const setv = (sel, v) => { const e = $(sel); if (e && v != null) e.value = v; };
-    setv('#ltrNo', L.no); setv('#ltrDate', L.date); setv('#ltrRef', L.ref); setv('#ltrEncl', L.encl);
-    setv('#ltrRate', L.rateWord);
-    $$('#ltrTypeChips .chip').forEach(x => x.setAttribute('aria-pressed', x.dataset.ltype === L.type));
+    restoreFields();
 
     /* tab switching — app.js apne 4 tabs handle karta hai, Letter hum */
     $$('nav.tabs button').forEach(b => b.addEventListener('click', () => {
