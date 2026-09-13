@@ -145,11 +145,56 @@ window.userProfile = store.get('rnb_profile', null);
   });
 
   /* ------------------------------ profile form ------------------------------ */
+
+  /* ---------------------- division / sub division dropdowns ---------------------- */
+  const OTHER = '__other__';
+
+  function fillDivSelects(curDiv, curSub){
+    const dSel = $('#pfDiv'), sSel = $('#pfSub');
+    if(!dSel || !sSel) return;
+    const list = (typeof divisions !== 'undefined' ? divisions : []).map(d => d.div);
+    const known = list.some(d => divKey(d) === divKey(curDiv));
+    dSel.innerHTML = '<option value="">— Division chuno —</option>' +
+      list.map(d => `<option${divKey(d) === divKey(curDiv) ? ' selected' : ''}>${esc(d)}</option>`).join('') +
+      `<option value="${OTHER}"${(curDiv && !known) ? ' selected' : ''}>Other — khud likho</option>`;
+    $('#pfDivOther').value = (curDiv && !known) ? curDiv : '';
+    $('#pfDivOther').style.display = (curDiv && !known) ? 'block' : 'none';
+    dSel.onchange = () => {
+      $('#pfDivOther').style.display = dSel.value === OTHER ? 'block' : 'none';
+      fillSubSelect(pickedDiv(), '');
+    };
+    $('#pfDivOther').oninput = () => fillSubSelect(pickedDiv(), '');
+    fillSubSelect(curDiv, curSub);
+  }
+
+  function fillSubSelect(divName, curSub){
+    const sSel = $('#pfSub');
+    if(!sSel) return;
+    const subs = (typeof divSubs === 'function') ? divSubs(divName) : [];
+    const known = subs.some(x => divKey(x) === divKey(curSub));
+    sSel.innerHTML = '<option value="">— Sub Division chuno —</option>' +
+      subs.map(x => `<option${divKey(x) === divKey(curSub) ? ' selected' : ''}>${esc(x)}</option>`).join('') +
+      `<option value="${OTHER}"${(curSub && !known) ? ' selected' : ''}>Other — khud likho</option>`;
+    $('#pfSubOther').value = (curSub && !known) ? curSub : '';
+    $('#pfSubOther').style.display = (curSub && !known) ? 'block' : 'none';
+    sSel.onchange = () => {
+      $('#pfSubOther').style.display = sSel.value === OTHER ? 'block' : 'none';
+    };
+  }
+
+  function pickedDiv(){
+    const v = $('#pfDiv') ? $('#pfDiv').value : '';
+    return (v === OTHER || !v) ? ($('#pfDivOther') ? $('#pfDivOther').value.trim() : '') : v.trim();
+  }
+  function pickedSub(){
+    const v = $('#pfSub') ? $('#pfSub').value : '';
+    return (v === OTHER || !v) ? ($('#pfSubOther') ? $('#pfSubOther').value.trim() : '') : v.trim();
+  }
+
   function openProfile(u, prof){
     if(!profBox) return;
     $('#pfName').value = (prof && prof.name) || u.displayName || '';
-    $('#pfSub').value  = (prof && prof.sub)  || office.sub || '';
-    $('#pfDiv').value  = (prof && prof.div)  || office.div || '';
+    fillDivSelects((prof && prof.div) || office.div || '', (prof && prof.sub) || office.sub || '');
     const sel = $('#pfPost');
     sel.innerHTML = '<option value="">— Post chuno —</option>' +
       POSTS.map(p => `<option${(prof && prof.post) === p ? ' selected' : ''}>${esc(p)}</option>`).join('');
@@ -162,8 +207,8 @@ window.userProfile = store.get('rnb_profile', null);
     const p = {
       name:  $('#pfName').value.trim(),
       post:  $('#pfPost').value.trim(),
-      sub:   $('#pfSub').value.trim(),
-      div:   $('#pfDiv').value.trim(),
+      sub:   pickedSub(),
+      div:   pickedDiv(),
       email: me ? me.email : '',
       uid:   me ? me.uid : '',
       updated: new Date().toISOString()
@@ -172,6 +217,7 @@ window.userProfile = store.get('rnb_profile', null);
       $('#pfErr').textContent = 'Chaaro field bharna zaroori hai.'; return;
     }
     $('#pfErr').textContent = 'Save ho raha hai…';
+    if(typeof addDivision === 'function') addDivision(p.div, p.sub);
     setProfile(p);                     // local pehle — app kabhi atkega nahi
     profBox.style.display = 'none';
     toast('Profile save ho gaya — ' + p.name);
