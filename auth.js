@@ -266,6 +266,7 @@ function applyProfile(p){
   const dEl = $('#divName'), sEl = $('#subDivName');
   if(dEl) dEl.value = office.div;
   if(sEl) sEl.value = office.sub;
+  if(typeof onDivChange === 'function') onDivChange();
   if(p.name && !est.prepBy){
     est.prepBy = p.name;
     const pb = $('#prepBy'); if(pb) pb.value = p.name;

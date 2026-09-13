@@ -13,6 +13,28 @@ const OFFICE_DEFAULT = {
   sub: 'R&B  sub Divison , Dahod',
   desc: 'Varius Roads under Dahod Sub Division,  Dist. Dahod are importent Roads which is joining Talukas & NHAI.  Before monsoon season in selected length road surface is washout hence paver patta / patchwork is required. So, Estimate is Prepared on basis of current SOR of Dahod  District & Non SOR item are supported with detailed rate analysis.'
 };
+/* ------------------------------- division scoping -------------------------------
+   Har data item apni division ka hota hai. Jo purana data bina div ke hai wo
+   Dahod ka maana jata hai. User apni profile me jo division bharega, usi
+   division ka data use dikhega. */
+const HOME_DIV = 'Dahod';
+const DIV_STOP = new Set(['r','b','rb','rnb','and','division','divison','sub','office','of','the','dept',
+                          'department','roads','buildings','road','building','state','gujarat','circle']);
+function divKey(s){
+  const out = [];
+  String(s || '').toLowerCase().replace(/[^a-z\s]/g, ' ').split(/\s+/).forEach(w => {
+    if(w && !DIV_STOP.has(w) && !out.includes(w)) out.push(w);
+  });
+  return out.join('-');
+}
+function myDiv(){
+  const p = window.userProfile;
+  return (p && p.div) || (typeof office !== 'undefined' && office.div) || HOME_DIV;
+}
+const myDivKey = () => divKey(myDiv()) || divKey(HOME_DIV);
+/* item is division ka hai? (bina div wala purana data = Dahod) */
+const divOK = it => divKey(it && it.div ? it.div : HOME_DIV) === myDivKey();
+
 const FRAMED = 'Estimate framed in the office of the Executive Engineer, Dahod (R&B ) Division , Dahod , for the probale expenses that will be incurred in  ';
 
 /* seed data versions — bump when data.js seeds change, to force-refresh stale localStorage */
@@ -99,12 +121,12 @@ const MODE = {
   road: {
     label:'Road', nameLabel:'Road name',
     namePh:'Type any word — Jhalod, Limkheda, SH.62, Sanjeli…',
-    cats:['Hotmix / Road works','Jungle cutting & Geru','Road Furniture'], list:()=>roads
+    cats:['Hotmix / Road works','Jungle cutting & Geru','Road Furniture'], list:()=>roads.filter(divOK)
   },
   building: {
     label:'Building', nameLabel:'Building / Work name',
     namePh:'Type building / work location…',
-    cats:['Resi / Non-Resi Building'], list:()=>buildings
+    cats:['Resi / Non-Resi Building'], list:()=>buildings.filter(divOK)
   }
 };
 
@@ -264,7 +286,7 @@ function applyRateSourceUI(){
                    : 'Search any word — SDBC, wetmix, hotmix, WMM, GSB, tack coat…';
   }
   const cc = $('#catChips');
-  if(cc){ cc.innerHTML = ''; if(isArc) renderCatChips(); }
+  if(cc){ cc.innerHTML = ''; if(isArc) renderCatChips(); else if(rs === 'sor') renderChapChips(); }
 }
 
 $$('#rateSrcChips .chip').forEach(b => b.onclick = () => {
@@ -500,13 +522,14 @@ function renderItemBlocks(){
 /* ------------------------------- data tables ------------------------------- */
 function renderRoadsTable(){
   const box = $('#roadsTable');
-  if(!roads.length){ box.innerHTML = '<div class="empty">Road list khali hai.</div>'; return; }
+  const view = roads.map((r,i)=>({r,i})).filter(x => divOK(x.r));
+  if(!view.length){ box.innerHTML = '<div class="empty">' + esc(myDiv()) + ' ke liye koi road nahi. “Add road” ya Excel import karo.</div>'; return; }
   box.innerHTML = `<div class="scroll"><table class="tbl"><tr><th style="width:78%">Road name</th><th>Km</th><th></th></tr>` +
-    roads.map((r,i)=>`<tr>
+    view.map(x=>{ const r=x.r, i=x.i; return `<tr>
       <td><input data-ri="${i}" data-rk="name" value="${esc(r.name)}"></td>
       <td><input class="mono" data-ri="${i}" data-rk="km" value="${esc(r.km||'')}"></td>
-      <td><button class="btn danger" style="padding:4px 8px" data-rdel="${i}">×</button></td></tr>`).join('') +
-    `</table></div><p class="hint">${roads.length} roads.</p>`;
+      <td><button class="btn danger" style="padding:4px 8px" data-rdel="${i}">×</button></td></tr>`;}).join('') +
+    `</table></div><p class="hint">${view.length} roads — ${esc(myDiv())}.</p>`;
   box.querySelectorAll('input').forEach(i => i.oninput = e => {
     roads[+e.target.dataset.ri][e.target.dataset.rk] = e.target.value; store.set('rnb_roads', roads); });
   box.querySelectorAll('[data-rdel]').forEach(b => b.onclick = () => {
@@ -519,19 +542,21 @@ let buildingDeptFilter = '';    // '' | dept
 function renderBuildingsTable(){
   const box = $('#buildingsTable');
   // Apply all three filters
-  const applyF = b => (!buildingKindFilter   || (b.kind||'')===buildingKindFilter)
+  const applyF = b => divOK(b)
+                   && (!buildingKindFilter   || (b.kind||'')===buildingKindFilter)
                    && (!buildingTalukaFilter || (b.taluka||'')===buildingTalukaFilter)
                    && (!buildingDeptFilter   || (b.dept||'')===buildingDeptFilter);
 
   const chipBox = $('#buildingKindChips');
   if(chipBox){
-    const R  = buildings.filter(b=>b.kind==='R').length;
-    const NR = buildings.filter(b=>b.kind==='NR').length;
-    const talukas = [...new Set(buildings.map(b=>b.taluka).filter(Boolean))].sort();
-    const depts   = [...new Set(buildings.map(b=>b.dept).filter(Boolean))].sort();
+    const mineB = buildings.filter(divOK);
+    const R  = mineB.filter(b=>b.kind==='R').length;
+    const NR = mineB.filter(b=>b.kind==='NR').length;
+    const talukas = [...new Set(mineB.map(b=>b.taluka).filter(Boolean))].sort();
+    const depts   = [...new Set(mineB.map(b=>b.dept).filter(Boolean))].sort();
     chipBox.innerHTML =
       `<div class="chips" style="margin-bottom:8px">
-        <button class="chip" data-bk="" aria-pressed="${buildingKindFilter===''}">All (${buildings.length})</button>
+        <button class="chip" data-bk="" aria-pressed="${buildingKindFilter===''}">All (${mineB.length})</button>
         <button class="chip" data-bk="R" aria-pressed="${buildingKindFilter==='R'}">Residential (${R})</button>
         <button class="chip" data-bk="NR" aria-pressed="${buildingKindFilter==='NR'}">Non-Residential (${NR})</button>
       </div>
@@ -575,7 +600,7 @@ function renderBuildingsTable(){
       <td><input data-bi="${i}" data-bk="taluka" value="${esc(r.taluka||'')}"></td>
       <td><input data-bi="${i}" data-bk="dept" value="${esc(r.dept||'')}"></td>
       <td><button class="btn danger" style="padding:4px 8px" data-bdel="${i}">×</button></td></tr>`;}).join('') +
-    `</table></div><p class="hint">${view.length}${(buildingKindFilter||buildingTalukaFilter||buildingDeptFilter)?' (filtered)':''} of ${buildings.length} buildings.</p>`;
+    `</table></div><p class="hint">${view.length}${(buildingKindFilter||buildingTalukaFilter||buildingDeptFilter)?' (filtered)':''} buildings — ${esc(myDiv())}.</p>`;
   box.querySelectorAll('input,select').forEach(i => i.oninput = e => {
     buildings[+e.target.dataset.bi][e.target.dataset.bk] = e.target.value; store.set('rnb_buildings', buildings); });
   box.querySelectorAll('[data-bdel]').forEach(b => b.onclick = () => {
@@ -584,7 +609,8 @@ function renderBuildingsTable(){
 function renderItemsTable(){
   const box = $('#itemsTable');
   if(!box) return;
-  const view = items.map((it,i) => ({it,i})).filter(x => !dataItemsCat || (x.it.cat||'') === dataItemsCat);
+  const view = items.map((it,i) => ({it,i}))
+    .filter(x => divOK(x.it) && (!dataItemsCat || (x.it.cat||'') === dataItemsCat));
   if(!view.length){ box.innerHTML = '<div class="empty">' + (dataItemsCat ? 'Is category me koi item nahi. “Add item” dabao.' : 'Item list khali hai.') + '</div>'; return; }
   box.innerHTML = `<div class="scroll"><table class="tbl" style="min-width:760px">
       <tr><th style="width:7%">It. No.</th><th style="width:50%">Item of work</th><th style="width:12%">Approved rate</th><th style="width:9%">Unit</th><th style="width:16%">Group</th><th></th></tr>` +
@@ -632,7 +658,7 @@ function renderPeopleTable(){
 }
 function renderCatChips(){
   const allow = MODE[est.mode] ? MODE[est.mode].cats : [];
-  const cats = [...new Set(items.map(i => i.cat).filter(c => c && allow.includes(c)))];
+  const cats = [...new Set(items.filter(divOK).map(i => i.cat).filter(c => c && allow.includes(c)))];
   $('#catChips').innerHTML = cats.map(c =>
     `<button class="chip" data-cat="${esc(c)}" aria-pressed="${catFilter === c}">${esc(c)}</button>`).join('') +
     (catFilter ? `<button class="chip" data-cat="" aria-pressed="false">Show all</button>` : '');
@@ -641,6 +667,47 @@ function renderCatChips(){
     renderCatChips(); $('#itemInput').focus();
   });
 }
+/* SOR chapter chips — item search box ke neeche */
+let chapFilter = '';
+const chapNo = c => { const m = String(c).match(/^CH-(\d+)([A-Z]?)/); return m ? [+m[1], m[2] || ''] : [999, '']; };
+function chapLabel(c){
+  const parts = String(c).split(': ');
+  const code = parts[0] || c;
+  let name = (parts[1] || '').toLowerCase().replace(/\b\w/g, m => m.toUpperCase());
+  const mech = /MECHANISED/i.test(c), man = /MANUAL/i.test(c);
+  name = name.replace(/\s*\(.*?\)\s*/g, ' ').trim();
+  if(mech) name += ' (Mech.)';
+  if(man)  name += ' (Manual)';
+  return code + ' · ' + name;
+}
+function renderChapChips(){
+  const box = $('#catChips');
+  if(!box) return;
+  const mine = sorItems.filter(divOK);
+  const cats = [...new Set(mine.map(i => i.cat).filter(Boolean))]
+    .sort((a,b) => { const A = chapNo(a), B = chapNo(b); return A[0]-B[0] || A[1].localeCompare(B[1]); });
+  if(!cats.length){
+    box.innerHTML = '<p class="hint" style="margin:0">' + esc(myDiv()) +
+      ' ka SOR abhi upload nahi hua. Data → SOR me Excel import karo — chapter chips apne aap ban jayenge.</p>';
+    return;
+  }
+  const count = c => mine.filter(i => i.cat === c).length;
+  box.innerHTML = (chapFilter ? `<button class="chip" data-chap="" aria-pressed="false">← All chapters</button>` : '') +
+    cats.map(c => `<button class="chip" data-chap="${esc(c)}" aria-pressed="${chapFilter === c}">${esc(chapLabel(c))} <span style="opacity:.6">${count(c)}</span></button>`).join('');
+  $$('#catChips .chip').forEach(b => b.onclick = () => {
+    chapFilter = (b.dataset.chap === chapFilter) ? '' : b.dataset.chap;
+    renderChapChips(); $('#itemInput').focus();
+  });
+}
+/* profile me division badle to lists refresh */
+window.onDivChange = function(){
+  chapFilter = ''; catFilter = '';
+  applyRateSourceUI();
+  if(typeof renderSorCatChips === 'function') renderSorCatChips();
+  if(typeof renderSorTable === 'function') renderSorTable();
+  refreshHints();
+};
+
 function refreshHints(){ $('#roadHint').textContent = `${roads.length} roads · ${buildings.length} buildings · ${items.length} items loaded.`; }
 
 /* ------------------------------- excel import ------------------------------- */
@@ -710,9 +777,10 @@ $('#mapOk').onclick = () => {
     out.push(o);
   });
   if(!out.length){ toast('Valid data nahi mila.'); return; }
+  out.forEach(o => { if(!o.div) o.div = myDiv(); });
   if(pendingKind === 'roads'){ roads = roads.concat(out); store.set('rnb_roads', roads); renderRoadsTable(); }
   else if(pendingKind === 'buildings'){ buildings = buildings.concat(out); store.set('rnb_buildings', buildings); renderBuildingsTable(); }
-  else if(pendingKind === 'sor'){ sorItems = sorItems.concat(out); store.set('rnb_sor_items', sorItems); renderSorCatChips(); renderSorTable(); }
+  else if(pendingKind === 'sor'){ out.forEach(o => { if(!o.div) o.div = myDiv(); }); sorItems = sorItems.concat(out); store.set('rnb_sor_items', sorItems); renderSorCatChips(); renderSorTable(); }
   else { items = items.concat(out); store.set('rnb_items', items); renderItemsTable(); renderCatChips(); }
   $('#mapModal').style.display = 'none';
   toast(`${out.length} ${pendingKind} import ho gaye.`); refreshHints();
@@ -728,7 +796,7 @@ let sorCatFilter = '';
 function renderSorCatChips(){
   const box = $('#sorCatChips');
   if(!box) return;
-  const cats = [...new Set(sorItems.map(i => i.cat).filter(Boolean))].sort();
+  const cats = [...new Set(sorItems.filter(divOK).map(i => i.cat).filter(Boolean))].sort();
   box.innerHTML = cats.map(c =>
     `<button class="chip" data-scat="${esc(c)}" aria-pressed="${sorCatFilter===c}">${esc(c.replace(/^CH-\d+[A-Z]?: /,''))}</button>`
   ).join('') + (sorCatFilter ? `<button class="chip" data-scat="" aria-pressed="false">Show all</button>` : '');
@@ -740,7 +808,8 @@ function renderSorCatChips(){
 function renderSorTable(){
   const box = $('#sorTable');
   if(!box) return;
-  const view = sorItems.map((it,i) => ({it,i})).filter(x => !sorCatFilter || (x.it.cat||'') === sorCatFilter);
+  const view = sorItems.map((it,i) => ({it,i}))
+    .filter(x => divOK(x.it) && (!sorCatFilter || (x.it.cat||'') === sorCatFilter));
   if(!view.length){ box.innerHTML = '<div class="empty">SOR list khali hai — category select karo ya "Add SOR item" dabao.</div>'; return; }
   box.innerHTML = `<div class="scroll"><table class="tbl" style="min-width:800px">
       <tr><th style="width:7%">SOR No.</th><th style="width:48%">Item of work</th><th style="width:10%">Rate</th><th style="width:8%">Unit</th><th style="width:20%">Chapter</th><th></th></tr>` +
@@ -757,7 +826,7 @@ function renderSorTable(){
   box.querySelectorAll('[data-sdel]').forEach(b => b.onclick = () => {
     sorItems.splice(+b.dataset.sdel,1); store.set('rnb_sor_items', sorItems); renderSorTable(); renderSorCatChips(); });
 }
-$('#btnAddSor').onclick = () => { sorItems.unshift({itemNo:'', desc:'', rate:'', unit:'MT', cat:''}); store.set('rnb_sor_items', sorItems); renderSorTable(); };
+$('#btnAddSor').onclick = () => { sorItems.unshift({itemNo:'', desc:'', rate:'', unit:'MT', cat:'', div: myDiv()}); store.set('rnb_sor_items', sorItems); renderSorTable(); };
 $('#btnClearSor').onclick = () => {
   if(!sorItems.length) return;
   if(!confirm('Saare SOR items delete karne hain?')) return;
@@ -829,8 +898,8 @@ $$('.data-view[data-view="rate"] .back').forEach(b => b.onclick = () => {
   if(!$('#sorView').hidden){ showRateSub('menu'); return; }
   showDataGrid();
 });
-$('#btnAddRoad').onclick = () => { roads.unshift({name:'', km:''}); store.set('rnb_roads', roads); renderRoadsTable(); };
-$('#btnAddBuilding').onclick = () => { buildings.unshift({name:'',kind:''}); store.set('rnb_buildings', buildings); renderBuildingsTable(); };
+$('#btnAddRoad').onclick = () => { roads.unshift({name:'', km:'', div: myDiv()}); store.set('rnb_roads', roads); renderRoadsTable(); };
+$('#btnAddBuilding').onclick = () => { buildings.unshift({name:'',kind:'', div: myDiv()}); store.set('rnb_buildings', buildings); renderBuildingsTable(); };
 $('#btnResetBuildings').onclick = () => {
   if(typeof BUILDINGS_SEED === 'undefined') return;
   if(!confirm('PRB Dahod ki 390 buildings wapas load karein? Aapke manual changes chale jayenge.')) return;
@@ -841,7 +910,7 @@ $('#btnResetBuildings').onclick = () => {
   renderBuildingsTable(); refreshHints();
   toast('PRB building list reload ho gayi (390 buildings).');
 };
-$('#btnAddItem').onclick = () => { items.unshift({itemNo:'', desc:'', rate:'', unit:'MT', cat: dataItemsCat || ''}); store.set('rnb_items', items); renderItemsTable(); };
+$('#btnAddItem').onclick = () => { items.unshift({itemNo:'', desc:'', rate:'', unit:'MT', cat: dataItemsCat || '', div: myDiv()}); store.set('rnb_items', items); renderItemsTable(); };
 $('#btnAddWD').onclick = () => { workDescs.unshift({text:'', type: est.mode || 'both'}); store.set('rnb_workdescs', workDescs); renderWDTable(); };
 $('#btnAddPerson').onclick = () => { people.unshift(''); store.set('rnb_people', people); renderPeopleTable(); };
 $('#btnResetData').onclick = () => {
@@ -896,7 +965,7 @@ makeCombo($('#itemInput'), $('#itemList'),
   () => {
     const rs = est.rateSource || 'arc';
     if(rs === 'sor'){
-      return sorItems.filter(it => it.desc).map(it => ({
+      return sorItems.filter(it => it.desc && divOK(it) && (!chapFilter || it.cat === chapFilter)).map(it => ({
         label: it.desc.length > 150 ? it.desc.slice(0,150) + '…' : it.desc,
         meta: `SOR ${it.itemNo} · ₹ ${fmt(n(it.rate))} / ${it.unit}${it.cat ? ' · ' + it.cat.replace(/^CH-/,'CH-') : ''}`,
         search: [it.desc, it.unit, it.itemNo, it.cat].join(' '), raw: it }));
@@ -905,7 +974,7 @@ makeCombo($('#itemInput'), $('#itemList'),
       return [];  // RA list to be added later
     }
     // ARC (default) — filter by mode categories + optional chip
-    return items.filter(it => (!MODE[est.mode] || MODE[est.mode].cats.includes(it.cat))
+    return items.filter(it => divOK(it) && (!MODE[est.mode] || MODE[est.mode].cats.includes(it.cat))
                           && (!catFilter || it.cat === catFilter)).map(it => ({
       label: it.desc.length > 150 ? it.desc.slice(0,150) + '…' : it.desc,
       meta: `No.${it.itemNo} · ₹ ${fmt(n(it.rate))} / ${it.unit}${it.cat ? ' · ' + it.cat : ''}`,
