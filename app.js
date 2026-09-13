@@ -16,7 +16,7 @@ const OFFICE_DEFAULT = {
 const FRAMED = 'Estimate framed in the office of the Executive Engineer, Dahod (R&B ) Division , Dahod , for the probale expenses that will be incurred in  ';
 
 /* seed data versions — bump when data.js seeds change, to force-refresh stale localStorage */
-const SEED_VERSIONS = { buildings: 4, sor: 2 };
+const SEED_VERSIONS = { buildings: 4, sor: 3 };
 function seedGet(key, seedName, seed){
   const verKey = 'rnb_seedver_' + seedName;
   const savedVer = store.get(verKey, 0);
@@ -41,7 +41,34 @@ let items     = store.get('rnb_items', null)     || ITEMS_SEED.slice();
     if(add.length){ items = items.concat(add.map(x => ({...x}))); store.set('rnb_items', items); }
   }catch(e){}
 })();
-let sorItems  = seedGet('rnb_sor_items', 'sor', typeof SOR_SEED !== 'undefined' ? SOR_SEED : []);
+/* SOR list: naya seed aane par sirf seed-items refresh hote hain —
+   user ke khud ke jode hue items delete nahi hote */
+let sorItems = (function(){
+  const SEED = (typeof SOR_SEED !== 'undefined') ? SOR_SEED : [];
+  const stored = store.get('rnb_sor_items', null);
+  const ver = store.get('rnb_seedver_sor', 0);
+  if(!stored || !stored.length){
+    store.set('rnb_seedver_sor', SEED_VERSIONS.sor);
+    store.set('rnb_sor_items', SEED);
+    return SEED.map(x => ({...x}));
+  }
+  if(ver !== SEED_VERSIONS.sor){
+    const map = new Map(SEED.map(it => [String(it.itemNo || '').trim(), it]));
+    const seen = new Set();
+    const merged = stored.map(it => {
+      const k = String(it.itemNo || '').trim();
+      const s = map.get(k);
+      if(!s) return it;                       // user ka apna item — waisa hi rehne do
+      seen.add(k);
+      return {...it, desc: s.desc, rate: s.rate, unit: s.unit, cat: s.cat};
+    });
+    SEED.forEach(it => { const k = String(it.itemNo || '').trim(); if(!seen.has(k)) merged.push({...it}); });
+    store.set('rnb_seedver_sor', SEED_VERSIONS.sor);
+    store.set('rnb_sor_items', merged);
+    return merged;
+  }
+  return stored;
+})();
 let buildings = seedGet('rnb_buildings', 'buildings', typeof BUILDINGS_SEED !== 'undefined' ? BUILDINGS_SEED : []);
 let workDescs = store.get('rnb_workdescs', null) || (typeof WORKDESCS_SEED !== 'undefined' ? WORKDESCS_SEED.map(x=>({...x})) : []);
 let people    = store.get('rnb_people', null)    || (typeof PEOPLE_SEED !== 'undefined' ? PEOPLE_SEED.slice() : []);
