@@ -1071,7 +1071,7 @@ function widths(ws, arr){ arr.forEach((w,i) => ws.getColumn(i+1).width = w); }
 function textHeight(text, colChars, size){
   const s = String(text == null ? '' : text);
   /* width units Calibri-11 par based hain — bade font me kam chars fit hote hain */
-  const perLine = Math.max(4, Math.floor(colChars * 1.0 * (11 / (size || 11))));
+  const perLine = Math.max(4, Math.floor(colChars * 1.14 * (11 / (size || 11))));
   let lines = 0;
   s.split(/\r?\n/).forEach(para => {
     // wrap each paragraph on word boundaries roughly by perLine
@@ -1086,7 +1086,7 @@ function textHeight(text, colChars, size){
     lines += (cur > 0 || !used) ? 1 : 0;
   });
   lines = Math.max(1, lines);
-  const lineH = size * 1.35;
+  const lineH = size * 1.30;
   return Math.ceil(lines * lineH + 4);   // + small padding
 }
 /* set a single row's height to fit its text (never below `min`) */
@@ -1136,8 +1136,10 @@ async function buildWorkbook(){
   fitRow(f, 18, '           ' + office.desc, faceWide, 11, 40);
 
   /* ---------- abst. ---------- */
-  const a = wb.addWorksheet('abst.', { pageSetup:{ paperSize:9, orientation:'portrait', fitToPage:true, fitToWidth:1, fitToHeight:0 } });
-  widths(a, [5.2, 9.6, 58.5, 10.2, 6.2, 13.0]);   // desc chaudi, amount patli
+  const a = wb.addWorksheet('abst.', { pageSetup:{ paperSize:9, orientation:'portrait',
+      fitToPage:true, fitToWidth:1, fitToHeight:0,
+      margins:{ left:0.35, right:0.35, top:0.45, bottom:0.4, header:0.2, footer:0.2 } } });
+  widths(a, [5.4, 8.4, 65.5, 9.4, 5.4, 12.4]);   // desc sabse chaudi, amount utni hi jitni zaroori
   a.getRow(1).height = 43.5; a.getRow(2).height = 9; a.getRow(3).height = 20.1;
   a.getRow(4).height = 9.75; a.getRow(5).height = 45; a.getRow(6).height = 20.1;
   a.mergeCells('A1:F1'); put(a, 'A1', NAME, ARIAL(12, true), CTRC);
@@ -1151,41 +1153,42 @@ async function buildWorkbook(){
   const amtCells = [], qtyRefCells = [];
   /* A4 portrait, fitToWidth ke baad upalabdh height (approx) — pehle page par
      title/heading rows ki height already ~150pt use ho chuki hai */
-  const PAGE_PT = 760;
+  const PAGE_PT = 770;
   let pageUsed = 150;
+
+  /* har item = 3 row: (1) description ki apni poori row, (2) L.C., (3) Approved Rate.
+     Description kisi merge me nahi hai, isliye height kam padne par bhi text
+     kabhi doosre item par nahi chadhta. */
   p.lines.forEach(l => {
-    const top = r, bot = r + 4;
+    const top = r, bot = r + 2;
     amtCells.push('F' + top); qtyRefCells.push('B' + top);
     a.mergeCells(`A${top}:A${bot}`); a.mergeCells(`E${top}:E${bot}`); a.mergeCells(`F${top}:F${bot}`);
-    a.mergeCells(`B${top+1}:B${bot}`); a.mergeCells(`C${top}:C${top+2}`); a.mergeCells(`D${top}:D${top+2}`);
-    put(a, 'A'+top, l.itemNo,  ARIAL(12), CTR, BOX);
-    put(a, 'B'+top, l.say,     ARIAL(11), CTR, BOX, '0.00');
-    put(a, 'B'+(top+1), l.unit, ARIAL(11), CTR, BOX);
-    /* bahut lambi description ho to font chhota — item ek hi page par rahe */
+    a.mergeCells(`B${top+1}:B${bot}`);
+
     const dLen = String(l.desc || '').length;
     const dFs  = dLen > 4000 ? 8 : dLen > 2500 ? 9 : 11;
-    put(a, 'C'+top, l.desc,    ARIAL(dFs), JUST, {top:THIN, left:THIN, right:THIN});
-    put(a, 'D'+top, n(l.rate), ARIAL(11), CTR, {top:THIN, left:THIN, right:THIN}, '0.00');
-    put(a, 'E'+top, l.unit,    ARIAL(11), CTR, BOX);
-    /* Amount = Qty x Rate (formula) */
+
+    put(a, 'A'+top, l.itemNo, ARIAL(11), CTRC, BOX);
+    put(a, 'B'+top, l.say,    ARIAL(11), CTRC, BOX, '0.00');
+    put(a, 'B'+(top+1), l.unit, ARIAL(11), CTRC, BOX);
+    put(a, 'C'+top, l.desc,   ARIAL(dFs), JUST, BOX);
+    put(a, 'D'+top, n(l.rate),ARIAL(11), CTRC, BOX, '0.00');
+    put(a, 'E'+top, l.unit,   ARIAL(11), CTRC, BOX);
     put(a, 'F'+top, { formula:`ROUND(B${top}*D${top},2)`, result:l.amount },
         ARIAL(11), {horizontal:'right', vertical:'center', wrapText:true}, BOX, '0.00');
-    put(a, 'C'+(top+3), 'L.C. included in approved rate', ARIAL(11), CTR, {left:THIN, right:THIN});
-    put(a, 'D'+(top+3), n(est.lc), ARIAL(11), CTR, {left:THIN, right:THIN}, '0.00');
-    put(a, 'C'+(top+4), 'Approved Rate no ' + (l.appRateNo || l.itemNo), ARIAL(11), CTR, {left:THIN, right:THIN, bottom:THIN});
-    put(a, 'D'+(top+4), { formula:`D${top}`, result:n(l.rate) }, ARIAL(11), CTR, {left:THIN, right:THIN, bottom:THIN}, '0.00');
-    // description merges C{top}:C{top+2} (3 rows). Compute exact height for the text
-    // (col C width = 42.61) and distribute: top & top+1 hold say/unit (~20 each),
-    // 3rd row absorbs the remainder so text fits with no cut and no big blank gap.
-    /* poori description dikhe — teen merged row (C{top}:C{top+2}) me height baant do */
-    const descH = textHeight(l.desc, 58.5, dFs);
-    const each  = Math.max(17, Math.ceil(descH / 3));
-    let blockH = 0;
-    for(let i = top; i <= bot; i++){
-      a.getRow(i).height = (i <= top + 2) ? each : 18;
-      blockH += a.getRow(i).height;
-    }
-    /* ek item kabhi do page me na bante — zarurat ho to item se pehle page break */
+
+    put(a, 'C'+(top+1), 'L.C. included in approved rate', ARIAL(11), CTRC, BOX);
+    put(a, 'D'+(top+1), n(est.lc), ARIAL(11), CTRC, BOX, '0.00');
+    put(a, 'C'+(top+2), 'Approved Rate no ' + (l.appRateNo || l.itemNo), ARIAL(11), CTRC, BOX);
+    put(a, 'D'+(top+2), { formula:`D${top}`, result:n(l.rate) }, ARIAL(11), CTRC, BOX, '0.00');
+
+    /* description row ki height — 15% extra margin taki text kabhi kate nahi */
+    const descH = Math.ceil(textHeight(l.desc, 65.5, dFs) * 1.04);
+    a.getRow(top).height     = Math.max(20, descH);
+    a.getRow(top+1).height   = 18;
+    a.getRow(top+2).height   = 18;
+    const blockH = a.getRow(top).height + 36;
+
     if(pageUsed > 150 && pageUsed + blockH > PAGE_PT){
       a.getRow(top - 1).addPageBreak();       // break item se THEEK pehle
       pageUsed = 0;
@@ -1378,9 +1381,9 @@ $('#btnPdf').onclick = () => {
   /* ek item = 5 row ka block. Har block alag table me chhapta hai taki
      page badalne par item beech me se na kate. */
   const A_HEAD = ['Item No.','Qty. & Unit','Item of Work','Rate','Per','Amount'];
-  const A_COLS = { 0:{cellWidth:34, halign:'center'}, 1:{cellWidth:46, halign:'center'},
-                   2:{cellWidth:283}, 3:{cellWidth:48, halign:'center'},
-                   4:{cellWidth:30, halign:'center'}, 5:{cellWidth:72, halign:'right'} };
+  const A_COLS = { 0:{cellWidth:28, halign:'center'}, 1:{cellWidth:42, halign:'center'},
+                   2:{cellWidth:309}, 3:{cellWidth:46, halign:'center'},
+                   4:{cellWidth:26, halign:'center'}, 5:{cellWidth:64, halign:'right'} };
   /* har item apne table me — page badalte waqt item kabhi beech se nahi katega */
   const PH = doc.internal.pageSize.getHeight(), BOT = 60;
   const itemRows = l => ([
