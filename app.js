@@ -1070,7 +1070,8 @@ function widths(ws, arr){ arr.forEach((w,i) => ws.getColumn(i+1).width = w); }
    word-wrap and explicit newlines. Arial ~ 1 char ≈ 1 width-unit; a line ≈ size*1.35 pt. */
 function textHeight(text, colChars, size){
   const s = String(text == null ? '' : text);
-  const perLine = Math.max(4, Math.floor(colChars * 0.92));   // chars that fit on one line
+  /* width units Calibri-11 par based hain — bade font me kam chars fit hote hain */
+  const perLine = Math.max(4, Math.floor(colChars * 1.0 * (11 / (size || 11))));
   let lines = 0;
   s.split(/\r?\n/).forEach(para => {
     // wrap each paragraph on word boundaries roughly by perLine
@@ -1136,7 +1137,7 @@ async function buildWorkbook(){
 
   /* ---------- abst. ---------- */
   const a = wb.addWorksheet('abst.', { pageSetup:{ paperSize:9, orientation:'portrait', fitToPage:true, fitToWidth:1, fitToHeight:0 } });
-  widths(a, [5.93, 12.81, 42.61, 12.54, 8.09, 16.72]);
+  widths(a, [5.2, 9.6, 58.5, 10.2, 6.2, 13.0]);   // desc chaudi, amount patli
   a.getRow(1).height = 43.5; a.getRow(2).height = 9; a.getRow(3).height = 20.1;
   a.getRow(4).height = 9.75; a.getRow(5).height = 45; a.getRow(6).height = 20.1;
   a.mergeCells('A1:F1'); put(a, 'A1', NAME, ARIAL(12, true), CTRC);
@@ -1147,44 +1148,71 @@ async function buildWorkbook(){
   [1,2,3,4,5,6].forEach((v,i) => put(a, String.fromCharCode(65+i) + '6', v, ARIAL(12), CTRC, BOX));
 
   let r = 7;
+  const amtCells = [], qtyRefCells = [];
+  /* A4 portrait, fitToWidth ke baad upalabdh height (approx) — pehle page par
+     title/heading rows ki height already ~150pt use ho chuki hai */
+  const PAGE_PT = 760;
+  let pageUsed = 150;
   p.lines.forEach(l => {
     const top = r, bot = r + 4;
+    amtCells.push('F' + top); qtyRefCells.push('B' + top);
     a.mergeCells(`A${top}:A${bot}`); a.mergeCells(`E${top}:E${bot}`); a.mergeCells(`F${top}:F${bot}`);
     a.mergeCells(`B${top+1}:B${bot}`); a.mergeCells(`C${top}:C${top+2}`); a.mergeCells(`D${top}:D${top+2}`);
     put(a, 'A'+top, l.itemNo,  ARIAL(12), CTR, BOX);
-    put(a, 'B'+top, l.say,     ARIAL(12), CTR, BOX, '0.00');
-    put(a, 'B'+(top+1), l.unit, ARIAL(12), CTR, BOX);
-    put(a, 'C'+top, l.desc,    ARIAL(12), JUST, {top:THIN, left:THIN, right:THIN});
-    put(a, 'D'+top, n(l.rate), ARIAL(12), CTR, {top:THIN, left:THIN, right:THIN}, '0.00');
-    put(a, 'E'+top, l.unit,    ARIAL(12), CTR, BOX);
-    put(a, 'F'+top, l.amount,  ARIAL(12), {horizontal:'right', wrapText:true}, BOX, '0.00');
-    put(a, 'C'+(top+3), 'L.C. included in approved rate', ARIAL(12), CTR, {left:THIN, right:THIN});
-    put(a, 'D'+(top+3), n(est.lc), ARIAL(12), CTR, {left:THIN, right:THIN}, '0.00');
-    put(a, 'C'+(top+4), 'Approved Rate no ' + (l.appRateNo || l.itemNo), ARIAL(12), CTR, {left:THIN, right:THIN, bottom:THIN});
-    put(a, 'D'+(top+4), n(l.rate), ARIAL(12), CTR, {left:THIN, right:THIN, bottom:THIN}, '0.00');
+    put(a, 'B'+top, l.say,     ARIAL(11), CTR, BOX, '0.00');
+    put(a, 'B'+(top+1), l.unit, ARIAL(11), CTR, BOX);
+    /* bahut lambi description ho to font chhota — item ek hi page par rahe */
+    const dLen = String(l.desc || '').length;
+    const dFs  = dLen > 4000 ? 8 : dLen > 2500 ? 9 : 11;
+    put(a, 'C'+top, l.desc,    ARIAL(dFs), JUST, {top:THIN, left:THIN, right:THIN});
+    put(a, 'D'+top, n(l.rate), ARIAL(11), CTR, {top:THIN, left:THIN, right:THIN}, '0.00');
+    put(a, 'E'+top, l.unit,    ARIAL(11), CTR, BOX);
+    /* Amount = Qty x Rate (formula) */
+    put(a, 'F'+top, { formula:`ROUND(B${top}*D${top},2)`, result:l.amount },
+        ARIAL(11), {horizontal:'right', vertical:'center', wrapText:true}, BOX, '0.00');
+    put(a, 'C'+(top+3), 'L.C. included in approved rate', ARIAL(11), CTR, {left:THIN, right:THIN});
+    put(a, 'D'+(top+3), n(est.lc), ARIAL(11), CTR, {left:THIN, right:THIN}, '0.00');
+    put(a, 'C'+(top+4), 'Approved Rate no ' + (l.appRateNo || l.itemNo), ARIAL(11), CTR, {left:THIN, right:THIN, bottom:THIN});
+    put(a, 'D'+(top+4), { formula:`D${top}`, result:n(l.rate) }, ARIAL(11), CTR, {left:THIN, right:THIN, bottom:THIN}, '0.00');
     // description merges C{top}:C{top+2} (3 rows). Compute exact height for the text
     // (col C width = 42.61) and distribute: top & top+1 hold say/unit (~20 each),
     // 3rd row absorbs the remainder so text fits with no cut and no big blank gap.
-    const descH = textHeight(l.desc, 42.61, 12);
-    const thirdRowH = Math.max(14, descH - 40.2);   // minus the two 20.1 rows above
-    for(let i = top; i <= bot; i++) a.getRow(i).height = (i === top + 2) ? thirdRowH : 20.1;
+    /* poori description dikhe — teen merged row (C{top}:C{top+2}) me height baant do */
+    const descH = textHeight(l.desc, 58.5, dFs);
+    const each  = Math.max(17, Math.ceil(descH / 3));
+    let blockH = 0;
+    for(let i = top; i <= bot; i++){
+      a.getRow(i).height = (i <= top + 2) ? each : 18;
+      blockH += a.getRow(i).height;
+    }
+    /* ek item kabhi do page me na bante — zarurat ho to item se pehle page break */
+    if(pageUsed > 150 && pageUsed + blockH > PAGE_PT){
+      a.getRow(top - 1).addPageBreak();       // break item se THEEK pehle
+      pageUsed = 0;
+    }
+    pageUsed += blockH;
     r = bot + 1;
   });
   const rTot = r, rQc = r + 1, rGrand = r + 2, rSay = r + 4;
   a.mergeCells(`A${rTot}:E${rTot}`);
-  put(a, 'A'+rTot, 'Total', ARIAL(12, true), RGT, BOX);
-  put(a, 'F'+rTot, p.t.total, ARIAL(12, true), RGT, BOX, '0.00');
-  put(a, 'D'+rQc, est.qc + ' % Q C', ARIAL(12, true), RGT, {top:THIN, bottom:THIN});
-  put(a, 'F'+rQc, p.t.qc, ARIAL(12, true), RGT, BOX, '0.00');
-  put(a, 'E'+rGrand, 'Total', ARIAL(12, true), RGT, {top:THIN, bottom:THIN});
-  put(a, 'F'+rGrand, p.t.grand, ARIAL(12, true), RGT, BOX, '0.00');
+  const sumF = amtCells.length ? 'ROUND(' + amtCells.join('+') + ',2)' : '0';
+  put(a, 'A'+rTot, 'Total', ARIAL(11, true), RGT, BOX);
+  put(a, 'F'+rTot, { formula:sumF, result:p.t.total }, ARIAL(11, true), RGT, BOX, '0.00');
+  put(a, 'D'+rQc, est.qc + ' % Q C', ARIAL(11, true), RGT, {top:THIN, bottom:THIN});
+  put(a, 'F'+rQc, { formula:`ROUND(F${rTot}*${n(est.qc)}/100,2)`, result:p.t.qc }, ARIAL(11, true), RGT, BOX, '0.00');
+  put(a, 'E'+rGrand, 'Total', ARIAL(11, true), RGT, {top:THIN, bottom:THIN});
+  put(a, 'F'+rGrand, { formula:`ROUND(F${rTot}+F${rQc},2)`, result:p.t.grand }, ARIAL(11, true), RGT, BOX, '0.00');
   a.mergeCells(`A${rSay}:E${rSay}`);
-  put(a, 'A'+rSay, 'Say', ARIAL(12, true), RGT, BOX);
-  put(a, 'F'+rSay, p.t.say, ARIAL(12, true), RGT, BOX, '0.00');
+  put(a, 'A'+rSay, 'Say', ARIAL(11, true), RGT, BOX);
+  put(a, 'F'+rSay, { formula:`CEILING(F${rGrand},1000)`, result:p.t.say }, ARIAL(11, true), RGT, BOX, '0.00');
+  a.abstSayCell = 'F' + rSay;
   for(let i = rTot; i <= rSay; i++) a.getRow(i).height = 14.25;
   const sg = rSay + 8;
   (typeof signBlock === 'function' ? signBlock() : ['Deputy Executive Engineer','R&B Sub Division','Dahod'])
     .forEach((t,i) => { a.mergeCells(`D${sg+i}:F${sg+i}`); put(a, 'D'+(sg+i), t, ARIAL(12), CTRC); });
+
+  /* FACE ka amount abstract ke Say se juda rahe */
+  put(f, 'B11', { formula:`'abst.'!${a.abstSayCell}`, result:p.t.say }, ARIAL(12, true), CTR, null, RS_FMT);
 
   /* ---------- MES ---------- */
   const m = wb.addWorksheet('MES ', { pageSetup:{ paperSize:9, orientation:'portrait', fitToPage:true, fitToWidth:1, fitToHeight:0 } });
@@ -1193,6 +1221,7 @@ async function buildWorkbook(){
   m.mergeCells('A1:N2'); put(m, 'A1', NAME, ARIAL(16), CTR);
   m.mergeCells('A4:N4'); put(m, 'A4', 'MEASUREMENT', ARIAL(16, true), {horizontal:'center'});
 
+  const mesSayCells = [];
   const COLS = { nos:'D', len:'F', wid:'H', thk:'J', den:'L' };
   const XCOL = { nos:'E', len:'G', wid:'I', thk:'K' };
   const mesWide = 108.27;   // A:N total width units
@@ -1210,6 +1239,7 @@ async function buildWorkbook(){
     m.mergeCells(`A${mr}:E${mr}`);
     if(fl.includes('thk')) put(m, 'J'+mr, 'Avg.', ARIAL(12), {horizontal:'center'});
     mr++;
+    const qtyCells = [];
     l.rows.forEach(row => {
       m.mergeCells(`A${mr}:C${mr}`);
       put(m, 'A'+mr, row.ch, ARIAL(12), CTRC);
@@ -1217,24 +1247,40 @@ async function buildWorkbook(){
         put(m, COLS[k] + mr, n(row[k]), ARIAL(12), CTRC);
         if(i < fl.length - 1) put(m, XCOL[k] + mr, 'x', ARIAL(12), CTRC);
       });
-      put(m, 'M'+mr, r2(rowQty(row, kind)), ARIAL(12), CTRC, null, '0.00');
+      /* Qty = Nos x Length x Width x Thick … (formula) */
+      const prod = fl.map(k => COLS[k] + mr).join('*');
+      qtyCells.push('M' + mr);
+      put(m, 'M'+mr, { formula:`ROUND(${prod},2)`, result:r2(rowQty(row, kind)) }, ARIAL(12), CTRC, null, '0.00');
       put(m, 'N'+mr, mUnit, ARIAL(12), CTRC);
       fitRow(m, mr, row.ch || '', 29.5, 12, 18); mr++;   // fit chainage text, min 18pt
     });
+    const sumQ = qtyCells.length ? `ROUND(SUM(${qtyCells[0]}:${qtyCells[qtyCells.length-1]}),2)` : '0';
     put(m, 'L'+mr, div !== 1 ? 'Total ('+mUnit+')' : 'Total', ARIAL(12, true), CTRC);
-    put(m, 'M'+mr, l.measured, ARIAL(12, true), CTRC, null, '0.00');
-    put(m, 'N'+mr, mUnit, ARIAL(12, true), CTRC); mr++;
+    put(m, 'M'+mr, { formula:sumQ, result:l.measured }, ARIAL(12, true), CTRC, null, '0.00');
+    put(m, 'N'+mr, mUnit, ARIAL(12, true), CTRC);
+    const measRow = mr; mr++;
+    let qtyRow = measRow;
     if(div !== 1){
       put(m, 'L'+mr, '÷ '+fmt0(div), ARIAL(12, true), CTRC);
-      put(m, 'M'+mr, l.qty, ARIAL(12, true), CTRC, null, '0.0000');
-      put(m, 'N'+mr, l.unit, ARIAL(12, true), CTRC); mr++;
+      put(m, 'M'+mr, { formula:`ROUND(M${measRow}/${div},4)`, result:l.qty }, ARIAL(12, true), CTRC, null, '0.0000');
+      put(m, 'N'+mr, l.unit, ARIAL(12, true), CTRC); qtyRow = mr; mr++;
     }
     put(m, 'L'+mr, 'Say', ARIAL(12, true), CTRC);
-    put(m, 'M'+mr, l.say, ARIAL(12, true), CTRC, null, '0.00');
+    put(m, 'M'+mr, (l.sayOverride == null || l.sayOverride === '')
+        ? { formula:`CEILING(M${qtyRow},0.1)`, result:l.say } : l.say,
+        ARIAL(12, true), CTRC, null, '0.00');
     put(m, 'N'+mr, l.unit, ARIAL(12, true), CTRC);
+    mesSayCells.push('M' + mr);
     if(p.lines.length === 1) put(m, 'P'+mr, p.t.say, ARIAL(12, true), CTRC, null, '0.00');
     mr += 2;
   });
+  /* abstract ki Qty = MES ka Say (formula) */
+  qtyRefCells.forEach((cell, i) => {
+    if(!mesSayCells[i]) return;
+    const c = a.getCell(cell);
+    c.value = { formula:`'MES '!${mesSayCells[i]}`, result:p.lines[i].say };
+  });
+
   if(p.lines.length > 1){
     put(m, 'L'+mr, 'Estimate Say', ARIAL(12, true), CTRC);
     put(m, 'M'+mr, p.t.say, ARIAL(12, true), CTRC, null, '0.00');
@@ -1329,38 +1375,64 @@ $('#btnPdf').onclick = () => {
   W = doc.internal.pageSize.getWidth(); M = 40;
   y = sheetTitle('ABSTRACT', W, M);
 
-  const abody = [];
-  abody.push(['1','2','3','4','5','6'].map(v => ({ content:v, styles:{halign:'center'} })));
-  p.lines.forEach(l => {
-    abody.push([
-      { content:String(l.itemNo), rowSpan:5, styles:{halign:'center', valign:'middle'} },
+  /* ek item = 5 row ka block. Har block alag table me chhapta hai taki
+     page badalne par item beech me se na kate. */
+  const A_HEAD = ['Item No.','Qty. & Unit','Item of Work','Rate','Per','Amount'];
+  const A_COLS = { 0:{cellWidth:34, halign:'center'}, 1:{cellWidth:46, halign:'center'},
+                   2:{cellWidth:283}, 3:{cellWidth:48, halign:'center'},
+                   4:{cellWidth:30, halign:'center'}, 5:{cellWidth:72, halign:'right'} };
+  /* har item apne table me — page badalte waqt item kabhi beech se nahi katega */
+  const PH = doc.internal.pageSize.getHeight(), BOT = 60;
+  const itemRows = l => ([
+    [ { content:String(l.itemNo), rowSpan:3, styles:{halign:'center', valign:'middle'} },
       { content:fmt(l.say),       styles:{halign:'center'} },
-      { content:l.desc, rowSpan:3, styles:{halign:'left', valign:'top'} },
-      { content:fmt(n(l.rate)), rowSpan:3, styles:{halign:'center', valign:'middle'} },
-      { content:l.unit, rowSpan:5, styles:{halign:'center', valign:'middle'} },
-      { content:fmt(l.amount), rowSpan:5, styles:{halign:'right', valign:'middle'} }
-    ]);
-    abody.push([ { content:l.unit, rowSpan:4, styles:{halign:'center', valign:'middle'} } ]);
-    abody.push([]);
-    abody.push([ { content:'L.C. included in approved rate', styles:{halign:'center'} },
-                 { content:fmt(n(est.lc)), styles:{halign:'center'} } ]);
-    abody.push([ { content:'Approved Rate no ' + (l.appRateNo || l.itemNo), styles:{halign:'center'} },
-                 { content:fmt(n(l.rate)), styles:{halign:'center'} } ]);
+      { content:l.desc,           styles:{halign:'left', valign:'top'} },
+      { content:fmt(n(l.rate)),   styles:{halign:'center', valign:'middle'} },
+      { content:l.unit, rowSpan:3, styles:{halign:'center', valign:'middle'} },
+      { content:fmt(l.amount), rowSpan:3, styles:{halign:'right', valign:'middle'} } ],
+    [ { content:l.unit, rowSpan:2, styles:{halign:'center', valign:'middle'} },
+      { content:'L.C. included in approved rate', styles:{halign:'center'} },
+      { content:fmt(n(est.lc)), styles:{halign:'center'} } ],
+    [ { content:'Approved Rate no ' + (l.appRateNo || l.itemNo), styles:{halign:'center'} },
+      { content:fmt(n(l.rate)), styles:{halign:'center'} } ]
+  ]);
+  const blockH = l => {
+    doc.setFont('helvetica','normal'); doc.setFontSize(GRID.fontSize);
+    const lines = doc.splitTextToSize(String(l.desc || ''), A_COLS[2].cellWidth - 2*GRID.cellPadding).length;
+    const lineH = GRID.fontSize * 1.15 + 2*GRID.cellPadding;
+    const rowH = GRID.fontSize + 2*GRID.cellPadding + 2;
+    return Math.max(3 * rowH, lines * (GRID.fontSize * 1.15) + 2*GRID.cellPadding) + 2 * rowH;
+  };
+  const drawRows = (rows, needHead) => {
+    doc.autoTable({ startY:y, margin:{left:M, right:M}, theme:'grid',
+      head: needHead ? [A_HEAD, ['1','2','3','4','5','6']] : [],
+      body: rows, styles:GRID, headStyles:HEAD, columnStyles:A_COLS, rowPageBreak:'avoid' });
+    y = doc.lastAutoTable.finalY;
+  };
+  let needHead = true;
+  p.lines.forEach(l => {
+    const h = blockH(l);
+    if(y + h > PH - BOT){                      // is page par item nahi samayega
+      doc.addPage('a4','portrait');
+      y = sheetTitle('ABSTRACT', W, M);
+      needHead = true;
+    }
+    drawRows(itemRows(l), needHead);
+    needHead = false;
   });
-  const B = fs => ({ fontStyle:'bold' , halign:'right', ...fs });
-  abody.push([ { content:'Total', colSpan:5, styles:B() }, { content:fmt(p.t.total), styles:B() } ]);
-  abody.push([ { content:'', colSpan:3, styles:{} }, { content:est.qc + ' % Q C', colSpan:2, styles:B() }, { content:fmt(p.t.qc), styles:B() } ]);
-  abody.push([ { content:'', colSpan:4, styles:{} }, { content:'Total', styles:B() }, { content:fmt(p.t.grand), styles:B() } ]);
-  abody.push([ { content:'Say', colSpan:5, styles:B() }, { content:fmt0(p.t.say), styles:B() } ]);
 
-  doc.autoTable({
-    startY:y, margin:{left:M, right:M}, theme:'grid',
-    head:[['Item No.','Qty. & Unit','Item of Work','Rate','Per','Amount']],
-    body:abody, styles:GRID, headStyles:HEAD,
-    columnStyles:{ 0:{cellWidth:40, halign:'center'}, 1:{cellWidth:58, halign:'center'},
-                   2:{cellWidth:235}, 3:{cellWidth:52, halign:'center'},
-                   4:{cellWidth:38, halign:'center'}, 5:{cellWidth:92, halign:'right'} }
-  });
+  const B = fs => ({ fontStyle:'bold' , halign:'right', ...fs });
+  const totRows = [
+    [ { content:'Total', colSpan:5, styles:B() }, { content:fmt(p.t.total), styles:B() } ],
+    [ { content:'', colSpan:3, styles:{} }, { content:est.qc + ' % Q C', colSpan:2, styles:B() }, { content:fmt(p.t.qc), styles:B() } ],
+    [ { content:'', colSpan:4, styles:{} }, { content:'Total', styles:B() }, { content:fmt(p.t.grand), styles:B() } ],
+    [ { content:'Say', colSpan:5, styles:B() }, { content:fmt0(p.t.say), styles:B() } ]
+  ];
+  if(y + 5 * (GRID.fontSize + 2*GRID.cellPadding + 2) > PH - BOT){
+    doc.addPage('a4','portrait'); y = sheetTitle('ABSTRACT', W, M); needHead = true;
+  }
+  drawRows(totRows, needHead);
+
   signature(doc.lastAutoTable.finalY + 44, M + 390);   // right side (under Rate/Per/Amount block)
 
   /* ================= MES (portrait, gridded) ================= */
