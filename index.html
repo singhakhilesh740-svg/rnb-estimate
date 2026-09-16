@@ -190,8 +190,13 @@ table.ltr-tbl tr.tot td{background:#d9d9d9}
       </button>
       <button class="opt" data-based="sor">
         <div class="ic">📘</div>
-        <div class="t">SOR &amp; RA</div>
-        <span class="s">SOR 2024-25 + Rate Analysis</span>
+        <div class="t">SOR</div>
+        <span class="s">Schedule of Rates 2024-25</span>
+      </button>
+      <button class="opt" data-based="ra">
+        <div class="ic">🧮</div>
+        <div class="t">Rate Analysis</div>
+        <span class="s">Apni RA library se items</span>
       </button>
     </div>
   </div>
@@ -252,9 +257,16 @@ table.ltr-tbl tr.tot td{background:#d9d9d9}
     <h2>Based on</h2>
     <div class="chips" id="rateSrcChips">
       <button class="chip" data-rs="arc" aria-pressed="true">📗 ARC (Approved Rate)</button>
-      <button class="chip" data-rs="sor" aria-pressed="false">📘 SOR &amp; RA</button>
+      <button class="chip" data-rs="sor" aria-pressed="false">📘 SOR 2024-25</button>
+      <button class="chip" data-rs="ra" aria-pressed="false">🧮 Rate Analysis</button>
     </div>
-    <p class="hint" id="rateSrcHint">ARC = approved rate contract items with your saved work descriptions. SOR &amp; RA = Schedule of Rates 2024-25 + Rate Analysis (work description per estimate).</p>
+    <p class="hint" id="rateSrcHint">ARC = approved rate contract items. SOR = Schedule of Rates 2024-25. Rate Analysis = aapki RA library — har item ka rate uske components se banta hai, aur RA ka alag annexure print hota hai.</p>
+    <div class="row" id="raExportRow" hidden style="gap:8px;margin-top:8px;flex-wrap:wrap;align-items:center">
+      <span style="font-size:12px;color:#456">RA annexure:</span>
+      <button class="btn ghost" id="btnRAXlsx" style="padding:4px 12px">⬇ RA Excel</button>
+      <button class="btn ghost" id="btnRAPdf" style="padding:4px 12px">⬇ RA PDF</button>
+      <span style="font-size:11px;color:#678">sirf is estimate me use hue RA, serial 1,2,3…</span>
+    </div>
   </div>
 
   <div class="card">
@@ -469,7 +481,7 @@ table.ltr-tbl tr.tot td{background:#d9d9d9}
     </button>
     <button class="data-tile" data-nav="ra">
       <div class="ic">🧮</div><div class="t">Rate Analysis</div>
-      <span class="s"><span id="cRA">0</span> items · SOR + MR</span>
+      <span class="s"><span id="cRA">0</span> RA · editable</span>
     </button>
     <button class="data-tile" data-nav="roads">
       <div class="ic">🛣️</div><div class="t">Road list</div>
@@ -500,22 +512,22 @@ table.ltr-tbl tr.tot td{background:#d9d9d9}
     <div class="data-view" data-view="ra" hidden>
       <div class="back-row">
         <button class="btn ghost back" id="btnRABack">← Back to Data</button>
-        <h2 class="crumb">Rate Analysis Library</h2>
+        <h2 class="crumb">Rate Analysis</h2>
       </div>
-      <div class="row" style="gap:8px;flex-wrap:wrap;margin-bottom:10px">
-        <div class="tabs" role="tablist" aria-label="RA sections" style="display:flex;gap:6px;flex-wrap:wrap">
-          <button class="btn ghost ra-sub-tab active" data-ra-tab="list">📋 RA Items</button>
-          <button class="btn ghost ra-sub-tab" data-ra-tab="mr">💵 Market Rates</button>
+      <div class="row" style="gap:8px;flex-wrap:wrap;margin-bottom:10px;align-items:center">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn ghost ra-sub-tab active" data-ra-tab="list">📋 RA list</button>
+          <button class="btn ghost ra-sub-tab" data-ra-tab="mr">💵 Market rates</button>
           <button class="btn ghost ra-sub-tab" data-ra-tab="quot">📜 Quotations</button>
           <button class="btn ghost ra-sub-tab" data-ra-tab="sor">📖 SOR override</button>
         </div>
-        <input id="raSearch" placeholder="Search…" style="margin-left:auto;min-width:180px;padding:6px 10px;border:1px solid #ccd;border-radius:6px" />
+        <input id="raSearch" placeholder="Search…" style="margin-left:auto;min-width:170px;padding:6px 10px;border:1px solid #ccd;border-radius:6px">
       </div>
-      <div id="raPanel" style="max-height:70vh;overflow:auto;border:1px solid #dde;border-radius:8px;background:#fff"></div>
-      <div style="margin-top:8px;font-size:12px;color:#567">
-        <b>Tip:</b> MR aur Quotation rates edit karke <b>Save</b> dabao — device par save ho jayenge aur RA rates auto-recompute honge.
-        SOR override sirf specific SOR items ke rates change karta hai (blank = default SOR 2024-25 use).
-      </div>
+      <div id="raPanel" style="max-height:72vh;overflow:auto;border:1px solid #dde;border-radius:8px;background:#fff"></div>
+      <p class="hint" style="margin-top:8px">
+        <b>Edit</b> ✏️ se kisi bhi RA ke components, qty, rate, C.P. badal sakte ho · <b>⧉</b> se copy · <b>+ New RA</b> se naya banao.
+        Market / Quotation / SOR rate badloge to har us RA ka rate apne aap update hoga.
+      </p>
     </div>
 
 
@@ -739,6 +751,7 @@ table.ltr-tbl tr.tot td{background:#d9d9d9}
 <script src="data.js"></script>
 <script src="ra-data.js"></script>
 <script src="app.js"></script>
+<script src="ra-engine.js"></script>
 <script src="auth.js"></script>
 <script src="letter.js"></script>
 <script>
