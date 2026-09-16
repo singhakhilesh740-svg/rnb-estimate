@@ -1784,3 +1784,381 @@ if(!est.mode || !est.rateSource) openGate('based');
     toast(picks.length + ' item import ho gaye — ab edit kar sakte ho.');
   };
 })();
+
+
+/* ==========================================================================
+   RATE ANALYSIS TAB  (added 2026-09) — under Data → Rate Analysis
+   --------------------------------------------------------------------------
+   Renders 50-item RA library from ra-data.js (DISTRICT_RA_LIBRARY).
+   Editable Market Rates + Quotation Rates + optional SOR override.
+   Rates persist in localStorage per district — cloud sync via profile only.
+   ========================================================================== */
+
+(function initRA(){
+  // wait for DOM
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initRA);
+    return;
+  }
+  if(typeof DISTRICT_RA_LIBRARY === 'undefined'){
+    console.warn('[RA] ra-data.js not loaded — RA tab will be empty');
+  }
+
+  const $ra = (s, r) => (r||document).querySelector(s);
+  const $$ra = (s, r) => Array.from((r||document).querySelectorAll(s));
+
+  let raCurTab = 'list';
+  let raSearch = '';
+
+  function raDistrict(){
+    return (typeof activeDistrict === 'function') ? activeDistrict(window.userProfile) : 'Dahod';
+  }
+  function raLib(){
+    const d = raDistrict();
+    if(typeof DISTRICT_RA_LIBRARY === 'undefined') return null;
+    return DISTRICT_RA_LIBRARY[d] || DISTRICT_RA_LIBRARY['Dahod'] || null;
+  }
+
+  function escHtml(s){
+    return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function num(x, d){ const n = Number(x); return isFinite(n) ? n.toFixed(d==null?2:d) : ''; }
+
+  function updateRACount(){
+    const lib = raLib();
+    const n = lib && lib.rateAnalysis ? lib.rateAnalysis.length : 0;
+    const el = document.getElementById('cRA');
+    if(el) el.textContent = n;
+  }
+
+  /* ---------------- RA List rendering ---------------- */
+  function renderRAList(){
+    const lib = raLib();
+    if(!lib){ return '<p style="padding:16px;color:#a44">RA library load nahi hui.</p>'; }
+    const items = (lib.rateAnalysis||[]).filter(ra => {
+      if(!raSearch) return true;
+      const q = raSearch.toLowerCase();
+      return String(ra.itemNo||'').toLowerCase().includes(q) ||
+             String(ra.desc||'').toLowerCase().includes(q) ||
+             String(ra.no||'').toLowerCase().includes(q);
+    });
+    if(!items.length) return '<p style="padding:16px;color:#678">Koi RA item match nahi hua.</p>';
+
+    let h = '<table style="width:100%;border-collapse:collapse;font-size:13px">';
+    h += '<thead style="position:sticky;top:0;background:#eef;z-index:1"><tr>' +
+         '<th style="padding:6px 8px;text-align:left;border-bottom:1px solid #ccd">RA</th>' +
+         '<th style="padding:6px 8px;text-align:left;border-bottom:1px solid #ccd">Item No.</th>' +
+         '<th style="padding:6px 8px;text-align:left;border-bottom:1px solid #ccd">Description</th>' +
+         '<th style="padding:6px 8px;text-align:left;border-bottom:1px solid #ccd">Unit</th>' +
+         '<th style="padding:6px 8px;text-align:right;border-bottom:1px solid #ccd">PDF Rate</th>' +
+         '<th style="padding:6px 8px;text-align:right;border-bottom:1px solid #ccd">Computed</th>' +
+         '<th style="padding:6px 8px;text-align:center;border-bottom:1px solid #ccd"></th>' +
+         '</tr></thead><tbody>';
+    items.forEach((ra, i) => {
+      let computed = ra.sayRate;
+      if(typeof computeRA === 'function'){
+        try{
+          const c = computeRA(ra,
+            (code, page) => sorRateOf(window.userProfile, code, page),
+            (label) => mrRateOf(window.userProfile, label),
+            (label) => qRateOf(window.userProfile, label)
+          );
+          if(c && isFinite(c)) computed = c;
+        }catch(e){ /* keep sayRate */ }
+      }
+      const bg = i%2 ? '#f9fafc' : '#fff';
+      const diff = Math.abs(Number(computed) - Number(ra.sayRate));
+      const diffPct = ra.sayRate ? (diff / Number(ra.sayRate) * 100) : 0;
+      const color = diffPct > 2 ? '#c60' : '#286';
+      h += `<tr style="background:${bg};border-bottom:1px solid #eef">
+        <td style="padding:6px 8px"><b>RA-${escHtml(ra.no)}</b></td>
+        <td style="padding:6px 8px">${escHtml(ra.itemNo||'')}</td>
+        <td style="padding:6px 8px">${escHtml(String(ra.desc||'').slice(0,120))}${(ra.desc||'').length>120?'…':''}</td>
+        <td style="padding:6px 8px">${escHtml(ra.unit||'')}</td>
+        <td style="padding:6px 8px;text-align:right">${num(ra.sayRate)}</td>
+        <td style="padding:6px 8px;text-align:right;color:${color}"><b>${num(computed)}</b></td>
+        <td style="padding:6px 8px;text-align:center">
+          <button class="btn ghost" data-ra-detail="${escHtml(ra.no)}" style="padding:2px 8px;font-size:11px">👁</button>
+        </td>
+      </tr>`;
+    });
+    h += '</tbody></table>';
+    return h;
+  }
+
+  /* ---------------- Market Rate editor ---------------- */
+  function renderMR(){
+    const lib = raLib();
+    if(!lib){ return '<p style="padding:16px;color:#a44">RA library load nahi hui.</p>'; }
+    const items = (lib.marketRates||[]).filter(mr => {
+      if(!raSearch) return true;
+      const q = raSearch.toLowerCase();
+      return String(mr.label||'').toLowerCase().includes(q);
+    });
+    if(!items.length) return '<p style="padding:16px;color:#678">Koi MR item nahi hai.</p>';
+
+    let h = '<table style="width:100%;border-collapse:collapse;font-size:13px">';
+    h += '<thead style="position:sticky;top:0;background:#eef;z-index:1"><tr>' +
+         '<th style="padding:6px 8px;text-align:left;border-bottom:1px solid #ccd">Item / Component</th>' +
+         '<th style="padding:6px 8px;text-align:left;border-bottom:1px solid #ccd">Unit</th>' +
+         '<th style="padding:6px 8px;text-align:right;border-bottom:1px solid #ccd">Default (PDF)</th>' +
+         '<th style="padding:6px 8px;text-align:right;border-bottom:1px solid #ccd">Your Rate (₹)</th>' +
+         '<th style="padding:6px 8px;text-align:center;border-bottom:1px solid #ccd">Save</th>' +
+         '</tr></thead><tbody>';
+    items.forEach((mr, i) => {
+      const cur = mrRateOf(window.userProfile, mr.label);
+      const bg = i%2 ? '#f9fafc' : '#fff';
+      const isOvr = cur != null && Number(cur) !== Number(mr.rate);
+      h += `<tr style="background:${bg};border-bottom:1px solid #eef">
+        <td style="padding:6px 8px">${escHtml(mr.label||'')}</td>
+        <td style="padding:6px 8px">${escHtml(mr.unit||'')}</td>
+        <td style="padding:6px 8px;text-align:right;color:#789">${num(mr.rate)}</td>
+        <td style="padding:6px 8px;text-align:right">
+          <input type="number" step="0.01" value="${cur!=null?cur:''}" placeholder="${num(mr.rate)}"
+            data-mr-label="${escHtml(mr.label||'')}" data-mr-default="${mr.rate}"
+            style="width:100px;padding:4px 6px;border:1px solid ${isOvr?'#48c':'#ccd'};border-radius:4px;text-align:right;font-weight:${isOvr?'bold':'normal'}" />
+        </td>
+        <td style="padding:6px 8px;text-align:center">
+          <button class="btn ghost mr-save" data-mr-label-save="${escHtml(mr.label||'')}" style="padding:2px 10px;font-size:11px">💾</button>
+        </td>
+      </tr>`;
+    });
+    h += '</tbody></table>';
+    return h;
+  }
+
+  /* ---------------- Quotation editor ---------------- */
+  function renderQuot(){
+    const lib = raLib();
+    if(!lib){ return '<p style="padding:16px;color:#a44">RA library load nahi hui.</p>'; }
+    const items = (lib.quotationRates||[]).filter(q => {
+      if(!raSearch) return true;
+      const s = raSearch.toLowerCase();
+      return String(q.label||'').toLowerCase().includes(s);
+    });
+    if(!items.length) return '<p style="padding:16px;color:#678">Koi Quotation item nahi hai.</p>';
+
+    let h = '<table style="width:100%;border-collapse:collapse;font-size:13px">';
+    h += '<thead style="position:sticky;top:0;background:#eef;z-index:1"><tr>' +
+         '<th style="padding:6px 8px;text-align:left;border-bottom:1px solid #ccd">Quotation Item</th>' +
+         '<th style="padding:6px 8px;text-align:left;border-bottom:1px solid #ccd">Unit</th>' +
+         '<th style="padding:6px 8px;text-align:right;border-bottom:1px solid #ccd">Default</th>' +
+         '<th style="padding:6px 8px;text-align:right;border-bottom:1px solid #ccd">Your Rate (₹)</th>' +
+         '<th style="padding:6px 8px;text-align:center;border-bottom:1px solid #ccd">Save</th>' +
+         '</tr></thead><tbody>';
+    items.forEach((q, i) => {
+      const cur = qRateOf(window.userProfile, q.label);
+      const bg = i%2 ? '#f9fafc' : '#fff';
+      const isOvr = cur != null && Number(cur) !== Number(q.rate);
+      h += `<tr style="background:${bg};border-bottom:1px solid #eef">
+        <td style="padding:6px 8px">${escHtml(q.label||'')}</td>
+        <td style="padding:6px 8px">${escHtml(q.unit||'')}</td>
+        <td style="padding:6px 8px;text-align:right;color:#789">${num(q.rate)}</td>
+        <td style="padding:6px 8px;text-align:right">
+          <input type="number" step="0.01" value="${cur!=null?cur:''}" placeholder="${num(q.rate)}"
+            data-q-label="${escHtml(q.label||'')}" data-q-default="${q.rate}"
+            style="width:100px;padding:4px 6px;border:1px solid ${isOvr?'#48c':'#ccd'};border-radius:4px;text-align:right;font-weight:${isOvr?'bold':'normal'}" />
+        </td>
+        <td style="padding:6px 8px;text-align:center">
+          <button class="btn ghost q-save" data-q-label-save="${escHtml(q.label||'')}" style="padding:2px 10px;font-size:11px">💾</button>
+        </td>
+      </tr>`;
+    });
+    h += '</tbody></table>';
+    return h;
+  }
+
+  /* ---------------- SOR override editor (only SOR items used by RAs) ---------------- */
+  function renderSORovr(){
+    const lib = raLib();
+    if(!lib){ return '<p style="padding:16px;color:#a44">RA library load nahi hui.</p>'; }
+    // collect unique SOR codes used across all RAs
+    const seen = new Map();
+    (lib.rateAnalysis||[]).forEach(ra => {
+      (ra.components||[]).forEach(c => {
+        if(c.kind === 'SOR' && c.code && !seen.has(c.code)){
+          seen.set(c.code, {code: c.code, page: c.page||'', label: c.label||''});
+        }
+      });
+      if(ra.liftExtra && ra.liftExtra.sorCode && !seen.has(ra.liftExtra.sorCode)){
+        seen.set(ra.liftExtra.sorCode, {code: ra.liftExtra.sorCode, page: ra.liftExtra.page||'', label: 'Lift extra (all floors)'});
+      }
+    });
+    let items = Array.from(seen.values());
+    if(raSearch){
+      const s = raSearch.toLowerCase();
+      items = items.filter(x => x.code.toLowerCase().includes(s) || String(x.label||'').toLowerCase().includes(s));
+    }
+    if(!items.length) return '<p style="padding:16px;color:#678">Koi SOR item nahi hai.</p>';
+    const dist = raDistrict();
+    let h = '<p style="padding:8px 12px;font-size:12px;color:#567;background:#eef">' +
+      '<b>Note:</b> Ye override sirf ' + escHtml(dist) + ' district ke liye local device par save hoga. Blank chhodne par default SOR 2024-25 rate use hoga.</p>';
+    h += '<table style="width:100%;border-collapse:collapse;font-size:13px">';
+    h += '<thead style="position:sticky;top:0;background:#eef;z-index:1"><tr>' +
+         '<th style="padding:6px 8px;text-align:left;border-bottom:1px solid #ccd">SOR Code</th>' +
+         '<th style="padding:6px 8px;text-align:left;border-bottom:1px solid #ccd">Page</th>' +
+         '<th style="padding:6px 8px;text-align:right;border-bottom:1px solid #ccd">SOR 2024-25</th>' +
+         '<th style="padding:6px 8px;text-align:right;border-bottom:1px solid #ccd">Override (₹)</th>' +
+         '<th style="padding:6px 8px;text-align:center;border-bottom:1px solid #ccd">Save</th>' +
+         '</tr></thead><tbody>';
+    items.forEach((it, i) => {
+      const seedRate = (typeof SOR_SEED !== 'undefined') ? (SOR_SEED.find(x => x.itemNo === it.code)||{}).rate : null;
+      let ovr = {}; try{ ovr = JSON.parse(localStorage.getItem('rnb_sor_ovr_'+dist)||'{}'); }catch(e){}
+      const cur = ovr[it.code];
+      const bg = i%2 ? '#f9fafc' : '#fff';
+      const isOvr = cur != null && cur !== '';
+      h += `<tr style="background:${bg};border-bottom:1px solid #eef">
+        <td style="padding:6px 8px"><b>${escHtml(it.code)}</b></td>
+        <td style="padding:6px 8px">${escHtml(it.page||'')}</td>
+        <td style="padding:6px 8px;text-align:right;color:#789">${seedRate!=null?num(seedRate):'—'}</td>
+        <td style="padding:6px 8px;text-align:right">
+          <input type="number" step="0.01" value="${cur!=null?cur:''}" placeholder="${seedRate!=null?num(seedRate):'default'}"
+            data-sor-code="${escHtml(it.code)}"
+            style="width:110px;padding:4px 6px;border:1px solid ${isOvr?'#48c':'#ccd'};border-radius:4px;text-align:right;font-weight:${isOvr?'bold':'normal'}" />
+        </td>
+        <td style="padding:6px 8px;text-align:center">
+          <button class="btn ghost sor-save" data-sor-code-save="${escHtml(it.code)}" style="padding:2px 10px;font-size:11px">💾</button>
+        </td>
+      </tr>`;
+    });
+    h += '</tbody></table>';
+    return h;
+  }
+
+  /* ---------------- Render dispatcher ---------------- */
+  function renderRA(){
+    const panel = document.getElementById('raPanel');
+    if(!panel) return;
+    if(raCurTab === 'list')  panel.innerHTML = renderRAList();
+    else if(raCurTab==='mr') panel.innerHTML = renderMR();
+    else if(raCurTab==='quot') panel.innerHTML = renderQuot();
+    else if(raCurTab==='sor')  panel.innerHTML = renderSORovr();
+    wireHandlers();
+  }
+
+  function wireHandlers(){
+    const panel = document.getElementById('raPanel');
+    if(!panel) return;
+
+    // MR save
+    panel.querySelectorAll('.mr-save').forEach(btn => btn.onclick = () => {
+      const label = btn.dataset.mrLabelSave;
+      const inp = panel.querySelector('input[data-mr-label="'+CSS.escape(label)+'"]');
+      if(!inp) return;
+      const v = inp.value.trim();
+      saveMR(raDistrict(), label, v);
+      if(typeof toast==='function') toast('MR saved: ' + label.slice(0,40));
+      renderRA();
+    });
+    // Q save
+    panel.querySelectorAll('.q-save').forEach(btn => btn.onclick = () => {
+      const label = btn.dataset.qLabelSave;
+      const inp = panel.querySelector('input[data-q-label="'+CSS.escape(label)+'"]');
+      if(!inp) return;
+      const v = inp.value.trim();
+      saveQ(raDistrict(), label, v);
+      if(typeof toast==='function') toast('Quotation saved: ' + label.slice(0,40));
+      renderRA();
+    });
+    // SOR save
+    panel.querySelectorAll('.sor-save').forEach(btn => btn.onclick = () => {
+      const code = btn.dataset.sorCodeSave;
+      const inp = panel.querySelector('input[data-sor-code="'+CSS.escape(code)+'"]');
+      if(!inp) return;
+      const v = inp.value.trim();
+      saveSORovr(raDistrict(), code, v);
+      if(typeof toast==='function') toast('SOR override saved: ' + code);
+      renderRA();
+    });
+    // RA detail modal
+    panel.querySelectorAll('[data-ra-detail]').forEach(b => b.onclick = () => showRADetail(b.dataset.raDetail));
+  }
+
+  function showRADetail(raNo){
+    const lib = raLib(); if(!lib) return;
+    const ra = (lib.rateAnalysis||[]).find(r => String(r.no) === String(raNo));
+    if(!ra){ alert('RA-' + raNo + ' nahi mila'); return; }
+    let h = `<div style="font-family:sans-serif">
+      <h3 style="margin:0 0 8px">RA-${ra.no} : ${escHtml(ra.itemNo||'')}</h3>
+      <p style="margin:4px 0;color:#345;font-size:13px">${escHtml(ra.desc||'')}</p>
+      <p style="font-size:12px;color:#678">Unit: <b>${escHtml(ra.unit||'')}</b> · Basis: ${escHtml(ra.basis||'')} · CP: ${(ra.cp||0)}%${ra.cpApplies?' (on: '+ra.cpApplies+')':''}</p>
+      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:8px">
+        <thead style="background:#eef"><tr>
+          <th style="padding:4px 6px;text-align:left;border-bottom:1px solid #ccd">Sr</th>
+          <th style="padding:4px 6px;text-align:left;border-bottom:1px solid #ccd">Type</th>
+          <th style="padding:4px 6px;text-align:left;border-bottom:1px solid #ccd">Code / Label</th>
+          <th style="padding:4px 6px;text-align:right;border-bottom:1px solid #ccd">Qty</th>
+          <th style="padding:4px 6px;text-align:right;border-bottom:1px solid #ccd">Rate</th>
+          <th style="padding:4px 6px;text-align:right;border-bottom:1px solid #ccd">Amount</th>
+        </tr></thead><tbody>`;
+    (ra.components||[]).forEach(c => {
+      h += `<tr>
+        <td style="padding:4px 6px">${c.sr||''}</td>
+        <td style="padding:4px 6px">${escHtml(c.kind||'')}</td>
+        <td style="padding:4px 6px">${escHtml(c.code || c.label || '')}${c.page?' <span style="color:#89a">(p.'+c.page+')</span>':''}</td>
+        <td style="padding:4px 6px;text-align:right">${num(c.qty)}</td>
+        <td style="padding:4px 6px;text-align:right">${num(c.rate)}</td>
+        <td style="padding:4px 6px;text-align:right">${num(c.amount)}</td>
+      </tr>`;
+    });
+    h += `<tr style="background:#f0f4f8;font-weight:bold">
+        <td colspan="5" style="padding:6px;text-align:right">Say Rate (from PDF):</td>
+        <td style="padding:6px;text-align:right">${num(ra.sayRate)}</td>
+      </tr></tbody></table>`;
+    if(ra.liftExtra){
+      h += `<p style="font-size:12px;color:#567;margin-top:6px">
+        <b>Floor lift:</b> +${num(ra.liftExtra.rate)}/unit per floor (SOR ${ra.liftExtra.sorCode}, p.${ra.liftExtra.page||'—'})
+        · Applies to: ${(ra.floors||[]).join(', ')}</p>`;
+    }
+    h += `<div style="margin-top:12px;text-align:right">
+      <button class="btn" onclick="document.getElementById('raModal').style.display='none'">Close</button>
+    </div></div>`;
+
+    let modal = document.getElementById('raModal');
+    if(!modal){
+      modal = document.createElement('div');
+      modal.id = 'raModal';
+      modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center';
+      modal.innerHTML = '<div id="raModalBody" style="background:#fff;max-width:800px;width:92%;max-height:90vh;overflow:auto;padding:20px;border-radius:10px;box-shadow:0 10px 40px rgba(0,0,0,.3)"></div>';
+      modal.onclick = (e) => { if(e.target === modal) modal.style.display='none'; };
+      document.body.appendChild(modal);
+    }
+    document.getElementById('raModalBody').innerHTML = h;
+    modal.style.display = 'flex';
+  }
+
+  /* ---------------- Sub-tab switching & search ---------------- */
+  document.querySelectorAll('.ra-sub-tab').forEach(b => b.onclick = () => {
+    document.querySelectorAll('.ra-sub-tab').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    raCurTab = b.dataset.raTab;
+    renderRA();
+  });
+  const searchEl = document.getElementById('raSearch');
+  if(searchEl) searchEl.oninput = () => { raSearch = searchEl.value.trim(); renderRA(); };
+
+  const backBtn = document.getElementById('btnRABack');
+  if(backBtn) backBtn.onclick = () => {
+    // reuse existing showDataGrid if present, else manual
+    if(typeof showDataGrid === 'function') showDataGrid();
+    else {
+      const grid = document.getElementById('dataGrid');
+      const det  = document.getElementById('dataDetail');
+      if(grid) grid.hidden = false;
+      if(det)  det.hidden = true;
+      document.querySelectorAll('.data-view').forEach(v => v.hidden = true);
+    }
+  };
+
+  // Update RA count in tile
+  updateRACount();
+
+  // Whenever the RA tile is clicked, render fresh (hook after existing handler)
+  const raTile = document.querySelector('#dataGrid .data-tile[data-nav="ra"]');
+  if(raTile){
+    const _existing = raTile.onclick;
+    raTile.addEventListener('click', () => setTimeout(renderRA, 20));
+  }
+
+  console.log('[RA] Rate Analysis tab initialized for district:', raDistrict());
+})();

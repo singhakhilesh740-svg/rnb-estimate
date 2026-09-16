@@ -1400,3 +1400,141 @@ const DIVISIONS_SEED = [
   {div:'Vadodara ( R&B ) Division, Vadodara', subs:['R & B Sub Division, Vadodara', 'R & B Sub Division, Padra', 'R & B Sub Division, Dabhoi', 'R & B Sub Division, Karjan', 'R & B Sub Division, Savli', 'R & B Sub Division, Waghodia', 'R & B Sub Division, Sinor', 'R & B Sub Division, Desar']},
   {div:'Valsad ( R&B ) Division, Valsad', subs:['R & B Sub Division, Valsad', 'R & B Sub Division, Vapi', 'R & B Sub Division, Pardi', 'R & B Sub Division, Dharampur', 'R & B Sub Division, Umbergaon', 'R & B Sub Division, Kaprada']}
 ];
+
+
+/* ==========================================================================
+   DISTRICT-WISE HELPERS  (added 2026-09 for RA library + multi-district)
+   --------------------------------------------------------------------------
+   All existing seed rows use `div:'Dahod'` — treat this as district-tag too
+   (since Dahod district has only one R&B division). For future districts,
+   new rows should use `dist:'<District>'`. Helpers below accept both.
+   ========================================================================== */
+
+const DIVISION_TO_DISTRICT = {
+  'Dahod ( R&B ) Division, Dahod': 'Dahod',
+  'Panchmahal ( R&B ) Division, Godhra': 'Panchmahal',
+  'Kheda ( R&B ) Division, Nadiad': 'Kheda',
+  'Vadodara ( R&B ) Division, Vadodara': 'Vadodara',
+  'Ahmedabad ( R&B ) Division, Ahmedabad': 'Ahmedabad',
+  'Anand ( R&B ) Division, Anand': 'Anand',
+  'Bharuch ( R&B ) Division, Bharuch': 'Bharuch',
+  'Narmada ( R&B ) Division, Rajpipla': 'Narmada',
+  'Chhota Udepur ( R&B ) Division, Chhota Udepur': 'Chhota Udepur',
+  'Surat ( R&B ) Division, Surat': 'Surat',
+  'Navsari ( R&B ) Division, Navsari': 'Navsari',
+  'Valsad ( R&B ) Division, Valsad': 'Valsad',
+  'Tapi ( R&B ) Division, Vyara': 'Tapi',
+  'Dang ( R&B ) Division, Ahwa': 'Dang',
+  'Rajkot ( R&B ) Division, Rajkot': 'Rajkot',
+  'Jamnagar ( R&B ) Division, Jamnagar': 'Jamnagar',
+  'Junagadh ( R&B ) Division, Junagadh': 'Junagadh',
+  'Bhavnagar ( R&B ) Division, Bhavnagar': 'Bhavnagar',
+  'Amreli ( R&B ) Division, Amreli': 'Amreli',
+  'Porbandar ( R&B ) Division, Porbandar': 'Porbandar',
+  'Morbi ( R&B ) Division, Morbi': 'Morbi',
+  'Botad ( R&B ) Division, Botad': 'Botad',
+  'Gir Somnath ( R&B ) Division, Veraval': 'Gir Somnath',
+  'Devbhumi Dwarka ( R&B ) Division, Khambhaliya': 'Devbhumi Dwarka',
+  'Surendranagar ( R&B ) Division, Surendranagar': 'Surendranagar',
+  'Kutch ( R&B ) Division, Bhuj': 'Kutch',
+  'Mehsana ( R&B ) Division, Mehsana': 'Mehsana',
+  'Patan ( R&B ) Division, Patan': 'Patan',
+  'Banaskantha ( R&B ) Division, Palanpur': 'Banaskantha',
+  'Sabarkantha ( R&B ) Division, Himmatnagar': 'Sabarkantha',
+  'Aravalli ( R&B ) Division, Modasa': 'Aravalli',
+  'Mahisagar ( R&B ) Division, Lunawada': 'Mahisagar',
+  'Gandhinagar ( R&B ) Division, Gandhinagar': 'Gandhinagar'
+};
+
+/* Compute active district from profile — falls back to 'Dahod' */
+function activeDistrict(profile){
+  if(!profile) return 'Dahod';
+  if(profile.district) return profile.district;
+  if(profile.div && DIVISION_TO_DISTRICT[profile.div]) return DIVISION_TO_DISTRICT[profile.div];
+  // best-guess from division name
+  if(profile.div){
+    const m = String(profile.div).match(/^([A-Za-z][A-Za-z .]+?)\s*\(/);
+    if(m) return m[1].trim();
+  }
+  return 'Dahod';
+}
+
+/* Row matches user's district if row.dist OR row.div equals the active district.
+   Kept lenient so existing div:'Dahod' seed rows still filter correctly. */
+function rowInDistrict(row, dist){
+  if(!row) return false;
+  const tag = row.dist || row.div || '';
+  return String(tag).toLowerCase() === String(dist).toLowerCase();
+}
+
+/* ---- Rate lookups for RA computeRA() (from ra-data.js) ---- */
+/* SOR override store: localStorage['rnb_sor_ovr_<district>'] = {code: rate, ...} */
+function _sorOvrKey(dist){ return 'rnb_sor_ovr_' + (dist||'Dahod'); }
+function _readOvr(dist){ try{ return JSON.parse(localStorage.getItem(_sorOvrKey(dist))||'{}'); }catch(e){ return {}; } }
+function _writeOvr(dist, obj){ localStorage.setItem(_sorOvrKey(dist), JSON.stringify(obj||{})); }
+
+function sorRateOf(profile, code /*, page*/){
+  const d = activeDistrict(profile);
+  const ovr = _readOvr(d);
+  if(ovr[code] != null && ovr[code] !== '') return Number(ovr[code]);
+  if(typeof SOR_SEED !== 'undefined'){
+    const rec = SOR_SEED.find(x => x.itemNo === code && rowInDistrict(x, d));
+    if(rec) return Number(rec.rate);
+    // fallback: any district's SOR (SOR is state-wide 2024-25)
+    const anyRec = SOR_SEED.find(x => x.itemNo === code);
+    if(anyRec) return Number(anyRec.rate);
+  }
+  return null;
+}
+
+/* MR / Quotation stores per district */
+function _mrKey(dist){ return 'rnb_mr_' + (dist||'Dahod'); }
+function _qKey(dist){ return 'rnb_q_' + (dist||'Dahod'); }
+
+function mrRateOf(profile, label){
+  const d = activeDistrict(profile);
+  let ovr = {}; try{ ovr = JSON.parse(localStorage.getItem(_mrKey(d))||'{}'); }catch(e){}
+  const k = String(label||'').toLowerCase().trim();
+  if(ovr[k] != null && ovr[k] !== '') return Number(ovr[k]);
+  // seed from DISTRICT_RA_LIBRARY if present
+  if(typeof DISTRICT_RA_LIBRARY !== 'undefined' && DISTRICT_RA_LIBRARY[d]){
+    const mr = DISTRICT_RA_LIBRARY[d].marketRates || [];
+    const rec = mr.find(x => String(x.label||'').toLowerCase().trim() === k);
+    if(rec) return Number(rec.rate);
+  }
+  return null;
+}
+
+function qRateOf(profile, label){
+  const d = activeDistrict(profile);
+  let ovr = {}; try{ ovr = JSON.parse(localStorage.getItem(_qKey(d))||'{}'); }catch(e){}
+  const k = String(label||'').toLowerCase().trim();
+  if(ovr[k] != null && ovr[k] !== '') return Number(ovr[k]);
+  if(typeof DISTRICT_RA_LIBRARY !== 'undefined' && DISTRICT_RA_LIBRARY[d]){
+    const qr = DISTRICT_RA_LIBRARY[d].quotationRates || [];
+    const rec = qr.find(x => String(x.label||'').toLowerCase().trim() === k);
+    if(rec) return Number(rec.rate);
+  }
+  return null;
+}
+
+/* Save helpers (used by RA editor in app.js) */
+function saveMR(dist, label, rate){
+  const key = _mrKey(dist);
+  let obj = {}; try{ obj = JSON.parse(localStorage.getItem(key)||'{}'); }catch(e){}
+  const k = String(label||'').toLowerCase().trim();
+  if(rate === '' || rate == null) delete obj[k]; else obj[k] = Number(rate);
+  localStorage.setItem(key, JSON.stringify(obj));
+}
+function saveQ(dist, label, rate){
+  const key = _qKey(dist);
+  let obj = {}; try{ obj = JSON.parse(localStorage.getItem(key)||'{}'); }catch(e){}
+  const k = String(label||'').toLowerCase().trim();
+  if(rate === '' || rate == null) delete obj[k]; else obj[k] = Number(rate);
+  localStorage.setItem(key, JSON.stringify(obj));
+}
+function saveSORovr(dist, code, rate){
+  const obj = _readOvr(dist);
+  if(rate === '' || rate == null) delete obj[code]; else obj[code] = Number(rate);
+  _writeOvr(dist, obj);
+}

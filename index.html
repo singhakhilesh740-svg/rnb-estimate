@@ -467,6 +467,10 @@ table.ltr-tbl tr.tot td{background:#d9d9d9}
       <div class="ic">💰</div><div class="t">Rate</div>
       <span class="s">ARC &amp; SOR rates</span>
     </button>
+    <button class="data-tile" data-nav="ra">
+      <div class="ic">🧮</div><div class="t">Rate Analysis</div>
+      <span class="s"><span id="cRA">0</span> items · SOR + MR</span>
+    </button>
     <button class="data-tile" data-nav="roads">
       <div class="ic">🛣️</div><div class="t">Road list</div>
       <span class="s"><span id="cRoads">0</span> entries</span>
@@ -491,6 +495,29 @@ table.ltr-tbl tr.tot td{background:#d9d9d9}
 
   <!-- ===== detail wrapper ===== -->
   <div id="dataDetail" hidden>
+
+    <!-- Rate Analysis view -->
+    <div class="data-view" data-view="ra" hidden>
+      <div class="back-row">
+        <button class="btn ghost back" id="btnRABack">← Back to Data</button>
+        <h2 class="crumb">Rate Analysis Library</h2>
+      </div>
+      <div class="row" style="gap:8px;flex-wrap:wrap;margin-bottom:10px">
+        <div class="tabs" role="tablist" aria-label="RA sections" style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn ghost ra-sub-tab active" data-ra-tab="list">📋 RA Items</button>
+          <button class="btn ghost ra-sub-tab" data-ra-tab="mr">💵 Market Rates</button>
+          <button class="btn ghost ra-sub-tab" data-ra-tab="quot">📜 Quotations</button>
+          <button class="btn ghost ra-sub-tab" data-ra-tab="sor">📖 SOR override</button>
+        </div>
+        <input id="raSearch" placeholder="Search…" style="margin-left:auto;min-width:180px;padding:6px 10px;border:1px solid #ccd;border-radius:6px" />
+      </div>
+      <div id="raPanel" style="max-height:70vh;overflow:auto;border:1px solid #dde;border-radius:8px;background:#fff"></div>
+      <div style="margin-top:8px;font-size:12px;color:#567">
+        <b>Tip:</b> MR aur Quotation rates edit karke <b>Save</b> dabao — device par save ho jayenge aur RA rates auto-recompute honge.
+        SOR override sirf specific SOR items ke rates change karta hai (blank = default SOR 2024-25 use).
+      </div>
+    </div>
+
 
     <!-- Rate view -->
     <div class="data-view" data-view="rate" hidden>
@@ -710,6 +737,7 @@ table.ltr-tbl tr.tot td{background:#d9d9d9}
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="data.js"></script>
+<script src="ra-data.js"></script>
 <script src="app.js"></script>
 <script src="auth.js"></script>
 <script src="letter.js"></script>
