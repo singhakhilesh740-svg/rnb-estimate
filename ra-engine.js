@@ -143,6 +143,8 @@
       const s = search.toLowerCase();
       list = list.filter(r =>
         String(r.desc || '').toLowerCase().includes(s) ||
+        String(r.topic || '').toLowerCase().includes(s) ||
+        String(r.source || '').toLowerCase().includes(s) ||
         String(r.itemNo || '').toLowerCase().includes(s) ||
         String(r.id || '').toLowerCase().includes(s));
     }
@@ -510,16 +512,16 @@
         Object.entries(c.floors).forEach(([floor, rate]) => {
           out.push({
             label: (ra.desc || '') + ' — ' + floor,
-            meta: `RA · ₹ ${money(rate)} / ${ra.unit}${ra.itemNo ? ' · item ' + ra.itemNo : ''}`,
-            search: [ra.desc, ra.unit, ra.itemNo, floor, 'RA'].join(' '),
+            meta: `RA${ra.topic ? ' · ' + ra.topic : ''} · ₹ ${money(rate)} / ${ra.unit}${ra.itemNo ? ' · item ' + ra.itemNo : ''}`,
+            search: [ra.desc, ra.unit, ra.itemNo, ra.topic, ra.source, floor, 'RA'].join(' '),
             raw: { ra, rate, floor }
           });
         });
       } else {
         out.push({
           label: ra.desc || '',
-          meta: `RA · ₹ ${money(c.perUnit)} / ${ra.unit}${ra.itemNo ? ' · item ' + ra.itemNo : ''}`,
-          search: [ra.desc, ra.unit, ra.itemNo, 'RA'].join(' '),
+          meta: `RA${ra.topic ? ' · ' + ra.topic : ''} · ₹ ${money(c.perUnit)} / ${ra.unit}${ra.itemNo ? ' · item ' + ra.itemNo : ''}`,
+          search: [ra.desc, ra.unit, ra.itemNo, ra.topic, ra.source, 'RA'].join(' '),
           raw: { ra, rate: c.perUnit, floor: null }
         });
       }

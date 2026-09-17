@@ -189,14 +189,9 @@ table.ltr-tbl tr.tot td{background:#d9d9d9}
         <span class="s">Approved Rate Contract items</span>
       </button>
       <button class="opt" data-based="sor">
-        <div class="ic">📘</div>
-        <div class="t">SOR</div>
-        <span class="s">Schedule of Rates 2024-25</span>
-      </button>
-      <button class="opt" data-based="ra">
-        <div class="ic">🧮</div>
-        <div class="t">Rate Analysis</div>
-        <span class="s">Apni RA library se items</span>
+        <div class="ic">📘🧮</div>
+        <div class="t">SOR + Rate Analysis</div>
+        <span class="s">SOR 2024-25 aur apni RA library — ek hi list me</span>
       </button>
     </div>
   </div>
@@ -257,10 +252,9 @@ table.ltr-tbl tr.tot td{background:#d9d9d9}
     <h2>Based on</h2>
     <div class="chips" id="rateSrcChips">
       <button class="chip" data-rs="arc" aria-pressed="true">📗 ARC (Approved Rate)</button>
-      <button class="chip" data-rs="sor" aria-pressed="false">📘 SOR 2024-25</button>
-      <button class="chip" data-rs="ra" aria-pressed="false">🧮 Rate Analysis</button>
+      <button class="chip" data-rs="sor" aria-pressed="false">📘🧮 SOR 2024-25 + Rate Analysis</button>
     </div>
-    <p class="hint" id="rateSrcHint">ARC = approved rate contract items. SOR = Schedule of Rates 2024-25. Rate Analysis = aapki RA library — har item ka rate uske components se banta hai, aur RA ka alag annexure print hota hai.</p>
+    <p class="hint" id="rateSrcHint">ARC = approved rate contract items. SOR + Rate Analysis = ek hi search me SOR 2024-25 ke items aur aapki RA library — RA wale item ka rate uske components se banta hai aur RA ka alag annexure print hota hai. Chips se sirf RA ya koi ek chapter filter kar sakte ho.</p>
     <div class="row" id="raExportRow" hidden style="gap:8px;margin-top:8px;flex-wrap:wrap;align-items:center">
       <span style="font-size:12px;color:#456">RA annexure:</span>
       <button class="btn ghost" id="btnRAXlsx" style="padding:4px 12px">⬇ RA Excel</button>
