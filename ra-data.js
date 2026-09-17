@@ -3650,6 +3650,1724 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ]
+        },
+        {
+            "id": "lib_66",
+            "libNo": "66",
+            "itemNo": "5",
+            "topic": "RCC",
+            "desc": "RCC — CC M-150 for foundations, footings & plinth slab",
+            "unit": "Cum",
+            "basis": "Per 1 Cum concrete",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 4049.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-1",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05023AA",
+                    "page": "",
+                    "label": "CC M-150 in foundations, footings, base of columns & mass concrete",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 3823.14,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001AA",
+                    "page": "",
+                    "label": "Form work — foundations, footings, bases of columns & mass concrete",
+                    "unit": "Sqm",
+                    "qty": 1.21,
+                    "rate": 186.24,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_67",
+            "libNo": "67",
+            "itemNo": "6",
+            "topic": "RCC",
+            "desc": "RCC — CC M-250 for foundations & footings",
+            "unit": "Cum",
+            "basis": "Per 1 Cum concrete",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 4450.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-2",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05025AA",
+                    "page": "",
+                    "label": "CC M-250 in foundations, footings, base of columns & mass concrete",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 4205.16,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001AA",
+                    "page": "",
+                    "label": "Form work — foundations, footings, bases of columns & mass concrete",
+                    "unit": "Sqm",
+                    "qty": 1.31,
+                    "rate": 186.24,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_68",
+            "libNo": "68",
+            "itemNo": "7",
+            "topic": "RCC",
+            "desc": "RCC — CC M-250 for columns upto plinth level",
+            "unit": "Cum",
+            "basis": "Per 1 Cum concrete",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 7824.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-3",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05025DA",
+                    "page": "",
+                    "label": "CC M-250 in columns, pillars, posts & struts",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 4590.29,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001G1A",
+                    "page": "",
+                    "label": "Form work — columns, pillars, posts & struts (square/rectangular)",
+                    "unit": "Sqm",
+                    "qty": 10.0,
+                    "rate": 323.39,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_69",
+            "libNo": "69",
+            "itemNo": "8",
+            "topic": "RCC",
+            "desc": "RCC — CC 1:4:8 in foundation & plinth",
+            "unit": "Cum",
+            "basis": "Per 1 Cum concrete",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 2981.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-4",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05004A",
+                    "page": "",
+                    "label": "CC 1:4:8 (40mm hand broken stone aggregate)",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 2653.39,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001AA",
+                    "page": "",
+                    "label": "Form work — foundations, footings, bases of columns & mass concrete",
+                    "unit": "Sqm",
+                    "qty": 1.76,
+                    "rate": 186.24,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_70",
+            "libNo": "70",
+            "itemNo": "9",
+            "topic": "RCC",
+            "desc": "RCC — CC M-250 for plinth beams",
+            "unit": "Cum",
+            "basis": "Per 1 Cum concrete",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 6352.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-5",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05025CA",
+                    "page": "",
+                    "label": "CC M-250 in slabs, landings, lintels, beams, girders & cantilever",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 4485.93,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001H1A",
+                    "page": "",
+                    "label": "Form work — sides & soffits of beams, girders & lintels upto 1 M depth",
+                    "unit": "Sqm",
+                    "qty": 8.89,
+                    "rate": 209.95,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_71",
+            "libNo": "71",
+            "itemNo": "14",
+            "topic": "RCC",
+            "desc": "RCC — CC M-200 for columns (all floors)",
+            "unit": "Cum",
+            "basis": "Per 1 Cum concrete",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 7590.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-6",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05024DA",
+                    "page": "",
+                    "label": "CC M-200 in columns, pillars, posts & struts",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 4544.94,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001G1A",
+                    "page": "",
+                    "label": "Form work — columns, pillars, posts & struts (square/rectangular)",
+                    "unit": "Sqm",
+                    "qty": 9.42,
+                    "rate": 323.39,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_72",
+            "libNo": "72",
+            "itemNo": "15",
+            "topic": "RCC",
+            "desc": "RCC — CC M-200 for beams (all floors)",
+            "unit": "Cum",
+            "basis": "Per 1 Cum concrete",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 6205.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-7",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05024CA",
+                    "page": "",
+                    "label": "CC M-200 in slabs, landings, lintels, beams, girders & cantilever",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 4440.58,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001H1A",
+                    "page": "",
+                    "label": "Form work — sides & soffits of beams, girders & lintels upto 1 M depth",
+                    "unit": "Sqm",
+                    "qty": 8.4,
+                    "rate": 209.95,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_73",
+            "libNo": "73",
+            "itemNo": "16",
+            "topic": "RCC",
+            "desc": "RCC — CC M-200 for lintels (all floors)",
+            "unit": "Cum",
+            "basis": "Per 1 Cum concrete",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 7535.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-8",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05024CA",
+                    "page": "",
+                    "label": "CC M-200 in slabs, landings, lintels, beams, girders & cantilever",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 4440.58,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001H1A",
+                    "page": "",
+                    "label": "Form work — sides & soffits of beams, girders & lintels upto 1 M depth",
+                    "unit": "Sqm",
+                    "qty": 14.74,
+                    "rate": 209.95,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_74",
+            "libNo": "74",
+            "itemNo": "17",
+            "topic": "RCC",
+            "desc": "RCC — CC M-200 for chhajja (all floors)",
+            "unit": "Cum",
+            "basis": "Per 1 Cum concrete",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 6465.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-9",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05024CA",
+                    "page": "",
+                    "label": "CC M-200 in slabs, landings, lintels, beams, girders & cantilever",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 4440.58,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001LA",
+                    "page": "",
+                    "label": "Form work — weather shades, chhajjas, corbels incl. edges",
+                    "unit": "Sqm",
+                    "qty": 11.78,
+                    "rate": 171.87,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_75",
+            "libNo": "75",
+            "itemNo": "18",
+            "topic": "RCC",
+            "desc": "RCC — CC M-250 for vertical fins (all floors)",
+            "unit": "Cum",
+            "basis": "Per 1 Cum concrete",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 8257.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-10",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05025BA",
+                    "page": "",
+                    "label": "CC M-250 in walls, from top of foundation upto floor two level",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 4512.29,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001QA",
+                    "page": "",
+                    "label": "Form work — vertical fins & vertical sun breakers",
+                    "unit": "Sqm",
+                    "qty": 9.1,
+                    "rate": 411.43,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_76",
+            "libNo": "76",
+            "itemNo": "19",
+            "topic": "RCC",
+            "desc": "RCC — CC M-200 for slabs (all floors)",
+            "unit": "Cum",
+            "basis": "Per 1 Cum concrete",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 6801.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-11",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05024CA",
+                    "page": "",
+                    "label": "CC M-200 in slabs, landings, lintels, beams, girders & cantilever",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 4440.58,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001B1A",
+                    "page": "",
+                    "label": "Form work — soffits of suspended floor/roof slabs upto 200mm thick",
+                    "unit": "Sqm",
+                    "qty": 8.71,
+                    "rate": 270.9,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_77",
+            "libNo": "77",
+            "itemNo": "20",
+            "topic": "RCC",
+            "desc": "RCC — CC M-200 for staircases (all floors)",
+            "unit": "Cum",
+            "basis": "Per 1 Cum concrete",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 9671.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-12",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05024EA",
+                    "page": "",
+                    "label": "CC M-200 in staircases excluding landing",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 5492.62,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001MA",
+                    "page": "",
+                    "label": "Form work — staircase with sloping/stepped soffits incl. risers",
+                    "unit": "Sqm",
+                    "qty": 15.82,
+                    "rate": 264.13,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_78",
+            "libNo": "78",
+            "itemNo": "21",
+            "topic": "RCC",
+            "desc": "RCC — TMT Bar Fe-500D reinforcement (all floors)",
+            "unit": "Kg",
+            "basis": "Per 1 Kg",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 77.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-13",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05014C",
+                    "page": "",
+                    "label": "TMT Bar Fe-500D reinforcement incl. bending, binding & placing",
+                    "unit": "Kg",
+                    "qty": 1.0,
+                    "rate": 76.52,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Extra for lift above floor two level",
+                    "unit": "Kg",
+                    "qty": 1.0,
+                    "rate": 0.48,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_79",
+            "libNo": "79",
+            "itemNo": "22",
+            "topic": "Brick masonry",
+            "desc": "Brick masonry — Brickwork in superstructure CM 1:6 (ANS Garbada)",
+            "unit": "Cum",
+            "basis": "Per 1 Cum brickwork",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 4122.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-14",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "06002BA",
+                    "page": "",
+                    "label": "Brick work CM 1:6 in foundation & plinth (conventional)",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 3815.08,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "7002",
+                    "page": "",
+                    "label": "Extra over for super structure above plinth upto floor two level",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 379.58,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_80",
+            "libNo": "80",
+            "itemNo": "23",
+            "topic": "Brick masonry",
+            "desc": "Brick masonry — Half brick masonry CM 1:4 (ANS Garbada)",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 641.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-15",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "06008A2A",
+                    "page": "",
+                    "label": "Half brick masonry CM 1:4 in foundation & plinth (conventional)",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 584.17,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Extra over for super structure above plinth level",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 56.83,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_81",
+            "libNo": "81",
+            "itemNo": "24",
+            "topic": "Plaster",
+            "desc": "Plaster — 20 mm double coat mala plaster, interior (ANS Garbada)",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm plaster",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 311.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-16",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "17017",
+                    "page": "105",
+                    "label": "20mm double coat mala cement plaster on interior brick/concrete",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 287.83,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Floating coat & finishing",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 23.17,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_82",
+            "libNo": "82",
+            "itemNo": "25",
+            "topic": "Plaster",
+            "desc": "Plaster — 10 mm ceiling plaster CM 1:3 (ANS Garbada)",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm plaster",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 212.6,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-17",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "17001A",
+                    "page": "",
+                    "label": "10mm cement plaster single coat, interior upto floor two level",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 149.18,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "17006",
+                    "page": "",
+                    "label": "Extra for plastering on ceilings & soffits of stairs",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 26.41,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Neat cement floating coat & scaffolding",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 37.01,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_83",
+            "libNo": "83",
+            "itemNo": "26",
+            "topic": "Waterproofing",
+            "desc": "Waterproofing — Sunk slab treatment with CC 1:2:4",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm sunk area",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 370.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-18",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05011BA",
+                    "page": "",
+                    "label": "CC 1:2:4, 50 mm average thick",
+                    "unit": "Cum",
+                    "qty": 0.05,
+                    "rate": 3998.26,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Waterproofing compound, brickbat coba & curing",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 170.09,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_84",
+            "libNo": "84",
+            "itemNo": "27",
+            "topic": "Plaster",
+            "desc": "Plaster — 20 mm sand faced plaster with 1×1 cm grooves (external)",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm plaster",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 363.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-19",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "17009",
+                    "page": "",
+                    "label": "20mm sand faced cement plaster on walls upto 10 m height",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 350.48,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Extra for forming 1×1 cm grooves",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 12.52,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_85",
+            "libNo": "85",
+            "itemNo": "29",
+            "topic": "Doors",
+            "desc": "Doors — MS factory fabricated double shutter entrance door (source abstract shows unit as Kg — verify)",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 9616.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-20",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "MS factory fabricated double shutter entrance door (source abstract shows unit as Kg — verify) — all-in rate as per estimate",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 9616.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_86",
+            "libNo": "86",
+            "itemNo": "30",
+            "topic": "Doors",
+            "desc": "Doors — Aluminium anodized single shutter 35 mm flush door",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 6566.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-21",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "Aluminium anodized single shutter 35 mm flush door — all-in rate as per estimate",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 6566.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_87",
+            "libNo": "87",
+            "itemNo": "32",
+            "topic": "Windows",
+            "desc": "Windows — Circular window, 3-track powder coated",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 4337.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-22",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "Circular window, 3-track powder coated — all-in rate as per estimate",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 4337.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_88",
+            "libNo": "88",
+            "itemNo": "33",
+            "topic": "Windows",
+            "desc": "Windows — Aluminium 2-track window with fixed glazing",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 3852.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-23",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "Aluminium 2-track window with fixed glazing — all-in rate as per estimate",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 3852.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_89",
+            "libNo": "89",
+            "itemNo": "35",
+            "topic": "Stone work",
+            "desc": "Stone work — Both-side mirror polished black granite 18 mm (sills & jams)",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 2998.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-24",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "M253",
+                    "page": "12",
+                    "label": "18mm black granite slab",
+                    "unit": "Sqm",
+                    "qty": 1.1,
+                    "rate": 1347.46,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "02007A",
+                    "page": "32",
+                    "label": "12mm CM 1:3 bedding",
+                    "unit": "Cum",
+                    "qty": 0.02,
+                    "rate": 3508.87,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "M724",
+                    "page": "24",
+                    "label": "Moulding on exposed edges",
+                    "unit": "Rmt",
+                    "qty": 3.0,
+                    "rate": 85.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "4",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Cutting, both-side polishing, fixing & labour",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 1190.61,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_90",
+            "libNo": "90",
+            "itemNo": "36",
+            "topic": "Steel work",
+            "desc": "Steel work — Safety grills of MS bars with CRC frame (ANS Garbada)",
+            "unit": "Kg",
+            "basis": "Per 20 Kg = 1 Sqm",
+            "basisQty": 20.0,
+            "cp": 0,
+            "pdfRate": 116.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-25",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "10025AA",
+                    "page": "67",
+                    "label": "Cost of plain grill fabrication & fixing",
+                    "unit": "Kg",
+                    "qty": 20.0,
+                    "rate": 109.22,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "19001",
+                    "page": "110",
+                    "label": "Priming coat",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 35.56,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "19005",
+                    "page": "110",
+                    "label": "Oil painting two coats",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 68.47,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_91",
+            "libNo": "91",
+            "itemNo": "41",
+            "topic": "Waterproofing",
+            "desc": "Waterproofing — China mosaic over 50 mm CC 1:2:4 (ANS Garbada)",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm terrace",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 1153.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-26",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "14035",
+                    "page": "",
+                    "label": "Broken china mosaic flooring for terrace (12–20mm glazed pieces)",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 771.98,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "05011BA",
+                    "page": "",
+                    "label": "CC 1:2:4 bedding, 50 mm average thick",
+                    "unit": "Cum",
+                    "qty": 0.05,
+                    "rate": 3998.26,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Waterproofing compound, oxalic acid cleaning & curing",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 181.11,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_92",
+            "libNo": "92",
+            "itemNo": "42",
+            "topic": "Stone work",
+            "desc": "Stone work — Double side polished granite partition 18 mm",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 2020.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-27",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "M253",
+                    "page": "12",
+                    "label": "18mm granite slab",
+                    "unit": "Sqm",
+                    "qty": 1.1,
+                    "rate": 1347.46,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Cutting, double side polishing, framing & fixing",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 537.79,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_93",
+            "libNo": "93",
+            "itemNo": "46",
+            "topic": "SS railing",
+            "desc": "SS railing — 90 cm high SS 304 railing (ANS Garbada rate)",
+            "unit": "Rmt",
+            "basis": "Per 1 Rmt",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 3221.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-28",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "90 cm high SS 304 railing (ANS Garbada rate) — all-in rate as per estimate",
+                    "unit": "Rmt",
+                    "qty": 1.0,
+                    "rate": 3221.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_94",
+            "libNo": "94",
+            "itemNo": "54",
+            "topic": "Sanitary",
+            "desc": "Sanitary — Table top wash basin 610×450 with fittings",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 5205.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-29",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "Table top wash basin 610×450 with fittings — all-in rate as per estimate",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 5205.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_95",
+            "libNo": "95",
+            "itemNo": "55",
+            "topic": "Sanitary",
+            "desc": "Sanitary — SS 304 grade kitchen sink 610×460",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 3052.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-30",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "SS 304 grade kitchen sink 610×460 — all-in rate as per estimate",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 3052.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_96",
+            "libNo": "96",
+            "itemNo": "57",
+            "topic": "Sanitary",
+            "desc": "Sanitary — Wall hung European WC with push valve",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 7074.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-31",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "Wall hung European WC with push valve — all-in rate as per estimate",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 7074.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_97",
+            "libNo": "97",
+            "itemNo": "58",
+            "topic": "Sanitary",
+            "desc": "Sanitary — CERA cruise set for handicap toilet (complete)",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 43302.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-32",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "CERA cruise set for handicap toilet (complete) — all-in rate as per estimate",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 43302.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_98",
+            "libNo": "98",
+            "itemNo": "59",
+            "topic": "Sanitary",
+            "desc": "Sanitary — Wall hung urinal",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 3967.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-33",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "Wall hung urinal — all-in rate as per estimate",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 3967.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_99",
+            "libNo": "99",
+            "itemNo": "79",
+            "topic": "Stone platform",
+            "desc": "Stone platform — Sandwich platform, granite top on kota supports (ANS Garbada rate)",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 3784.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-34",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "Sandwich platform, granite top on kota supports (ANS Garbada rate) — all-in rate as per estimate",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 3784.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_100",
+            "libNo": "100",
+            "itemNo": "80",
+            "topic": "Steel work",
+            "desc": "Steel work — MS square pipe railing",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 2255.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-35",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "MS square pipe railing — all-in rate as per estimate",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 2255.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_101",
+            "libNo": "101",
+            "itemNo": "83",
+            "topic": "Flooring",
+            "desc": "Flooring — 60×60 GVT glossy tile flooring (ANS Garbada rate)",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 1720.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-36",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "60×60 GVT glossy tile flooring (ANS Garbada rate) — all-in rate as per estimate",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 1720.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_102",
+            "libNo": "102",
+            "itemNo": "84",
+            "topic": "Flooring",
+            "desc": "Flooring — GVT skirting / risers / dado (ANS Garbada rate)",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 1458.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-37",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "GVT skirting / risers / dado (ANS Garbada rate) — all-in rate as per estimate",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 1458.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_103",
+            "libNo": "103",
+            "itemNo": "89",
+            "topic": "Signage",
+            "desc": "Signage — Wall signage, SS 304 1.5 mm laser cut letters",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 1000.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-38",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "Wall signage, SS 304 1.5 mm laser cut letters — all-in rate as per estimate",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 1000.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_104",
+            "libNo": "104",
+            "itemNo": "90",
+            "topic": "Drainage",
+            "desc": "Drainage — Sock pit 2.28 m dia × 6.5 m deep (complete)",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 50872.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-39",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "Sock pit 2.28 m dia × 6.5 m deep (complete) — all-in rate as per estimate",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 50872.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_105",
+            "libNo": "105",
+            "itemNo": "91",
+            "topic": "Drainage",
+            "desc": "Drainage — Septic tank 4.95 × 1.98 × 2.5 m (complete)",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 92086.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-40",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "Septic tank 4.95 × 1.98 × 2.5 m (complete) — all-in rate as per estimate",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 92086.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_106",
+            "libNo": "106",
+            "itemNo": "92",
+            "topic": "SS railing",
+            "desc": "SS railing — SS 304 hand railing 32 mm dia",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 816.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-41",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "SS 304 hand railing 32 mm dia — all-in rate as per estimate",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 816.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_107",
+            "libNo": "107",
+            "itemNo": "98",
+            "topic": "Plaster",
+            "desc": "Plaster — Chicken mesh at brick–RCC joints (ANS Garbada rate)",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 76.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — School block (SOR 2024-25) RA-44",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "Chicken mesh at brick–RCC joints (ANS Garbada rate) — all-in rate as per estimate",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 76.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_108",
+            "libNo": "108",
+            "itemNo": "",
+            "topic": "Windows",
+            "desc": "Windows — Ventilator 65×25 anodized with louvers",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 8610.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — Hostel block (SOR 2024-25) RA-42",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "Ventilator 65×25 anodized with louvers — all-in rate as per estimate",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 8610.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_109",
+            "libNo": "109",
+            "itemNo": "",
+            "topic": "Windows",
+            "desc": "Windows — 114 mm GI louvers, 0.55 mm thick",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 8476.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — Hostel block (SOR 2024-25) RA-43",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "114 mm GI louvers, 0.55 mm thick — all-in rate as per estimate",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 8476.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_110",
+            "libNo": "110",
+            "itemNo": "",
+            "topic": "RCC",
+            "desc": "RCC — CC M-250 for columns upto plinth level (hostel variant)",
+            "unit": "Cum",
+            "basis": "Per 1 Cum concrete",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 7297.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — Hostel block (SOR 2024-25) RA-3",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05025DA",
+                    "page": "",
+                    "label": "CC M-250 in columns, pillars, posts & struts",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 4590.29,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001G1A",
+                    "page": "",
+                    "label": "Form work — columns, pillars, posts & struts (square/rectangular)",
+                    "unit": "Sqm",
+                    "qty": 8.37,
+                    "rate": 323.39,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_111",
+            "libNo": "111",
+            "itemNo": "",
+            "topic": "RCC",
+            "desc": "RCC — CC M-250 for plinth beams (hostel variant)",
+            "unit": "Cum",
+            "basis": "Per 1 Cum concrete",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 5886.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — Hostel block (SOR 2024-25) RA-5",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05025CA",
+                    "page": "",
+                    "label": "CC M-250 in slabs, landings, lintels, beams, girders & cantilever",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 4485.93,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001H1A",
+                    "page": "",
+                    "label": "Form work — sides & soffits of beams, girders & lintels upto 1 M depth",
+                    "unit": "Sqm",
+                    "qty": 6.67,
+                    "rate": 209.95,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_112",
+            "libNo": "112",
+            "itemNo": "",
+            "topic": "RCC",
+            "desc": "RCC — CC M-250 for vertical & horizontal wall (hostel variant)",
+            "unit": "Cum",
+            "basis": "Per 1 Cum concrete",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 8010.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — Hostel block (SOR 2024-25) RA-10",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05025BA",
+                    "page": "",
+                    "label": "CC M-250 in walls, from top of foundation upto floor two level",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 4512.29,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001CA",
+                    "page": "",
+                    "label": "Form work — vertical surfaces such as walls & partitions",
+                    "unit": "Sqm",
+                    "qty": 14.15,
+                    "rate": 247.2,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_113",
+            "libNo": "113",
+            "itemNo": "",
+            "topic": "Doors",
+            "desc": "Doors — Single shutter door with green marble frame",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 6066.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — Hostel block (SOR 2024-25) RA-21",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "Single shutter door with green marble frame — all-in rate as per estimate",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 6066.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_114",
+            "libNo": "114",
+            "itemNo": "",
+            "topic": "Windows",
+            "desc": "Windows — Circular window, 3-track (hostel variant)",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 4709.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — Hostel block (SOR 2024-25) RA-22",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "Circular window, 3-track (hostel variant) — all-in rate as per estimate",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 4709.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_115",
+            "libNo": "115",
+            "itemNo": "",
+            "topic": "Windows",
+            "desc": "Windows — Aluminium 2-track window (hostel variant)",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 4619.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — Hostel block (SOR 2024-25) RA-23",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "Aluminium 2-track window (hostel variant) — all-in rate as per estimate",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 4619.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_116",
+            "libNo": "116",
+            "itemNo": "",
+            "topic": "Stone work",
+            "desc": "Stone work — Green marble 18 mm on sills & jams",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 2131.0,
+            "floors": false,
+            "source": "Adarsh Nivasi School, Garbada — Hostel block (SOR 2024-25) RA-24",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "Green marble 18 mm on sills & jams — all-in rate as per estimate",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 2131.0,
+                    "cpApply": false
+                }
+            ]
         }
     ],
     marketRates: [
@@ -4007,6 +5725,22 @@ const DISTRICT_RA_LIBRARY = {
             "usedInRA": [
                 "65"
             ]
+        },
+        {
+            "label": "Cutting, both-side polishing, fixing & labour",
+            "rate": 1190.61,
+            "unit": "Sqm",
+            "usedInRA": [
+                "89"
+            ]
+        },
+        {
+            "label": "Cutting, double side polishing, framing & fixing",
+            "rate": 537.79,
+            "unit": "Sqm",
+            "usedInRA": [
+                "92"
+            ]
         }
     ],
     quotationRates: [
@@ -4106,6 +5840,206 @@ const DISTRICT_RA_LIBRARY = {
             "unit": "Sqm",
             "usedInRA": [
                 "54"
+            ]
+        },
+        {
+            "label": "MS factory fabricated double shutter entrance door (source abstract shows unit as Kg — verify) — all-in rate as per estimate",
+            "rate": 9616.0,
+            "unit": "Sqm",
+            "usedInRA": [
+                "85"
+            ]
+        },
+        {
+            "label": "Aluminium anodized single shutter 35 mm flush door — all-in rate as per estimate",
+            "rate": 6566.0,
+            "unit": "Sqm",
+            "usedInRA": [
+                "86"
+            ]
+        },
+        {
+            "label": "Circular window, 3-track powder coated — all-in rate as per estimate",
+            "rate": 4337.0,
+            "unit": "Sqm",
+            "usedInRA": [
+                "87"
+            ]
+        },
+        {
+            "label": "Aluminium 2-track window with fixed glazing — all-in rate as per estimate",
+            "rate": 3852.0,
+            "unit": "Sqm",
+            "usedInRA": [
+                "88"
+            ]
+        },
+        {
+            "label": "90 cm high SS 304 railing (ANS Garbada rate) — all-in rate as per estimate",
+            "rate": 3221.0,
+            "unit": "Rmt",
+            "usedInRA": [
+                "93"
+            ]
+        },
+        {
+            "label": "Table top wash basin 610×450 with fittings — all-in rate as per estimate",
+            "rate": 5205.0,
+            "unit": "No",
+            "usedInRA": [
+                "94"
+            ]
+        },
+        {
+            "label": "SS 304 grade kitchen sink 610×460 — all-in rate as per estimate",
+            "rate": 3052.0,
+            "unit": "No",
+            "usedInRA": [
+                "95"
+            ]
+        },
+        {
+            "label": "Wall hung European WC with push valve — all-in rate as per estimate",
+            "rate": 7074.0,
+            "unit": "No",
+            "usedInRA": [
+                "96"
+            ]
+        },
+        {
+            "label": "CERA cruise set for handicap toilet (complete) — all-in rate as per estimate",
+            "rate": 43302.0,
+            "unit": "No",
+            "usedInRA": [
+                "97"
+            ]
+        },
+        {
+            "label": "Wall hung urinal — all-in rate as per estimate",
+            "rate": 3967.0,
+            "unit": "No",
+            "usedInRA": [
+                "98"
+            ]
+        },
+        {
+            "label": "Sandwich platform, granite top on kota supports (ANS Garbada rate) — all-in rate as per estimate",
+            "rate": 3784.0,
+            "unit": "Sqm",
+            "usedInRA": [
+                "99"
+            ]
+        },
+        {
+            "label": "MS square pipe railing — all-in rate as per estimate",
+            "rate": 2255.0,
+            "unit": "Sqm",
+            "usedInRA": [
+                "100"
+            ]
+        },
+        {
+            "label": "60×60 GVT glossy tile flooring (ANS Garbada rate) — all-in rate as per estimate",
+            "rate": 1720.0,
+            "unit": "Sqm",
+            "usedInRA": [
+                "101"
+            ]
+        },
+        {
+            "label": "GVT skirting / risers / dado (ANS Garbada rate) — all-in rate as per estimate",
+            "rate": 1458.0,
+            "unit": "Sqm",
+            "usedInRA": [
+                "102"
+            ]
+        },
+        {
+            "label": "Wall signage, SS 304 1.5 mm laser cut letters — all-in rate as per estimate",
+            "rate": 1000.0,
+            "unit": "No",
+            "usedInRA": [
+                "103"
+            ]
+        },
+        {
+            "label": "Sock pit 2.28 m dia × 6.5 m deep (complete) — all-in rate as per estimate",
+            "rate": 50872.0,
+            "unit": "No",
+            "usedInRA": [
+                "104"
+            ]
+        },
+        {
+            "label": "Septic tank 4.95 × 1.98 × 2.5 m (complete) — all-in rate as per estimate",
+            "rate": 92086.0,
+            "unit": "No",
+            "usedInRA": [
+                "105"
+            ]
+        },
+        {
+            "label": "SS 304 hand railing 32 mm dia — all-in rate as per estimate",
+            "rate": 816.0,
+            "unit": "Sqm",
+            "usedInRA": [
+                "106"
+            ]
+        },
+        {
+            "label": "Chicken mesh at brick–RCC joints (ANS Garbada rate) — all-in rate as per estimate",
+            "rate": 76.0,
+            "unit": "Sqm",
+            "usedInRA": [
+                "107"
+            ]
+        },
+        {
+            "label": "Ventilator 65×25 anodized with louvers — all-in rate as per estimate",
+            "rate": 8610.0,
+            "unit": "Sqm",
+            "usedInRA": [
+                "108"
+            ]
+        },
+        {
+            "label": "114 mm GI louvers, 0.55 mm thick — all-in rate as per estimate",
+            "rate": 8476.0,
+            "unit": "Sqm",
+            "usedInRA": [
+                "109"
+            ]
+        },
+        {
+            "label": "Single shutter door with green marble frame — all-in rate as per estimate",
+            "rate": 6066.0,
+            "unit": "Sqm",
+            "usedInRA": [
+                "113"
+            ]
+        },
+        {
+            "label": "Circular window, 3-track (hostel variant) — all-in rate as per estimate",
+            "rate": 4709.0,
+            "unit": "Sqm",
+            "usedInRA": [
+                "114"
+            ]
+        },
+        {
+            "label": "Aluminium 2-track window (hostel variant) — all-in rate as per estimate",
+            "rate": 4619.0,
+            "unit": "Sqm",
+            "usedInRA": [
+                "115"
+            ]
+        },
+        {
+            "label": "Green marble 18 mm on sills & jams — all-in rate as per estimate",
+            "rate": 2131.0,
+            "unit": "Sqm",
+            "usedInRA": [
+                "116"
             ]
         }
     ]
