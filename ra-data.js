@@ -72,7 +72,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 4205.16,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "RCC"
         },
         {
             "id": "lib_2",
@@ -108,7 +109,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 4590.29,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "RCC"
         },
         {
             "id": "lib_3",
@@ -149,7 +151,8 @@ const DISTRICT_RA_LIBRARY = {
                 "sorCode": "05015A",
                 "page": "40",
                 "rate": 39.68
-            }
+            },
+            "topic": "RCC"
         },
         {
             "id": "lib_4",
@@ -185,7 +188,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 4485.93,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "RCC"
         },
         {
             "id": "lib_5",
@@ -221,7 +225,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 3823.14,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "RCC"
         },
         {
             "id": "lib_6",
@@ -262,7 +267,8 @@ const DISTRICT_RA_LIBRARY = {
                 "sorCode": "05015A",
                 "page": "40",
                 "rate": 39.68
-            }
+            },
+            "topic": "RCC"
         },
         {
             "id": "lib_7",
@@ -303,7 +309,8 @@ const DISTRICT_RA_LIBRARY = {
                 "sorCode": "05015A",
                 "page": "40",
                 "rate": 39.68
-            }
+            },
+            "topic": "RCC"
         },
         {
             "id": "lib_8",
@@ -344,7 +351,8 @@ const DISTRICT_RA_LIBRARY = {
                 "sorCode": "05015A",
                 "page": "40",
                 "rate": 39.68
-            }
+            },
+            "topic": "RCC"
         },
         {
             "id": "lib_9",
@@ -385,7 +393,8 @@ const DISTRICT_RA_LIBRARY = {
                 "sorCode": "05015A",
                 "page": "40",
                 "rate": 39.68
-            }
+            },
+            "topic": "RCC"
         },
         {
             "id": "lib_10",
@@ -426,7 +435,8 @@ const DISTRICT_RA_LIBRARY = {
                 "sorCode": "05015A",
                 "page": "40",
                 "rate": 39.68
-            }
+            },
+            "topic": "RCC"
         },
         {
             "id": "lib_10A",
@@ -462,7 +472,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 254.1,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "RCC"
         },
         {
             "id": "lib_11",
@@ -542,7 +553,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 500.0,
                     "cpApply": true
                 }
-            ]
+            ],
+            "topic": "SS railing"
         },
         {
             "id": "lib_12",
@@ -578,7 +590,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 76.65,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "RCC"
         },
         {
             "id": "lib_13",
@@ -619,7 +632,8 @@ const DISTRICT_RA_LIBRARY = {
                 "sorCode": "17007A",
                 "page": "104",
                 "rate": 24.22
-            }
+            },
+            "topic": "Plaster"
         },
         {
             "id": "lib_14",
@@ -671,7 +685,8 @@ const DISTRICT_RA_LIBRARY = {
                 "sorCode": "17007A",
                 "page": "104",
                 "rate": 24.22
-            }
+            },
+            "topic": "Plaster"
         },
         {
             "id": "lib_15",
@@ -718,7 +733,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 505.0,
                     "cpApply": true
                 }
-            ]
+            ],
+            "topic": "Filling"
         },
         {
             "id": "lib_16",
@@ -759,7 +775,8 @@ const DISTRICT_RA_LIBRARY = {
                 "sorCode": "05015A",
                 "page": "40",
                 "rate": 39.68
-            }
+            },
+            "topic": "RCC"
         },
         {
             "id": "lib_17",
@@ -828,7 +845,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 801.0,
                     "cpApply": true
                 }
-            ]
+            ],
+            "topic": "Windows"
         },
         {
             "id": "lib_18",
@@ -897,7 +915,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 801.0,
                     "cpApply": true
                 }
-            ]
+            ],
+            "topic": "Windows"
         },
         {
             "id": "lib_19",
@@ -966,7 +985,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 801.0,
                     "cpApply": true
                 }
-            ]
+            ],
+            "topic": "Windows"
         },
         {
             "id": "lib_20",
@@ -1013,7 +1033,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 1000.0,
                     "cpApply": true
                 }
-            ]
+            ],
+            "topic": "Windows"
         },
         {
             "id": "lib_21",
@@ -1170,7 +1191,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 137.15,
                     "cpApply": true
                 }
-            ]
+            ],
+            "topic": "Doors"
         },
         {
             "id": "lib_22",
@@ -1327,7 +1349,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 20.25,
                     "cpApply": true
                 }
-            ]
+            ],
+            "topic": "Doors"
         },
         {
             "id": "lib_23",
@@ -1374,7 +1397,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 850.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "Doors"
         },
         {
             "id": "lib_24",
@@ -1421,7 +1445,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 515.2,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "Flooring"
         },
         {
             "id": "lib_25",
@@ -1468,7 +1493,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 515.2,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "Flooring"
         },
         {
             "id": "lib_26",
@@ -1526,7 +1552,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 15.0,
                     "cpApply": true
                 }
-            ]
+            ],
+            "topic": "Flooring"
         },
         {
             "id": "lib_27",
@@ -1584,7 +1611,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 15.0,
                     "cpApply": true
                 }
-            ]
+            ],
+            "topic": "Flooring"
         },
         {
             "id": "lib_28",
@@ -1642,7 +1670,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 322.8,
                     "cpApply": true
                 }
-            ]
+            ],
+            "topic": "Stone work"
         },
         {
             "id": "lib_29",
@@ -1711,7 +1740,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 150.0,
                     "cpApply": true
                 }
-            ]
+            ],
+            "topic": "Stone work"
         },
         {
             "id": "lib_30",
@@ -1758,7 +1788,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 69.47,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "Steel work"
         },
         {
             "id": "lib_31",
@@ -1805,7 +1836,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 143.22,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "Drainage"
         },
         {
             "id": "lib_32",
@@ -1841,7 +1873,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 4.0,
                     "cpApply": true
                 }
-            ]
+            ],
+            "topic": "Drainage"
         },
         {
             "id": "lib_33",
@@ -1877,7 +1910,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 5.0,
                     "cpApply": true
                 }
-            ]
+            ],
+            "topic": "Drainage"
         },
         {
             "id": "lib_34",
@@ -1946,7 +1980,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 677.97,
                     "cpApply": true
                 }
-            ]
+            ],
+            "topic": "Sanitary"
         },
         {
             "id": "lib_35",
@@ -2015,7 +2050,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 500.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "Sanitary"
         },
         {
             "id": "lib_36",
@@ -2073,7 +2109,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 150.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "Sanitary"
         },
         {
             "id": "lib_37",
@@ -2109,7 +2146,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 150.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "Sanitary"
         },
         {
             "id": "lib_38",
@@ -2145,7 +2183,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 150.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "Sanitary"
         },
         {
             "id": "lib_39",
@@ -2214,7 +2253,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 650.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "Stone platform"
         },
         {
             "id": "lib_40",
@@ -2261,7 +2301,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 812.71,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "Drainage"
         },
         {
             "id": "lib_41",
@@ -2308,7 +2349,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 1129.66,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "Drainage"
         },
         {
             "id": "lib_42",
@@ -2355,7 +2397,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 101.85,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "Steel work"
         },
         {
             "id": "lib_43",
@@ -2424,7 +2467,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 120.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "Sanitary"
         },
         {
             "id": "lib_44",
@@ -2493,7 +2537,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 650.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "Stone platform"
         },
         {
             "id": "lib_45",
@@ -2518,7 +2563,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 4500.0,
                     "cpApply": true
                 }
-            ]
+            ],
+            "topic": "Dewatering"
         },
         {
             "id": "lib_45A",
@@ -2620,7 +2666,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 300.0,
                     "cpApply": true
                 }
-            ]
+            ],
+            "topic": "Kitchen fittings"
         },
         {
             "id": "lib_46",
@@ -2656,7 +2703,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 10.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "topic": "Gates"
         },
         {
             "id": "lib_47",
@@ -2714,7 +2762,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 15.0,
                     "cpApply": true
                 }
-            ]
+            ],
+            "topic": "Fencing"
         },
         {
             "id": "lib_48",
@@ -2792,6 +2841,812 @@ const DISTRICT_RA_LIBRARY = {
                     "unit": "Cum",
                     "qty": 2.9,
                     "rate": 3845.54,
+                    "cpApply": false
+                }
+            ],
+            "topic": "Fencing"
+        },
+        {
+            "id": "lib_49",
+            "libNo": "49",
+            "itemNo": "24",
+            "topic": "Brick masonry",
+            "desc": "Brick masonry — Brickwork in superstructure above plinth in CM 1:6 (conventional bricks), all floors",
+            "unit": "Cum",
+            "basis": "Per 1 Cum brickwork",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 4100.65,
+            "floors": false,
+            "source": "Veterinary Polyclinic, Dahod (SOR 2024-25) RA-15",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "06002BA",
+                    "page": "",
+                    "label": "Brick work CM 1:6 in foundation & plinth (conventional)",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 3815.08,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "7002",
+                    "page": "",
+                    "label": "Extra over for super structure above plinth upto floor two level",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 379.58,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_50",
+            "libNo": "50",
+            "itemNo": "25",
+            "topic": "Brick masonry",
+            "desc": "Brick masonry — Half brick masonry in CM 1:4 in superstructure (conventional bricks)",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 639.34,
+            "floors": false,
+            "source": "Veterinary Polyclinic, Dahod (SOR 2024-25) RA-16",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "06008A2A",
+                    "page": "",
+                    "label": "Half brick masonry CM 1:4 in foundation & plinth (conventional)",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 584.17,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Extra over for super structure above plinth level (balance as per estimate)",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 55.17,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_51",
+            "libNo": "51",
+            "itemNo": "26",
+            "topic": "Plaster",
+            "desc": "Plaster — 150 mm wide chicken wire mesh at brick–RCC junctions before plastering",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm of mesh",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 292.2,
+            "floors": false,
+            "source": "Veterinary Polyclinic, Dahod (SOR 2024-25) RA-17",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "GI chicken wire mesh 150mm wide incl. nails, fixing & labour",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 292.2,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_52",
+            "libNo": "52",
+            "itemNo": "35",
+            "topic": "Waterproofing",
+            "desc": "Waterproofing — China mosaic treatment over 40 mm CC 1:2:4 bedding (terrace)",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm terrace",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 1102.0,
+            "floors": false,
+            "source": "Veterinary Polyclinic, Dahod (SOR 2024-25) RA-20",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "14035",
+                    "page": "",
+                    "label": "Broken china mosaic flooring for terrace (12–20mm glazed pieces)",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 771.98,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "05011BA",
+                    "page": "",
+                    "label": "CC 1:2:4 bedding, 40 mm average thick",
+                    "unit": "Cum",
+                    "qty": 0.04,
+                    "rate": 3998.26,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Waterproofing compound 1 kg/bag, oxalic acid cleaning & curing",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 170.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_53",
+            "libNo": "53",
+            "itemNo": "36",
+            "topic": "Plinth protection",
+            "desc": "Plinth protection — 60 mm interlocking paver block on brickbat + sand bed with kerb stone edging",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm plinth protection",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 1433.0,
+            "floors": false,
+            "source": "Veterinary Polyclinic, Dahod (SOR 2024-25) RA-21",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Paver block 60mm on 100mm brickbat + 75mm sand bed (District SOR, Building item 47)",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 924.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "14032",
+                    "page": "",
+                    "label": "Precast concrete kerb stone 30×30×15 cm, M-250",
+                    "unit": "Rmt",
+                    "qty": 1.2,
+                    "rate": 371.21,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Excavation, levelling & dressing",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 60.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_54",
+            "libNo": "54",
+            "itemNo": "42",
+            "topic": "Doors",
+            "desc": "Doors — Frameless toughened glass door, 12–18 mm glass with SS 304 patch fittings & floor spring",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm door",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 10803.0,
+            "floors": false,
+            "source": "Veterinary Polyclinic, Dahod (SOR 2024-25) RA-24",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "Toughened glass 12–18mm with SS 304 patch fittings, floor spring, lock & handle",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 10803.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_55",
+            "libNo": "55",
+            "itemNo": "43",
+            "topic": "Doors",
+            "desc": "Doors — Double shutter door with granite frame and 38 mm solid core flush shutters",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm door",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 3917.0,
+            "floors": false,
+            "source": "Veterinary Polyclinic, Dahod (SOR 2024-25) RA-25",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "10011",
+                    "page": "",
+                    "label": "Flush door shutter, solid core, block board core with anodised hinges",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 1811.62,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Granite door frame, hardware & fixing (balance as per estimate)",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 2105.38,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_56",
+            "libNo": "56",
+            "itemNo": "44",
+            "topic": "Doors",
+            "desc": "Doors — Single shutter door with granite frame and 38 mm solid core flush shutter",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm door",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 3976.0,
+            "floors": false,
+            "source": "Veterinary Polyclinic, Dahod (SOR 2024-25) RA-26",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "10011",
+                    "page": "",
+                    "label": "Flush door shutter, solid core, block board core with anodised hinges",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 1811.62,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Granite door frame, hardware & fixing (balance as per estimate)",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 2164.38,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_57",
+            "libNo": "57",
+            "itemNo": "85",
+            "topic": "Stone work",
+            "desc": "Stone work — 25 mm polished Kota stone shelf with round moulded edge",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm shelf",
+            "basisQty": 1.0,
+            "cp": 15,
+            "pdfRate": 661.0,
+            "floors": false,
+            "source": "Veterinary Polyclinic, Dahod (SOR 2024-25) RA-39",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "M490",
+                    "page": "18",
+                    "label": "25mm thick Kota stone slab",
+                    "unit": "Sqm",
+                    "qty": 1.1,
+                    "rate": 198.31,
+                    "cpApply": true
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "02007A",
+                    "page": "32",
+                    "label": "10mm CM 1:3 bedding",
+                    "unit": "Cum",
+                    "qty": 0.01,
+                    "rate": 3508.87,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "M724",
+                    "page": "24",
+                    "label": "Moulding on exposed edges",
+                    "unit": "Rmt",
+                    "qty": 2.0,
+                    "rate": 85.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "4",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour — cutting grooves in wall & fixing",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 205.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_58",
+            "libNo": "58",
+            "itemNo": "Sump-11",
+            "topic": "RCC",
+            "desc": "RCC — CC M-200 for vertical & horizontal RCC fins / walls (incl. formwork)",
+            "unit": "Cum",
+            "basis": "Per 1 Cum fin/wall",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 10461.24,
+            "floors": false,
+            "source": "Veterinary Polyclinic, Dahod (SOR 2024-25) RA-42",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05024BA",
+                    "page": "",
+                    "label": "CC M-200 in walls, top of foundation upto floor two level",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 4466.94,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001CA",
+                    "page": "",
+                    "label": "Formwork — vertical surfaces such as walls",
+                    "unit": "Sqm",
+                    "qty": 24.0,
+                    "rate": 247.2,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_59",
+            "libNo": "59",
+            "itemNo": "22",
+            "topic": "SS railing",
+            "desc": "SS railing — 120 cm high SS 316 railing (50 mm handrail, 38 mm balusters)",
+            "unit": "Rmt",
+            "basis": "Per 3.50 Rmt",
+            "basisQty": 3.5,
+            "cp": 15,
+            "pdfRate": 3819.3,
+            "floors": false,
+            "source": "Veterinary Polyclinic, Dahod (SOR 2024-25) RA-14",
+            "components": [
+                {
+                    "sr": "A",
+                    "kind": "SOR",
+                    "code": "M714",
+                    "page": "24",
+                    "label": "50mm dia SS pipe (handrail)",
+                    "unit": "Rmt",
+                    "qty": 3.5,
+                    "rate": 1004.24,
+                    "cpApply": true
+                },
+                {
+                    "sr": "B",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "38mm dia SS pipe (baluster support, 120cm high)",
+                    "unit": "Rmt",
+                    "qty": 4.32,
+                    "rate": 580.0,
+                    "cpApply": true
+                },
+                {
+                    "sr": "C",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "25mm horizontal SS pipe",
+                    "unit": "Rmt",
+                    "qty": 3.5,
+                    "rate": 180.0,
+                    "cpApply": true
+                },
+                {
+                    "sr": "D",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "18.75mm SS support pipe",
+                    "unit": "Rmt",
+                    "qty": 10.5,
+                    "rate": 250.0,
+                    "cpApply": true
+                },
+                {
+                    "sr": "E",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Round SS ball at top",
+                    "unit": "No",
+                    "qty": 2.0,
+                    "rate": 300.0,
+                    "cpApply": true
+                },
+                {
+                    "sr": "F",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charge — prep & fixing",
+                    "unit": "Rmt",
+                    "qty": 3.5,
+                    "rate": 500.0,
+                    "cpApply": true
+                }
+            ]
+        },
+        {
+            "id": "lib_60",
+            "libNo": "60",
+            "itemNo": "27",
+            "topic": "Plaster",
+            "desc": "Plaster — 15 mm mala cement plaster CM 1:4 (interior), all floors",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm plaster",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 293.83,
+            "floors": true,
+            "source": "Veterinary Polyclinic, Dahod (SOR 2024-25) RA-18",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "17017",
+                    "page": "105",
+                    "label": "Mala cement plaster (double coat) — base SOR rate",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 287.83,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Extra for trowel finish (balance as per estimate)",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 6.0,
+                    "cpApply": false
+                }
+            ],
+            "liftExtra": {
+                "sorCode": "17007A",
+                "page": "104",
+                "rate": 24.22
+            }
+        },
+        {
+            "id": "lib_61",
+            "libNo": "61",
+            "itemNo": "67",
+            "topic": "Sanitary",
+            "desc": "Sanitary — Wash-down European WC with PVC flushing tank, seat & cover and jet spray",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 3025.0,
+            "floors": false,
+            "source": "Veterinary Polyclinic, Dahod (SOR 2024-25) RA-34",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Wash down EWC pan (vitreous china)",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 1200.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "23017",
+                    "page": "",
+                    "label": "Plastic seat & cover for wash down WC",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 288.45,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "PVC flushing tank (ISI mark)",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 780.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "4",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Health faucet / jet spray with SS hose",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 250.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "5",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Fittings & labour charge",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 500.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_62",
+            "libNo": "62",
+            "itemNo": "83",
+            "topic": "Steel work",
+            "desc": "Steel work — GI ladder with GI flats & round bars, primer + two coats oil paint",
+            "unit": "Kg",
+            "basis": "Per 25 Kg = 1 Sqm",
+            "basisQty": 25.0,
+            "cp": 0,
+            "pdfRate": 95.0,
+            "floors": false,
+            "source": "Veterinary Polyclinic, Dahod (SOR 2024-25) RA-37",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "GI flats & round bars incl. fabrication and fixing",
+                    "unit": "Kg",
+                    "qty": 25.0,
+                    "rate": 90.84,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "19001",
+                    "page": "110",
+                    "label": "Priming coat",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 35.56,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "19005",
+                    "page": "110",
+                    "label": "Oil painting two coats",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 68.47,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_63",
+            "libNo": "63",
+            "itemNo": "84",
+            "topic": "Stone platform",
+            "desc": "Stone platform — 18 mm black granite top on 25 mm Kota stone supports (per Sqm basis)",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm platform",
+            "basisQty": 1.0,
+            "cp": 15,
+            "pdfRate": 4152.0,
+            "floors": false,
+            "source": "Veterinary Polyclinic, Dahod (SOR 2024-25) RA-38",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "M253",
+                    "page": "12",
+                    "label": "18mm Black Granite (horizontal + patti)",
+                    "unit": "Sqm",
+                    "qty": 1.66,
+                    "rate": 1347.46,
+                    "cpApply": true
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "M490",
+                    "page": "18",
+                    "label": "25mm Kota stone (vertical supports)",
+                    "unit": "Sqm",
+                    "qty": 1.6,
+                    "rate": 198.31,
+                    "cpApply": true
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "02007A",
+                    "page": "32",
+                    "label": "12mm CM 1:3 bases",
+                    "unit": "Cum",
+                    "qty": 0.015,
+                    "rate": 3508.87,
+                    "cpApply": false
+                },
+                {
+                    "sr": "4",
+                    "kind": "SOR",
+                    "code": "M724",
+                    "page": "24",
+                    "label": "Moulding on exposed edges",
+                    "unit": "Rmt",
+                    "qty": 6.0,
+                    "rate": 85.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "5",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour — fixing",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 650.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_64",
+            "libNo": "64",
+            "itemNo": "90",
+            "topic": "Gates",
+            "desc": "Gates — Foldable (bi-fold) MS entrance gate with wicket gate",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqm gate",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 7206.59,
+            "floors": false,
+            "source": "Veterinary Polyclinic, Dahod (SOR 2024-25) RA-41",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "10025BA",
+                    "page": "67",
+                    "label": "P/F ornamental MS grill work — gate fabrication @ 40 kg/Sqm",
+                    "unit": "Kg",
+                    "qty": 40.0,
+                    "rate": 164.57,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Hinges, rollers, track, wicket gate lock & stopper",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 500.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "19001",
+                    "page": "110",
+                    "label": "Priming coat (both faces)",
+                    "unit": "Sqm",
+                    "qty": 2.0,
+                    "rate": 35.56,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_65",
+            "libNo": "65",
+            "itemNo": "96",
+            "topic": "Fencing",
+            "desc": "Fencing — 1.2 m high GI barbed wire fencing with MS angle posts at 2.5 m c/c",
+            "unit": "Rmt",
+            "basis": "Per 1 Rmt fencing",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 421.0,
+            "floors": false,
+            "source": "Veterinary Polyclinic, Dahod (SOR 2024-25) RA-41A",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "22001",
+                    "page": "",
+                    "label": "1.20 m high fencing, MS angle posts 40×40×6, barbed wire, CC 1:5:10 blocks",
+                    "unit": "Rmt",
+                    "qty": 1.0,
+                    "rate": 388.05,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Extra GI staples & additional strands",
+                    "unit": "Rmt",
+                    "qty": 1.0,
+                    "rate": 33.0,
                     "cpApply": false
                 }
             ]
@@ -3088,6 +3943,70 @@ const DISTRICT_RA_LIBRARY = {
             "usedInRA": [
                 "48"
             ]
+        },
+        {
+            "label": "38mm dia SS pipe (baluster support, 120cm high)",
+            "rate": 580.0,
+            "unit": "Rmt",
+            "usedInRA": [
+                "59"
+            ]
+        },
+        {
+            "label": "Labour — cutting grooves in wall & fixing",
+            "rate": 205.0,
+            "unit": "Sqm",
+            "usedInRA": [
+                "57"
+            ]
+        },
+        {
+            "label": "GI flats & round bars incl. fabrication and fixing",
+            "rate": 90.84,
+            "unit": "Kg",
+            "usedInRA": [
+                "62"
+            ]
+        },
+        {
+            "label": "Wash down EWC pan (vitreous china)",
+            "rate": 1200.0,
+            "unit": "No",
+            "usedInRA": [
+                "61"
+            ]
+        },
+        {
+            "label": "PVC flushing tank (ISI mark)",
+            "rate": 780.0,
+            "unit": "No",
+            "usedInRA": [
+                "61"
+            ]
+        },
+        {
+            "label": "Health faucet / jet spray with SS hose",
+            "rate": 250.0,
+            "unit": "No",
+            "usedInRA": [
+                "61"
+            ]
+        },
+        {
+            "label": "Hinges, rollers, track, wicket gate lock & stopper",
+            "rate": 500.0,
+            "unit": "Sqm",
+            "usedInRA": [
+                "64"
+            ]
+        },
+        {
+            "label": "Extra GI staples & additional strands",
+            "rate": 33.0,
+            "unit": "Rmt",
+            "usedInRA": [
+                "65"
+            ]
         }
     ],
     quotationRates: [
@@ -3171,6 +4090,22 @@ const DISTRICT_RA_LIBRARY = {
             "unit": "Day",
             "usedInRA": [
                 "45"
+            ]
+        },
+        {
+            "label": "GI chicken wire mesh 150mm wide incl. nails, fixing & labour",
+            "rate": 292.2,
+            "unit": "Sqm",
+            "usedInRA": [
+                "51"
+            ]
+        },
+        {
+            "label": "Toughened glass 12–18mm with SS 304 patch fittings, floor spring, lock & handle",
+            "rate": 10803.0,
+            "unit": "Sqm",
+            "usedInRA": [
+                "54"
             ]
         }
     ]
