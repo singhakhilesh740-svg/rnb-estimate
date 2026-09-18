@@ -5636,6 +5636,1688 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ]
+        },
+        {
+            "id": "lib_119",
+            "libNo": "119",
+            "itemNo": "10",
+            "topic": "RCC",
+            "desc": "RCC — CC M-250 for columns upto plinth level (Vet. Polyclinic)",
+            "longDesc": "Providing and laying controlled cement concrete M-250 and curing complete including the cost of form work but excluding the cost of reinforcement for reinforced concrete work in (d) columns Up to Plinth level.",
+            "unit": "Cum",
+            "basis": "Consider size 1 × 0.35 × 0.75 × 2.50 = 0.66 Cmt",
+            "basisNote": "Consider size 1 × 0.35 × 0.75 × 2.50 = 0.66 Cmt",
+            "basisQty": 0.66,
+            "cp": 0,
+            "pdfRate": 7285.2,
+            "sayRate": 7285.2,
+            "floors": false,
+            "source": "Veterinary Polyclinic Building, Dahod (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05025DA",
+                    "page": "",
+                    "label": "Concrete M-250",
+                    "unit": "Cmt",
+                    "qty": 0.66,
+                    "rate": 4590.29,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 0.35,
+                            "b": 0.75,
+                            "d": 2.5,
+                            "qty": 0.66,
+                            "unit": "Cmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001G1",
+                    "page": "",
+                    "label": "Formwork required",
+                    "unit": "Sqmt",
+                    "qty": 5.5,
+                    "rate": 323.39,
+                    "cpApply": false,
+                    "spec": "Providing form work of ordinary timber planking so as to give a rough finish including centering, shuttering, strutting and propping etc. and removal of the same",
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 0.35,
+                            "b": "",
+                            "d": 2.5,
+                            "qty": 1.75,
+                            "unit": "Sqmt"
+                        },
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 0.75,
+                            "b": "",
+                            "d": 2.5,
+                            "qty": 3.75,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "lib_120",
+            "libNo": "120",
+            "itemNo": "11",
+            "topic": "RCC",
+            "desc": "RCC — CC M-200 for columns, pillars, posts & struts — G.F. (Vet. Polyclinic)",
+            "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete including the cost of form work but excluding the cost of reinforcement for reinforced concrete work in Columns, pillars posts and struts G.FLOOR",
+            "unit": "Cum",
+            "basis": "Consider size 1 × 0.35 × 0.75 × 2.00 = 0.53 Cmt",
+            "basisNote": "Consider size 1 × 0.35 × 0.75 × 2.00 = 0.53 Cmt",
+            "basisQty": 0.53,
+            "cp": 0,
+            "pdfRate": 7229.7,
+            "sayRate": 7229.7,
+            "floors": true,
+            "source": "Veterinary Polyclinic Building, Dahod (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05024DA",
+                    "page": "",
+                    "label": "Concrete M-200",
+                    "unit": "Cmt",
+                    "qty": 0.53,
+                    "rate": 4544.94,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 0.35,
+                            "b": 0.75,
+                            "d": 2.0,
+                            "qty": 0.53,
+                            "unit": "Cmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001G1",
+                    "page": "",
+                    "label": "Formwork required",
+                    "unit": "Sqmt",
+                    "qty": 4.4,
+                    "rate": 323.39,
+                    "cpApply": false,
+                    "spec": "Providing form work of ordinary timber planking so as to give a rough finish including centering, shuttering, strutting and propping etc. and removal of the same",
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 0.35,
+                            "b": "",
+                            "d": 2.0,
+                            "qty": 1.4,
+                            "unit": "Sqmt"
+                        },
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 0.75,
+                            "b": "",
+                            "d": 2.0,
+                            "qty": 3.0,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                }
+            ],
+            "liftExtra": {
+                "sorCode": "05015A",
+                "page": "",
+                "rate": 39.68
+            }
+        },
+        {
+            "id": "lib_121",
+            "libNo": "121",
+            "itemNo": "12",
+            "topic": "RCC",
+            "desc": "RCC — CC M-250 for ground & plinth beams (Vet. Polyclinic)",
+            "longDesc": "Providing and laying controlled cement concrete M-250 and curing complete including the cost of form work but excluding the cost of reinforcement for reinforced concrete work in Ground & Plinth BEAMS",
+            "unit": "Cum",
+            "basis": "Consider size 1 × 1.00 × 0.30 × 0.75 = 0.23 Cmt",
+            "basisNote": "Consider size 1 × 1.00 × 0.30 × 0.75 = 0.23 Cmt",
+            "basisQty": 0.23,
+            "cp": 0,
+            "pdfRate": 6129.04,
+            "sayRate": 6129.04,
+            "floors": false,
+            "source": "Veterinary Polyclinic Building, Dahod (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05025CA",
+                    "page": "",
+                    "label": "Concrete M-250",
+                    "unit": "Cmt",
+                    "qty": 0.23,
+                    "rate": 4485.93,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 1.0,
+                            "b": 0.3,
+                            "d": 0.75,
+                            "qty": 0.23,
+                            "unit": "Cmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001H1",
+                    "page": "",
+                    "label": "Formwork required",
+                    "unit": "Sqmt",
+                    "qty": 1.8,
+                    "rate": 209.95,
+                    "cpApply": false,
+                    "spec": "Providing form work of ordinary timber planking so as to give a rough finish including centering, shuttering, strutting and propping etc. and removal of the same",
+                    "rows": [
+                        {
+                            "label": "Side",
+                            "nos": 2,
+                            "l": 1.0,
+                            "b": "",
+                            "d": 0.75,
+                            "qty": 1.5,
+                            "unit": "Sqmt"
+                        },
+                        {
+                            "label": "Bottom",
+                            "nos": 1,
+                            "l": 0.3,
+                            "b": "",
+                            "d": 1.0,
+                            "qty": 0.3,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "lib_122",
+            "libNo": "122",
+            "itemNo": "13",
+            "topic": "RCC",
+            "desc": "RCC — CC M-150 for plinth slabs (Vet. Polyclinic)",
+            "longDesc": "Providing and laying controlled cement concrete M-150 and curing complete including the cost of form work but excluding the cost of reinforcement for reinforced concrete work in (C) Plinth Slabs",
+            "unit": "Cum",
+            "basis": "Consider size 1 × 1.00 × 1.00 × 0.10 = 0.10 Cmt",
+            "basisNote": "Consider size 1 × 1.00 × 1.00 × 0.10 = 0.10 Cmt",
+            "basisQty": 0.1,
+            "cp": 0,
+            "pdfRate": 5187.5,
+            "sayRate": 5187.5,
+            "floors": false,
+            "source": "Veterinary Polyclinic Building, Dahod (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05023CA",
+                    "page": "",
+                    "label": "Concrete M-150",
+                    "unit": "Cmt",
+                    "qty": 0.1,
+                    "rate": 4103.92,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 1.0,
+                            "b": 1.0,
+                            "d": 0.1,
+                            "qty": 0.1,
+                            "unit": "Cmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001B1",
+                    "page": "",
+                    "label": "Formwork required",
+                    "unit": "Sqmt",
+                    "qty": 0.4,
+                    "rate": 270.9,
+                    "cpApply": false,
+                    "spec": "Providing form work of ordinary timber planking so as to give a rough finish including centering, shuttering, strutting and propping etc. and removal of the same",
+                    "rows": [
+                        {
+                            "label": "Side",
+                            "nos": 4,
+                            "l": 1.0,
+                            "b": "",
+                            "d": 0.1,
+                            "qty": 0.4,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "lib_123",
+            "libNo": "123",
+            "itemNo": "14",
+            "topic": "RCC",
+            "desc": "RCC — CC M-200 for ground floor beams (Vet. Polyclinic)",
+            "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete including the cost of form work but excluding the cost of reinforcement for reinforced concrete work in (C) Ground floor Beams,",
+            "unit": "Cum",
+            "basis": "Consider size 1 × 1.00 × 0.30 × 0.75 = 0.23 Cmt",
+            "basisNote": "Consider size 1 × 1.00 × 0.30 × 0.75 = 0.23 Cmt",
+            "basisQty": 0.23,
+            "cp": 0,
+            "pdfRate": 6083.7,
+            "sayRate": 6083.7,
+            "floors": true,
+            "source": "Veterinary Polyclinic Building, Dahod (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05024CA",
+                    "page": "",
+                    "label": "Concrete M-200",
+                    "unit": "Cmt",
+                    "qty": 0.23,
+                    "rate": 4440.58,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 1.0,
+                            "b": 0.3,
+                            "d": 0.75,
+                            "qty": 0.23,
+                            "unit": "Cmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001H1",
+                    "page": "",
+                    "label": "Formwork required",
+                    "unit": "Sqmt",
+                    "qty": 1.8,
+                    "rate": 209.95,
+                    "cpApply": false,
+                    "spec": "Providing form work of ordinary timber planking so as to give a rough finish including centering, shuttering, strutting and propping etc. and removal of the same",
+                    "rows": [
+                        {
+                            "label": "Side",
+                            "nos": 2,
+                            "l": 1.0,
+                            "b": "",
+                            "d": 0.75,
+                            "qty": 1.5,
+                            "unit": "Sqmt"
+                        },
+                        {
+                            "label": "Bottom",
+                            "nos": 1,
+                            "l": 0.3,
+                            "b": "",
+                            "d": 1.0,
+                            "qty": 0.3,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                }
+            ],
+            "liftExtra": {
+                "sorCode": "05015A",
+                "page": "",
+                "rate": 39.68
+            }
+        },
+        {
+            "id": "lib_124",
+            "libNo": "124",
+            "itemNo": "15",
+            "topic": "RCC",
+            "desc": "RCC — CC M-200 for chhajja — ground floor (Vet. Polyclinic)",
+            "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete including the cost of form work but excluding the cost of reinforcement for reinforced concrete work in (c) Chhajja for Ground floor",
+            "unit": "Cum",
+            "basis": "Consider size 1 × 1.20 × 0.52 × 0.15 = 0.09 Cmt",
+            "basisNote": "Consider size 1 × 1.20 × 0.52 × 0.15 = 0.09 Cmt",
+            "basisQty": 0.09,
+            "cp": 0,
+            "pdfRate": 6312.0,
+            "sayRate": 6312.0,
+            "floors": true,
+            "source": "Veterinary Polyclinic Building, Dahod (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05024CA",
+                    "page": "",
+                    "label": "Concrete M-200",
+                    "unit": "Cmt",
+                    "qty": 0.09,
+                    "rate": 4440.58,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 1.2,
+                            "b": 0.52,
+                            "d": 0.15,
+                            "qty": 0.09,
+                            "unit": "Cmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001L",
+                    "page": "",
+                    "label": "Formwork required",
+                    "unit": "Sqmt",
+                    "qty": 0.98,
+                    "rate": 171.87,
+                    "cpApply": false,
+                    "spec": "Providing form work of ordinary timber planking so as to give a rough finish including centering, shuttering, strutting and propping etc. and removal of the same",
+                    "rows": [
+                        {
+                            "label": "Side",
+                            "nos": 2,
+                            "l": 1.2,
+                            "b": "",
+                            "d": 0.15,
+                            "qty": 0.36,
+                            "unit": "Sqmt"
+                        },
+                        {
+                            "label": "Bottom",
+                            "nos": 1,
+                            "l": 1.2,
+                            "b": 0.52,
+                            "d": "",
+                            "qty": 0.62,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                }
+            ],
+            "liftExtra": {
+                "sorCode": "05015A",
+                "page": "",
+                "rate": 39.68
+            }
+        },
+        {
+            "id": "lib_125",
+            "libNo": "125",
+            "itemNo": "16",
+            "topic": "RCC",
+            "desc": "RCC — CC M-200 for lintel — ground floor (Vet. Polyclinic)",
+            "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete including the cost of form work but excluding the cost of reinforcement for reinforced concrete work in (c) Lintal for G floor",
+            "unit": "Cum",
+            "basis": "Consider size 1 × 1.20 × 0.23 × 0.15 = 0.04 Cmt",
+            "basisNote": "Consider size 1 × 1.20 × 0.23 × 0.15 = 0.04 Cmt",
+            "basisQty": 0.04,
+            "cp": 0,
+            "pdfRate": 7432.25,
+            "sayRate": 7432.25,
+            "floors": true,
+            "source": "Veterinary Polyclinic Building, Dahod (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05024CA",
+                    "page": "",
+                    "label": "Concrete M-200",
+                    "unit": "Cmt",
+                    "qty": 0.04,
+                    "rate": 4440.58,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 1.2,
+                            "b": 0.23,
+                            "d": 0.15,
+                            "qty": 0.04,
+                            "unit": "Cmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001H1",
+                    "page": "",
+                    "label": "Formwork required",
+                    "unit": "Sqmt",
+                    "qty": 0.57,
+                    "rate": 209.95,
+                    "cpApply": false,
+                    "spec": "Providing form work of ordinary timber planking so as to give a rough finish including centering, shuttering, strutting and propping etc. and removal of the same",
+                    "rows": [
+                        {
+                            "label": "Side",
+                            "nos": 2,
+                            "l": 1.2,
+                            "b": "",
+                            "d": 0.15,
+                            "qty": 0.36,
+                            "unit": "Sqmt"
+                        },
+                        {
+                            "label": "Bottom",
+                            "nos": 1,
+                            "l": 0.23,
+                            "b": "",
+                            "d": 0.9,
+                            "qty": 0.21,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                }
+            ],
+            "liftExtra": {
+                "sorCode": "05015A",
+                "page": "",
+                "rate": 39.68
+            }
+        },
+        {
+            "id": "lib_126",
+            "libNo": "126",
+            "itemNo": "18",
+            "topic": "RCC",
+            "desc": "RCC — CC M-200 for staircase, G.F. to first floor (Vet. Polyclinic)",
+            "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete including the cost of form work but excluding the cost of reinforcement for reinforced concrete work in (E) Stair case for Ground Floor to first floor",
+            "unit": "Cum",
+            "basis": "Consider single flight — waist slab + steps = 8.24 Cmt",
+            "basisNote": "Consider single flight — waist slab + steps = 8.24 Cmt",
+            "basisQty": 7.0,
+            "cp": 0,
+            "pdfRate": 8308.85,
+            "sayRate": 8308.85,
+            "floors": true,
+            "source": "Veterinary Polyclinic Building, Dahod (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05024EA",
+                    "page": "",
+                    "label": "Concrete M-200",
+                    "unit": "Cmt",
+                    "qty": 8.24,
+                    "rate": 5492.62,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Waist slab",
+                            "nos": 1,
+                            "l": 14.0,
+                            "b": 2.5,
+                            "d": 0.2,
+                            "qty": 7.0,
+                            "unit": "Cmt"
+                        },
+                        {
+                            "label": "Steps",
+                            "nos": 11,
+                            "l": 2.5,
+                            "b": 0.3,
+                            "d": 0.15,
+                            "qty": 1.24,
+                            "unit": "Cmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001M",
+                    "page": "",
+                    "label": "Formwork required",
+                    "unit": "Sqmt",
+                    "qty": 48.85,
+                    "rate": 264.13,
+                    "cpApply": false,
+                    "spec": "Providing form work of ordinary timber planking so as to give a rough finish including centering, shuttering, strutting and propping etc. and removal of the same",
+                    "rows": [
+                        {
+                            "label": "Side",
+                            "nos": 2,
+                            "l": 14.0,
+                            "b": "",
+                            "d": 0.2,
+                            "qty": 5.6,
+                            "unit": "Sqmt"
+                        },
+                        {
+                            "label": "Bottom",
+                            "nos": 1,
+                            "l": 14.0,
+                            "b": 2.5,
+                            "d": "",
+                            "qty": 35.0,
+                            "unit": "Sqmt"
+                        },
+                        {
+                            "label": "Steps side",
+                            "nos": 22,
+                            "l": 2.5,
+                            "b": "",
+                            "d": 0.15,
+                            "qty": 8.25,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                }
+            ],
+            "liftExtra": {
+                "sorCode": "05015A",
+                "page": "",
+                "rate": 39.68
+            }
+        },
+        {
+            "id": "lib_127",
+            "libNo": "127",
+            "itemNo": "19",
+            "topic": "RCC",
+            "desc": "RCC — CC M-200 for coping — ground floor (Vet. Polyclinic)",
+            "longDesc": "Providing and laying controlled cement concrete M-200 for RCC work and curing complete including the cost of form work but excluding the cost of reinforced concrete work in coping on Ground Floor",
+            "unit": "Cum",
+            "basis": "Consider size 1 × 4.20 × 0.23 × 0.15 = 0.14 Cmt",
+            "basisNote": "Consider size 1 × 4.20 × 0.23 × 0.15 = 0.14 Cmt",
+            "basisQty": 0.14,
+            "cp": 0,
+            "pdfRate": 6330.14,
+            "sayRate": 6330.14,
+            "floors": true,
+            "source": "Veterinary Polyclinic Building, Dahod (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05024CA",
+                    "page": "",
+                    "label": "Concrete M-200",
+                    "unit": "Cmt",
+                    "qty": 0.14,
+                    "rate": 4440.58,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 4.2,
+                            "b": 0.23,
+                            "d": 0.15,
+                            "qty": 0.14,
+                            "unit": "Cmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001H1",
+                    "page": "",
+                    "label": "Formwork required",
+                    "unit": "Sqmt",
+                    "qty": 1.26,
+                    "rate": 209.95,
+                    "cpApply": false,
+                    "spec": "Providing form work of ordinary timber planking so as to give a rough finish including centering, shuttering, strutting and propping etc. and removal of the same",
+                    "rows": [
+                        {
+                            "label": "Side",
+                            "nos": 2,
+                            "l": 4.2,
+                            "b": "",
+                            "d": 0.15,
+                            "qty": 1.26,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                }
+            ],
+            "liftExtra": {
+                "sorCode": "05015A",
+                "page": "",
+                "rate": 39.68
+            }
+        },
+        {
+            "id": "lib_128",
+            "libNo": "128",
+            "itemNo": "21",
+            "topic": "SS railing",
+            "desc": "SS railing — 90 cm high SS 316 railing (Vet. Polyclinic)",
+            "longDesc": "Providing and fixing 90 cm high Stainless steel railing made from anticorrocive 316 grade S S pipe of 50 mm dia (16Gauge) as hand rail with S S 316 grade Baluster of 38 mm dia (16Gauge) as a vertical support fixed in RCC slab at 1.2m c/c including three horizontal S S pipes of 25 mm dia (16Gauge) at eqal distance fixed by 18.75 mm dia (16Gauge) S S pipe with baluster including accessories as per detailed drawing as directed etc. complete.",
+            "unit": "Rmt",
+            "basis": "Consider S.S. railing of length 3.50 × 0.90 Mt.",
+            "basisNote": "Consider S.S. railing of length 3.50 × 0.90 Mt.",
+            "basisQty": 3.5,
+            "cp": 0,
+            "pdfRate": 3590.6,
+            "sayRate": 3590.6,
+            "floors": false,
+            "source": "Veterinary Polyclinic Building, Dahod (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "M714",
+                    "page": "24",
+                    "label": "Providing 50 mm dia S.S. 316 grade (16 gauge) pipe hand rail — basic 1004.24 + 15% C.P.",
+                    "unit": "Rmt",
+                    "qty": 3.5,
+                    "rate": 1154.88,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 3.5,
+                            "b": "",
+                            "d": "",
+                            "qty": 3.5,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Providing 38 mm dia S.S. 316 grade (16 gauge) vertical support — basic 580.00 + 15% C.P.",
+                    "unit": "Rmt",
+                    "qty": 3.6,
+                    "rate": 667.0,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 4,
+                            "l": 0.9,
+                            "b": "",
+                            "d": "",
+                            "qty": 3.6,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "3",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Providing 25 mm dia horizontal hollow S.S. pipe — basic 200.00 + 15% C.P.",
+                    "unit": "Rmt",
+                    "qty": 3.5,
+                    "rate": 230.0,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 3.5,
+                            "b": "",
+                            "d": "",
+                            "qty": 3.5,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "4",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Providing 18.75 mm dia support pipe — basic 250.00 + 15% C.P.",
+                    "unit": "Rmt",
+                    "qty": 10.5,
+                    "rate": 287.5,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 3,
+                            "l": 3.5,
+                            "b": "",
+                            "d": "",
+                            "qty": 10.5,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "5",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Round ball at top — basic 300.00 + 15% C.P.",
+                    "unit": "No",
+                    "qty": 2.0,
+                    "rate": 345.0,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 2,
+                            "b": "",
+                            "d": "",
+                            "qty": 2.0,
+                            "unit": "No"
+                        }
+                    ]
+                },
+                {
+                    "sr": "6",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charges for fabricating the structure — basic 400.00 + 15% C.P.",
+                    "unit": "Rmt",
+                    "qty": 3.5,
+                    "rate": 460.0,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 3.5,
+                            "b": "",
+                            "d": "",
+                            "qty": 3.5,
+                            "unit": "Rmt"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "lib_129",
+            "libNo": "129",
+            "itemNo": "28",
+            "topic": "Plaster",
+            "desc": "Plaster — 10 mm mala trovel plaster on ceiling & soffits of stairs (Vet. Polyclinic)",
+            "longDesc": "Providing 10 mm. Thick Mala trovel plaster in single coat for plastering on ceiling and soffits of stairs and finished With 1x1 CM Grooves at juction of structual member in : (I) Cement mortar 1:4 (1 cement : 4 sand) with Mala finished of neat cement slurry etc. complete.Ground Floor",
+            "unit": "Sqm",
+            "basis": "Per 1.00 Sqmt",
+            "basisNote": "Per 1.00 Sqmt",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 160.51,
+            "sayRate": 160.51,
+            "floors": true,
+            "source": "Veterinary Polyclinic Building, Dahod (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "17001B",
+                    "page": "",
+                    "label": "Providing 10 mm thick single coat mala plaster",
+                    "unit": "Sqmt",
+                    "qty": 1.0,
+                    "rate": 134.1,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "17006",
+                    "page": "",
+                    "label": "Extra for ceilings and soffits of stairs upto floor two level instead of plastering on walls",
+                    "unit": "Sqmt",
+                    "qty": 1.0,
+                    "rate": 26.41,
+                    "cpApply": false
+                }
+            ],
+            "liftExtra": {
+                "sorCode": "17007A",
+                "page": "104",
+                "rate": 24.22
+            }
+        },
+        {
+            "id": "lib_130",
+            "libNo": "130",
+            "itemNo": "39",
+            "topic": "Windows",
+            "desc": "Windows — Aluminium ventilator 65 × 25 × 1.50 mm box frame with louvers (Vet. Polyclinic)",
+            "longDesc": "Providing & Fixing in position standard extruded approved colour anodised Aluminum Ventilation with outer frame 65 x 25 x 1.50 mm Stander Box Frame @ Wt 0.833 kg/Rmt with Bajri or figure glass 3mm thick and alluminium strip blade fixed or adjestable ventilation including all required materials, fixtures, fastenning, labours and equipments as per detailed drawing as directed. For Ventilators",
+            "unit": "Sqm",
+            "basis": "Consider for 1 × 0.90 × 0.45 = 0.405 Sqmt",
+            "basisNote": "Consider for 1 × 0.90 × 0.45 = 0.405 Sqmt",
+            "basisQty": 0.405,
+            "cp": 15,
+            "pdfRate": 2358.9,
+            "sayRate": 2358.9,
+            "floors": false,
+            "source": "Veterinary Polyclinic Building, Dahod (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "M686+M687",
+                    "page": "",
+                    "label": "Aluminium material for frame including anodizing of sections 65 × 25 × 1.50 mm @ wt. 0.833 kg/Rmt (incl. 5% wastage)",
+                    "unit": "Kg",
+                    "qty": 2.36,
+                    "rate": 199.15,
+                    "cpApply": true,
+                    "rows": [
+                        {
+                            "label": "Top & bottom",
+                            "nos": 2,
+                            "l": 0.9,
+                            "b": "",
+                            "d": "",
+                            "qty": 1.8,
+                            "unit": "Rmt"
+                        },
+                        {
+                            "label": "Side",
+                            "nos": 2,
+                            "l": 0.45,
+                            "b": "",
+                            "d": "",
+                            "qty": 0.9,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "M686+M687",
+                    "page": "",
+                    "label": "Channel of louvers 9.50 × 9.50 × 1.60 @ wt. 0.15 kg/Rmt (incl. 5% wastage)",
+                    "unit": "Kg",
+                    "qty": 0.14,
+                    "rate": 199.15,
+                    "cpApply": true,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 9,
+                            "l": 0.1,
+                            "b": "",
+                            "d": "",
+                            "qty": 0.9,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "M070",
+                    "page": "7",
+                    "label": "Bajri or figure glass 3 mm thick (incl. 5% wastage)",
+                    "unit": "Sqmt",
+                    "qty": 0.38,
+                    "rate": 161.02,
+                    "cpApply": true,
+                    "rows": [
+                        {
+                            "label": "Louvers",
+                            "nos": 9,
+                            "l": 0.1,
+                            "b": 0.4,
+                            "d": "",
+                            "qty": 0.36,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "4",
+                    "kind": "SOR",
+                    "code": "L004",
+                    "page": "",
+                    "label": "Labour charges",
+                    "unit": "Sqmt",
+                    "qty": 0.405,
+                    "rate": 670.0,
+                    "cpApply": true,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 0.9,
+                            "b": 0.45,
+                            "d": "",
+                            "qty": 0.405,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "lib_131",
+            "libNo": "131",
+            "itemNo": "45",
+            "topic": "Doors",
+            "desc": "Doors — FRP frame 100 × 50 mm with 35 mm depress panel FRP shutter (Vet. Polyclinic)",
+            "longDesc": "Providing and fixing FRP frame size 100 x 50 mm and 35 mm thick ( Fiber Glass with PUF Injection ) FRP depress panel Single or Double shutter having extra reinforcement on sides & edges in Gel coat finish.The core of the both shutter & frame is to be filed up with injected fire retradat grade polyurethene foam done in situ along with embeded wooden pieces for stiffening & also taking hinges & fintures.The whole FRP frame & single or double shutter is to be waterproof, weatherproof, termite proof & resistance to mild acid/alkali. Rates are to be inclusive of S.S hinges with necessary screws & alluminum fixtures & fastenings & fartener sleeve.Colour and Shade approved by Engineer-In-Charge.",
+            "unit": "Sqm",
+            "basis": "Per 1.00 Sqmt",
+            "basisNote": "Per 1.00 Sqmt",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 2340.0,
+            "sayRate": 2340.0,
+            "floors": false,
+            "source": "Veterinary Polyclinic Building, Dahod (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "10038",
+                    "page": "70",
+                    "label": "Providing and fixing FRP frame 100 × 50 mm and 35 mm thick FRP depress panel double shutter, gel coat finish, PUF injected core",
+                    "unit": "Sqmt",
+                    "qty": 1.0,
+                    "rate": 2589.15,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "FRP frame 100 × 50",
+                    "unit": "Sqmt",
+                    "qty": 1.0,
+                    "rate": 1050.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Deduction — FRP frame 125 × 65",
+                    "unit": "Sqmt",
+                    "qty": -1.0,
+                    "rate": 1300.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_132",
+            "libNo": "132",
+            "itemNo": "52",
+            "topic": "Stone work",
+            "desc": "Stone work — Double polished granite 18 mm treads & risers with nosing (Vet. Polyclinic)",
+            "longDesc": "Providing and laying machine cut free edge machine Double polished granite stone 18mm thick finished treads and risers in with 1cm projecting, nozing rounded moulding in tread laid over 12 mm (av.) thick bases of cement mortar 1:6 (1-cement : 6-coarse sand) jointed with grey or colour cement slurry including rubbing and polishing incl. making Three No.s of grooves of size 3mm X 3mm along the length of treads etc. complete",
+            "unit": "Sqm",
+            "basis": "Rate for 2.50 × 0.30 = 0.75 Sqm",
+            "basisNote": "Rate for 2.50 × 0.30 = 0.75 Sqm",
+            "basisQty": 0.75,
+            "cp": 15,
+            "pdfRate": 1997.0,
+            "sayRate": 1997.0,
+            "floors": false,
+            "source": "Veterinary Polyclinic Building, Dahod (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "M253",
+                    "page": "12",
+                    "label": "Granite stone 18 mm thick (incl. 5% centage)",
+                    "unit": "Sqm",
+                    "qty": 0.79,
+                    "rate": 1347.46,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 2.5,
+                            "b": 0.3,
+                            "d": "",
+                            "qty": 0.75,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "Add 5% centage",
+                            "nos": "",
+                            "l": "",
+                            "b": "",
+                            "d": "",
+                            "qty": 0.04,
+                            "unit": "Sqm"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "02010",
+                    "page": "",
+                    "label": "12 mm (av.) thick bases of cement mortar 1:6 (1 cement : 6 coarse sand)",
+                    "unit": "Cum",
+                    "qty": 0.09,
+                    "rate": 2128.19,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 2.5,
+                            "b": 0.3,
+                            "d": 0.12,
+                            "qty": 0.09,
+                            "unit": "Cum"
+                        }
+                    ]
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "M724",
+                    "page": "24",
+                    "label": "Add for round moulding on exposed edge and groove",
+                    "unit": "Rmt",
+                    "qty": 2.5,
+                    "rate": 85.0,
+                    "cpApply": true,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 2.5,
+                            "b": "",
+                            "d": "",
+                            "qty": 2.5,
+                            "unit": "Rmt"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "lib_133",
+            "libNo": "133",
+            "itemNo": "53",
+            "topic": "Stone work",
+            "desc": "Stone work — Mirror polished granite 18 mm cladding on sills & jambs (Vet. Polyclinic)",
+            "longDesc": "Providing and fixing mirror polished 18 mm thick Granite stone with full round edge and polished of approved quality in clading on sill and around the doors/ windows/ ventilation with 12 mm thick cement 53 29 mortor CM (1:4) and fixing with cement slurry & adhesive including moulding of exposed edges as directed by engineering in charge etc. complete.",
+            "unit": "Sqm",
+            "basis": "Rate for window size 1 × 1.20 × 2.00",
+            "basisNote": "Rate for window size 1 × 1.20 × 2.00",
+            "basisQty": 0.9,
+            "cp": 15,
+            "pdfRate": 2891.0,
+            "sayRate": 2891.0,
+            "floors": false,
+            "source": "Veterinary Polyclinic Building, Dahod (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "M253",
+                    "page": "12",
+                    "label": "Granite slab 18 mm thick, one side polished (incl. 5% centage)",
+                    "unit": "Sqm",
+                    "qty": 0.95,
+                    "rate": 1347.46,
+                    "cpApply": true,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 1.2,
+                            "b": 0.28,
+                            "d": "",
+                            "qty": 0.34,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 2.0,
+                            "b": 0.28,
+                            "d": "",
+                            "qty": 0.56,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "Add 5% centage",
+                            "nos": "",
+                            "l": "",
+                            "b": "",
+                            "d": "",
+                            "qty": 0.05,
+                            "unit": "Sqm"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "02012",
+                    "page": "",
+                    "label": "12 mm thick cement mortar 1:4",
+                    "unit": "Cum",
+                    "qty": 0.18,
+                    "rate": 2842.71,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 1.2,
+                            "b": 0.23,
+                            "d": 0.12,
+                            "qty": 0.07,
+                            "unit": "Cum"
+                        },
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 2.0,
+                            "b": 0.23,
+                            "d": 0.12,
+                            "qty": 0.11,
+                            "unit": "Cum"
+                        }
+                    ]
+                },
+                {
+                    "sr": "3",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charges for fixing including cement slurry & adhesive",
+                    "unit": "Sqm",
+                    "qty": 0.95,
+                    "rate": 130.0,
+                    "cpApply": true
+                },
+                {
+                    "sr": "4",
+                    "kind": "SOR",
+                    "code": "M725",
+                    "page": "",
+                    "label": "Labour charges for moulding on exposed edges",
+                    "unit": "Rmt",
+                    "qty": 6.4,
+                    "rate": 51.0,
+                    "cpApply": true,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 1.2,
+                            "b": "",
+                            "d": "",
+                            "qty": 2.4,
+                            "unit": "Rmt"
+                        },
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 2.0,
+                            "b": "",
+                            "d": "",
+                            "qty": 4.0,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "5",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Add for mirror polishing",
+                    "unit": "Sqm",
+                    "qty": 0.95,
+                    "rate": 100.0,
+                    "cpApply": true
+                }
+            ]
+        },
+        {
+            "id": "lib_134",
+            "libNo": "134",
+            "itemNo": "55",
+            "topic": "Steel work",
+            "desc": "Steel work — MS safety grill with 12 × 12 mm square bar (Vet. Polyclinic)",
+            "longDesc": "Providinfg and fixing Safty grills of required pattern for windows/ Door using necessary 12x12 mm M.S. Square bar, M.S flats and other structural steel at required spacing including cutting, welding and fabriction 55 30 etc. including one coat of primer of approved quality and two coats of oil painting as per detail drawing etc complete.",
+            "unit": "Kg",
+            "basis": "Assume weight 20.00 Kg/Sqmt",
+            "basisNote": "Assume weight 20.00 Kg/Sqmt",
+            "basisQty": 20.0,
+            "cp": 0,
+            "pdfRate": 105.0,
+            "sayRate": 105.0,
+            "floors": false,
+            "source": "Veterinary Polyclinic Building, Dahod (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "10025A",
+                    "page": "",
+                    "label": "Providing and fixing M.S. grills of required pattern to wooden frames of windows etc. with M.S. flats at required spacings and frame all round, square or round bars with round headed bolts and nuts or by screws — (A) Plain Grill",
+                    "unit": "Kg",
+                    "qty": 20.0,
+                    "rate": 109.22,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 20.0,
+                            "b": "",
+                            "d": "",
+                            "qty": 20.0,
+                            "unit": "Kg"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "19001",
+                    "page": "",
+                    "label": "Applying priming coat over new steel and other metal surface",
+                    "unit": "Sqmt",
+                    "qty": 1.0,
+                    "rate": 35.56,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 1.0,
+                            "b": 1.0,
+                            "d": "",
+                            "qty": 1.0,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "19005",
+                    "page": "",
+                    "label": "Painting two coats (excluding priming coat) on new steel and other metal surface with synthetic enamel paint",
+                    "unit": "Sqmt",
+                    "qty": 1.0,
+                    "rate": 68.47,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 1.0,
+                            "b": 1.0,
+                            "d": "",
+                            "qty": 1.0,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                }
+            ],
+            "tailNote": "Note: source PDF shows Say Rs. 105.00; its own component total works out to Rs. 114.42 per Kg — verify before use."
+        },
+        {
+            "id": "lib_135",
+            "libNo": "135",
+            "itemNo": "63",
+            "topic": "Drainage",
+            "desc": "Drainage — UPVC SWR Type-B 75 mm dia pipe line with fittings & labour (Vet. Polyclinic)",
+            "longDesc": "Providing, laying and jointing in true line and level 75 mm dia. UPVC SWRType B pipe conforming to IS 13592-1992 with one end plain and other end socketed with rubbering and fitting conforming to ISI 14735- 1999 of approved make for drainage system pipe line, pipe shall be jointed with each other with rubber 63 31 lubricant, pipe shall be fixed on wall using of PVC clamp at every 2000 mm c/c or shall be conceled in walss as directed including necessary fittings such as bends, shoes etc. including testing of pipes and joints and jointed with adhesive solvent cement including cost of all materials.",
+            "unit": "Rmt",
+            "basis": "Details of cost of 12.00 Meter",
+            "basisNote": "Details of cost of 12.00 Meter",
+            "basisQty": 12.0,
+            "cp": 15,
+            "pdfRate": 291.0,
+            "sayRate": 291.0,
+            "floors": false,
+            "source": "Veterinary Polyclinic Building, Dahod (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "M803",
+                    "page": "",
+                    "label": "UPVC SWR 75 mm dia pipe",
+                    "unit": "Rmt",
+                    "qty": 12.0,
+                    "rate": 143.22,
+                    "cpApply": true
+                },
+                {
+                    "sr": "2",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Plug",
+                    "unit": "Each",
+                    "qty": 3.0,
+                    "rate": 111.0,
+                    "cpApply": true
+                },
+                {
+                    "sr": "3",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Clamps",
+                    "unit": "Each",
+                    "qty": 8.0,
+                    "rate": 18.0,
+                    "cpApply": true
+                },
+                {
+                    "sr": "4",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Solvent solution (50 ml)",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 92.0,
+                    "cpApply": true
+                },
+                {
+                    "sr": "5",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Jani nails",
+                    "unit": "No",
+                    "qty": 16.0,
+                    "rate": 1.0,
+                    "cpApply": true
+                },
+                {
+                    "sr": "6",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Carriage of pipe (L.S.) — no C.P. on carriage",
+                    "unit": "LS",
+                    "qty": 1.0,
+                    "rate": 10.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "7",
+                    "kind": "SOR",
+                    "code": "St-2",
+                    "page": "",
+                    "label": "Labour — Mazdoor (male)",
+                    "unit": "Each",
+                    "qty": 0.7,
+                    "rate": 505.0,
+                    "cpApply": true
+                },
+                {
+                    "sr": "8",
+                    "kind": "SOR",
+                    "code": "St-2",
+                    "page": "",
+                    "label": "Labour — Plumber",
+                    "unit": "Each",
+                    "qty": 0.35,
+                    "rate": 729.0,
+                    "cpApply": true
+                },
+                {
+                    "sr": "9",
+                    "kind": "SOR",
+                    "code": "St-2",
+                    "page": "",
+                    "label": "Labour — Bandhani",
+                    "unit": "Each",
+                    "qty": 0.17,
+                    "rate": 622.0,
+                    "cpApply": true
+                }
+            ]
+        },
+        {
+            "id": "lib_136",
+            "libNo": "136",
+            "itemNo": "79",
+            "topic": "Drainage",
+            "desc": "Drainage — Inspection chamber 455 × 610 mm with precast RCC cover (Vet. Polyclinic)",
+            "longDesc": "Constructing brick masonry chamber for underground C.I. Inspection chamber and bends with briocks having croshing strength not less than 35Kg. Cm2 in C.M. 1:5 precast RCC cover 455mm x 610mm intenal dimensions with frame (R.C.C. top slabe with 1:2:4 mix (1-cement :2- coarse sand :4-graded stone aggregate 79 35 20mm size) foundation concrete 1:5:10 inside plaster 15mm thick with cement mortar 1:3 finished smooth with a floating coat of neat cement on walls and bed concrete etc. complete (i) Inside dimensions 455mmx 610mm and 450mm deep for single pipe line. Constructing brick masonry chamber for underground C.I. Inspection chamber and bends with briocks having croshing strength not less than 35Kg. Cm2 in C.M. 1:5 C.I. cover with frame (Light duty) 455mm x 610mm intenal dimensions total weight of cover with frame to be not less than 38Kg. (Wt. of cover 23 Kg.) and Wt.",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisNote": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 3192.0,
+            "sayRate": 3192.0,
+            "floors": false,
+            "source": "Veterinary Polyclinic Building, Dahod (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "24016A",
+                    "page": "",
+                    "label": "Constructing brick masonry chamber for underground C.I. inspection chamber and bends in C.M. 1:5, C.I. cover with frame (light duty) 455 × 610 mm internal, R.C.C. top slab 1:2:4, foundation concrete 1:5:10, inside plaster 15 mm in C.M. 1:3 finished with neat cement floating coat — 450 mm deep for single pipe line",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 2903.89,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Precast R.C.C. cover",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 1100.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "M113",
+                    "page": "",
+                    "label": "Less — C.I. cover with frame (deducted)",
+                    "unit": "No",
+                    "qty": -1.0,
+                    "rate": 812.71,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_137",
+            "libNo": "137",
+            "itemNo": "80",
+            "topic": "Drainage",
+            "desc": "Drainage — Inspection chamber 500 × 700 mm with precast RCC cover (Vet. Polyclinic)",
+            "longDesc": "Constructing brick masonry chamber for underground C.I. Inspection C.I. Inspection chamber and bends with briocks having croshing strength not less than 35Kg. Cm2 in C.M. 1:5 precast RCC cover 500mmx 700mm intenal dimensions with frame (R.C.C. top slabe with 1:2:4 mix (1-cement :2- coarse sand :4-graded stone 80 36 aggregate 20mm size) foundation concrete 1:5:10 inside plaster 15mm thick with cement mortar 1:3 finished smooth with a floating coat of neat cement on walls and bed concrete etc. complete (i) Inside dimensions 500mmx 700mm and 450mm deep for single pipe line. Constructing brick masonry chamber for underground C.I. Inspection chamber and bends with briocks having croshing strength not less than 35Kg. Cm2 in C.M. 1:5 C.I. cover with frame (Light duty) 455mm x 610mm intenal dimensions total weight of cover with frame to be not less than 38Kg. (Wt. of cover 23 Kg.) and Wt.",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisNote": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 3895.0,
+            "sayRate": 3895.0,
+            "floors": false,
+            "source": "Veterinary Polyclinic Building, Dahod (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "24016B",
+                    "page": "",
+                    "label": "Constructing brick masonry chamber for underground C.I. inspection chamber and bends in C.M. 1:5, C.I. cover with frame (light duty) 500 × 700 mm internal, R.C.C. top slab 1:2:4, foundation concrete 1:5:10, inside plaster 15 mm in C.M. 1:3 finished with neat cement floating coat — 450 mm deep for single pipe line",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 3624.51,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Precast R.C.C. cover",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 1400.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "M114",
+                    "page": "",
+                    "label": "Less — C.I. cover with frame (deducted)",
+                    "unit": "No",
+                    "qty": -1.0,
+                    "rate": 1129.66,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_138",
+            "libNo": "138",
+            "itemNo": "86",
+            "topic": "Sanitary",
+            "desc": "Sanitary — Vitreous china kitchen sink 600 × 450 × 150 mm with C.I./M.S. brackets (Vet. Polyclinic)",
+            "longDesc": "Providing and fixing Kitchen sink with C.I. or M.S. brackets, painted white including cutting holes in walls and making good the same but excluding fittings. (C) Vitreous China Sink.(i) 600mm x 450mm x 150mm size",
+            "unit": "No",
+            "basis": "Rate for 1 sink",
+            "basisNote": "Rate for 1 sink",
+            "basisQty": 1.0,
+            "cp": 15,
+            "pdfRate": 3604.0,
+            "sayRate": 3604.0,
+            "floors": false,
+            "source": "Veterinary Polyclinic Building, Dahod (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "23019",
+                    "page": "",
+                    "label": "Providing and laying kitchen sink",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 2303.62,
+                    "cpApply": true
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "23029A",
+                    "page": "",
+                    "label": "Providing and fixing pillar cock 15 mm",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 305.67,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "23021A",
+                    "page": "",
+                    "label": "M.I. fisher union (A) 32 mm dia",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 77.97,
+                    "cpApply": true
+                },
+                {
+                    "sr": "4",
+                    "kind": "SOR",
+                    "code": "23020A",
+                    "page": "",
+                    "label": "C.P. brass waste (A) 32 mm dia",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 67.24,
+                    "cpApply": false
+                },
+                {
+                    "sr": "5",
+                    "kind": "SOR",
+                    "code": "23030A",
+                    "page": "",
+                    "label": "Providing and fixing chromium plated stop cock 15 mm dia",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 203.79,
+                    "cpApply": false
+                },
+                {
+                    "sr": "6",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Add for labour charges for fixing",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 250.0,
+                    "cpApply": true
+                }
+            ]
         }
     ],
     marketRates: [
