@@ -477,7 +477,9 @@ function renderItemBlocks(){
     return `<div class="itemblock">
       <h3><span>Item No. ${li + 1}</span>
         <button class="btn danger" style="padding:4px 9px" data-rmline="${li}">Remove</button></h3>
-      <div class="itemdesc">${esc(l.desc)}</div>
+      <div class="itemdesc">${(l.shortDesc && String(l.desc||'').length > 220)
+        ? `<b>${esc(l.shortDesc)}</b><details style="margin-top:4px"><summary style="cursor:pointer;font-size:11px;color:#567">Full description (estimate me yahi jayegi)</summary><div style="margin-top:4px">${esc(l.desc)}</div></details>`
+        : esc(l.desc)}</div>
       <div>
         <span class="pill">Rate ₹ ${fmt(n(l.rate))}</span>
         <span class="pill">Per ${esc(l.unit)}</span>
@@ -701,7 +703,9 @@ function renderCatChips(){
 let chapFilter = '';
 /* SOR aur RA ab ek hi source hain. Purane estimates me rateSource 'ra' ho sakta
    hai — use 'sor' ki tarah treat karo. chapFilter === RA_ONLY => sirf RA dikhao. */
-const RA_ONLY = '__RA__';
+const RA_ONLY  = '__RA__';      // RA branch khula — saari RA
+const SOR_ALL  = '__SOR__';     // SOR branch khula — saare chapters
+const RA_TOPIC = 'RA::';        // RA::<topic> — ek RA topic
 function rsKey(){ const rs = est.rateSource || 'arc'; return rs === 'ra' ? 'sor' : rs; }
 function raEntries(){
   return (window.RA && window.RA.pickerEntries) ? window.RA.pickerEntries() : [];
@@ -717,6 +721,15 @@ function chapLabel(c){
   if(man)  name += ' (Manual)';
   return code + ' · ' + name;
 }
+function raTopics(){
+  const m = {};
+  raEntries().forEach(e => {
+    const t = (e.raw && e.raw.ra && e.raw.ra.topic) || 'Other';
+    m[t] = (m[t] || 0) + 1;
+  });
+  return Object.keys(m).sort().map(k => [k, m[k]]);
+}
+
 function renderChapChips(){
   const box = $('#catChips');
   if(!box) return;
@@ -724,24 +737,42 @@ function renderChapChips(){
   const cats = [...new Set(mine.map(i => i.cat).filter(Boolean))]
     .sort((a,b) => { const A = chapNo(a), B = chapNo(b); return A[0]-B[0] || A[1].localeCompare(B[1]); });
   const raCount = raEntries().length;
-  const raChip = raCount
-    ? `<button class="chip" data-chap="${RA_ONLY}" aria-pressed="${chapFilter === RA_ONLY}">🧮 Rate Analysis <span style="opacity:.6">${raCount}</span></button>`
-    : '';
-  if(!cats.length){
-    box.innerHTML = raChip + '<p class="hint" style="margin:6px 0 0">' + esc(myDiv()) +
-      ' ka SOR abhi upload nahi hua. Data → SOR me Excel import karo — chapter chips apne aap ban jayenge.</p>';
-    $$('#catChips .chip').forEach(b => b.onclick = () => {
-      chapFilter = (b.dataset.chap === chapFilter) ? '' : b.dataset.chap;
-      renderChapChips(); $('#itemInput').focus();
-    });
-    return;
+  const f = chapFilter || '';
+  const chip = (val, label, count, on) =>
+    `<button class="chip" data-chap="${esc(val)}" aria-pressed="${!!on}">${label}` +
+    (count != null ? ` <span style="opacity:.6">${count}</span>` : '') + `</button>`;
+  const back = (val, label) => `<button class="chip" data-chap="${esc(val)}" aria-pressed="false">${label}</button>`;
+
+  let h = '';
+  if(f === RA_ONLY || f.startsWith(RA_TOPIC)){
+    /* ---- RA branch ---- */
+    h = back('', '← Wapas') +
+        chip(RA_ONLY, '🧮 Saari RA', raCount, f === RA_ONLY) +
+        raTopics().map(([t,c]) => chip(RA_TOPIC + t, esc(t), c, f === RA_TOPIC + t)).join('');
+  } else if(f === SOR_ALL || (f && f !== RA_ONLY)){
+    /* ---- SOR branch ---- */
+    if(!cats.length){
+      box.innerHTML = back('', '← Wapas') + '<p class="hint" style="margin:6px 0 0">' + esc(myDiv()) +
+        ' ka SOR abhi upload nahi hua. Data → SOR me Excel import karo — chapter chips apne aap ban jayenge.</p>';
+      wireChapChips(); return;
+    }
+    const count = c => mine.filter(i => i.cat === c).length;
+    h = back('', '← Wapas') +
+        chip(SOR_ALL, '📘 Saare chapters', mine.length, f === SOR_ALL) +
+        cats.map(c => chip(c, esc(chapLabel(c)), count(c), f === c)).join('');
+  } else {
+    /* ---- top level: sirf do chips ---- */
+    h = (raCount ? chip(RA_ONLY, '🧮 Rate Analysis', raCount, false) : '') +
+        chip(SOR_ALL, '📘 SOR 2024-25', mine.length, false);
   }
-  const count = c => mine.filter(i => i.cat === c).length;
-  box.innerHTML = (chapFilter ? `<button class="chip" data-chap="" aria-pressed="false">← Sab dikhao (SOR + RA)</button>` : '') +
-    raChip +
-    cats.map(c => `<button class="chip" data-chap="${esc(c)}" aria-pressed="${chapFilter === c}">${esc(chapLabel(c))} <span style="opacity:.6">${count(c)}</span></button>`).join('');
+  box.innerHTML = h;
+  wireChapChips();
+}
+
+function wireChapChips(){
   $$('#catChips .chip').forEach(b => b.onclick = () => {
-    chapFilter = (b.dataset.chap === chapFilter) ? '' : b.dataset.chap;
+    const v = b.dataset.chap;
+    chapFilter = (v === chapFilter) ? (v === RA_ONLY || v === SOR_ALL ? '' : (v.startsWith(RA_TOPIC) ? RA_ONLY : SOR_ALL)) : v;
     renderChapChips(); $('#itemInput').focus();
   });
 }
@@ -1011,10 +1042,17 @@ makeCombo($('#itemInput'), $('#itemList'),
   () => {
     const rs = rsKey();
     if(rs === 'sor'){
-      /* RA pehle, phir SOR — dono ek hi list me */
-      const ra = (chapFilter && chapFilter !== RA_ONLY) ? [] : raEntries();
-      const sor = (chapFilter === RA_ONLY) ? [] :
-        sorItems.filter(it => it.desc && divOK(it) && (!chapFilter || it.cat === chapFilter)).map(it => ({
+      /* RA pehle, phir SOR — chip se jo branch khula hai wahi dikhega */
+      const f = chapFilter || '';
+      const raBranch  = (f === '' || f === RA_ONLY || f.startsWith(RA_TOPIC));
+      const sorBranch = (f === '' || f === SOR_ALL || (f && f !== RA_ONLY && !f.startsWith(RA_TOPIC)));
+      const raTopic = f.startsWith(RA_TOPIC) ? f.slice(RA_TOPIC.length) : '';
+      const sorCat  = (f && f !== SOR_ALL && f !== RA_ONLY && !f.startsWith(RA_TOPIC)) ? f : '';
+
+      const ra = !raBranch ? [] : raEntries().filter(e =>
+        !raTopic || (e.raw && e.raw.ra && (e.raw.ra.topic || '') === raTopic));
+      const sor = !sorBranch ? [] :
+        sorItems.filter(it => it.desc && divOK(it) && (!sorCat || it.cat === sorCat)).map(it => ({
           label: it.desc.length > 150 ? it.desc.slice(0,150) + '…' : it.desc,
           meta: `SOR ${it.itemNo} · ₹ ${fmt(n(it.rate))} / ${it.unit}${it.cat ? ' · ' + it.cat.replace(/^CH-/,'CH-') : ''}`,
           search: [it.desc, it.unit, it.itemNo, it.cat].join(' '), raw: it }));
@@ -1029,8 +1067,10 @@ makeCombo($('#itemInput'), $('#itemList'),
   },
   d => { const it = d.raw;
     if(it && it.ra){
-      // picked from the Rate Analysis library
-      est.lines.push({ appRateNo: it.ra.itemNo || '', desc: it.ra.desc + (it.floor ? ' \u2014 ' + it.floor : ''),
+      // picked from the Rate Analysis library — estimate line par poori description jaati hai
+      const full = String(it.ra.longDesc || it.ra.desc || '');
+      est.lines.push({ appRateNo: it.ra.itemNo || '', desc: full + (it.floor ? ' \u2014 ' + it.floor : ''),
+                       shortDesc: it.ra.desc || '',
                        rate: it.rate, unit: it.ra.unit || 'Cum', cat: 'Rate Analysis',
                        raId: it.ra.id, raFloor: it.floor || null, sayOverride: null, rows:[blankRow()] });
     } else {
