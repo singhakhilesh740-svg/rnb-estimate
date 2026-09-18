@@ -144,6 +144,7 @@
       list = list.filter(r =>
         String(r.desc || '').toLowerCase().includes(s) ||
         String(r.topic || '').toLowerCase().includes(s) ||
+        String(r.origin || '').toLowerCase().includes(s) ||
         String(r.source || '').toLowerCase().includes(s) ||
         String(r.itemNo || '').toLowerCase().includes(s) ||
         String(r.id || '').toLowerCase().includes(s));
@@ -177,7 +178,8 @@
         <td style="padding:6px 8px">${esc(ra.itemNo || '—')}</td>
         <td style="padding:6px 8px">${esc(String(ra.desc || '').slice(0, 110))}${(ra.desc || '').length > 110 ? '…' : ''}
           ${edited ? '<span style="font-size:10px;background:#48c;color:#fff;padding:1px 5px;border-radius:3px;margin-left:5px">edited</span>' : ''}
-          ${ra.floors ? '<span style="font-size:10px;background:#7a5;color:#fff;padding:1px 5px;border-radius:3px;margin-left:4px">floors</span>' : ''}</td>
+          ${ra.floors ? '<span style="font-size:10px;background:#7a5;color:#fff;padding:1px 5px;border-radius:3px;margin-left:4px">floors</span>' : ''}
+          ${originOf(ra) ? `<div style="font-size:10.5px;color:#7a8ba0;margin-top:2px">📄 ${esc(originOf(ra))}</div>` : ''}</td>
         <td style="padding:6px 8px">${esc(ra.unit || '')}</td>
         <td style="padding:6px 8px;font-size:11px;color:#678">${esc(ra.basis || '')}</td>
         <td style="padding:6px 8px;text-align:right"><b>${money(c.perUnit)}</b></td>
@@ -217,6 +219,7 @@
     let h = `<div style="padding:10px;background:#f4f6fa;border-bottom:1px solid #dde;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
       <button class="btn ghost" id="raBackList" style="padding:4px 12px">← List</button>
       <b style="font-size:13px">${isCustom(draft.id) ? 'Custom RA' : 'Library RA — ' + esc(draft.id)}</b>
+      ${originOf(draft) ? `<span style="font-size:11px;color:#678;background:#eef2f7;padding:2px 8px;border-radius:10px" title="Sirf app me dikhta hai — print me nahi jata">📄 ${esc(originOf(draft))}</span>` : ''}
       <span style="margin-left:auto"></span>
       <button class="btn" id="raSaveBtn" style="padding:4px 16px">💾 Save</button>
       <button class="btn ghost" id="raRevert" style="padding:4px 12px">↺ Revert to default</button>
@@ -582,16 +585,16 @@
         Object.entries(c.floors).forEach(([floor, rate]) => {
           out.push({
             label: (ra.desc || '') + ' — ' + floor,
-            meta: `RA${ra.topic ? ' · ' + ra.topic : ''} · ₹ ${money(rate)} / ${ra.unit}${ra.itemNo ? ' · item ' + ra.itemNo : ''}`,
-            search: [ra.desc, ra.unit, ra.itemNo, ra.topic, ra.source, floor, 'RA'].join(' '),
+            meta: `RA${ra.topic ? ' · ' + ra.topic : ''} · ₹ ${money(rate)} / ${ra.unit}${ra.itemNo ? ' · item ' + ra.itemNo : ''}${originOf(ra) ? ' · 📄 ' + originOf(ra) : ''}`,
+            search: [ra.desc, ra.unit, ra.itemNo, ra.topic, ra.origin, ra.source, floor, 'RA'].join(' '),
             raw: { ra, rate, floor }
           });
         });
       } else {
         out.push({
           label: ra.desc || '',
-          meta: `RA${ra.topic ? ' · ' + ra.topic : ''} · ₹ ${money(c.perUnit)} / ${ra.unit}${ra.itemNo ? ' · item ' + ra.itemNo : ''}`,
-          search: [ra.desc, ra.unit, ra.itemNo, ra.topic, ra.source, 'RA'].join(' '),
+          meta: `RA${ra.topic ? ' · ' + ra.topic : ''} · ₹ ${money(c.perUnit)} / ${ra.unit}${ra.itemNo ? ' · item ' + ra.itemNo : ''}${originOf(ra) ? ' · 📄 ' + originOf(ra) : ''}`,
+          search: [ra.desc, ra.unit, ra.itemNo, ra.topic, ra.origin, ra.source, 'RA'].join(' '),
           raw: { ra, rate: c.perUnit, floor: null }
         });
       }
@@ -627,6 +630,8 @@
         →  qty x Rs. rate = amount  →  Total / CP / Say  →  signature
      ==================================================================== */
   const fullDesc = ra => String(ra.longDesc || ra.desc || '');
+  /* Kis estimate se aayi — sirf app me dikhta hai, Excel/PDF me kabhi print nahi hota */
+  const originOf = ra => String((ra && (ra.origin || ra.source)) || '').trim();
 
   function compRef(c) {
     if (c.ref) return String(c.ref);
