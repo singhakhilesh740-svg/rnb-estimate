@@ -196,6 +196,21 @@
   }
 
   /* ----------------------------------------------------------- edit view */
+  function measRowsHtml(ci, rows) {
+    if (!rows.length) return '';
+    const nb = (v) => (v === undefined || v === null) ? '' : v;
+    return '<table style="width:100%;border-collapse:collapse;font-size:11.5px;margin-top:3px">' +
+      rows.map((m, j) => `<tr>
+        <td style="padding:1px 3px"><input data-rm="${ci}" data-rmi="${j}" data-rmk="label" value="${esc(nb(m.label))}" placeholder="label" style="width:100%;padding:2px 4px;border:1px solid #dde;border-radius:3px;font:inherit;font-size:11.5px"></td>
+        <td style="padding:1px 3px;width:62px"><input type="number" step="0.01" data-rm="${ci}" data-rmi="${j}" data-rmk="nos" value="${nb(m.nos)}" placeholder="nos" style="width:100%;padding:2px 4px;border:1px solid #dde;border-radius:3px;font:inherit;font-size:11.5px;text-align:right"></td>
+        <td style="padding:1px 3px;width:66px"><input type="number" step="0.001" data-rm="${ci}" data-rmi="${j}" data-rmk="l" value="${nb(m.l)}" placeholder="L" style="width:100%;padding:2px 4px;border:1px solid #dde;border-radius:3px;font:inherit;font-size:11.5px;text-align:right"></td>
+        <td style="padding:1px 3px;width:66px"><input type="number" step="0.001" data-rm="${ci}" data-rmi="${j}" data-rmk="b" value="${nb(m.b)}" placeholder="B" style="width:100%;padding:2px 4px;border:1px solid #dde;border-radius:3px;font:inherit;font-size:11.5px;text-align:right"></td>
+        <td style="padding:1px 3px;width:66px"><input type="number" step="0.001" data-rm="${ci}" data-rmi="${j}" data-rmk="d" value="${nb(m.d)}" placeholder="H" style="width:100%;padding:2px 4px;border:1px solid #dde;border-radius:3px;font:inherit;font-size:11.5px;text-align:right"></td>
+        <td style="padding:1px 6px;width:80px;text-align:right;font-weight:bold">${money(m.qty || 0)}</td>
+        <td style="padding:1px;width:24px;text-align:center"><button class="btn ghost" data-rmdel="${ci}" data-rmdeli="${j}" style="padding:0 5px;font-size:11px;color:#b3402a">✕</button></td>
+      </tr>`).join('') + '</table>';
+  }
+
   function viewEdit() {
     if (!draft) return '<p style="padding:20px">Koi RA select nahi hai.</p>';
     const c = calc(draft);
@@ -213,6 +228,9 @@
       ${fld('Basis (note)', 'basis', draft.basis, 'text')}
       ${fld('Basis Qty (divisor)', 'basisQty', draft.basisQty, 'number')}
       ${fld("Contractor's profit %", 'cp', draft.cp, 'number')}
+      ${fld('Say rate (rounded)', 'sayRate', draft.sayRate, 'number')}
+      ${fld('Basis note (RA sheet top line)', 'basisNote', draft.basisNote, 'text')}
+      ${fld('Tail note (Say ke neeche)', 'tailNote', draft.tailNote, 'text')}
       <label style="display:flex;flex-direction:column;gap:3px;font-size:12px;color:#456">
         <span>Floor-wise cascade</span>
         <span style="display:flex;align-items:center;gap:6px;padding-top:6px">
@@ -272,6 +290,19 @@
         <td style="padding:3px 6px;text-align:right;font-weight:bold">${money(row.amount)}</td>
         <td style="padding:3px;text-align:center"><input type="checkbox" data-rc="${i}" data-rck="cpApply" ${row.cpApply ? 'checked' : ''}></td>
         <td style="padding:3px;text-align:center"><button class="btn ghost" data-rcdel="${i}" style="padding:1px 6px;font-size:11px;color:#b3402a">✕</button></td>
+      </tr>
+      <tr style="background:${bg}">
+        <td></td>
+        <td colspan="9" style="padding:0 5px 7px">
+          <textarea data-rc="${i}" data-rck="spec" rows="2" placeholder="Full SOR / item paragraph — RA sheet me isi ka text chhapega (khaali = upar wala label)"
+            style="width:100%;padding:4px 6px;border:1px dashed #cbd;border-radius:4px;font:inherit;font-size:11.5px">${esc(draft.components[i].spec || '')}</textarea>
+          <div style="margin-top:4px">
+            <b style="font-size:11px;color:#456">Measurement</b>
+            <button class="btn ghost" data-rcmadd="${i}" style="padding:0 7px;font-size:11px;margin-left:6px">+ row</button>
+            <span style="font-size:10.5px;color:#789;margin-left:6px">label · nos · L · B · H — qty apne aap = nos×L×B×H, sab rows ka jod component qty ban jayega</span>
+          </div>
+          ${measRowsHtml(i, draft.components[i].rows || [])}
+        </td>
       </tr>`;
     });
 
@@ -465,7 +496,7 @@
       const k = el.dataset.rah;
       const handler = () => {
         if (el.type === 'checkbox') draft[k] = el.checked;
-        else if (k === 'basisQty' || k === 'cp') draft[k] = numv(el.value);
+        else if (k === 'basisQty' || k === 'cp' || k === 'sayRate') draft[k] = numv(el.value);
         else draft[k] = el.value;
         if (k === 'floors' || k === 'cp' || k === 'basisQty' || k === 'unit') render();
       };
@@ -491,6 +522,39 @@
       };
       if (el.tagName === 'SELECT' || el.type === 'checkbox') el.onchange = commit;
       else el.onchange = commit;   // recompute on blur, not every keystroke
+      if (el.tagName === 'TEXTAREA') el.oninput = () => { const c = draft.components[i]; if (c) c[k] = el.value; };
+    });
+
+    /* ---------- measurement rows (nos x L x B x H) ---------- */
+    const reQty = (c) => {
+      if (!c.rows || !c.rows.length) return;
+      let tot = 0;
+      c.rows.forEach(m => {
+        const parts = ['nos', 'l', 'b', 'd'].map(k2 => numv(m[k2])).filter(v => v > 0);
+        m.qty = parts.length ? Math.round(parts.reduce((a, b2) => a * b2, 1) * 1000) / 1000 : numv(m.qty);
+        tot += Number(m.qty) || 0;
+      });
+      c.qty = Math.round(tot * 1000) / 1000;
+    };
+    qq('[data-rm]', p).forEach(el => {
+      const i = +el.dataset.rm, j = +el.dataset.rmi, k = el.dataset.rmk;
+      el.onchange = () => {
+        const c = draft.components[i]; if (!c || !c.rows || !c.rows[j]) return;
+        c.rows[j][k] = (k === 'label') ? el.value : numv(el.value);
+        reQty(c); render();
+      };
+    });
+    qq('[data-rcmadd]', p).forEach(b => b.onclick = () => {
+      const i = +b.dataset.rcmadd, c = draft.components[i]; if (!c) return;
+      c.rows = c.rows || [];
+      c.rows.push({ label: '', nos: 1, l: '', b: '', d: '', qty: 0 });
+      reQty(c); render();
+    });
+    qq('[data-rmdel]', p).forEach(b => b.onclick = () => {
+      const i = +b.dataset.rmdel, j = +b.dataset.rmdeli, c = draft.components[i]; if (!c || !c.rows) return;
+      c.rows.splice(j, 1);
+      if (!c.rows.length) delete c.rows; else reQty(c);
+      render();
     });
 
     /* MR / Quotation / SOR saves */
@@ -555,114 +619,198 @@
   const THIN2 = { style: 'thin' };
   const BOX2 = { top: THIN2, left: THIN2, bottom: THIN2, right: THIN2 };
 
+  /* ==================================================== RA DOCUMENT BUILDER
+     Ek hi jagah se RA ka layout banta hai — Excel, PDF aur on-screen preview
+     teeno isi list ko padhte hain. Format E-2 Type estimate jaisa:
+        (As per RA)-n  →  It. No + poora item description  →  basis
+        →  har component ka spec paragraph + SOR ref + measurement rows
+        →  qty x Rs. rate = amount  →  Total / CP / Say  →  signature
+     ==================================================================== */
   const fullDesc = ra => String(ra.longDesc || ra.desc || '');
+
+  function compRef(c) {
+    if (c.ref) return String(c.ref);
+    const k = String(c.kind || '').toUpperCase();
+    if (k === 'SOR' && c.code) return 'S.O.R. 2024-25  It. Code ' + c.code + (c.page ? ' / P. ' + c.page : '');
+    if (k === 'MR') return '(M.R.)';
+    if (k === 'QUOTATION') return '(As per quotation)';
+    if (k === 'MANUAL') return '';
+    return c.code ? String(c.code) : '';
+  }
+
+  /* component ki measurement rows — agar RA me nahi hain to ek hi row bana do */
+  function compRows(c) {
+    if (Array.isArray(c.rows) && c.rows.length) return c.rows;
+    return [{ label: '', nos: '', l: '', b: '', d: '', qty: Number(c.qty) || 0 }];
+  }
+
+  function raDoc(ra, serial) {
+    const c = calc(ra);
+    const U = ra.unit || 'unit';
+    const L = [];
+    L.push({ t: 'title', text: '(As per RA)-' + (ra.libNo || serial) });
+    if (ra.itemNo) L.push({ t: 'itemno', text: 'It. No.  ' + ra.itemNo });
+    L.push({ t: 'para', text: fullDesc(ra) });
+    if (ra.basisNote) L.push({ t: 'note', text: ra.basisNote });
+    L.push({ t: 'note', text: 'The rate for  ' + c.basisQty + '  ' + U });
+    (ra.basisRows || []).forEach(r => L.push({ t: 'meas', ...r }));
+
+    c.rows.forEach(row => {
+      L.push({ t: 'gap' });
+      L.push({ t: 'comp', tag: row.sr || '', text: row.spec || row.label || '' });
+      const ref = compRef(row);
+      if (ref) L.push({ t: 'ref', text: ref });
+      const rws = compRows(row);
+      rws.forEach(r => L.push({ t: 'meas', ...r }));
+      if (rws.length > 1) L.push({ t: 'meastot', qty: row.qty, unit: row.unit || '' });
+      L.push({ t: 'amt',
+               text: fmtn(row.qty) + ' ' + (row.unit || '') + '  x  Rs. ' + money(row.rate) + ' per ' + (row.unit || ''),
+               amount: row.amount });
+    });
+
+    L.push({ t: 'gap' });
+    L.push({ t: 'sum', label: 'Total Rs', value: c.subtotal, bold: false });
+    if (c.cpAmt) L.push({ t: 'sum', label: 'Add ' + ra.cp + ' % Contractor\u2019s Profit on Rs. ' + money(c.cpBase), value: c.cpAmt, bold: false });
+    L.push({ t: 'sum', label: 'G. Total', value: c.total, bold: true });
+    L.push({ t: 'note', text: 'per  ' + c.basisQty + '  ' + U, right: true });
+    L.push({ t: 'sum', label: 'Hence for one ' + U + '   Rs', value: c.perUnit, bold: true });
+    const say = Number(ra.sayRate) || Number(ra.pdfRate) || Math.round(c.perUnit);
+    L.push({ t: 'sum', label: 'Say', value: say, bold: true });
+    L.push({ t: 'note', text: 'Per ' + U, right: true });
+    if (ra.tailNote) L.push({ t: 'note', text: ra.tailNote });
+    if (c.floors) {
+      L.push({ t: 'gap' });
+      if (ra.liftExtra) L.push({ t: 'note', text: 'Extra for lift  Rs. ' + money(ra.liftExtra.rate) +
+        (ra.liftExtra.sorCode ? '   (It. Code ' + ra.liftExtra.sorCode + (ra.liftExtra.page ? ' / P. ' + ra.liftExtra.page : '') + ')' : '') });
+      Object.entries(c.floors).forEach(([k2, v]) => L.push({ t: 'sum', label: k2, value: v, bold: false }));
+    }
+    return { lines: L, calc: c, say };
+  }
+
+  function fmtn(v) {
+    const n = Number(v);
+    if (!isFinite(n) || v === '' || v === null) return '';
+    return n.toLocaleString('en-IN', { maximumFractionDigits: 3 });
+  }
+
   /* do-column signature — left: preparing officer, right: approving officer.
      Post hamesha Deputy Executive Engineer (profile ki post yahan use nahi hoti). */
   function signCols() {
     const p = (typeof window !== 'undefined' && window.userProfile) || null;
     const dist = (typeof district === 'function' && district()) || 'Dahod';
-    const left = [ 'Deputy Executive Engineer',
-                   (p && p.sub)  || 'R&B Sub Division',
-                   dist ];
-    const right = ['Executive Engineer', 'R&B Division', dist];
+    const left = [ 'Deputy Executive Engineer', (p && p.sub) || 'R&B Sub Division', dist ];
+    const right = ['Executive Engineer', '( R & B ) Division', dist];
     return [left, right];
   }
 
+  /* ======================================================== EXPORT: EXCEL */
   function raSheet(wb, entries, titleNote) {
     const ws = wb.addWorksheet('RA', {
       pageSetup: { paperSize: 9, orientation: 'portrait', fitToPage: true, fitToWidth: 1, fitToHeight: 0,
                    margins: { left: 0.5, right: 0.4, top: 0.5, bottom: 0.5, header: 0.2, footer: 0.2 } }
     });
-    [6, 9, 44, 8, 9, 11, 13, 14].forEach((w, i) => ws.getColumn(i + 1).width = w);
+    /* A tag | B label | C nos | D L | E B | F H | G qty | H amount */
+    [5, 30, 8, 9, 9, 9, 12, 15].forEach((w, i) => ws.getColumn(i + 1).width = w);
     let r = 1;
-    ws.mergeCells(`A${r}:H${r}`);
-    const t = ws.getCell(`A${r}`);
-    t.value = 'RATE ANALYSIS';
-    t.font = AR(16, true); t.alignment = { horizontal: 'center' };
-    ws.getRow(r).height = 22; r++;
     if (titleNote) {
       ws.mergeCells(`A${r}:H${r}`);
       const n2 = ws.getCell(`A${r}`);
-      n2.value = titleNote; n2.font = AR(10); n2.alignment = { horizontal: 'center', wrapText: true };
+      n2.value = titleNote; n2.font = AR(10, true);
+      n2.alignment = { horizontal: 'center', wrapText: true };
       ws.getRow(r).height = 26; r++;
+      ws.pageSetup.printTitlesRow = '1:1';
     }
-    /* heading rows repeat on top of every printed page */
-    ws.pageSetup.printTitlesRow = '1:' + (titleNote ? 2 : 1);
-    r++;
 
     entries.forEach(({ serial, ra }, idx) => {
-      const c = calc(ra);
-      /* item header — RA no. + full item description, no shortening */
-      ws.mergeCells(`A${r}:H${r}`);
-      const hc = ws.getCell(`A${r}`);
-      hc.value = `R.A. No. ${serial}${ra.itemNo ? '   (Item No. ' + ra.itemNo + ')' : ''}`;
-      hc.font = AR(11, true); hc.alignment = { wrapText: true, vertical: 'middle' };
-      hc.border = BOX2;
-      r++;
-      ws.mergeCells(`A${r}:H${r}`);
-      const dc = ws.getCell(`A${r}`);
-      dc.value = '"' + fullDesc(ra) + '"';
-      dc.font = AR(10); dc.alignment = { wrapText: true, vertical: 'top', horizontal: 'justify' };
-      dc.border = BOX2;
-      ws.getRow(r).height = Math.max(18, Math.ceil(String(dc.value).length / 108) * 13 + 6);
-      r++;
-      if (ra.basis) {
+      const doc = raDoc(ra, serial);
+
+      const wide = (txt, font, align, hFactor) => {
         ws.mergeCells(`A${r}:H${r}`);
-        const bc = ws.getCell(`A${r}`);
-        bc.value = 'Basis : ' + ra.basis + '     Unit : ' + (ra.unit || '');
-        bc.font = AR(9); bc.border = BOX2;
-        r++;
-      }
-      /* column heads */
-      ['Sr', 'Type', 'Description / SOR code', 'Page', 'Unit', 'Qty', 'Rate', 'Amount']
-        .forEach((h, i) => {
-          const cell = ws.getCell(r, i + 1);
-          cell.value = h; cell.font = AR(9, true); cell.border = BOX2;
-          cell.alignment = { horizontal: i >= 5 ? 'right' : 'center', vertical: 'middle' };
-        });
-      r++;
-      /* rows */
-      c.rows.forEach(row => {
-        const vals = [row.sr, row.kind,
-          (row.kind === 'SOR' && row.code ? row.code + ' — ' : '') + (row.label || ''),
-          row.page, row.unit, row.qty, row.rate, row.amount];
-        vals.forEach((v, i) => {
-          const cell = ws.getCell(r, i + 1);
-          cell.value = v; cell.font = AR(9); cell.border = BOX2;
-          cell.alignment = { horizontal: i >= 5 ? 'right' : (i === 2 ? 'left' : 'center'), wrapText: i === 2, vertical: 'top' };
-          if (i >= 6) cell.numFmt = '#,##0.00';
-          if (i === 5) cell.numFmt = '#,##0.000';
-        });
-        ws.getRow(r).height = Math.max(13, Math.ceil(String(vals[2]).length / 44) * 11 + 3);
-        r++;
-      });
-      /* totals */
-      const totRow = (lbl, val, bold) => {
-        ws.mergeCells(`A${r}:G${r}`);
-        const lc = ws.getCell(`A${r}`);
-        lc.value = lbl; lc.font = AR(9, bold); lc.alignment = { horizontal: 'right' }; lc.border = BOX2;
-        const vc = ws.getCell(r, 8);
-        vc.value = val; vc.font = AR(9, bold); vc.numFmt = '#,##0.00';
-        vc.alignment = { horizontal: 'right' }; vc.border = BOX2;
+        const cell = ws.getCell(`A${r}`);
+        cell.value = txt; cell.font = font;
+        cell.alignment = align;
+        ws.getRow(r).height = Math.max(14, Math.ceil(String(txt).length / (hFactor || 110)) * 13 + 4);
         r++;
       };
-      totRow('Sub Total', c.subtotal, false);
-      if (c.cpAmt) totRow(`Add ${ra.cp} % Contractor's Profit on ${money(c.cpBase)}`, c.cpAmt, false);
-      totRow('Total', c.total, true);
-      totRow(`Rate per ${ra.unit || 'unit'}  ( ÷ ${c.basisQty} )`, c.perUnit, true);
-      if (c.floors) {
-        ws.mergeCells(`A${r}:H${r}`);
-        const fc = ws.getCell(`A${r}`);
-        fc.value = 'Floor-wise : ' + Object.entries(c.floors).map(([k, v]) => k + ' = ' + money(v)).join('   ·   ');
-        fc.font = AR(9); fc.border = BOX2; fc.alignment = { wrapText: true };
-        r++;
-      }
-      /* signature block for THIS rate analysis — do column */
+
+      doc.lines.forEach(ln => {
+        if (ln.t === 'gap') { r++; return; }
+        if (ln.t === 'title') {
+          wide(ln.text, AR(13, true), { horizontal: 'center' }); return;
+        }
+        if (ln.t === 'itemno') {
+          ws.getCell(`A${r}`).value = ln.text; ws.getCell(`A${r}`).font = AR(10, true); r++; return;
+        }
+        if (ln.t === 'para') {
+          wide(ln.text, AR(10), { wrapText: true, vertical: 'top', horizontal: 'justify' }, 108); return;
+        }
+        if (ln.t === 'note') {
+          wide(ln.text, AR(9.5), { horizontal: ln.right ? 'right' : 'left', wrapText: true }, 120); return;
+        }
+        if (ln.t === 'comp') {
+          ws.getCell(`A${r}`).value = ln.tag;
+          ws.getCell(`A${r}`).font = AR(10, true);
+          ws.getCell(`A${r}`).alignment = { horizontal: 'center', vertical: 'top' };
+          ws.mergeCells(`B${r}:H${r}`);
+          const cc = ws.getCell(`B${r}`);
+          cc.value = ln.text; cc.font = AR(9.5);
+          cc.alignment = { wrapText: true, vertical: 'top', horizontal: 'justify' };
+          ws.getRow(r).height = Math.max(14, Math.ceil(String(ln.text).length / 96) * 12 + 4);
+          r++; return;
+        }
+        if (ln.t === 'ref') {
+          ws.mergeCells(`B${r}:H${r}`);
+          const rc = ws.getCell(`B${r}`);
+          rc.value = ln.text; rc.font = { name: 'Arial', size: 9, italic: true };
+          r++; return;
+        }
+        if (ln.t === 'meas') {
+          const vals = [ '', ln.label || '', ln.nos, ln.l, ln.b, ln.d, ln.qty, ln.unit || '' ];
+          vals.forEach((v, i2) => {
+            const cell = ws.getCell(r, i2 + 1);
+            if (v !== '' && v !== null && v !== undefined) cell.value = (i2 >= 2 && i2 <= 6) ? Number(v) : v;
+            cell.font = AR(9);
+            cell.alignment = { horizontal: i2 === 1 ? 'left' : (i2 === 7 ? 'left' : 'right') };
+            if (i2 >= 2 && i2 <= 6) cell.numFmt = '#,##0.00';
+          });
+          r++; return;
+        }
+        if (ln.t === 'meastot') {
+          ws.getCell(r, 6).value = 'Total'; ws.getCell(r, 6).font = AR(9, true);
+          ws.getCell(r, 6).alignment = { horizontal: 'right' };
+          ws.getCell(r, 7).value = Number(ln.qty); ws.getCell(r, 7).font = AR(9, true);
+          ws.getCell(r, 7).numFmt = '#,##0.00'; ws.getCell(r, 7).alignment = { horizontal: 'right' };
+          ws.getCell(r, 8).value = ln.unit; ws.getCell(r, 8).font = AR(9);
+          r++; return;
+        }
+        if (ln.t === 'amt') {
+          ws.mergeCells(`B${r}:G${r}`);
+          const lc = ws.getCell(`B${r}`);
+          lc.value = ln.text; lc.font = AR(9.5); lc.alignment = { horizontal: 'right' };
+          const vc = ws.getCell(r, 8);
+          vc.value = Number(ln.amount); vc.font = AR(9.5); vc.numFmt = '#,##0.00';
+          vc.alignment = { horizontal: 'right' };
+          vc.border = { top: { style: 'thin' } };
+          r++; return;
+        }
+        if (ln.t === 'sum') {
+          ws.mergeCells(`A${r}:G${r}`);
+          const lc = ws.getCell(`A${r}`);
+          lc.value = ln.label; lc.font = AR(10, ln.bold); lc.alignment = { horizontal: 'right' };
+          const vc = ws.getCell(r, 8);
+          vc.value = Number(ln.value); vc.font = AR(10, ln.bold); vc.numFmt = '#,##0.00';
+          vc.alignment = { horizontal: 'right' };
+          vc.border = { top: { style: 'thin' }, bottom: ln.bold ? { style: 'double' } : undefined };
+          r++; return;
+        }
+      });
+
+      /* signature block for THIS rate analysis */
       r += 2;
       const [sL, sR] = signCols();
       for (let k = 0; k < Math.max(sL.length, sR.length); k++) {
-        ws.mergeCells(`B${r}:D${r}`);
-        const lc2 = ws.getCell(`B${r}`);
+        ws.mergeCells(`A${r}:C${r}`);
+        const lc2 = ws.getCell(`A${r}`);
         lc2.value = sL[k] || ''; lc2.font = AR(10, true); lc2.alignment = { horizontal: 'center' };
         ws.mergeCells(`F${r}:H${r}`);
         const rc2 = ws.getCell(`F${r}`);
@@ -670,10 +818,7 @@
         r++;
       }
       /* har RA apne page par — agli RA fresh page se shuru */
-      if (idx < entries.length - 1) {
-        ws.getRow(r - 1).addPageBreak();
-        r++;
-      }
+      if (idx < entries.length - 1) { ws.getRow(r - 1).addPageBreak(); r++; }
     });
 
     return ws;
@@ -694,88 +839,113 @@
     } catch (e) { toastMsg('Excel error: ' + e.message); }
   }
 
-  /* ============================================================= EXPORT: PDF */
+  /* ========================================================== EXPORT: PDF */
   function exportPdf(ras, title) {
     if (!window.jspdf) { toastMsg('jsPDF load nahi hua.'); return; }
     const entries = ras.map((ra, i) => ({ serial: i + 1, ra }));
     if (!entries.length) { toastMsg('Koi RA nahi hai.'); return; }
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ unit: 'pt', format: 'a4', orientation: 'portrait' });
-    const W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight(), M = 40;
+    const W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight(), M = 42;
+    const TW = W - 2 * M;
+    /* column x positions: tag | label | nos | L | B | H | qty | amount */
+    const X = { tag: M, lab: M + 14, nos: M + 214, l: M + 262, b: M + 310, d: M + 358, qty: M + 420, amt: W - M };
     let y = 0;
 
-    function head(first) {
+    function newPage(first) {
+      if (!first) doc.addPage('a4', 'portrait');
       y = 46;
-      doc.setFont('helvetica', 'bold'); doc.setFontSize(14);
-      doc.text('RATE ANALYSIS', W / 2, y, { align: 'center' });
-      y += 16;
-      if (first && title) {
-        doc.setFont('helvetica', 'normal'); doc.setFontSize(9);
-        const l = doc.splitTextToSize(title, W - 2 * M);
+      if (title) {
+        doc.setFont('helvetica', 'bold'); doc.setFontSize(9);
+        const l = doc.splitTextToSize(title, TW);
         doc.text(l, W / 2, y, { align: 'center' });
-        y += l.length * 11;
+        y += l.length * 11 + 6;
       }
-      y += 8;
     }
-    head(true);
+    function need(h) { if (y + h > H - 120) { newPage(false); } }
 
     entries.forEach(({ serial, ra }, idx) => {
-      const c = calc(ra);
-      /* har RA fresh page se */
-      if (idx > 0) { doc.addPage('a4', 'portrait'); head(false); }
+      newPage(idx === 0);
+      const d = raDoc(ra, serial);
 
-      doc.setFont('helvetica', 'bold'); doc.setFontSize(9.5);
-      const hdr = doc.splitTextToSize(
-        `R.A. No. ${serial}${ra.itemNo ? '   (Item No. ' + ra.itemNo + ')' : ''}`, W - 2 * M);
-      doc.text(hdr, M, y); y += hdr.length * 12 + 2;
-      doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5);
-      const dsc = doc.splitTextToSize('"' + fullDesc(ra) + '"', W - 2 * M);
-      doc.text(dsc, M, y, { align: 'justify', maxWidth: W - 2 * M }); y += dsc.length * 10 + 6;
-      if (ra.basis) {
-        doc.setFont('helvetica', 'normal'); doc.setFontSize(8);
-        doc.text('Basis : ' + ra.basis + '     Unit : ' + (ra.unit || ''), M, y); y += 11;
-      }
-
-      const body = c.rows.map(rw => [
-        rw.sr, rw.kind,
-        (rw.kind === 'SOR' && rw.code ? rw.code + ' — ' : '') + (rw.label || ''),
-        rw.page || '', rw.unit || '',
-        Number(rw.qty).toLocaleString('en-IN', { maximumFractionDigits: 3 }),
-        money(rw.rate), money(rw.amount)
-      ]);
-      body.push([{ content: 'Sub Total', colSpan: 7, styles: { halign: 'right', fontStyle: 'bold' } }, money(c.subtotal)]);
-      if (c.cpAmt) body.push([{ content: `Add ${ra.cp} % C.P. on ${money(c.cpBase)}`, colSpan: 7, styles: { halign: 'right' } }, money(c.cpAmt)]);
-      body.push([{ content: 'Total', colSpan: 7, styles: { halign: 'right', fontStyle: 'bold' } }, money(c.total)]);
-      body.push([{ content: `Rate per ${ra.unit || 'unit'}  ( ÷ ${c.basisQty} )`, colSpan: 7, styles: { halign: 'right', fontStyle: 'bold' } },
-        { content: money(c.perUnit), styles: { fontStyle: 'bold' } }]);
-      if (c.floors) {
-        body.push([{ content: 'Floor-wise : ' + Object.entries(c.floors).map(([k, v]) => k + ' = ' + money(v)).join('   ·   '),
-          colSpan: 8, styles: { halign: 'left', fontSize: 7 } }]);
-      }
-
-      doc.autoTable({
-        startY: y, margin: { left: M, right: M }, theme: 'grid',
-        styles: { font: 'helvetica', fontSize: 7.4, cellPadding: 2.5, lineColor: [0, 0, 0], lineWidth: 0.4,
-                  textColor: [0, 0, 0], valign: 'top', overflow: 'linebreak' },
-        headStyles: { fillColor: [255, 255, 255], textColor: [0, 0, 0], fontStyle: 'bold', halign: 'center',
-                      lineColor: [0, 0, 0], lineWidth: 0.4 },
-        head: [['Sr', 'Type', 'Description / SOR code', 'Page', 'Unit', 'Qty', 'Rate', 'Amount']],
-        body,
-        columnStyles: {
-          0: { cellWidth: 22, halign: 'center' }, 1: { cellWidth: 44, halign: 'center' },
-          2: { cellWidth: 'auto' }, 3: { cellWidth: 26, halign: 'center' },
-          4: { cellWidth: 32, halign: 'center' }, 5: { cellWidth: 40, halign: 'right' },
-          6: { cellWidth: 52, halign: 'right' }, 7: { cellWidth: 58, halign: 'right' }
-        },
-        didDrawPage: () => { }
+      d.lines.forEach(ln => {
+        if (ln.t === 'gap') { y += 6; return; }
+        if (ln.t === 'title') {
+          doc.setFont('helvetica', 'bold'); doc.setFontSize(12);
+          need(20); doc.text(ln.text, W / 2, y, { align: 'center' }); y += 20; return;
+        }
+        if (ln.t === 'itemno') {
+          doc.setFont('helvetica', 'bold'); doc.setFontSize(9);
+          need(13); doc.text(ln.text, M, y); y += 13; return;
+        }
+        if (ln.t === 'para') {
+          doc.setFont('helvetica', 'normal'); doc.setFontSize(9);
+          const l = doc.splitTextToSize(ln.text, TW);
+          need(l.length * 11 + 4);
+          doc.text(l, M, y, { align: 'justify', maxWidth: TW }); y += l.length * 11 + 5; return;
+        }
+        if (ln.t === 'note') {
+          doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5);
+          const l = doc.splitTextToSize(ln.text, TW);
+          need(l.length * 10 + 2);
+          if (ln.right) doc.text(l, W - M, y, { align: 'right' }); else doc.text(l, M, y);
+          y += l.length * 10 + 3; return;
+        }
+        if (ln.t === 'comp') {
+          doc.setFont('helvetica', 'normal'); doc.setFontSize(8.8);
+          const l = doc.splitTextToSize(ln.text, TW - 16);
+          need(l.length * 10 + 4);
+          doc.setFont('helvetica', 'bold'); doc.text(String(ln.tag || ''), X.tag, y);
+          doc.setFont('helvetica', 'normal');
+          doc.text(l, X.lab, y, { align: 'justify', maxWidth: TW - 16 });
+          y += l.length * 10 + 3; return;
+        }
+        if (ln.t === 'ref') {
+          doc.setFont('helvetica', 'italic'); doc.setFontSize(8);
+          need(11); doc.text(ln.text, X.lab, y); y += 11; return;
+        }
+        if (ln.t === 'meas') {
+          doc.setFont('helvetica', 'normal'); doc.setFontSize(8.2);
+          need(11);
+          if (ln.label) doc.text(String(ln.label), X.lab, y);
+          [['nos', X.nos], ['l', X.l], ['b', X.b], ['d', X.d], ['qty', X.qty]].forEach(([k, x]) => {
+            const v = fmtn(ln[k]); if (v) doc.text(v, x, y, { align: 'right' });
+          });
+          if (ln.unit) doc.text(String(ln.unit), X.qty + 8, y);
+          y += 11; return;
+        }
+        if (ln.t === 'meastot') {
+          doc.setFont('helvetica', 'bold'); doc.setFontSize(8.2);
+          need(12);
+          doc.text('Total', X.d, y, { align: 'right' });
+          doc.text(fmtn(ln.qty), X.qty, y, { align: 'right' });
+          doc.setFont('helvetica', 'normal');
+          if (ln.unit) doc.text(String(ln.unit), X.qty + 8, y);
+          y += 12; return;
+        }
+        if (ln.t === 'amt') {
+          doc.setFont('helvetica', 'normal'); doc.setFontSize(8.6);
+          need(14);
+          doc.text(ln.text, X.qty + 60, y, { align: 'right' });
+          doc.text(money(ln.amount), X.amt, y, { align: 'right' });
+          y += 13; return;
+        }
+        if (ln.t === 'sum') {
+          doc.setFont('helvetica', ln.bold ? 'bold' : 'normal'); doc.setFontSize(9);
+          need(15);
+          doc.line(X.amt - 78, y - 9, X.amt, y - 9);
+          doc.text(ln.label, X.amt - 88, y, { align: 'right' });
+          doc.text(money(ln.value), X.amt, y, { align: 'right' });
+          y += 14; return;
+        }
       });
-      y = doc.lastAutoTable.finalY + 26;
 
       /* signature block for THIS rate analysis */
-      if (y > H - 80) { doc.addPage('a4', 'portrait'); head(false); y += 20; }
+      y += 26;
+      if (y > H - 70) { newPage(false); y += 30; }
       doc.setFont('helvetica', 'bold'); doc.setFontSize(9);
       const [pL, pR] = signCols();
-      const xL = M + (W - 2 * M) * 0.28, xR = M + (W - 2 * M) * 0.76;
+      const xL = M + TW * 0.22, xR = M + TW * 0.78;
       for (let k = 0; k < Math.max(pL.length, pR.length); k++) {
         if (pL[k]) doc.text(String(pL[k]), xL, y + k * 13, { align: 'center' });
         if (pR[k]) doc.text(String(pR[k]), xR, y + k * 13, { align: 'center' });
