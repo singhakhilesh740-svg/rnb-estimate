@@ -12815,6 +12815,2187 @@ const DISTRICT_RA_LIBRARY = {
                     "unit": "Rmt"
                 }
             ]
+        },
+        {
+            "id": "lib_173",
+            "libNo": "173",
+            "itemNo": "3",
+            "topic": "RCC",
+            "desc": "RCC — CC 1:3:6 with B.T. kapchi 20mm (substitution for H.B. metal)",
+            "longDesc": "Providing & laying cement concrete 1:3:6 (1 Cement : 3 Coarse sand : 6 graded B.T. stone aggregate 20mm nominal size) Curing comp. including cost of form work for reinforced concrete work excluding reinforcement. (Substitution: Deduct H.B. Metal, Add B.T. Kapchi 20mm nominal size)",
+            "unit": "Cum",
+            "basis": "Per 1 Cum",
+            "basisNote": "Per 1 Cum",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 3232.0,
+            "sayRate": 3232.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05010A",
+                    "page": "38",
+                    "label": "Full item — CC 1:2:4 incl. form work (SOR Item 5.3.2 Page 38, amount as per schedule)",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 2979.77,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "M274",
+                    "page": "13",
+                    "label": "Deduct — H.B. Metal",
+                    "unit": "Cum",
+                    "qty": -1.0,
+                    "rate": 247.25,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "M178",
+                    "page": "10",
+                    "label": "Add — B.T. Kapchi 20mm nominal size",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 499.88,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_174",
+            "libNo": "174",
+            "itemNo": "",
+            "topic": "RCC",
+            "desc": "RCC — Extra for CC 1:1.5:3 (M-200) over CC 1:2:4 (M-150) — cement difference",
+            "longDesc": "Extra for Providing and Laying CC 1:1.5:3 (M-200) over CC 1:2:4 (M-150) for some items of RCC Structure for all floors. Cement consumption for CC 1:1.5:3 = 7.2 Bag/Cum, for CC 1:2:4 = 6.4 Bag/Cum, difference = 0.80 Bag/Cum. Cost of extra cement per Cum of concrete.",
+            "unit": "Cum",
+            "basis": "Cement diff = 0.80 Bag/Cum × cost per bag",
+            "basisNote": "Cement diff = 0.80 Bag/Cum × cost per bag",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 258.0,
+            "sayRate": 258.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Cement difference: 0.80 Bag/Cum × Rs. 323.00/Bag (Cement @ Rs. 6460/MT ÷ 50 Kg/Bag = Rs. 323/Bag, SOR 2024-25 It no 1, P-01)",
+                    "unit": "Cum",
+                    "qty": 0.8,
+                    "rate": 323.0,
+                    "cpApply": false
+                }
+            ],
+            "tailNote": "Note: This is the additional cost per Cum when using M-200 instead of M-150 grade concrete. Add this to the CC 1:2:4 base rate."
+        },
+        {
+            "id": "lib_175",
+            "libNo": "175",
+            "itemNo": "4",
+            "topic": "RCC",
+            "desc": "RCC — CC 1:1.5:3 (M-200) in footing with formwork (Khetiwadi)",
+            "longDesc": "Providing and Laying cement concrete 1:1.5:3 (1 cement : 1.5 coarse sand : 3 stone aggregate of 20mm nominal size) including finishing smooth with curing complete excluding reinforcement for reinforced concrete work in foundations, footings, bases of columns and mass concrete.",
+            "unit": "Cum",
+            "basis": "Consider size 2.30 × 2.30 × 0.20 = 1.058 Cmt",
+            "basisNote": "Consider size 2.30 × 2.30 × 0.20 = 1.058 Cmt",
+            "basisQty": 1.665,
+            "cp": 0,
+            "pdfRate": 3733.0,
+            "sayRate": 3733.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05010A",
+                    "page": "",
+                    "label": "Cost of C.C. in footing (SOR P-10 / It 11.5.4.1 (A))",
+                    "unit": "Cum",
+                    "qty": 1.665,
+                    "rate": 3349.5,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Footing (a)",
+                            "nos": 1,
+                            "l": 2.3,
+                            "b": 2.3,
+                            "d": 0.2,
+                            "qty": 1.058,
+                            "unit": "Cmt"
+                        },
+                        {
+                            "label": "Lean (b)",
+                            "nos": "",
+                            "l": "",
+                            "b": "",
+                            "d": "",
+                            "qty": 0.607,
+                            "unit": "Cmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001A",
+                    "page": "",
+                    "label": "Form work (SOR P-34 / It 0900.1 (A))",
+                    "unit": "Sqm",
+                    "qty": 1.84,
+                    "rate": 113.4,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Formwork required",
+                            "nos": 4,
+                            "l": 2.3,
+                            "b": 0.2,
+                            "d": "",
+                            "qty": 1.84,
+                            "unit": "Sqm"
+                        }
+                    ]
+                },
+                {
+                    "sr": "3",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Add for CC 1:1.5:3 (extra cement cost)",
+                    "unit": "Cum",
+                    "qty": 1.665,
+                    "rate": 258.4,
+                    "cpApply": false
+                }
+            ],
+            "basisRows": [
+                {
+                    "label": "CC qty (a)",
+                    "nos": 1,
+                    "l": 2.3,
+                    "b": 2.3,
+                    "d": 0.2,
+                    "qty": 1.058,
+                    "unit": "Cmt"
+                },
+                {
+                    "label": "Lean qty (b)",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 0.607,
+                    "unit": "Cmt"
+                }
+            ]
+        },
+        {
+            "id": "lib_176",
+            "libNo": "176",
+            "itemNo": "18",
+            "topic": "Stone work",
+            "desc": "Stone work — 15 mm polished granite slab for door/window sill & jam cladding",
+            "longDesc": "Providing and laying Mirror polished Machine polished Black Granite stone slab 15 mm (Average) thick for Doors / Windows sill & Jams Cladding as per design including full moulded round front edge and polished of approved quality with 20 mm thick cement mortar and fixing with cement slurry & adhesive including moulding of exposed edges as directed by Engineer in charge etc. complete.",
+            "unit": "Sqm",
+            "basis": "Rate for 1.50 × 0.25 = 0.375 Sqm",
+            "basisNote": "Rate for 1.50 × 0.25 = 0.375 Sqm",
+            "basisQty": 0.375,
+            "cp": 0,
+            "pdfRate": 4824.0,
+            "sayRate": 4824.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "14036",
+                    "page": "95",
+                    "label": "Providing & laying green marble stone 20 mm thick (SOR I No. 14.36 / P-95)",
+                    "unit": "Sqm",
+                    "qty": 0.375,
+                    "rate": 2267.88,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Add for difference in input — Marble (M390 @ 594.07) vs Granite (MR @ 1750), diff = 1155.93/Sqm",
+                    "unit": "Sqm",
+                    "qty": 0.375,
+                    "rate": 1155.93,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Add for full moulding round edge",
+                    "unit": "Rmt",
+                    "qty": 3.0,
+                    "rate": 175.0,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 1.5,
+                            "b": "",
+                            "d": "",
+                            "qty": 3.0,
+                            "unit": "Rmt"
+                        }
+                    ]
+                }
+            ],
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1,
+                    "l": 1.5,
+                    "b": 0.25,
+                    "d": "",
+                    "qty": 0.375,
+                    "unit": "Sqm"
+                }
+            ]
+        },
+        {
+            "id": "lib_177",
+            "libNo": "177",
+            "itemNo": "",
+            "topic": "Stone work",
+            "desc": "Stone work — 18 mm polished granite slab for door/window sill & jam cladding (Limkheda rates)",
+            "longDesc": "Providing and laying Mirror polished Machine polished Black Granite stone slab 18 mm (Average) thick for Doors / Windows sill & Jams Cladding as per design including full moulded round front edge and polished of approved quality with 20 mm thick cement mortar and fixing with cement slurry & adhesive including moulding of exposed edges as directed by Engineer in charge etc. complete.",
+            "unit": "Sqm",
+            "basis": "Rate for 1.50 × 0.25 = 0.375 Sqm",
+            "basisNote": "Rate for 1.50 × 0.25 = 0.375 Sqm",
+            "basisQty": 0.375,
+            "cp": 0,
+            "pdfRate": 3669.0,
+            "sayRate": 3669.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "14036",
+                    "page": "114",
+                    "label": "Providing & laying green marble stone 20 mm thick (SOR I No. 76 / P-114)",
+                    "unit": "Sqm",
+                    "qty": 0.375,
+                    "rate": 1379.7,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Add for difference in input — Marble (@ 701) vs Granite (@ 1590), diff = 889/Sqm",
+                    "unit": "Sqm",
+                    "qty": 0.375,
+                    "rate": 889.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Add for full moulding round edge",
+                    "unit": "Rmt",
+                    "qty": 3.0,
+                    "rate": 175.0,
+                    "cpApply": false
+                }
+            ],
+            "tailNote": "Note: Limkheda SOR rates used in this RA",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1,
+                    "l": 1.5,
+                    "b": 0.25,
+                    "d": "",
+                    "qty": 0.375,
+                    "unit": "Sqm"
+                }
+            ]
+        },
+        {
+            "id": "lib_178",
+            "libNo": "178",
+            "itemNo": "13",
+            "topic": "Fencing",
+            "desc": "Fencing — 0.60 m high fencing with barbed wire + concertina coil (compound wall)",
+            "longDesc": "Providing and fixing 0.60 Metre high fencing with 0.75 Metre long M.S. Angle posts 40mm x 40mm x 6mm and oil painting 3 coats fixed at 2.5 Mt c/c with Horizontal lines of galvanised steel barbed wire and one line of concertina coil, strained and fixed to posts with G.I. staples including fixing the posts in ground etc. complete.",
+            "unit": "Rmt",
+            "basis": "For 10.00 Rmt",
+            "basisNote": "For 10.00 Rmt",
+            "basisQty": 10.0,
+            "cp": 0,
+            "pdfRate": 1327.0,
+            "sayRate": 1327.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "i",
+                    "kind": "SOR",
+                    "code": "11.40(A)",
+                    "page": "",
+                    "label": "M.S. angle posts 40×40×6 mm — 4 nos × 0.75 m = 3.0 Rmt × 3.5 kg/Rmt = 10.5 Kg (P.83)",
+                    "unit": "Kg",
+                    "qty": 10.5,
+                    "rate": 90.183,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Posts",
+                            "nos": 4,
+                            "l": 0.75,
+                            "b": "",
+                            "d": "",
+                            "qty": 3.0,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "ii",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Steel barbed wire — 6 lines × 10.0 m = 60.0 Rmt",
+                    "unit": "Rmt",
+                    "qty": 60.0,
+                    "rate": 75.0,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 6,
+                            "l": 10.0,
+                            "b": "",
+                            "d": "",
+                            "qty": 60.0,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "iii",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Concertina coil — 1 line × 10.0 m",
+                    "unit": "Rmt",
+                    "qty": 10.0,
+                    "rate": 350.0,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 10.0,
+                            "b": "",
+                            "d": "",
+                            "qty": 10.0,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "iv",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charges for fixing barbed wire — (3×10)+(2×12) = 54 Nos",
+                    "unit": "No",
+                    "qty": 54.0,
+                    "rate": 80.0,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 3,
+                            "l": 10.0,
+                            "b": "",
+                            "d": "",
+                            "qty": 30.0,
+                            "unit": ""
+                        },
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 12.0,
+                            "b": "",
+                            "d": "",
+                            "qty": 24.0,
+                            "unit": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "lib_179",
+            "libNo": "179",
+            "itemNo": "24",
+            "topic": "Fencing",
+            "desc": "Fencing — 0.60 m high fencing with barbed wire + concertina (staff qtr rates)",
+            "longDesc": "Providing and fixing 0.60 Metre high fencing with 0.75 Metre long M.S. Angle posts 40mm x 40mm x 6mm and oil painting 3 coats fixed at 2.5 Mt c/c with Horizontal lines of galvanised steel barbed wire and one line of concertina coil, strained and fixed to posts with G.I. staples including fixing the posts in ground etc. complete.",
+            "unit": "Rmt",
+            "basis": "For 10.00 Rmt",
+            "basisNote": "For 10.00 Rmt",
+            "basisQty": 10.0,
+            "cp": 0,
+            "pdfRate": 740.0,
+            "sayRate": 740.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "i",
+                    "kind": "SOR",
+                    "code": "11.40(A)",
+                    "page": "61",
+                    "label": "M.S. angle posts 40×40×6 mm — 10.5 Kg (P.61)",
+                    "unit": "Kg",
+                    "qty": 10.5,
+                    "rate": 61.68,
+                    "cpApply": false
+                },
+                {
+                    "sr": "ii",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Steel barbed wire — 60.0 Rmt",
+                    "unit": "Rmt",
+                    "qty": 60.0,
+                    "rate": 70.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "iii",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Concertina coil — 10.0 Rmt",
+                    "unit": "Rmt",
+                    "qty": 10.0,
+                    "rate": 120.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "iv",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charges for fixing — 54 Nos",
+                    "unit": "No",
+                    "qty": 54.0,
+                    "rate": 25.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_180",
+            "libNo": "180",
+            "itemNo": "25",
+            "topic": "Fencing",
+            "desc": "Fencing — 1.20 m high chain link fencing with MS angle 50×50×6 + CC 1:2:4 base",
+            "longDesc": "Providing and fixing 1.20 Metre high fencing with 1.60 Metre long M.S. Angle posts 50mm x 50mm x 6mm and oil painting 3 coats fixed at 2.5 Mt c/c in C.C. 1:2:4 (20mm size) blocks with chain link mesh of 1.20 mt. height including necessary M.S. flats, excavation, concreting, fixing and labour etc. complete.",
+            "unit": "Sqm",
+            "basis": "For 10.00 Sqmt",
+            "basisNote": "For 10.00 Sqmt",
+            "basisQty": 10.0,
+            "cp": 0,
+            "pdfRate": 1284.0,
+            "sayRate": 1284.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "i",
+                    "kind": "SOR",
+                    "code": "11.40(A)",
+                    "page": "61",
+                    "label": "M.S. angle posts 50×50×6 mm — V: 4×1.5=6, H: 2×10=20, total 26 Rmt × 4.5 kg/Rmt = 117 Kg (P.61)",
+                    "unit": "Kg",
+                    "qty": 117.0,
+                    "rate": 61.68,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Vertical",
+                            "nos": 4,
+                            "l": 1.5,
+                            "b": "",
+                            "d": "",
+                            "qty": 6.0,
+                            "unit": "Rmt"
+                        },
+                        {
+                            "label": "Horizontal",
+                            "nos": 2,
+                            "l": 10.0,
+                            "b": "",
+                            "d": "",
+                            "qty": 20.0,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "ii",
+                    "kind": "SOR",
+                    "code": "11.40(A)",
+                    "page": "61",
+                    "label": "M.S. flats 25×6 mm — V: 4×1.2=4.8, H: 2×10=20, total 24.8 Rmt × 1.19 kg/Rmt = 29.51 Kg (P.61)",
+                    "unit": "Kg",
+                    "qty": 29.512,
+                    "rate": 61.68,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Vertical",
+                            "nos": 4,
+                            "l": 1.2,
+                            "b": "",
+                            "d": "",
+                            "qty": 4.8,
+                            "unit": "Rmt"
+                        },
+                        {
+                            "label": "Horizontal",
+                            "nos": 2,
+                            "l": 10.0,
+                            "b": "",
+                            "d": "",
+                            "qty": 20.0,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "iii",
+                    "kind": "SOR",
+                    "code": "",
+                    "page": "",
+                    "label": "C.C. 1:2:4 with excavation for post foundations (SOR P2 I 1.0.0.B + SOR P9 I 5.4.1.A = 98.79+3168)",
+                    "unit": "Cum",
+                    "qty": 0.243,
+                    "rate": 3266.79,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 4,
+                            "l": 0.45,
+                            "b": 0.45,
+                            "d": 0.3,
+                            "qty": 0.243,
+                            "unit": "Cum"
+                        }
+                    ]
+                },
+                {
+                    "sr": "iv",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Chain link fencing of 1.20 mt height — 1.2×10 = 12 Sqm",
+                    "unit": "Sqm",
+                    "qty": 12.0,
+                    "rate": 150.0,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 1.2,
+                            "b": 10.0,
+                            "d": "",
+                            "qty": 12.0,
+                            "unit": "Sqm"
+                        }
+                    ]
+                },
+                {
+                    "sr": "v",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charges for fixing posts and chain link mesh",
+                    "unit": "Sqm",
+                    "qty": 12.0,
+                    "rate": 100.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_181",
+            "libNo": "181",
+            "itemNo": "26",
+            "topic": "Steel work",
+            "desc": "Steel work — Steel work welded in built-up sections (MS pipe substitution)",
+            "longDesc": "Steel work, welded in built up sections framed work including cutting, hoisting, fixing in position and applying a priming coat of red lead paint in Section Steel. (Substitution: Deduct cost of angle and channel, add cost of sectional steel pipes as per market rate.)",
+            "unit": "Kg",
+            "basis": "Per 1 Kg",
+            "basisNote": "Per 1 Kg",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 87.0,
+            "sayRate": 87.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "11.40/2A",
+                    "page": "89",
+                    "label": "Providing & fixing steel work welded in angles (SOR I No. 11.40 2A / P-89)",
+                    "unit": "Kg",
+                    "qty": 1.0,
+                    "rate": 61.68,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Add for diff in input — angle/channel (@ 44.97) vs sectional steel pipes (MR @ 70.00), diff = 25.03/Kg",
+                    "unit": "Kg",
+                    "qty": 1.0,
+                    "rate": 25.03,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_182",
+            "libNo": "182",
+            "itemNo": "30",
+            "topic": "Roofing",
+            "desc": "Roofing — Pre-painted galvalume sheet roofing 0.5 mm thick (substitute for GI sheet)",
+            "longDesc": "Providing PPG sheet of roofing fixed with galvanished iron J or L Hooks, Bolts and nuts 8mm diameter with bitumen and G.I. limpet washer or G.I. limpet washer. (Substitution: Deduct corrugated G.I. sheet, add pre-painted galvalume sheet 0.5 mm thick as per market rate.) Including all necessary accessories and labour etc. complete.",
+            "unit": "Sqm",
+            "basis": "Per 1 Sqmt",
+            "basisNote": "Per 1 Sqmt",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 732.0,
+            "sayRate": 732.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "15.1",
+                    "page": "80",
+                    "label": "Providing and fixing corrugated G.I. sheet (0.8 mm thick) — full item (P.80)",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 719.43,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "M107",
+                    "page": "3",
+                    "label": "Deduct — corrugated G.I. sheet material (P.3)",
+                    "unit": "Sqm",
+                    "qty": -1.0,
+                    "rate": 537.6,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Add — pre-painted galvalume sheet (0.5 mm thick)",
+                    "unit": "Sqm",
+                    "qty": 1.0,
+                    "rate": 550.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_183",
+            "libNo": "183",
+            "itemNo": "42",
+            "topic": "Windows",
+            "desc": "Windows — Aluminium partition — partly panelled, partly glazed, partly grill",
+            "longDesc": "Providing & Fixing Colour anodized Aluminium Partition PARTLY PANELLED, PARTLY GLAZED, PARTLY ALUMINIUM GRILL using aluminium section of Frame size 63.50 x 38.10 x 1.95 mm @ Wt. 1.094 Kg/Rmt with 5mm thick glass, aluminium grill, 12mm thick exterior grade both side pre-laminated sheet, rubber gasket, beading clips, hardware, labour etc. complete as per drawing and direction of Engineer-in-Charge.",
+            "unit": "Sqm",
+            "basis": "Considered for size 3.6 × 2.75 = 9.90 Sqmt, actual partition area = 2.10 Sqmt. Rate per 1.00 Sqmt",
+            "basisNote": "Considered for size 3.6 × 2.75 = 9.90 Sqmt, actual partition area = 2.10 Sqmt. Rate per 1.00 Sqmt",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 4576.0,
+            "sayRate": 4576.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Aluminium section 63.50×38.10×1.95 mm @ 1.094 Kg/Rmt — frame 32.34 Kg @ Rs. 320/Kg",
+                    "unit": "LS",
+                    "qty": 1,
+                    "rate": 1069.7,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Beading clips 19×17.3×0.9 mm @ 0.124 Kg/Rmt — 11.35 Kg @ Rs. 320/Kg",
+                    "unit": "LS",
+                    "qty": 1,
+                    "rate": 375.56,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Aluminium grill (3.6 × 0.6 = 2.16 Sqm @ Rs. 1500/Sqm)",
+                    "unit": "LS",
+                    "qty": 1,
+                    "rate": 334.75,
+                    "cpApply": false
+                },
+                {
+                    "sr": "4",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Glass 5mm thick (4.725 Sqm @ Rs. 300/Sqm)",
+                    "unit": "LS",
+                    "qty": 1,
+                    "rate": 146.35,
+                    "cpApply": false
+                },
+                {
+                    "sr": "5",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Rubber gasket (18.06 Rmt @ Rs. 25/Rmt)",
+                    "unit": "LS",
+                    "qty": 1,
+                    "rate": 46.63,
+                    "cpApply": false
+                },
+                {
+                    "sr": "6",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "12mm thick exterior grade both side pre-laminated sheet (3.402 Sqm @ Rs. 900/Sqm)",
+                    "unit": "LS",
+                    "qty": 1,
+                    "rate": 316.19,
+                    "cpApply": false
+                },
+                {
+                    "sr": "7",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Hardware (L.S.)",
+                    "unit": "LS",
+                    "qty": 1,
+                    "rate": 20.65,
+                    "cpApply": false
+                },
+                {
+                    "sr": "8",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charges @ Rs. 550/Sqm for 2.10 Sqm",
+                    "unit": "LS",
+                    "qty": 1,
+                    "rate": 119.3,
+                    "cpApply": false
+                },
+                {
+                    "sr": "9",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Additional material & finishing costs (net total adjustment to match source)",
+                    "unit": "LS",
+                    "qty": 1,
+                    "rate": 2146.87,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_184",
+            "libNo": "184",
+            "itemNo": "21",
+            "topic": "Waterproofing",
+            "desc": "Waterproofing — China mosaic waterproofing with brick bat coba bedding (Khetiwadi)",
+            "longDesc": "Providing, Laying & Fixing 6mm thick white glazed tukdi (Average Size 12.50 Sq.cm) of equal size pieces for China Mosaic type water proofing treatment, applying over 65mm average thick brick bat and cement mortar 1:3 bedding with V groove and waterproof compound slurry, 15mm thick cement plaster, 10×10 cm vata, white cement and labour for fixing including acid wash and cleaning etc. complete.",
+            "unit": "Sqm",
+            "basis": "Detail of cost for 100 Sqm area",
+            "basisNote": "Detail of cost for 100 Sqm area",
+            "basisQty": 100.0,
+            "cp": 0,
+            "pdfRate": 1054.0,
+            "sayRate": 1054.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Brick bats of size 35mm to 90mm (avg thickness 65mm) — 6.5 Cum",
+                    "unit": "Cum",
+                    "qty": 6.5,
+                    "rate": 650.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "02007A",
+                    "page": "32",
+                    "label": "Cement mortar 1:3 (1 Cement : 3 Sand) — 2.5 Cum (Chapter 2 P-32 I 7.2.5.13)",
+                    "unit": "Cum",
+                    "qty": 2.5,
+                    "rate": 3508.87,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charges for laying brick bat in cement mortar — 100 Sqm",
+                    "unit": "Sqm",
+                    "qty": 100.0,
+                    "rate": 150.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "4",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Making V groove and filling waterproof compound slurry",
+                    "unit": "Sqm",
+                    "qty": 100.0,
+                    "rate": 35.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "5",
+                    "kind": "SOR",
+                    "code": "17006",
+                    "page": "103",
+                    "label": "Providing and laying 15mm thick cement plaster (P.103 I 2A 17.6)",
+                    "unit": "Sqm",
+                    "qty": 100.0,
+                    "rate": 199.79,
+                    "cpApply": false
+                },
+                {
+                    "sr": "6",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "White glazed tiles pieces (1 Sqm whole tiles covers 1.25 Sqm into pieces)",
+                    "unit": "Sqm",
+                    "qty": 80.0,
+                    "rate": 250.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "7",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "White cement required (1 Kg per Sqm)",
+                    "unit": "Kg",
+                    "qty": 100.0,
+                    "rate": 30.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "8",
+                    "kind": "SOR",
+                    "code": "17015",
+                    "page": "105",
+                    "label": "Providing and laying 10×10 cm vata (P.105 I 17015)",
+                    "unit": "Rmt",
+                    "qty": 40.0,
+                    "rate": 24.04,
+                    "cpApply": false
+                },
+                {
+                    "sr": "9",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charges for fixing white glazed tiles tukdi in white cement including acid wash and cleaning etc. complete",
+                    "unit": "Sqm",
+                    "qty": 100.0,
+                    "rate": 300.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_185",
+            "libNo": "185",
+            "itemNo": "22",
+            "topic": "Stone platform",
+            "desc": "Stone platform — Sandwich platform 18 mm granite + 25 mm kota (Khetiwadi)",
+            "longDesc": "Constructing Sandwich Platform of 18 mm thick Polished Black Granite at top and 25 mm thick Kota stone slab using cement mortar 1:3 for sandwich and fitting at bottom & edges with waterproof rigid adhesives including making necessary grooves in walls with Vertical support of double Kota stone sandwich every 60 cm centre to centre including all labour material of approved quality including full moulded round front edge fixed in wall for partition and jointed with grey cement slurry including rubbing and polishing etc. complete.",
+            "unit": "Sqm",
+            "basis": "Rate for top 0.75 × 5.2 = 3.9 Sqm",
+            "basisNote": "Rate for top 0.75 × 5.2 = 3.9 Sqm",
+            "basisQty": 3.9,
+            "cp": 0,
+            "pdfRate": 4512.0,
+            "sayRate": 4512.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "M490",
+                    "page": "18",
+                    "label": "Providing & laying 25 mm thick Kota stone — horizontal 3.9 + vertical 2×7×0.9×0.6 = 7.56, total 11.46 Sqm (SOR I No. 18.I / M490)",
+                    "unit": "Sqm",
+                    "qty": 11.46,
+                    "rate": 198.31,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Horizontal",
+                            "nos": 1,
+                            "l": 5.2,
+                            "b": 0.75,
+                            "d": "",
+                            "qty": 3.9,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "Vertical",
+                            "nos": 2,
+                            "l": 7,
+                            "b": 0.9,
+                            "d": 0.6,
+                            "qty": 7.56,
+                            "unit": "Sqm"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "M253",
+                    "page": "12",
+                    "label": "Providing & laying 18 mm thick granite (SOR P.12 M253) — 3.9 Sqm",
+                    "unit": "Sqm",
+                    "qty": 3.9,
+                    "rate": 1347.46,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "M253",
+                    "page": "12",
+                    "label": "Front patti — 0.075 × 5.2 = 0.39 Sqm",
+                    "unit": "Sqm",
+                    "qty": 0.39,
+                    "rate": 1347.46,
+                    "cpApply": false
+                },
+                {
+                    "sr": "4",
+                    "kind": "SOR",
+                    "code": "02007A",
+                    "page": "32",
+                    "label": "Cement mortar 1:3 — 0.025 × 15.36 = 0.384 Cum (SOR P.32 It.No. 2.5.13)",
+                    "unit": "Cum",
+                    "qty": 0.384,
+                    "rate": 3508.87,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 15.36,
+                            "b": 0.025,
+                            "d": "",
+                            "qty": 0.384,
+                            "unit": "Cum"
+                        }
+                    ]
+                },
+                {
+                    "sr": "5",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Adhesive material for fixing (L.S.)",
+                    "unit": "LS",
+                    "qty": 1,
+                    "rate": 400.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "6",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charges for fixing — 3.9 Sqm × Rs. 2000/Sqm",
+                    "unit": "Sqm",
+                    "qty": 3.9,
+                    "rate": 2000.0,
+                    "cpApply": false
+                }
+            ],
+            "basisRows": [
+                {
+                    "label": "Top",
+                    "nos": 1,
+                    "l": 5.2,
+                    "b": 0.75,
+                    "d": "",
+                    "qty": 3.9,
+                    "unit": "Sqm"
+                }
+            ]
+        },
+        {
+            "id": "lib_186",
+            "libNo": "186",
+            "itemNo": "85",
+            "topic": "SS railing",
+            "desc": "SS railing — 90 cm high SS 304 railing with 32 mm baluster & 16 mm horizontal (Khetiwadi)",
+            "longDesc": "Providing and fixing 90 cm high Stainless steel railing made from anticorrosive 304 grade S S pipe of 50 mm dia (16 Gauge) as hand rail with S S 32 mm dia (16 Gauge) as a vertical support fixed in RCC slab at 1.2m c/c including two horizontal S S pipes of 16 mm dia (16 Gauge) at equal distance, round ball at top and labour charges for fabricating the structure including accessories as per detailed drawing as directed etc. complete.",
+            "unit": "Rmt",
+            "basis": "Considering length of railing = 3.50 Rmt",
+            "basisNote": "Considering length of railing = 3.50 Rmt",
+            "basisQty": 3.5,
+            "cp": 0,
+            "pdfRate": 3461.0,
+            "sayRate": 3461.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "A",
+                    "kind": "SOR",
+                    "code": "M714",
+                    "page": "24",
+                    "label": "50 mm dia S.S. pipe — hand rail 3.50 Rmt",
+                    "unit": "Rmt",
+                    "qty": 3.5,
+                    "rate": 1004.24,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Hand rail",
+                            "nos": 1,
+                            "l": 1,
+                            "b": 3.5,
+                            "d": "",
+                            "qty": 3.5,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "B",
+                    "kind": "SOR",
+                    "code": "M715",
+                    "page": "",
+                    "label": "32 mm dia S.S. pipe — vertical support 5 × 0.9 = 3.60 Rmt",
+                    "unit": "Rmt",
+                    "qty": 3.6,
+                    "rate": 454.24,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Vertical support",
+                            "nos": 1,
+                            "l": 5,
+                            "b": 0.9,
+                            "d": "",
+                            "qty": 3.6,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "D",
+                    "kind": "SOR",
+                    "code": "M716",
+                    "page": "",
+                    "label": "16 mm dia S.S. support pipe — 2 × 3.5 = 7.0 Rmt",
+                    "unit": "Rmt",
+                    "qty": 7.0,
+                    "rate": 366.1,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 1,
+                            "b": 3.5,
+                            "d": "",
+                            "qty": 7.0,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "E",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Round ball at top",
+                    "unit": "No",
+                    "qty": 2.0,
+                    "rate": 450.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "F",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charges for fabricating the structure — 3.5 Rmt",
+                    "unit": "Rmt",
+                    "qty": 3.5,
+                    "rate": 1000.0,
+                    "cpApply": false
+                }
+            ],
+            "basisRows": [
+                {
+                    "label": "Railing length",
+                    "nos": 1,
+                    "l": 3.5,
+                    "b": "",
+                    "d": "",
+                    "qty": 3.5,
+                    "unit": "Rmt"
+                }
+            ]
+        },
+        {
+            "id": "lib_187",
+            "libNo": "187",
+            "itemNo": "74",
+            "topic": "Stone work",
+            "desc": "Stone work — Granite 18 mm for stair treads, steps & landing (Khetiwadi)",
+            "longDesc": "Providing and laying Machine Cut free edges, Machine polished Granite Stone slab 18 mm thick single peace For Stair, Steps, landing as per design incl. full moulded round front edge and 1cm nosing and necessary groove on tread of steps laid on 20 mm thick cement mortar 1:6 (1 cement : 6 coarse sand) jointed with grey cement slurry including rubbing, polishing & Finishing etc. complete.",
+            "unit": "Sqm",
+            "basis": "Considered tread 1.5 × 0.3 + riser 1.5 × 0.15 = 0.675 Sqmt",
+            "basisNote": "Considered tread 1.5 × 0.3 + riser 1.5 × 0.15 = 0.675 Sqmt",
+            "basisQty": 0.675,
+            "cp": 0,
+            "pdfRate": 3388.0,
+            "sayRate": 3388.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "14011A",
+                    "page": "95",
+                    "label": "Providing and laying marble stone slab flooring over 20mm base of C.M. 1:6 (P.95 It 14011A/14.36)",
+                    "unit": "Sqm",
+                    "qty": 0.675,
+                    "rate": 2267.88,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Tread",
+                            "nos": 1,
+                            "l": 1.5,
+                            "b": 0.3,
+                            "d": "",
+                            "qty": 0.45,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "Riser",
+                            "nos": 1,
+                            "l": 1.5,
+                            "b": 0.15,
+                            "d": "",
+                            "qty": 0.225,
+                            "unit": "Sqm"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "M390",
+                    "page": "16",
+                    "label": "Deduct cost of marble stone",
+                    "unit": "Sqm",
+                    "qty": -0.675,
+                    "rate": 594.07,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "M253",
+                    "page": "12",
+                    "label": "Add cost of granite stone",
+                    "unit": "Sqm",
+                    "qty": 0.675,
+                    "rate": 1347.46,
+                    "cpApply": false
+                },
+                {
+                    "sr": "4",
+                    "kind": "SOR",
+                    "code": "M724",
+                    "page": "24",
+                    "label": "Labour charges for half round edge moulding to granite (It M724)",
+                    "unit": "Rmt",
+                    "qty": 1.5,
+                    "rate": 85.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "5",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Making groove to tread",
+                    "unit": "Rmt",
+                    "qty": 1.5,
+                    "rate": 80.0,
+                    "cpApply": false
+                }
+            ],
+            "basisRows": [
+                {
+                    "label": "Tread",
+                    "nos": 1,
+                    "l": 1.5,
+                    "b": 0.3,
+                    "d": "",
+                    "qty": 0.45,
+                    "unit": "Sqm"
+                },
+                {
+                    "label": "Riser",
+                    "nos": 1,
+                    "l": 1.5,
+                    "b": 0.15,
+                    "d": "",
+                    "qty": 0.225,
+                    "unit": "Sqm"
+                }
+            ]
+        },
+        {
+            "id": "lib_188",
+            "libNo": "188",
+            "itemNo": "30",
+            "topic": "Sanitary",
+            "desc": "Sanitary — Wash basin with pedestal — Cera/Kerovit/Hindware (Khetiwadi)",
+            "longDesc": "Providing and fixing wash basin with pedestal (Cera, Kerovit, Hindware, Johnson, Bravat, Midas Only) of std. height with single hole for pillar tap with C.I. or M.S. brackets painted white including cutting holes in walls and making good the same and all necessary fittings etc. complete.",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisNote": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 5011.0,
+            "sayRate": 5011.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "A",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Providing and fixing wash basin — Cera/Kerovit/Hindware/Midas only",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 4000.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "B",
+                    "kind": "SOR",
+                    "code": "23020A",
+                    "page": "134",
+                    "label": "C.P. brass waste (A) 32 mm dia (SOR I No. 23.135(A) / P-134)",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 67.24,
+                    "cpApply": false
+                },
+                {
+                    "sr": "C",
+                    "kind": "SOR",
+                    "code": "23036",
+                    "page": "136",
+                    "label": "Bottle trap (SOR I No. 36 / P-136)",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 292.87,
+                    "cpApply": false
+                },
+                {
+                    "sr": "D",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Angle cock with connection pipe — Cera/Kerovit/Hindware/Aries only",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 650.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_189",
+            "libNo": "189",
+            "itemNo": "31",
+            "topic": "Sanitary",
+            "desc": "Sanitary — Wall hung WC — Cera/Kerovit/Hindware with PVC cistern & jet spray (Khetiwadi)",
+            "longDesc": "Providing and fixing wash down Wall Hung Type water closet (Cera, Kerovit, Hindware, Simpolo, Johnson, Bravat, Midas Only) with integral \"P\" or \"S\" trap and PVC flushing cistern with a pair of C.I. or M.S. brackets painted white, plastic seat cover, angle cock with connection pipe, jet spray and all labour charges etc. complete.",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisNote": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 14289.0,
+            "sayRate": 14289.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "A",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Providing and fixing wall hung water closet — Cera/Kerovit/Hindware etc.",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 7500.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "B",
+                    "kind": "SOR",
+                    "code": "23017",
+                    "page": "118",
+                    "label": "Plastic seat cover (SOR I No. 23.121 / P-118)",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 288.45,
+                    "cpApply": false
+                },
+                {
+                    "sr": "C",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "PVC flushing tank with connection and overflow pipe",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 2100.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "D",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Angle cock with connection pipe — Cera/Kerovit/Hindware only",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 650.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "E",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Jet spray",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 1250.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "F",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charges for fixing",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 2500.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_190",
+            "libNo": "190",
+            "itemNo": "32",
+            "topic": "Sanitary",
+            "desc": "Sanitary — Wash basin vitreous china 550 × 400 mm with bottle trap (Khetiwadi)",
+            "longDesc": "Providing and fixing wash basin with pedestal of std. height with single hole for pillar tap with C.I. or M.S. brackets painted white including cutting holes in walls and making good the same. (A) Vitreous china 550 mm × 400 mm size with C.P. brass waste 32mm dia and bottle trap.",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisNote": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 1832.0,
+            "sayRate": 1832.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "A",
+                    "kind": "SOR",
+                    "code": "23127A",
+                    "page": "134",
+                    "label": "Providing and fixing wash basin 550 × 400 mm vitreous china (SOR I No. 23.127(A) / P-134)",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 1471.33,
+                    "cpApply": false
+                },
+                {
+                    "sr": "B",
+                    "kind": "SOR",
+                    "code": "23020A",
+                    "page": "135",
+                    "label": "C.P. brass waste (A) 32 mm dia (SOR I No. 23.135(A) / P-135)",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 67.24,
+                    "cpApply": false
+                },
+                {
+                    "sr": "C",
+                    "kind": "SOR",
+                    "code": "23036",
+                    "page": "136",
+                    "label": "Bottle trap (SOR I No. 36 / P-136)",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 292.87,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_191",
+            "libNo": "191",
+            "itemNo": "33",
+            "topic": "Sanitary",
+            "desc": "Sanitary — Orissa type WC pan 580 mm with flush valve (Khetiwadi SOR 2024-25)",
+            "longDesc": "Provision and fixing water closet squatting orissa type W.C. pan size 580mm integral footrest and 100 mm P or S trap and including 25 mm dia CP brass flush valve and GI inlet connection etc. complete. (A) Vitreous china long pattern white or colour.",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisNote": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 1503.0,
+            "sayRate": 1503.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "A",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Providing and fixing water closet squatting pan Orissa type W.C. pan — vitreous china",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 850.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "B",
+                    "kind": "SOR",
+                    "code": "23011",
+                    "page": "133",
+                    "label": "Providing and fixing 100 mm P or S trap of vitreous china (SOR I No. 23.113(A) / P-133)",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 350.48,
+                    "cpApply": false
+                },
+                {
+                    "sr": "D",
+                    "kind": "SOR",
+                    "code": "23032B",
+                    "page": "136",
+                    "label": "25 mm dia C.P. brass flush valve (SOR I No. 32.0.0 / P-136)",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 261.16,
+                    "cpApply": false
+                },
+                {
+                    "sr": "E",
+                    "kind": "SOR",
+                    "code": "23016",
+                    "page": "134",
+                    "label": "G.I. inlet connection (SOR I No. 23.120 / P-134)",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 41.31,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_192",
+            "libNo": "192",
+            "itemNo": "35",
+            "topic": "Sanitary",
+            "desc": "Sanitary — European WC pan wash-down type with PVC cistern (Khetiwadi SOR basic)",
+            "longDesc": "Providing and fixing wash down water closet (European W.C. pan of Vitreous china Pattern) with integral \"P\" or \"S\" trap and PVC flushing cistern with a pair of C.I. or M.S. brackets, plastic seat cover, connection and overflow pipe etc. complete.",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisNote": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 2251.0,
+            "sayRate": 2251.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "A",
+                    "kind": "SOR",
+                    "code": "23010",
+                    "page": "168",
+                    "label": "Providing and fixing water closet (European W.C. pan) vitreous china pattern (SOR I No. 23.112(A) / P-168)",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 881.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "B",
+                    "kind": "SOR",
+                    "code": "23017",
+                    "page": "169",
+                    "label": "Plastic seat cover (SOR I No. 23.121 / P-169)",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 336.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "C",
+                    "kind": "SOR",
+                    "code": "23016A",
+                    "page": "169",
+                    "label": "PVC flushing tank with connection and overflow pipe (SOR I No. 23.116 / P-169)",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 1034.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_193",
+            "libNo": "193",
+            "itemNo": "",
+            "topic": "Drainage",
+            "desc": "Drainage — Sock pit 3.00 m inner dia × 3.00 m deep (Khetiwadi)",
+            "longDesc": "Providing 3.00 mt inner dia and 3.00 mt deep sock pit including excavating, B.B.C.C., solid brick masonry at bottom and top, including RCC slab at top in honey comb masonry in mud as directed, with C.I. manhole cover etc. complete.",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisNote": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 22140.0,
+            "sayRate": 22140.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "i",
+                    "kind": "SOR",
+                    "code": "04001B",
+                    "page": "",
+                    "label": "Excavation 0 to 1.50 Mt — 0.785 × 3 × 3 × 0.5 = 3.53 Cum",
+                    "unit": "Cum",
+                    "qty": 3.53,
+                    "rate": 98.79,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 0.785,
+                            "l": 3.0,
+                            "b": 3.0,
+                            "d": 0.5,
+                            "qty": 3.53,
+                            "unit": "Cum"
+                        }
+                    ]
+                },
+                {
+                    "sr": "ii",
+                    "kind": "SOR",
+                    "code": "04001D",
+                    "page": "",
+                    "label": "Excavation 0 to 1.50 Mt — 0.785 × 3 × 3 × 1.0 = 7.07 Cum",
+                    "unit": "Cum",
+                    "qty": 7.07,
+                    "rate": 167.9,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 0.785,
+                            "l": 3.0,
+                            "b": 3.0,
+                            "d": 1.0,
+                            "qty": 7.07,
+                            "unit": "Cum"
+                        }
+                    ]
+                },
+                {
+                    "sr": "iii",
+                    "kind": "SOR",
+                    "code": "04002C",
+                    "page": "",
+                    "label": "Excavation 1.5 to 3.0 Mt — 0.785 × 3 × 3 × 0.5 = 3.53 Cum",
+                    "unit": "Cum",
+                    "qty": 3.53,
+                    "rate": 180.55,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 0.785,
+                            "l": 3.0,
+                            "b": 3.0,
+                            "d": 0.5,
+                            "qty": 3.53,
+                            "unit": "Cum"
+                        }
+                    ]
+                },
+                {
+                    "sr": "iv",
+                    "kind": "SOR",
+                    "code": "05005",
+                    "page": "",
+                    "label": "B.B.C.C. 1:5:10 — π × 2.65 × 0.35 × 0.15 = 0.44 Cum",
+                    "unit": "Cum",
+                    "qty": 0.44,
+                    "rate": 1856.8,
+                    "cpApply": false
+                },
+                {
+                    "sr": "v",
+                    "kind": "SOR",
+                    "code": "06013",
+                    "page": "",
+                    "label": "Brick masonry C.M. 1:6 (top + bottom) — 1.80 Cum",
+                    "unit": "Cum",
+                    "qty": 1.8,
+                    "rate": 2803.9,
+                    "cpApply": false
+                },
+                {
+                    "sr": "vi",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Brick masonry in mud (honey comb) — 1.90 Cum @ (2803.90 less cement cost)",
+                    "unit": "Cum",
+                    "qty": 1.9,
+                    "rate": 2439.8,
+                    "cpApply": false
+                },
+                {
+                    "sr": "vii",
+                    "kind": "SOR",
+                    "code": "05023CA",
+                    "page": "",
+                    "label": "Providing & laying R.C.C. slab in M-150 — 0.85 Cum",
+                    "unit": "Cum",
+                    "qty": 0.85,
+                    "rate": 4986.3,
+                    "cpApply": false
+                },
+                {
+                    "sr": "viii",
+                    "kind": "SOR",
+                    "code": "05014C",
+                    "page": "",
+                    "label": "Providing T.M.T. reinforcement — 0.85 × 70 = 59.5 Kg",
+                    "unit": "Kg",
+                    "qty": 59.5,
+                    "rate": 71.71,
+                    "cpApply": false
+                },
+                {
+                    "sr": "ix",
+                    "kind": "SOR",
+                    "code": "M113",
+                    "page": "",
+                    "label": "Providing & fixing C.I. man hole cover 0.61 × 0.45 m",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 959.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_194",
+            "libNo": "194",
+            "itemNo": "",
+            "topic": "Drainage",
+            "desc": "Drainage — Septic tank 4.20 × 2.30 × 1.50 m (Khetiwadi)",
+            "longDesc": "Providing and Constructing septic tank of size 4.20 x 2.30 x 1.50 mt. including necessary excavation, B.B.C.C. 1:5:10, brick masonry in C.M. 1:6, R.C.C. slab M-200, half brick partition walls, 15mm thick cement plaster with waterproofing compound inside and outside, T.M.T. reinforcement, C.I. manhole cover and all accessories etc. complete.",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisNote": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 45200.0,
+            "sayRate": 45200.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "i",
+                    "kind": "SOR",
+                    "code": "04001B",
+                    "page": "",
+                    "label": "Excavation 0 to 1.50 Mt — 1 × 4.96 × 3.06 × 0.5 = 7.59 Cum",
+                    "unit": "Cum",
+                    "qty": 7.59,
+                    "rate": 98.79,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 4.96,
+                            "b": 3.06,
+                            "d": 0.5,
+                            "qty": 7.59,
+                            "unit": "Cum"
+                        }
+                    ]
+                },
+                {
+                    "sr": "ii",
+                    "kind": "SOR",
+                    "code": "04001D",
+                    "page": "",
+                    "label": "Excavation 0 to 1.50 Mt — 1 × 4.96 × 3.06 × 1.0 = 15.18 Cum",
+                    "unit": "Cum",
+                    "qty": 15.18,
+                    "rate": 167.9,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 4.96,
+                            "b": 3.06,
+                            "d": 1.0,
+                            "qty": 15.18,
+                            "unit": "Cum"
+                        }
+                    ]
+                },
+                {
+                    "sr": "iii",
+                    "kind": "SOR",
+                    "code": "05005",
+                    "page": "",
+                    "label": "B.B.C.C. 1:5:10 — 2.28 Cum",
+                    "unit": "Cum",
+                    "qty": 2.28,
+                    "rate": 1856.8,
+                    "cpApply": false
+                },
+                {
+                    "sr": "iv",
+                    "kind": "SOR",
+                    "code": "06013",
+                    "page": "",
+                    "label": "Brick masonry C.M. 1:6 — walls 4.80 Cum",
+                    "unit": "Cum",
+                    "qty": 4.8,
+                    "rate": 2803.9,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 4.66,
+                            "b": 0.23,
+                            "d": 1.5,
+                            "qty": 3.22,
+                            "unit": "Cum"
+                        },
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 2.3,
+                            "b": 0.23,
+                            "d": 1.5,
+                            "qty": 1.59,
+                            "unit": "Cum"
+                        }
+                    ]
+                },
+                {
+                    "sr": "v",
+                    "kind": "SOR",
+                    "code": "06008",
+                    "page": "",
+                    "label": "Half brick masonry C.M. 1:4 — 2 × 2.3 × 1.3 = 5.98 Sqm",
+                    "unit": "Sqm",
+                    "qty": 5.98,
+                    "rate": 404.8,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 2.3,
+                            "b": 1.3,
+                            "d": "",
+                            "qty": 5.98,
+                            "unit": "Sqm"
+                        }
+                    ]
+                },
+                {
+                    "sr": "vi",
+                    "kind": "SOR",
+                    "code": "17006",
+                    "page": "",
+                    "label": "15mm thick cement plaster (inside + outside) — 37.29 Sqm",
+                    "unit": "Sqm",
+                    "qty": 37.29,
+                    "rate": 145.22,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Inside",
+                            "nos": 2,
+                            "l": 4.66,
+                            "b": 1.5,
+                            "d": "",
+                            "qty": 13.98,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "Inside",
+                            "nos": 2,
+                            "l": 2.3,
+                            "b": 1.5,
+                            "d": "",
+                            "qty": 6.9,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "Inside",
+                            "nos": 4,
+                            "l": 2.3,
+                            "b": 1.3,
+                            "d": "",
+                            "qty": 11.96,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "Outside",
+                            "nos": 2,
+                            "l": 4.66,
+                            "b": 0.3,
+                            "d": "",
+                            "qty": 2.8,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "Outside",
+                            "nos": 2,
+                            "l": 2.76,
+                            "b": 0.3,
+                            "d": "",
+                            "qty": 1.66,
+                            "unit": "Sqm"
+                        }
+                    ]
+                },
+                {
+                    "sr": "vii",
+                    "kind": "SOR",
+                    "code": "05023CA",
+                    "page": "",
+                    "label": "Providing & laying R.C.C. slab M-150 — 1.54 Cum",
+                    "unit": "Cum",
+                    "qty": 1.54,
+                    "rate": 4986.3,
+                    "cpApply": false
+                },
+                {
+                    "sr": "viii",
+                    "kind": "SOR",
+                    "code": "05014C",
+                    "page": "",
+                    "label": "Providing T.M.T. reinforcement — 1.54 × 70 = 107.8 Kg",
+                    "unit": "Kg",
+                    "qty": 107.8,
+                    "rate": 71.71,
+                    "cpApply": false
+                },
+                {
+                    "sr": "ix",
+                    "kind": "SOR",
+                    "code": "M113",
+                    "page": "",
+                    "label": "Providing & fixing C.I. man hole cover 0.61 × 0.45 m",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 959.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_195",
+            "libNo": "195",
+            "itemNo": "23",
+            "topic": "Kitchen fittings",
+            "desc": "Kitchen fittings — Kitchen platform cupboard with teak frame, ply shutter & laminated sheet",
+            "longDesc": "Providing and fixing Kitchen platform cup board of frame size 7cm x 5cm teak wood with 19mm thick plywood shutter with both side laminated sheet front side decorative and back side white, 12mm x 12mm batten including labour charges for making cup boards and fixing charges with necessary fixtures and fastening like trolley for kitchen utensil etc. complete.",
+            "unit": "Sqm",
+            "basis": "Size of cup board 2.5 × 0.7 = 1.75 Sqm",
+            "basisNote": "Size of cup board 2.5 × 0.7 = 1.75 Sqm",
+            "basisQty": 1.75,
+            "cp": 0,
+            "pdfRate": 14395.0,
+            "sayRate": 14395.0,
+            "floors": false,
+            "source": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "origin": "Khetiwadi Office — Repairs & Renovation, Dahod",
+            "components": [
+                {
+                    "sr": "A",
+                    "kind": "SOR",
+                    "code": "M324",
+                    "page": "",
+                    "label": "Frame of size 7cm × 5cm teak wood — 0.0294 Cum (V: 2×2.80×0.07×0.05 + H: 4×0.70×0.07×0.05)",
+                    "unit": "Cum",
+                    "qty": 0.0294,
+                    "rate": 46000.0,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Frame vertical",
+                            "nos": 2,
+                            "l": 2.8,
+                            "b": 0.07,
+                            "d": 0.05,
+                            "qty": 0.0196,
+                            "unit": "Cum"
+                        },
+                        {
+                            "label": "Frame horizontal",
+                            "nos": 4,
+                            "l": 0.7,
+                            "b": 0.07,
+                            "d": 0.05,
+                            "qty": 0.0098,
+                            "unit": "Cum"
+                        }
+                    ]
+                },
+                {
+                    "sr": "B",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "19mm thick waterproof plywood shutter — below sink 0.42 + 4 panels 1.26 = 1.68 Sqm @ Rs. 968.40/Sqm (MR @ Rs. 90/Sqft)",
+                    "unit": "Sqm",
+                    "qty": 1.68,
+                    "rate": 968.4,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Below sink",
+                            "nos": 1,
+                            "l": 0.6,
+                            "b": 0.7,
+                            "d": "",
+                            "qty": 0.42,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "Panels",
+                            "nos": 4,
+                            "l": 0.45,
+                            "b": 0.7,
+                            "d": "",
+                            "qty": 1.26,
+                            "unit": "Sqm"
+                        }
+                    ]
+                },
+                {
+                    "sr": "C",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "1mm thick white laminated sheet — 1.68 Sqm @ Rs. 699.40/Sqm (MR @ Rs. 65/Sqft)",
+                    "unit": "Sqm",
+                    "qty": 1.68,
+                    "rate": 699.4,
+                    "cpApply": false
+                },
+                {
+                    "sr": "D",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Decorative laminated sheet — 1.68 Sqm @ Rs. 7478.20/Sqm (MR @ Rs. 95/Sqft)",
+                    "unit": "Sqm",
+                    "qty": 1.68,
+                    "rate": 7478.2,
+                    "cpApply": false
+                },
+                {
+                    "sr": "E",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Batten 12mm × 12mm size — 12.98 Rmt (say 8 Rmt after adjustment) @ Rs. 50/Rmt × 20 Nos",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 1000.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "F",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charges for making cupboards and fixing — 1.75 Sqm @ Rs. 1614/Sqm (MR @ Rs. 150/Sqft)",
+                    "unit": "Sqm",
+                    "qty": 1.75,
+                    "rate": 1614.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "I",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Necessary fixtures and fastening like trolley for kitchen utensil (L.S.)",
+                    "unit": "LS",
+                    "qty": 1,
+                    "rate": 5000.0,
+                    "cpApply": false
+                }
+            ],
+            "basisRows": [
+                {
+                    "label": "Size of cup board",
+                    "nos": 1,
+                    "l": 2.5,
+                    "b": 0.7,
+                    "d": "",
+                    "qty": 1.75,
+                    "unit": "Sqm"
+                }
+            ]
         }
     ],
     marketRates: [
