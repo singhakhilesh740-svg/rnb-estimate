@@ -73,7 +73,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "RCC"
+            "topic": "RCC",
+            "longDesc": "Providing and laying controlled cement concrete M-250 and curing complete, for reinforced concrete work in foundations, footings, bases of columns and mass concrete, including cost of form work of ordinary timber planking for foundations, footings, bases of columns and mass concrete, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_2",
@@ -110,7 +111,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "RCC"
+            "topic": "RCC",
+            "longDesc": "Providing and laying controlled cement concrete M-250 and curing complete, for reinforced concrete work in columns, pillars, posts and struts up to floor two level, including cost of form work of ordinary timber planking for columns, pillars, posts and struts, square/rectangular/polygonal in plan, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_3",
@@ -152,7 +154,8 @@ const DISTRICT_RA_LIBRARY = {
                 "page": "40",
                 "rate": 39.68
             },
-            "topic": "RCC"
+            "topic": "RCC",
+            "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in columns, pillars, posts and struts up to floor two level, including cost of form work of ordinary timber planking for columns, pillars, posts and struts, square/rectangular/polygonal in plan, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_4",
@@ -189,7 +192,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "RCC"
+            "topic": "RCC",
+            "longDesc": "Providing and laying controlled cement concrete M-250 and curing complete, for reinforced concrete work in slabs, landings, shelves, balconies, lintels, beams, girders and cantilever up to floor two level, including cost of form work of ordinary timber planking for sides and soffits of beams, beam haunchings, cantilevers, girders, bressumers and lintels not exceeding 1 M in depth, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_5",
@@ -226,7 +230,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "RCC"
+            "topic": "RCC",
+            "longDesc": "Providing and laying controlled cement concrete M-150 and curing complete, for reinforced concrete work in slabs, landings, shelves, balconies, lintels, beams, girders and cantilever up to floor two level, including cost of form work of ordinary timber planking for flat surfaces such as soffits of suspended floor/roof slabs and landings up to 200 mm in thickness, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_6",
@@ -268,7 +273,8 @@ const DISTRICT_RA_LIBRARY = {
                 "page": "40",
                 "rate": 39.68
             },
-            "topic": "RCC"
+            "topic": "RCC",
+            "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in slabs, landings, shelves, balconies, lintels, beams, girders and cantilever up to floor two level, including cost of form work of ordinary timber planking for sides and soffits of beams, beam haunchings, cantilevers, girders, bressumers and lintels not exceeding 1 M in depth, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_7",
@@ -310,7 +316,8 @@ const DISTRICT_RA_LIBRARY = {
                 "page": "40",
                 "rate": 39.68
             },
-            "topic": "RCC"
+            "topic": "RCC",
+            "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in slabs, landings, shelves, balconies, lintels, beams, girders and cantilever up to floor two level, including cost of form work of ordinary timber planking for flat surfaces such as soffits of suspended floor/roof slabs and landings up to 200 mm in thickness, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_8",
@@ -352,7 +359,8 @@ const DISTRICT_RA_LIBRARY = {
                 "page": "40",
                 "rate": 39.68
             },
-            "topic": "RCC"
+            "topic": "RCC",
+            "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in slabs, landings, shelves, balconies, lintels, beams, girders and cantilever up to floor two level, including cost of form work of ordinary timber planking for chullah hoods, weather shades, chhajjas, corbels etc. including edges, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_9",
@@ -394,7 +402,8 @@ const DISTRICT_RA_LIBRARY = {
                 "page": "40",
                 "rate": 39.68
             },
-            "topic": "RCC"
+            "topic": "RCC",
+            "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in slabs, landings, shelves, balconies, lintels, beams, girders and cantilever up to floor two level, including cost of form work of ordinary timber planking for sides and soffits of beams, beam haunchings, cantilevers, girders, bressumers and lintels exceeding 1 M in depth, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_10",
@@ -436,7 +445,8 @@ const DISTRICT_RA_LIBRARY = {
                 "page": "40",
                 "rate": 39.68
             },
-            "topic": "RCC"
+            "topic": "RCC",
+            "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in staircases excluding landing, up to floor two level, including cost of form work of ordinary timber planking for staircase with sloping or stepped soffits including risers and stringers, excluding landing, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_10A",
@@ -473,7 +483,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "RCC"
+            "topic": "RCC",
+            "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in walls, from top of foundation level up to floor two level, including cost of form work of ordinary timber planking for vertical fins and vertical sun breakers, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_11",
@@ -554,7 +565,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "topic": "SS railing"
+            "topic": "SS railing",
+            "longDesc": "Providing, fabricating and fixing in position 90 cm high stainless steel railing of AISI 304 grade, comprising 50 mm dia. top hand rail, 38 mm dia. vertical balusters, 25 mm dia. horizontal members and 18.75 mm dia. supporting pipes, with decorative stainless steel ball at ends, all pipes of approved gauge, cut to size, welded / joined with concealed joints, welds ground smooth and buffed to mirror finish, including base plates, anchor fasteners, grouting, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_12",
@@ -591,7 +603,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "RCC"
+            "topic": "RCC",
+            "longDesc": "Providing TMT bar Fe-500D reinforcement of approved make conforming to IS 1786 for R.C.C. work, including straightening, cutting, bending, binding with 18 gauge annealed binding wire, providing cover blocks and placing in position at all levels and all floors, complete as per bar bending schedule, drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_13",
@@ -633,7 +646,8 @@ const DISTRICT_RA_LIBRARY = {
                 "page": "104",
                 "rate": 24.22
             },
-            "topic": "Plaster"
+            "topic": "Plaster",
+            "longDesc": "Providing 20 mm thick double coat mala cement plaster on interior brick / concrete surfaces comprising base coat of 12 mm thick cement plaster in cement mortar 1:4 (1 cement : 4 coarse sand) in rough finish and 8 mm thick top coat of cement mortar 1:2 (1 cement : 2 coarse sand) finished with trowel, including neat cement floating coat, scaffolding, curing, raking of joints, making good around openings etc., complete as per specification and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_14",
@@ -686,7 +700,8 @@ const DISTRICT_RA_LIBRARY = {
                 "page": "104",
                 "rate": 24.22
             },
-            "topic": "Plaster"
+            "topic": "Plaster",
+            "longDesc": "Providing 10 mm thick smooth cement plaster in single coat in cement mortar 1:4 (1 cement : 4 fine sand) on ceilings and soffits of stairs, finished even and smooth with neat cement floating coat, including scaffolding, curing, cleaning of surface, making good etc., complete as per specification and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_15",
@@ -734,7 +749,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "topic": "Filling"
+            "topic": "Filling",
+            "longDesc": "Providing and filling cinder in sunken portions of floors / sunks in layers not exceeding 15 cm thickness, each layer well watered, rammed and consolidated, including conveyance, spreading, dressing to required level at all floors, complete as directed by the Engineer-in-Charge."
         },
         {
             "id": "lib_16",
@@ -776,7 +792,8 @@ const DISTRICT_RA_LIBRARY = {
                 "page": "40",
                 "rate": 39.68
             },
-            "topic": "RCC"
+            "topic": "RCC",
+            "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in foundations, footings, bases of columns and mass concrete, including cost of form work of ordinary timber planking for sides and soffits of beams, beam haunchings, cantilevers, girders, bressumers and lintels not exceeding 1 M in depth, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_17",
@@ -846,7 +863,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "topic": "Windows"
+            "topic": "Windows",
+            "longDesc": "Providing and fixing in position four track aluminium sliding window of Jindal E-section (30 mm series), anodised / powder coated to approved shade, with outer frame and shutters of specified section, including 5 mm thick plain glass panes, EPDM gaskets, PVC wool pile, nylon rollers, locking arrangement, aluminium handles, screws, necessary hold fasts, filling gaps with approved weather-proof sealant, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_18",
@@ -916,7 +934,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "topic": "Windows"
+            "topic": "Windows",
+            "longDesc": "Providing and fixing in position three track aluminium sliding window of Jindal E-section (30 mm series), anodised / powder coated to approved shade, with outer frame and shutters of specified section, including 5 mm thick plain glass panes, EPDM gaskets, PVC wool pile, nylon rollers, locking arrangement, aluminium handles, screws, necessary hold fasts, filling gaps with approved weather-proof sealant, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_19",
@@ -986,7 +1005,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "topic": "Windows"
+            "topic": "Windows",
+            "longDesc": "Providing and fixing in position two track aluminium sliding window of Jindal E-section (30 mm series), anodised / powder coated to approved shade, with outer frame and shutters of specified section, including 5 mm thick plain glass panes, EPDM gaskets, PVC wool pile, nylon rollers, locking arrangement, aluminium handles, screws, necessary hold fasts, filling gaps with approved weather-proof sealant, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_20",
@@ -1034,7 +1054,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "topic": "Windows"
+            "topic": "Windows",
+            "longDesc": "Providing and fixing in position aluminium ventilator of Jindal section 4605, anodised / powder coated to approved shade, fitted with adjustable / fixed glass louvres of approved make, including louvre clips, frame, screws, hold fasts, weather-proof sealant, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_21",
@@ -1192,7 +1213,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "topic": "Doors"
+            "topic": "Doors",
+            "longDesc": "Providing and fixing in position 50 mm thick specially designed main entrance door shutter of hollow flush construction with teak wood frame, both faces finished with decorative laminate of approved make and shade, fixed to second class teak wood door frame of specified section, including stainless steel butt hinges, mortice lock with cylinder, tower bolts, handles, door stopper, aluminium sections, moulding, necessary screws and hold fasts, French polishing / painting of exposed wood work, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_22",
@@ -1350,7 +1372,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "topic": "Doors"
+            "topic": "Doors",
+            "longDesc": "Providing and fixing in position 35 mm thick factory made flush door single shutter of solid core construction conforming to IS 12623 grade one, of approved make, with frame of first class hardwood, cross board and face veneer, fixed to door frame of specified section, including anodised aluminium butt hinges, mortice latch and lock, handles, tower bolts, door stopper, necessary screws and hold fasts, priming and painting / polishing of exposed surfaces, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_23",
@@ -1398,7 +1421,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "Doors"
+            "topic": "Doors",
+            "longDesc": "Providing and fixing in position F.R.P. door shutter of 35 mm thick depressed panel type with F.R.P. frame of size 100 mm x 50 mm, of approved make and shade, including hinges, tower bolts, handles, aldrop, necessary screws, hold fasts and fixing arrangement, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_24",
@@ -1446,7 +1470,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "Flooring"
+            "topic": "Flooring",
+            "longDesc": "Providing and laying glazed vitrified tile (GVT) flooring using 600 mm x 600 mm tiles of approved make, shade and first quality, laid over 20 mm thick base of cement mortar 1:4 (1 cement : 4 coarse sand), jointed with white cement slurry mixed with matching pigment, including cutting, rubbing, cleaning with oxalic acid, curing and removal of debris, complete as per specification and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_25",
@@ -1494,7 +1519,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "Flooring"
+            "topic": "Flooring",
+            "longDesc": "Providing and fixing glazed vitrified tile (GVT) skirting / dado using 600 mm x 600 mm tiles of approved make, shade and first quality, set over 12 mm thick backing of cement mortar 1:3 (1 cement : 3 fine sand), jointed with white cement slurry mixed with matching pigment, including cutting, rubbing, cleaning with oxalic acid, curing and scaffolding, complete as per specification and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_26",
@@ -1553,7 +1579,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "topic": "Flooring"
+            "topic": "Flooring",
+            "longDesc": "Providing and laying matt finished glazed ceramic tile flooring using 300 mm x 300 mm tiles of approved make, shade and first quality, laid over 20 mm thick base of cement mortar 1:4 (1 cement : 4 coarse sand), with 3 mm wide groove filled with epoxy grout of matching shade, including cutting, rubbing, cleaning with oxalic acid, curing and removal of debris, complete as per specification and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_27",
@@ -1612,7 +1639,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "topic": "Flooring"
+            "topic": "Flooring",
+            "longDesc": "Providing and fixing matt finished glazed ceramic tile dado using 300 mm x 900 mm tiles of approved make, shade and first quality, set over 12 mm thick backing of cement mortar 1:3 (1 cement : 3 fine sand), with 3 mm wide groove filled with epoxy grout of matching shade, including cutting, rubbing, cleaning with oxalic acid, curing and scaffolding, complete as per specification and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_28",
@@ -1671,7 +1699,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "topic": "Stone work"
+            "topic": "Stone work",
+            "longDesc": "Providing and fixing machine cut mirror polished granite stone slab 18 mm thick of approved shade for treads and risers of staircase, laid over 20 mm thick bed of cement mortar 1:3 (1 cement : 3 fine sand), including nosing and moulding on exposed edges, jointing with matching pigment, cutting, polishing at site, cleaning with oxalic acid, curing etc., complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_29",
@@ -1741,7 +1770,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "topic": "Stone work"
+            "topic": "Stone work",
+            "longDesc": "Providing and fixing 18 mm thick machine cut mirror polished granite stone cladding of approved shade over window sills, jambs and around openings, set in cement mortar 1:3 (1 cement : 3 fine sand), including moulding on exposed edges, cutting to size and shape, jointing with matching pigment, cleaning with oxalic acid, curing and scaffolding, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_30",
@@ -1789,7 +1819,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "Steel work"
+            "topic": "Steel work",
+            "longDesc": "Providing, fabricating and fixing in position M.S. safety grill of required pattern for windows and doors, made of M.S. flats at required spacing with frame all round and square or round bars, fixed to frame with round headed bolts and nuts or screws, welded joints ground smooth, and given one coat of red oxide zinc chromate primer and two coats of approved synthetic enamel paint of desired shade, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_31",
@@ -1837,7 +1868,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "Drainage"
+            "topic": "Drainage",
+            "longDesc": "Providing and fixing in position U.P.V.C. S.W.R. pipe Type-B of 75 mm outer diameter conforming to IS 13592 of approved make, including all fittings such as bends, tees, shoes and couplers, fixed to wall with M.S. clamps / holder bat clamps and rawl plugs, jointing with solvent cement, testing and scaffolding, complete as per direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_32",
@@ -1874,7 +1906,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "topic": "Drainage"
+            "topic": "Drainage",
+            "longDesc": "Providing and fixing P.V.C. S.W.R. cowl vent of 75 mm diameter of approved make at the top of vent pipe, including jointing with solvent cement, scaffolding and all labour, complete as per direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_33",
@@ -1911,7 +1944,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "topic": "Drainage"
+            "topic": "Drainage",
+            "longDesc": "Providing and fixing P.V.C. S.W.R. cowl vent of 110 mm diameter of approved make at the top of vent pipe, including jointing with solvent cement, scaffolding and all labour, complete as per direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_34",
@@ -1981,7 +2015,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "topic": "Sanitary"
+            "topic": "Sanitary",
+            "longDesc": "Providing and fixing white vitreous china European type water closet pan of approved make with P or S trap, complete with P.V.C. low level flushing cistern with fittings, solid plastic seat and cover with C.P. hinges, jet spray / health faucet with flexible hose, C.P. angle cock, connection pipes, bolts, nuts, rubber gasket, cutting and making good the walls and floors, testing and commissioning, complete as per direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_35",
@@ -2051,7 +2086,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "Sanitary"
+            "topic": "Sanitary",
+            "longDesc": "Providing and fixing white vitreous china Orissa type W.C. pan of size 580 mm of approved make with integral foot rests, P or S trap, flush valve with fittings, C.P. connection pipe, bolts, nuts, rubber gasket, cutting and making good the walls and floors, testing and commissioning, complete as per direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_36",
@@ -2110,7 +2146,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "Sanitary"
+            "topic": "Sanitary",
+            "longDesc": "Providing and fixing white vitreous china table top wash basin of size 450 mm x 400 mm x 135 mm of approved make, including C.P. pop-up waste, bottle trap, C.P. connection pipes with angle cock, brackets / clamps, cutting and making good the walls, testing and commissioning, complete as per direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_37",
@@ -2147,7 +2184,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "Sanitary"
+            "topic": "Sanitary",
+            "longDesc": "Providing and fixing C.P. brass wall mixer three-in-one of approved make and quality with wall flange, including necessary fittings, cutting and making good the walls, testing and commissioning, complete as per direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_38",
@@ -2184,7 +2222,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "Sanitary"
+            "topic": "Sanitary",
+            "longDesc": "Providing and fixing C.P. brass angle cock of approved make and quality with wall flange, including necessary fittings, cutting and making good the walls, testing and commissioning, complete as per direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_39",
@@ -2254,7 +2293,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "Stone platform"
+            "topic": "Stone platform",
+            "longDesc": "Providing and fixing wash basin platform comprising 18 mm thick machine cut mirror polished black granite top on 25 mm thick polished Kota stone vertical supports, set in cement mortar 1:3 (1 cement : 3 fine sand), including cutting the slab to required size and shape, cut-outs for wash basin, moulding on exposed edges, jointing with matching pigment, polishing at site, cleaning with oxalic acid and curing, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_40",
@@ -2302,7 +2342,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "Drainage"
+            "topic": "Drainage",
+            "longDesc": "Constructing brick masonry inspection chamber of internal size 455 mm x 610 mm in cement mortar 1:5 (1 cement : 5 fine sand), including excavation, C.C. 1:4:8 foundation bed, 12 mm thick cement plaster in C.M. 1:3 internally finished with neat cement, channel and benching in cement concrete, providing and fixing pre-cast R.C.C. cover with frame, backfilling and disposal of surplus earth, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_41",
@@ -2350,7 +2391,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "Drainage"
+            "topic": "Drainage",
+            "longDesc": "Constructing brick masonry inspection chamber of internal size 500 mm x 700 mm in cement mortar 1:5 (1 cement : 5 fine sand), including excavation, C.C. 1:4:8 foundation bed, 12 mm thick cement plaster in C.M. 1:3 internally finished with neat cement, channel and benching in cement concrete, providing and fixing pre-cast R.C.C. cover with frame, backfilling and disposal of surplus earth, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_42",
@@ -2398,7 +2440,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "Steel work"
+            "topic": "Steel work",
+            "longDesc": "Providing, fabricating and fixing in position M.S. ladder made of M.S. flats and round bars of required section and spacing, welded joints ground smooth, fixed to wall with M.S. clamps and anchor fasteners, and given one coat of red oxide zinc chromate primer and two coats of approved synthetic enamel paint of desired shade, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_43",
@@ -2468,7 +2511,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "Sanitary"
+            "topic": "Sanitary",
+            "longDesc": "Providing and fixing stainless steel AISI 316 grade glossy finish kitchen sink of overall size 610 mm x 460 mm with bowl of size 560 mm x 410 mm x 200 mm of approved make, including C.P. waste coupling, bottle trap, C.P. connection pipes with angle cock, brackets / clamps, cutting and making good the walls, testing and commissioning, complete as per direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_44",
@@ -2538,7 +2582,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "Stone platform"
+            "topic": "Stone platform",
+            "longDesc": "Providing and fixing sandwich type kitchen / service platform comprising 15 to 18 mm thick machine cut mirror polished black granite top supported on 25 mm thick polished Kota stone vertical supports, set in cement mortar 1:3 (1 cement : 3 fine sand), including cutting the slab to required size and shape, cut-outs for sink, moulding on exposed edges, jointing with matching pigment, polishing at site, cleaning with oxalic acid and curing, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_45",
@@ -2564,7 +2609,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "topic": "Dewatering"
+            "topic": "Dewatering",
+            "longDesc": "Dewatering arrangement for keeping the excavation / working area free from water by deploying 5 H.P. pump set with suction and delivery pipes, including hire charges, fuel, operator, labour, laying and removal of pipes, and disposal of water to a safe distance, complete as directed by the Engineer-in-Charge."
         },
         {
             "id": "lib_45A",
@@ -2667,7 +2713,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "topic": "Kitchen fittings"
+            "topic": "Kitchen fittings",
+            "longDesc": "Providing and fixing kitchen platform trolley unit made of 19 mm thick BWR grade plywood finished with decorative laminate of approved shade on exposed surfaces, fitted with three stainless steel AISI 304 grade baskets, telescopic channels / soft close sliders, hinges, handles, screws and all necessary hardware, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_46",
@@ -2704,7 +2751,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "Gates"
+            "topic": "Gates",
+            "longDesc": "Providing, fabricating and fixing in position decorative entrance gate made of cast iron ornamental components and M.S. tubular / square sections for frame and bracing, welded joints ground smooth, complete with all hardware such as hinges, pivot rollers, guide rails, stoppers, locking arrangement, tower bolts and handles, and given one coat of red oxide zinc chromate primer and two coats of approved synthetic enamel paint of desired shade, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_47",
@@ -2763,7 +2811,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "topic": "Fencing"
+            "topic": "Fencing",
+            "longDesc": "Providing and fixing concertina coil fencing of 600 mm diameter reinforced barbed tape (R.B.T.) of approved make, mounted on M.S. angle posts 50 mm x 50 mm x 5 mm fixed at required spacing in cement concrete blocks, including G.I. binding wire, stays, staples, priming and two coats of enamel painting to angle posts, all labour and materials, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_48",
@@ -2844,7 +2893,8 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "topic": "Fencing"
+            "topic": "Fencing",
+            "longDesc": "Providing, fabricating and fixing in position cattle guard using I.S.M.C. 100 mm x 50 mm and 100 mm x 75 mm sections with 50 mm dia. G.I. pipes at required spacing, including excavation, brick masonry / cement concrete supporting walls, welding, painting with one coat of primer and two coats of enamel paint, all labour, materials, tools and plants, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_49",
@@ -2882,7 +2932,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 379.58,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying brick work in super structure above plinth level up to floor two level using common burnt clay conventional building bricks having crushing strength not less than 35 kg/Sq.Cm. in cement mortar 1:6 (1 cement : 6 fine sand), including raking out joints, scaffolding, curing, all labour, materials, tools and plants, complete as per specification and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_50",
@@ -2920,7 +2971,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 55.17,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying half brick masonry in super structure above plinth level using common burnt clay conventional building bricks having crushing strength not less than 35 kg/Sq.Cm. in cement mortar 1:4 (1 cement : 4 coarse sand), including scaffolding, curing, raking out joints and making good, complete as per specification and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_51",
@@ -2947,7 +2999,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 292.2,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing 150 mm wide G.I. chicken wire mesh of approved gauge over the junctions of brick masonry and R.C.C. members before plastering, fixed with galvanised nails / staples at required spacing, including cutting the mesh to required width, scaffolding and all labour, complete as directed by the Engineer-in-Charge."
         },
         {
             "id": "lib_52",
@@ -2996,7 +3049,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 170.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying broken china mosaic water proofing treatment over terrace using 12 mm to 20 mm broken pieces of glazed tiles laid over 40 mm average thick cement concrete 1:2:4 bedding mixed with approved water proofing compound at 1 kg per bag of cement, laid to required slope and tamped to bring cement creme to the surface, jointed with white cement, including rounding off junctions and extending 15 cm along the wall, cleaning with water and oxalic acid, curing and ponding test, complete as directed by the Engineer-in-Charge."
         },
         {
             "id": "lib_53",
@@ -3045,7 +3099,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 60.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying plinth protection with 60 mm thick inter-locking concrete paver blocks of approved shape, shade and strength, laid over 75 mm thick sand bed on 100 mm thick brick bat soling, edged with pre-cast cement concrete kerb stone of size 30 cm x 30 cm x 15 cm of M-250 grade, including excavation, levelling, dressing, compaction, filling the joints with fine sand and cement mortar 1:3, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_54",
@@ -3072,7 +3127,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 10803.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing in position frameless toughened glass door of 12 mm to 18 mm thickness of approved make and quality, complete with stainless steel AISI 304 grade patch fittings, floor spring of approved make with cover plate, top and bottom patches, pivots, lock with strike plate, D-type handles, gaskets, all necessary hardware, cutting and making good the floor and walls, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_55",
@@ -3110,7 +3166,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 2105.38,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing in position double shutter door comprising 38 mm thick solid core factory made flush door shutters of non-decorative type with block board core, fixed to polished granite door frame of approved shade and section, including anodised aluminium butt hinges, mortice lock, tower bolts, handles, door stopper, necessary screws and hold fasts, priming and painting / polishing of exposed surfaces, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_56",
@@ -3148,7 +3205,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 2164.38,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing in position single shutter door comprising 38 mm thick solid core factory made flush door shutter of non-decorative type with block board core, fixed to polished granite door frame of approved shade and section, including anodised aluminium butt hinges, mortice lock, tower bolts, handles, door stopper, necessary screws and hold fasts, priming and painting / polishing of exposed surfaces, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_57",
@@ -3208,7 +3266,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 205.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing 25 mm thick polished Kota stone shelf of approved shade, set in cement mortar 1:3 (1 cement : 3 fine sand), including cutting grooves in the wall for bearing, moulding and rounding of exposed edges, jointing with matching pigment, polishing at site, cleaning with oxalic acid, curing and scaffolding, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_58",
@@ -3246,7 +3305,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 247.2,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in walls, from top of foundation level up to floor two level, including cost of form work of ordinary timber planking for vertical surfaces such as walls of any thickness, partitions and the like including attached buttresses and string course, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_59",
@@ -3328,7 +3388,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 500.0,
                     "cpApply": true
                 }
-            ]
+            ],
+            "longDesc": "Providing, fabricating and fixing in position 120 cm high stainless steel railing of AISI 316 grade, comprising 50 mm dia. top hand rail, 38 mm dia. vertical balusters, 25 mm dia. horizontal members and 18.75 mm dia. supporting pipes, with decorative stainless steel ball at ends, all pipes of approved gauge, cut to size, welded / joined with concealed joints, welds ground smooth and buffed to mirror finish, including base plates, anchor fasteners, grouting, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_60",
@@ -3371,7 +3432,8 @@ const DISTRICT_RA_LIBRARY = {
                 "sorCode": "17007A",
                 "page": "104",
                 "rate": 24.22
-            }
+            },
+            "longDesc": "Providing 15 mm thick mala cement plaster in cement mortar 1:4 (1 cement : 4 coarse sand) on interior brick / concrete surfaces, finished with trowel to an even and smooth surface, including neat cement floating, scaffolding, curing, raking of joints and making good around openings, at all floors, complete as per specification and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_61",
@@ -3442,7 +3504,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 500.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing white vitreous china wash-down type European water closet of approved make with P or S trap, complete with I.S.I. marked P.V.C. flushing tank with fittings, solid plastic seat and cover with C.P. hinges, health faucet / jet spray with stainless steel flexible hose and wall hook, C.P. angle cock, connection pipes, bolts, nuts, rubber gasket, cutting and making good the walls and floors, testing and commissioning, complete as per direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_62",
@@ -3491,7 +3554,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 68.47,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing, fabricating and fixing in position G.I. ladder made of G.I. flats and round bars of required section and spacing, welded joints ground smooth, fixed to wall with clamps and anchor fasteners, and given one coat of red oxide zinc chromate primer and two coats of approved synthetic enamel paint of desired shade, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_63",
@@ -3562,7 +3626,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 650.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing service platform comprising 18 mm thick machine cut mirror polished black granite top supported on 25 mm thick polished Kota stone vertical supports, set in cement mortar 1:3 (1 cement : 3 fine sand), including cutting the slab to required size and shape, necessary cut-outs, moulding on exposed edges, jointing with matching pigment, polishing at site, cleaning with oxalic acid and curing, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_64",
@@ -3611,7 +3676,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 35.56,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing, fabricating and fixing in position foldable steel entrance gate made of M.S. hollow rectangular / square sections for frame and bracing, with M.S. sheet infill panels as required, including one integrated hinged wicket gate (single leaf type) of size approximately 1.0 M width. The gate shall be of bi-fold type with two folding leaves on either side of the central existing R.C.C. column, making a total of four panels, complete with all necessary hardware such as hinges, pivot rollers, top and bottom guide rails, stoppers, locking arrangements, tower bolts, handles and latches. The entire surface shall be cleaned, welded joints ground smooth, and given a coat of red oxide zinc chromate primer and two or more coats of approved synthetic enamel paint of desired shade. All work shall be completed as per drawing, manufacturer’s specification and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_65",
@@ -3649,7 +3715,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 33.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing 1.20 metre high fencing with 2.0 metre long M.S. angle posts of size 40 mm x 40 mm x 6 mm, oil painted in three coats and fixed at 2.5 M centre to centre, with five horizontal lines and two diagonals of galvanised steel barbed wire weighing 9.38 kg per 100 metre, strained and fixed to posts with G.I. staples, including fixing the posts in ground in 0.5 M x 0.5 M x 0.5 M block of cement concrete 1:5:10, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_66",
@@ -3687,7 +3754,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 186.24,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying controlled cement concrete M-150 and curing complete, for reinforced concrete work in foundations, footings, bases of columns and mass concrete, including cost of form work of ordinary timber planking for foundations, footings, bases of columns and mass concrete, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_67",
@@ -3725,7 +3793,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 186.24,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying controlled cement concrete M-250 and curing complete, for reinforced concrete work in foundations, footings, bases of columns and mass concrete, including cost of form work of ordinary timber planking for foundations, footings, bases of columns and mass concrete, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_68",
@@ -3763,7 +3832,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 323.39,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying controlled cement concrete M-250 and curing complete, for reinforced concrete work in columns, pillars, posts and struts up to floor two level, including cost of form work of ordinary timber planking for columns, pillars, posts and struts, square/rectangular/polygonal in plan, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_69",
@@ -3801,7 +3871,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 186.24,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying cement concrete 1:4:8 (1 Cement : 4 coarse sand : 8 hand broken stone aggregate 40 mm nominal size) and curing complete, in foundation and plinth, including cost of form work of ordinary timber planking for foundations, footings, bases of columns and mass concrete, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_70",
@@ -3839,7 +3910,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 209.95,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying controlled cement concrete M-250 and curing complete, for reinforced concrete work in slabs, landings, shelves, balconies, lintels, beams, girders and cantilever up to floor two level, including cost of form work of ordinary timber planking for sides and soffits of beams, beam haunchings, cantilevers, girders, bressumers and lintels not exceeding 1 M in depth, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_71",
@@ -3877,7 +3949,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 323.39,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in columns, pillars, posts and struts up to floor two level, including cost of form work of ordinary timber planking for columns, pillars, posts and struts, square/rectangular/polygonal in plan, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_72",
@@ -3915,7 +3988,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 209.95,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in slabs, landings, shelves, balconies, lintels, beams, girders and cantilever up to floor two level, including cost of form work of ordinary timber planking for sides and soffits of beams, beam haunchings, cantilevers, girders, bressumers and lintels not exceeding 1 M in depth, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_73",
@@ -3953,7 +4027,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 209.95,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in slabs, landings, shelves, balconies, lintels, beams, girders and cantilever up to floor two level, including cost of form work of ordinary timber planking for sides and soffits of beams, beam haunchings, cantilevers, girders, bressumers and lintels not exceeding 1 M in depth, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_74",
@@ -3991,7 +4066,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 171.87,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in slabs, landings, shelves, balconies, lintels, beams, girders and cantilever up to floor two level, including cost of form work of ordinary timber planking for chullah hoods, weather shades, chhajjas, corbels etc. including edges, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_75",
@@ -4029,7 +4105,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 411.43,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying controlled cement concrete M-250 and curing complete, for reinforced concrete work in walls, from top of foundation level up to floor two level, including cost of form work of ordinary timber planking for vertical fins and vertical sun breakers, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_76",
@@ -4067,7 +4144,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 270.9,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in slabs, landings, shelves, balconies, lintels, beams, girders and cantilever up to floor two level, including cost of form work of ordinary timber planking for flat surfaces such as soffits of suspended floor/roof slabs and landings up to 200 mm in thickness, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_77",
@@ -4105,7 +4183,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 264.13,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in staircases excluding landing, up to floor two level, including cost of form work of ordinary timber planking for staircase with sloping or stepped soffits including risers and stringers, excluding landing, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_78",
@@ -4143,7 +4222,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 0.48,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing TMT bar Fe-500D reinforcement of approved make conforming to IS 1786 for R.C.C. work, including straightening, cutting, bending, binding with 18 gauge annealed binding wire, providing cover blocks and placing in position at all levels and all floors, including extra lift above floor two level, complete as per bar bending schedule, drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_79",
@@ -4181,7 +4261,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 379.58,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying brick work in super structure above plinth level up to floor two level using common burnt clay conventional building bricks having crushing strength not less than 35 kg/Sq.Cm. in cement mortar 1:6 (1 cement : 6 fine sand), including raking out joints, scaffolding, curing, all labour, materials, tools and plants, complete as per specification and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_80",
@@ -4219,7 +4300,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 56.83,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying half brick masonry in super structure above plinth level using common burnt clay conventional building bricks having crushing strength not less than 35 kg/Sq.Cm. in cement mortar 1:4 (1 cement : 4 coarse sand), including scaffolding, curing, raking out joints and making good, complete as per specification and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_81",
@@ -4257,7 +4339,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 23.17,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing 20 mm thick double coat mala cement plaster on interior brick / concrete surfaces comprising base coat of 12 mm thick cement plaster in cement mortar 1:4 (1 cement : 4 coarse sand) in rough finish and 8 mm thick top coat of cement mortar 1:2 (1 cement : 2 coarse sand) finished with trowel, including floating coat, scaffolding, curing, raking of joints and making good around openings, complete as per specification and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_82",
@@ -4306,7 +4389,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 37.01,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing 10 mm thick cement plaster in single coat in cement mortar 1:3 (1 cement : 3 sand) on ceilings and soffits of stairs, finished even and smooth with neat cement floating coat, including scaffolding, curing and making good, complete as per specification and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_83",
@@ -4344,7 +4428,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 170.09,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing water proofing treatment to sunken portions of toilets / bathrooms by laying cement concrete 1:2:4 (1 cement : 2 coarse sand : 4 graded stone aggregate 20 mm nominal size) of 50 mm average thickness mixed with approved water proofing compound, laid to required slope, including surface preparation, cleaning, brick bat coba where directed, curing and ponding test, complete as per specification and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_84",
@@ -4382,7 +4467,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 12.52,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing 20 mm thick sand faced cement plaster on external walls up to a height of 10 metres above ground level, consisting of 12 mm thick backing coat of cement mortar 1:3 (1 cement : 3 sand) and 8 mm thick finishing coat of cement mortar 1:1 (1 cement : 1 sand), with 1 cm x 1 cm grooves formed at required locations as per drawing, including scaffolding, curing, raking of joints and making good, complete as per specification and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_85",
@@ -4409,7 +4495,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 9616.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing, fabricating and fixing in position M.S. factory fabricated double shutter entrance door made of M.S. hollow rectangular / square sections for frame and bracing with M.S. sheet infill panels of approved gauge, welded joints ground smooth, complete with all necessary hardware such as hinges, pivot rollers, guide rails, stoppers, locking arrangement, tower bolts and handles, and given one coat of red oxide zinc chromate primer and two coats of approved synthetic enamel paint of desired shade, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_86",
@@ -4436,7 +4523,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 6566.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing in position anodised aluminium single shutter door comprising 35 mm thick flush shutter with aluminium framing of approved section and shade, including anodised aluminium hinges, mortice lock, handles, tower bolts, door stopper, gaskets, screws, hold fasts, weather-proof sealant, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_87",
@@ -4463,7 +4551,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 4337.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing in position circular window with three track powder coated aluminium frame and shutters of approved section and shade, including 5 mm thick plain glass panes, EPDM gaskets, PVC wool pile, nylon rollers, locking arrangement, handles, screws, hold fasts, weather-proof sealant, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_88",
@@ -4490,7 +4579,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 3852.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing in position two track anodised / powder coated aluminium sliding window with fixed glazing panel, of approved section and shade, including 5 mm thick plain glass panes, EPDM gaskets, PVC wool pile, nylon rollers, locking arrangement, handles, screws, hold fasts, weather-proof sealant, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_89",
@@ -4550,7 +4640,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 1190.61,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing 18 mm thick machine cut both side mirror polished black granite slab of approved shade on window sills and jambs, set in cement mortar 1:3 (1 cement : 3 fine sand), including cutting to required size and shape, moulding on exposed edges, jointing with matching pigment, polishing at site, cleaning with oxalic acid, curing and scaffolding, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_90",
@@ -4599,7 +4690,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 68.47,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing, fabricating and fixing in position safety grill made of M.S. square / round bars at required spacing with C.R.C. frame all round, fixed with round headed bolts and nuts or screws, welded joints ground smooth, and given one coat of red oxide zinc chromate primer and two coats of approved synthetic enamel paint of desired shade, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_91",
@@ -4648,7 +4740,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 181.11,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying broken china mosaic water proofing treatment over terrace using 12 mm to 20 mm broken pieces of glazed tiles laid over 50 mm average thick cement concrete 1:2:4 bedding mixed with approved water proofing compound, laid to required slope and tamped to bring cement creme to the surface, jointed with white cement, including rounding off junctions and extending 15 cm along the wall, cleaning with water and oxalic acid, curing and ponding test, complete as directed by the Engineer-in-Charge."
         },
         {
             "id": "lib_92",
@@ -4686,7 +4779,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 537.79,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing 18 mm thick machine cut double side mirror polished granite slab of approved shade as partition, fixed in position with stainless steel / M.S. framing, anchor fasteners and adhesive as required, including cutting to size and shape, moulding on exposed edges, jointing with matching pigment, polishing at site, cleaning with oxalic acid, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_93",
@@ -4713,7 +4807,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 3221.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing, fabricating and fixing in position 90 cm high stainless steel railing of AISI 304 grade comprising top hand rail, vertical balusters and horizontal members of approved dia. and gauge, cut to size, welded / joined with concealed joints, welds ground smooth and buffed to mirror finish, including base plates, anchor fasteners, grouting, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_94",
@@ -4740,7 +4835,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 5205.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing white vitreous china table top wash basin of size 610 mm x 450 mm of approved make, including C.P. pillar cock, pop-up waste, bottle trap, C.P. connection pipes with angle cock, brackets / clamps, cutting and making good the walls, testing and commissioning, complete as per direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_95",
@@ -4767,7 +4863,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 3052.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing stainless steel AISI 304 grade kitchen sink of size 610 mm x 460 mm of approved make, including waste coupling, bottle trap, C.P. connection pipes with angle cock, brackets / clamps, cutting and making good the walls, testing and commissioning, complete as per direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_96",
@@ -4794,7 +4891,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 7074.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing white vitreous china wall hung European type water closet of approved make, complete with concealed cistern and push valve / flush plate of approved make, wall mounting frame and brackets, solid plastic seat and cover with C.P. hinges, health faucet with flexible hose, C.P. angle cock, connection pipes, bolts, nuts, rubber gasket, cutting and making good the walls and floors, testing and commissioning, complete as per direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_97",
@@ -4821,7 +4919,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 43302.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing complete set of sanitary fittings for handicap / divyang toilet of approved make (CERA Cruise set or equivalent), comprising wall hung water closet with concealed cistern, wash basin with fittings, stainless steel grab bars, folding support rails, mirror, health faucet, C.P. fittings and all accessories, including cutting and making good the walls and floors, testing and commissioning, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_98",
@@ -4848,7 +4947,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 3967.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing white vitreous china wall hung urinal of approved make, complete with flush valve / sensor flushing arrangement, C.P. spreader, waste coupling, bottle trap, connection pipes with angle cock, brackets / clamps, cutting and making good the walls, testing and commissioning, complete as per direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_99",
@@ -4875,7 +4975,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 3784.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing sandwich type platform comprising machine cut mirror polished granite top supported on polished Kota stone vertical supports, set in cement mortar 1:3 (1 cement : 3 fine sand), including cutting the slab to required size and shape, necessary cut-outs, moulding on exposed edges, jointing with matching pigment, polishing at site, cleaning with oxalic acid and curing, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_100",
@@ -4902,7 +5003,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 2255.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing, fabricating and fixing in position railing made of M.S. square pipe sections of approved size and gauge for hand rail, balusters and horizontal members, welded joints ground smooth, fixed with base plates and anchor fasteners, and given one coat of red oxide zinc chromate primer and two coats of approved synthetic enamel paint of desired shade, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_101",
@@ -4929,7 +5031,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 1720.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying glossy glazed vitrified tile (GVT) flooring using 600 mm x 600 mm tiles of approved make, shade and first quality, laid over 20 mm thick base of cement mortar 1:4 (1 cement : 4 coarse sand), jointed with white cement slurry mixed with matching pigment, including cutting, rubbing, cleaning with oxalic acid, curing and removal of debris, complete as per specification and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_102",
@@ -4956,7 +5059,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 1458.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing glazed vitrified tile (GVT) skirting, risers and dado of approved make, shade and first quality, set over 12 mm thick backing of cement mortar 1:3 (1 cement : 3 fine sand), jointed with white cement slurry mixed with matching pigment, including cutting, rubbing, cleaning with oxalic acid, curing and scaffolding, complete as per specification and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_103",
@@ -4983,7 +5087,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 1000.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing wall signage made of 1.5 mm thick stainless steel AISI 304 grade laser cut letters / symbols of approved font, size and finish, fixed to wall with concealed studs, spacers and adhesive as required, including drilling, making good the wall surface, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_104",
@@ -5010,7 +5115,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 50872.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Constructing soak pit of 2.28 metre internal diameter and 6.5 metre depth, including excavation in all kinds of soil, brick masonry honey comb lining in cement mortar, filling with graded brick bats and stone metal, R.C.C. cover slab with frame, inlet arrangement, backfilling and disposal of surplus excavated material, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_105",
@@ -5037,7 +5143,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 92086.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Constructing septic tank of internal size 4.95 m x 1.98 m x 2.5 m including excavation in all kinds of soil, cement concrete foundation bed, brick masonry walls in cement mortar, internal and external plastering with water proofing compound, R.C.C. top slab with manhole covers and frames, baffle walls, inlet and outlet arrangement with pipes and tees, vent pipe with cowl, backfilling and disposal of surplus excavated material, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_106",
@@ -5064,7 +5171,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 816.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing, fabricating and fixing in position stainless steel AISI 304 grade hand railing of 32 mm diameter pipe of approved gauge, cut to size, welded / joined with concealed joints, welds ground smooth and buffed to mirror finish, fixed to wall / floor with brackets, base plates and anchor fasteners, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_107",
@@ -5091,7 +5199,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 76.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing G.I. chicken wire mesh of approved width and gauge over the junctions of brick masonry and R.C.C. members before plastering, fixed with galvanised nails / staples at required spacing, including cutting the mesh to required width, scaffolding and all labour, complete as directed by the Engineer-in-Charge."
         },
         {
             "id": "lib_108",
@@ -5118,7 +5227,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 8610.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing in position anodised aluminium ventilator of size approximately 65 cm x 25 cm of approved section and shade, fitted with glass / aluminium louvres, including louvre clips, frame, screws, hold fasts, weather-proof sealant, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_109",
@@ -5145,7 +5255,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 8476.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing 114 mm wide G.I. louvers of 0.55 mm thickness of approved make and profile, fixed to frame with necessary clips, screws and supporting members, including cutting to required size, priming and painting where directed, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_110",
@@ -5183,7 +5294,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 323.39,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying controlled cement concrete M-250 and curing complete, for reinforced concrete work in columns, pillars, posts and struts up to floor two level, including cost of form work of ordinary timber planking for columns, pillars, posts and struts, square/rectangular/polygonal in plan, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_111",
@@ -5221,7 +5333,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 209.95,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying controlled cement concrete M-250 and curing complete, for reinforced concrete work in slabs, landings, shelves, balconies, lintels, beams, girders and cantilever up to floor two level, including cost of form work of ordinary timber planking for sides and soffits of beams, beam haunchings, cantilevers, girders, bressumers and lintels not exceeding 1 M in depth, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_112",
@@ -5259,7 +5372,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 247.2,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and laying controlled cement concrete M-250 and curing complete, for reinforced concrete work in walls, from top of foundation level up to floor two level, including cost of form work of ordinary timber planking for vertical surfaces such as walls of any thickness, partitions and the like including attached buttresses and string course, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)"
         },
         {
             "id": "lib_113",
@@ -5286,7 +5400,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 6066.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing in position single shutter door with green marble door frame of approved shade and section, with 38 mm thick solid core flush shutter, including anodised aluminium butt hinges, mortice lock, tower bolts, handles, door stopper, necessary screws and hold fasts, priming and painting / polishing of exposed surfaces, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_114",
@@ -5313,7 +5428,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 4709.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing in position circular window with three track anodised / powder coated aluminium frame and shutters of approved section and shade, including 5 mm thick plain glass panes, EPDM gaskets, PVC wool pile, nylon rollers, locking arrangement, handles, screws, hold fasts, weather-proof sealant, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_115",
@@ -5340,7 +5456,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 4619.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing in position two track anodised / powder coated aluminium sliding window of approved section and shade, including 5 mm thick plain glass panes, EPDM gaskets, PVC wool pile, nylon rollers, locking arrangement, handles, screws, hold fasts, weather-proof sealant, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge."
         },
         {
             "id": "lib_116",
@@ -5367,7 +5484,8 @@ const DISTRICT_RA_LIBRARY = {
                     "rate": 2131.0,
                     "cpApply": false
                 }
-            ]
+            ],
+            "longDesc": "Providing and fixing 18 mm thick machine cut polished green marble slab of approved shade on window sills and jambs, set in cement mortar 1:3 (1 cement : 3 fine sand), including cutting to required size and shape, moulding on exposed edges, jointing with matching pigment, polishing at site, cleaning with oxalic acid, curing and scaffolding, complete as per drawing and direction of the Engineer-in-Charge."
         }
     ],
     marketRates: [

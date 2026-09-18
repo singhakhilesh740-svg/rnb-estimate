@@ -225,8 +225,14 @@
     </div>
 
     <div style="padding:10px 12px;border-bottom:1px solid #eef">
-      <label style="font-size:12px;color:#456;display:block;margin-bottom:3px">Description</label>
-      <textarea data-rah="desc" rows="3" style="width:100%;padding:6px 8px;border:1px solid #ccd;border-radius:5px;font:inherit;font-size:13px">${esc(draft.desc || '')}</textarea>
+      <label style="font-size:12px;color:#456;display:block;margin-bottom:3px">Description (short — abstract me yahi aayega)</label>
+      <textarea data-rah="desc" rows="2" style="width:100%;padding:6px 8px;border:1px solid #ccd;border-radius:5px;font:inherit;font-size:13px">${esc(draft.desc || '')}</textarea>
+    </div>
+
+    <div style="padding:10px 12px;border-bottom:1px solid #eef">
+      <label style="font-size:12px;color:#456;display:block;margin-bottom:3px">Full item description (RA sheet / PDF me chhapegi — "Providing and laying…" wali)</label>
+      <textarea data-rah="longDesc" rows="6" style="width:100%;padding:6px 8px;border:1px solid #ccd;border-radius:5px;font:inherit;font-size:12.5px">${esc(draft.longDesc || '')}</textarea>
+      <span style="font-size:11px;color:#678">Khaali chhod doge to short description hi print hogi.</span>
     </div>
 
     <div style="padding:10px 12px">
@@ -549,9 +555,22 @@
   const THIN2 = { style: 'thin' };
   const BOX2 = { top: THIN2, left: THIN2, bottom: THIN2, right: THIN2 };
 
+  const fullDesc = ra => String(ra.longDesc || ra.desc || '');
+  /* do-column signature — left: preparing officer, right: approving officer */
+  function signCols() {
+    const p = (typeof window !== 'undefined' && window.userProfile) || null;
+    const dist = (typeof district === 'function' && district()) || 'Dahod';
+    const left = [ (p && p.post) || 'Deputy Executive Engineer',
+                   (p && p.sub)  || 'R&B Sub Division',
+                   dist ];
+    const right = ['Executive Engineer', 'R&B Division', dist];
+    return [left, right];
+  }
+
   function raSheet(wb, entries, titleNote) {
     const ws = wb.addWorksheet('RA', {
-      pageSetup: { paperSize: 9, orientation: 'portrait', fitToPage: true, fitToWidth: 1, fitToHeight: 0 }
+      pageSetup: { paperSize: 9, orientation: 'portrait', fitToPage: true, fitToWidth: 1, fitToHeight: 0,
+                   margins: { left: 0.5, right: 0.4, top: 0.5, bottom: 0.5, header: 0.2, footer: 0.2 } }
     });
     [6, 9, 44, 8, 9, 11, 13, 14].forEach((w, i) => ws.getColumn(i + 1).width = w);
     let r = 1;
@@ -566,17 +585,25 @@
       n2.value = titleNote; n2.font = AR(10); n2.alignment = { horizontal: 'center', wrapText: true };
       ws.getRow(r).height = 26; r++;
     }
+    /* heading rows repeat on top of every printed page */
+    ws.pageSetup.printTitlesRow = '1:' + (titleNote ? 2 : 1);
     r++;
 
-    entries.forEach(({ serial, ra }) => {
+    entries.forEach(({ serial, ra }, idx) => {
       const c = calc(ra);
-      /* item header */
+      /* item header — RA no. + full item description, no shortening */
       ws.mergeCells(`A${r}:H${r}`);
       const hc = ws.getCell(`A${r}`);
-      hc.value = `R.A. No. ${serial}${ra.itemNo ? '   (Item No. ' + ra.itemNo + ')' : ''}   —   ${ra.desc || ''}`;
+      hc.value = `R.A. No. ${serial}${ra.itemNo ? '   (Item No. ' + ra.itemNo + ')' : ''}`;
       hc.font = AR(11, true); hc.alignment = { wrapText: true, vertical: 'middle' };
       hc.border = BOX2;
-      ws.getRow(r).height = Math.max(18, Math.ceil(String(hc.value).length / 95) * 14 + 6);
+      r++;
+      ws.mergeCells(`A${r}:H${r}`);
+      const dc = ws.getCell(`A${r}`);
+      dc.value = '"' + fullDesc(ra) + '"';
+      dc.font = AR(10); dc.alignment = { wrapText: true, vertical: 'top', horizontal: 'justify' };
+      dc.border = BOX2;
+      ws.getRow(r).height = Math.max(18, Math.ceil(String(dc.value).length / 108) * 13 + 6);
       r++;
       if (ra.basis) {
         ws.mergeCells(`A${r}:H${r}`);
@@ -629,20 +656,25 @@
         fc.font = AR(9); fc.border = BOX2; fc.alignment = { wrapText: true };
         r++;
       }
-      r++;   // blank spacer between RAs
+      /* signature block for THIS rate analysis — do column */
+      r += 2;
+      const [sL, sR] = signCols();
+      for (let k = 0; k < Math.max(sL.length, sR.length); k++) {
+        ws.mergeCells(`B${r}:D${r}`);
+        const lc2 = ws.getCell(`B${r}`);
+        lc2.value = sL[k] || ''; lc2.font = AR(10, true); lc2.alignment = { horizontal: 'center' };
+        ws.mergeCells(`F${r}:H${r}`);
+        const rc2 = ws.getCell(`F${r}`);
+        rc2.value = sR[k] || ''; rc2.font = AR(10, true); rc2.alignment = { horizontal: 'center' };
+        r++;
+      }
+      /* har RA apne page par — agli RA fresh page se shuru */
+      if (idx < entries.length - 1) {
+        ws.getRow(r - 1).addPageBreak();
+        r++;
+      }
     });
 
-    /* signature */
-    r++;
-    const sb = (typeof signBlock === 'function') ? signBlock()
-      : ['Deputy Executive Engineer', 'R & B Sub Division,', 'Dahod.'];
-    sb.forEach(line => {
-      if (!line) return;
-      ws.mergeCells(`F${r}:H${r}`);
-      const sc = ws.getCell(`F${r}`);
-      sc.value = line; sc.font = AR(10); sc.alignment = { horizontal: 'center' };
-      r++;
-    });
     return ws;
   }
 
@@ -686,15 +718,18 @@
     }
     head(true);
 
-    entries.forEach(({ serial, ra }) => {
+    entries.forEach(({ serial, ra }, idx) => {
       const c = calc(ra);
-      if (y > H - 150) { doc.addPage('a4', 'portrait'); head(false); }
+      /* har RA fresh page se */
+      if (idx > 0) { doc.addPage('a4', 'portrait'); head(false); }
 
       doc.setFont('helvetica', 'bold'); doc.setFontSize(9.5);
       const hdr = doc.splitTextToSize(
-        `R.A. No. ${serial}${ra.itemNo ? '   (Item No. ' + ra.itemNo + ')' : ''}   —   ${ra.desc || ''}`,
-        W - 2 * M);
-      doc.text(hdr, M, y); y += hdr.length * 11 + 2;
+        `R.A. No. ${serial}${ra.itemNo ? '   (Item No. ' + ra.itemNo + ')' : ''}`, W - 2 * M);
+      doc.text(hdr, M, y); y += hdr.length * 12 + 2;
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5);
+      const dsc = doc.splitTextToSize('"' + fullDesc(ra) + '"', W - 2 * M);
+      doc.text(dsc, M, y, { align: 'justify', maxWidth: W - 2 * M }); y += dsc.length * 10 + 6;
       if (ra.basis) {
         doc.setFont('helvetica', 'normal'); doc.setFontSize(8);
         doc.text('Basis : ' + ra.basis + '     Unit : ' + (ra.unit || ''), M, y); y += 11;
@@ -733,15 +768,18 @@
         },
         didDrawPage: () => { }
       });
-      y = doc.lastAutoTable.finalY + 14;
-    });
+      y = doc.lastAutoTable.finalY + 26;
 
-    /* signature at the end */
-    if (y > H - 90) { doc.addPage('a4', 'portrait'); y = 80; }
-    doc.setFont('helvetica', 'normal'); doc.setFontSize(9);
-    const sb = (typeof signBlock === 'function') ? signBlock()
-      : ['Deputy Executive Engineer', 'R & B Sub Division,', 'Dahod.'];
-    sb.forEach((t, i) => { if (t) doc.text(String(t), W - M - 90, y + 24 + i * 12, { align: 'center' }); });
+      /* signature block for THIS rate analysis */
+      if (y > H - 80) { doc.addPage('a4', 'portrait'); head(false); y += 20; }
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(9);
+      const [pL, pR] = signCols();
+      const xL = M + (W - 2 * M) * 0.28, xR = M + (W - 2 * M) * 0.76;
+      for (let k = 0; k < Math.max(pL.length, pR.length); k++) {
+        if (pL[k]) doc.text(String(pL[k]), xL, y + k * 13, { align: 'center' });
+        if (pR[k]) doc.text(String(pR[k]), xR, y + k * 13, { align: 'center' });
+      }
+    });
 
     doc.save((title || 'Rate_Analysis').replace(/[^\w\- ]+/g, '').replace(/\s+/g, '_').slice(0, 60) + '.pdf');
     toastMsg('PDF ban gaya.');
