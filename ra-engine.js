@@ -556,11 +556,12 @@
   const BOX2 = { top: THIN2, left: THIN2, bottom: THIN2, right: THIN2 };
 
   const fullDesc = ra => String(ra.longDesc || ra.desc || '');
-  /* do-column signature — left: preparing officer, right: approving officer */
+  /* do-column signature — left: preparing officer, right: approving officer.
+     Post hamesha Deputy Executive Engineer (profile ki post yahan use nahi hoti). */
   function signCols() {
     const p = (typeof window !== 'undefined' && window.userProfile) || null;
     const dist = (typeof district === 'function' && district()) || 'Dahod';
-    const left = [ (p && p.post) || 'Deputy Executive Engineer',
+    const left = [ 'Deputy Executive Engineer',
                    (p && p.sub)  || 'R&B Sub Division',
                    dist ];
     const right = ['Executive Engineer', 'R&B Division', dist];
