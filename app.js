@@ -159,7 +159,16 @@ const fmt0= v => (v || 0).toLocaleString('en-IN', {maximumFractionDigits:0});
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function toast(m){ const t = $('#toast'); t.textContent = m; t.style.display='block';
   clearTimeout(t._t); t._t = setTimeout(()=> t.style.display='none', 2800); }
-function save(){ store.set('rnb_est', est); }
+function save(){
+  store.set('rnb_est', est);
+  /* if a parent project is active, keep the active sub's slot in sync so
+     Excel/PDF builds always see the latest edits */
+  if(window.project && Array.isArray(window.project.subs) && window.project.subs.length &&
+     window.project.subs[window.project.active]){
+    window.project.subs[window.project.active].est = JSON.parse(JSON.stringify(est));
+    store.set('rnb_project', window.project);
+  }
+}
 
 /* ------------------------------- mode gate (2-step wizard) ------------------------------- */
 function openGate(step){
@@ -1169,14 +1178,19 @@ function fitRow(ws, rowNo, text, colChars, size, min){
   ws.getRow(rowNo).height = Math.max(min || 14.25, textHeight(text, colChars, size || 11));
 }
 
-async function buildWorkbook(){
+async function _buildOneSubSheets(wb, opts){
+  opts = opts || {};
+  const includeFace  = opts.includeFace !== false;
+  const abstName     = opts.abstName    || 'abst.';
+  const mesName      = opts.mesName     || 'MES ';
+  const titleSuffix  = opts.titleSuffix || '';
   const p  = previewData();
-  const wb = new ExcelJS.Workbook();
-  wb.creator = 'R&B Sub Division, Dahod';
-  const NAME = ' Name of Work : - ' + p.name + ' ';
+  const NAME = ' Name of Work : - ' + p.name + (titleSuffix ? ' — ' + titleSuffix : '') + ' ';
 
-  /* ---------- FACE ---------- */
-  const f = wb.addWorksheet('FACE', { pageSetup:{ paperSize:9, orientation:'portrait', fitToPage:true, fitToWidth:1, fitToHeight:0 } });
+  /* ---------- FACE (only in single-estimate mode) ---------- */
+  let f = null;
+  if(includeFace){
+  f = wb.addWorksheet('FACE', { pageSetup:{ paperSize:9, orientation:'portrait', fitToPage:true, fitToWidth:1, fitToHeight:0 } });
   widths(f, [4.31, 28.45, 4.31, 15.10, 9.17, 18.74]);
   [40.5,24.95,24.95,24.95,24.95,24.95,24.95,24.95,60.75,82.5,14.25,28.5,27.75,21.75,24.95,24.95,36.75,93]
     .forEach((h,i) => f.getRow(i+1).height = h);
@@ -1209,9 +1223,9 @@ async function buildWorkbook(){
   f.mergeCells('A17:F17'); put(f, 'A17', 'GENERAL DESCRIPTION', ARIAL(11, true), CTRC);
   f.mergeCells('B18:F18'); put(f, 'B18', '           ' + office.desc, ARIAL(11), JUST);
   fitRow(f, 18, '           ' + office.desc, faceWide, 11, 40);
-
+  }
   /* ---------- abst. ---------- */
-  const a = wb.addWorksheet('abst.', { pageSetup:{ paperSize:9, orientation:'portrait',
+  const a = wb.addWorksheet(abstName, { pageSetup:{ paperSize:9, orientation:'portrait',
       fitToPage:true, fitToWidth:1, fitToHeight:0,
       margins:{ left:0.35, right:0.35, top:0.45, bottom:0.4, header:0.2, footer:0.2 } } });
   widths(a, [5.4, 8.4, 65.5, 9.4, 5.4, 12.4]);   // desc sabse chaudi, amount utni hi jitni zaroori
@@ -1290,10 +1304,12 @@ async function buildWorkbook(){
     .forEach((t,i) => { a.mergeCells(`D${sg+i}:F${sg+i}`); put(a, 'D'+(sg+i), t, ARIAL(12), CTRC); });
 
   /* FACE ka amount abstract ke Say se juda rahe */
-  put(f, 'B11', { formula:`'abst.'!${a.abstSayCell}`, result:p.t.say }, ARIAL(12, true), CTR, null, RS_FMT);
+  if(includeFace && f){
+    put(f, 'B11', { formula:`'${abstName}'!${a.abstSayCell}`, result:p.t.say }, ARIAL(12, true), CTR, null, RS_FMT);
+  }
 
   /* ---------- MES ---------- */
-  const m = wb.addWorksheet('MES ', { pageSetup:{ paperSize:9, orientation:'portrait', fitToPage:true, fitToWidth:1, fitToHeight:0 } });
+  const m = wb.addWorksheet(mesName, { pageSetup:{ paperSize:9, orientation:'portrait', fitToPage:true, fitToWidth:1, fitToHeight:0 } });
   widths(m, [12.14, 4.99, 12.41, 8.09, 2.56, 9.57, 2.56, 9.84, 2.43, 10.11, 3.10, 9.44, 13.08, 7.95]);
   m.getRow(1).height = 15; m.getRow(2).height = 42; m.getRow(3).height = 21; m.getRow(4).height = 20.25;
   m.mergeCells('A1:N2'); put(m, 'A1', NAME, ARIAL(16), CTR);
@@ -1356,16 +1372,67 @@ async function buildWorkbook(){
   qtyRefCells.forEach((cell, i) => {
     if(!mesSayCells[i]) return;
     const c = a.getCell(cell);
-    c.value = { formula:`'MES '!${mesSayCells[i]}`, result:p.lines[i].say };
+    c.value = { formula:`'${mesName}'!${mesSayCells[i]}`, result:p.lines[i].say };
   });
 
   if(p.lines.length > 1){
     put(m, 'L'+mr, 'Estimate Say', ARIAL(12, true), CTRC);
     put(m, 'M'+mr, p.t.say, ARIAL(12, true), CTRC, null, '0.00');
   }
+}
+
+/* ---- project-aware wrapper ------------------------------------------------
+   Agar project.subs me multiple sub-estimates hain, to Face/GD/Performa/RCC
+   parent level pe pehle aayenge, phir har sub ke apne abst_<i>+MES_<i>, and
+   Recap sheet last me. Warna purana behaviour (single Face+abst+MES).
+------------------------------------------------------------------------- */
+async function buildWorkbook(){
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'R&B Sub Division, Dahod';
+  const hasProj = window.project && Array.isArray(window.project.subs) && window.project.subs.length >= 1;
+
+  if(hasProj){
+    /* stash current est back to active slot so live edits are captured */
+    const savedEst = JSON.parse(JSON.stringify(est));
+    const savedIdx = window.project.active;
+    if(window.project.subs[savedIdx]) window.project.subs[savedIdx].est = savedEst;
+
+    /* parent identity sheets first */
+    if(typeof projFaceSheet     === 'function') projFaceSheet(wb);
+    if(typeof projGDSheet       === 'function') projGDSheet(wb);
+    if(typeof projPerformaSheet === 'function') projPerformaSheet(wb);
+    if(typeof projRCCSheet      === 'function') projRCCSheet(wb);
+
+    /* per-sub abst + MES */
+    for(let i = 0; i < window.project.subs.length; i++){
+      const sub = window.project.subs[i];
+      est = JSON.parse(JSON.stringify(sub.est));
+      /* Excel sheet names: max 31 chars, cannot contain :\/?*[] */
+      const cleanN = String(sub.name || ('Sub ' + (i+1))).replace(/[:\\/?*\[\]]/g, ' ').slice(0, 18);
+      await _buildOneSubSheets(wb, {
+        includeFace: false,
+        abstName:    ('abst.' + (i+1) + ' ' + cleanN).slice(0, 30).trim(),
+        mesName:     ('MES ' + (i+1) + ' ' + cleanN).slice(0, 30).trim(),
+        titleSuffix: sub.name || ('Sub ' + (i+1))
+      });
+    }
+    /* restore */
+    est = savedEst;
+
+    /* recap at the end */
+    if(typeof projRecapSheet === 'function') projRecapSheet(wb);
+  } else {
+    await _buildOneSubSheets(wb, { includeFace: true });
+  }
+
   return wb;
 }
+
 function safeName(){
+  if(window.project && Array.isArray(window.project.subs) && window.project.subs.length >= 1 && typeof projName === 'function'){
+    const pn = String(projName() || 'Project').replace(/[^\w\- ]+/g,'').replace(/\s+/g,'_').slice(0,60);
+    return pn || 'Project';
+  }
   const first = (est.roadList && est.roadList[0]) || {};
   const wc = first.wcFrom || first.wcTo;
   return (est.road || first.name || 'Estimate').replace(/[^\w\- ]+/g,'').replace(/\s+/g,'_').slice(0,55)
@@ -1377,7 +1444,10 @@ function download(blob, name){
   a.remove(); setTimeout(()=> URL.revokeObjectURL(url), 4000);
 }
 $('#btnXlsx').onclick = async () => {
-  if(!est.road || !est.lines.length){ toast('Name aur kam se kam ek item select karo.'); return; }
+  const hasProj = window.project && Array.isArray(window.project.subs) && window.project.subs.length >= 1;
+  if(!hasProj && (!est.road || !est.lines.length)){
+    toast('Name aur kam se kam ek item select karo.'); return;
+  }
   const b = $('#btnXlsx'); b.disabled = true; b.textContent = 'Building…';
   try{
     const wb = await buildWorkbook();
@@ -1387,11 +1457,159 @@ $('#btnXlsx').onclick = async () => {
   b.disabled = false; b.textContent = 'Download Excel';
 };
 
+/* ---- helper: draws only abst.+MES pages for the CURRENT est into an
+        existing jsPDF doc (caller manages est swap + addPage). Used by
+        project-mode PDF export where each sub-estimate contributes one
+        abst+MES appendix. Mirrors the abst/MES sections of btnPdf below. */
+function _drawAbstAndMesPDF(doc, subLabel){
+  const p = previewData();
+  const GRID = { font:'helvetica', fontSize:8, cellPadding:3, lineColor:[0,0,0], lineWidth:0.5,
+                 textColor:[0,0,0], valign:'middle', overflow:'linebreak' };
+  const HEAD = { fillColor:[255,255,255], textColor:[0,0,0], fontStyle:'bold', halign:'center',
+                 lineColor:[0,0,0], lineWidth:0.5 };
+  function sheetTitle(title, W, M){
+    const y0 = 46; doc.setFont('helvetica','bold'); doc.setFontSize(9);
+    const nmT = 'Name of Work : - ' + p.name + (subLabel ? '   [' + subLabel + ']' : '');
+    const nm = doc.splitTextToSize(nmT, W - 2*M);
+    doc.text(nm, W/2, y0, {align:'center'});
+    const y1 = y0 + nm.length*11 + 6;
+    doc.setFontSize(14); doc.text(title, W/2, y1, {align:'center'});
+    return y1 + 14;
+  }
+  function signature(y, xCenter){
+    doc.setFont('helvetica','normal'); doc.setFontSize(9);
+    const sb = (typeof signBlock === 'function' ? signBlock()
+                : ['Deputy Executive Engineer','R & B Sub Division,','Dahod.']);
+    sb.forEach((t,i) => { if(t) doc.text(String(t), xCenter, y + i*12, {align:'center'}); });
+  }
+  /* ------- abst. ------- */
+  let W = doc.internal.pageSize.getWidth(), M = 40;
+  let y = sheetTitle('ABSTRACT', W, M);
+  const A_HEAD = ['Item No.','Qty. & Unit','Item of Work','Rate','Per','Amount'];
+  const A_COLS = { 0:{cellWidth:28, halign:'center'}, 1:{cellWidth:42, halign:'center'},
+                   2:{cellWidth:309}, 3:{cellWidth:46, halign:'center'},
+                   4:{cellWidth:26, halign:'center'}, 5:{cellWidth:64, halign:'right'} };
+  const PH = doc.internal.pageSize.getHeight(), BOT = 60;
+  const itemRows = l => ([
+    [ { content:String(l.itemNo), rowSpan:3, styles:{halign:'center', valign:'middle'} },
+      { content:fmt(l.say),       styles:{halign:'center'} },
+      { content:l.desc,           styles:{halign:'left', valign:'top'} },
+      { content:fmt(n(l.rate)),   styles:{halign:'center', valign:'middle'} },
+      { content:l.unit, rowSpan:3, styles:{halign:'center', valign:'middle'} },
+      { content:fmt(l.amount), rowSpan:3, styles:{halign:'right', valign:'middle'} } ],
+    [ { content:l.unit, rowSpan:2, styles:{halign:'center', valign:'middle'} },
+      { content:'L.C. included in approved rate', styles:{halign:'center'} },
+      { content:fmt(n(est.lc)), styles:{halign:'center'} } ],
+    [ { content:'Approved Rate no ' + (l.appRateNo || l.itemNo), styles:{halign:'center'} },
+      { content:fmt(n(l.rate)), styles:{halign:'center'} } ]
+  ]);
+  const blockH = l => {
+    doc.setFont('helvetica','normal'); doc.setFontSize(GRID.fontSize);
+    const lines = doc.splitTextToSize(String(l.desc || ''), A_COLS[2].cellWidth - 2*GRID.cellPadding).length;
+    const rowH = GRID.fontSize + 2*GRID.cellPadding + 2;
+    return Math.max(3 * rowH, lines * (GRID.fontSize * 1.15) + 2*GRID.cellPadding) + 2 * rowH;
+  };
+  const drawRows = (rows, needHead) => {
+    doc.autoTable({ startY:y, margin:{left:M, right:M}, theme:'grid',
+      head: needHead ? [A_HEAD, ['1','2','3','4','5','6']] : [],
+      body: rows, styles:GRID, headStyles:HEAD, columnStyles:A_COLS, rowPageBreak:'avoid' });
+    y = doc.lastAutoTable.finalY;
+  };
+  let needHead = true;
+  p.lines.forEach(l => {
+    const h = blockH(l);
+    if(y + h > PH - BOT){
+      doc.addPage('a4','portrait');
+      y = sheetTitle('ABSTRACT', W, M);
+      needHead = true;
+    }
+    drawRows(itemRows(l), needHead);
+    needHead = false;
+  });
+  const B = fs => ({ fontStyle:'bold' , halign:'right', ...fs });
+  const totRows = [
+    [ { content:'Total', colSpan:5, styles:B() }, { content:fmt(p.t.total), styles:B() } ],
+    [ { content:'', colSpan:3, styles:{} }, { content:est.qc + ' % Q C', colSpan:2, styles:B() }, { content:fmt(p.t.qc), styles:B() } ],
+    [ { content:'', colSpan:4, styles:{} }, { content:'Total', styles:B() }, { content:fmt(p.t.grand), styles:B() } ],
+    [ { content:'Say', colSpan:5, styles:B() }, { content:fmt0(p.t.say), styles:B() } ]
+  ];
+  if(y + 5 * (GRID.fontSize + 2*GRID.cellPadding + 2) > PH - BOT){
+    doc.addPage('a4','portrait'); y = sheetTitle('ABSTRACT', W, M); needHead = true;
+  }
+  drawRows(totRows, needHead);
+  signature(doc.lastAutoTable.finalY + 44, M + 390);
+
+  /* ------- MES ------- */
+  doc.addPage('a4','portrait');
+  W = doc.internal.pageSize.getWidth(); M = 34;
+  y = sheetTitle('MEASUREMENT', W, M);
+  p.lines.forEach(l => {
+    const kind = unitKind(l.unit), fl = FIELDS[kind], mUnit = measuredUnit(kind), div = unitDivisor(l.unit);
+    if(y > doc.internal.pageSize.getHeight() - 120){ doc.addPage('a4','portrait'); y = sheetTitle('MEASUREMENT', W, M); }
+    doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.text('Item No. ' + l.itemNo, M, y); y += 12;
+    doc.setFont('helvetica','normal'); doc.setFontSize(8);
+    const d = doc.splitTextToSize(l.desc, W - 2*M); doc.text(d, M, y, {maxWidth:W - 2*M, align:'justify'}); y += d.length*9 + 6;
+    const cols = [{t:'chain'}];
+    fl.forEach((k,i) => { cols.push({t:'field', k}); if(i < fl.length - 1) cols.push({t:'x'}); });
+    cols.push({t:'qty'}); cols.push({t:'unit'});
+    const header = cols.map(c => c.t==='chain'?'Chainage':c.t==='field'?FLABEL[c.k]:c.t==='x'?'':c.t==='qty'?'Qty':'Unit');
+    const preQty = cols.length - 2;
+    const body = l.rows.map(row => cols.map(c => {
+      if(c.t==='chain') return { content:row.ch || '', styles:{halign:'left'} };
+      if(c.t==='field') return { content:row[c.k]===''?'':String(n(row[c.k])), styles:{halign:'center'} };
+      if(c.t==='x')     return { content:'x', styles:{halign:'center'} };
+      if(c.t==='qty')   return { content:fmt(rowQty(row, kind)), styles:{halign:'center'} };
+      return { content:mUnit, styles:{halign:'center'} };
+    }));
+    body.push([ { content: div!==1 ? 'Total ('+mUnit+')' : 'Total', colSpan:preQty, styles:{halign:'right', fontStyle:'bold'} },
+                { content:fmt(l.measured), styles:{halign:'center', fontStyle:'bold'} },
+                { content:mUnit, styles:{halign:'center', fontStyle:'bold'} } ]);
+    if(div !== 1){
+      body.push([ { content:'÷ '+fmt0(div)+' ('+mUnit+' -> '+l.unit+')', colSpan:preQty, styles:{halign:'right', fontStyle:'bold', textColor:[179,64,42]} },
+                  { content:fmt(l.qty), styles:{halign:'center', fontStyle:'bold'} },
+                  { content:l.unit, styles:{halign:'center', fontStyle:'bold'} } ]);
+    }
+    body.push([ { content:'Say', colSpan:preQty, styles:{halign:'right', fontStyle:'bold'} },
+                { content:fmt(l.say), styles:{halign:'center', fontStyle:'bold'} },
+                { content:l.unit, styles:{halign:'center', fontStyle:'bold'} } ]);
+    const usable = W - 2*M, xW = 9, qtyW = 54, unitW = 38, chainW = 96;
+    const fieldW = Math.max(28, (usable - chainW - qtyW - unitW - xW*(fl.length-1) - 1) / fl.length);
+    const colStyles = {};
+    cols.forEach((c,i) => colStyles[i] = { cellWidth:
+      c.t==='chain'?chainW : c.t==='x'?xW : c.t==='qty'?qtyW : c.t==='unit'?unitW : fieldW });
+    doc.autoTable({ startY:y, margin:{left:M, right:M}, theme:'grid',
+      head:[header], body, styles:{...GRID, fontSize:7, cellPadding:2}, headStyles:HEAD, columnStyles:colStyles });
+    y = doc.lastAutoTable.finalY + 16;
+  });
+  signature(y + 12, W - M - 130);
+}
+
 /* ------------------------------- pdf export (mirrors the Excel sheets) ------------------------------- */
 $('#btnPdf').onclick = () => {
-  if(!est.road || !est.lines.length){ toast('Name aur kam se kam ek item select karo.'); return; }
+  const hasProj = window.project && Array.isArray(window.project.subs) && window.project.subs.length >= 1;
+  if(!hasProj && (!est.road || !est.lines.length)){
+    toast('Name aur kam se kam ek item select karo.'); return;
+  }
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit:'pt', format:'a4', orientation:'portrait' });
+
+  /* project mode: parent pages first (Face/GD/Performa/RCC/Recap), then
+     an appendix of abst+MES per sub-estimate. Each sub swaps est temporarily. */
+  if(hasProj){
+    const savedEst = JSON.parse(JSON.stringify(est));
+    if(typeof projPDFPages === 'function') projPDFPages(doc);
+    window.project.subs.forEach((sub, idx) => {
+      est = JSON.parse(JSON.stringify(sub.est));
+      if(!est.lines || !est.lines.length) return;
+      doc.addPage('a4','portrait');
+      _drawAbstAndMesPDF(doc, sub.name || ('Sub ' + (idx+1)));
+    });
+    est = savedEst;
+    doc.save(safeName() + '.pdf');
+    return;
+  }
+
+  /* single-estimate mode (legacy) */
   const p = previewData();
   const GRID = { font:'helvetica', fontSize:8, cellPadding:3, lineColor:[0,0,0], lineWidth:0.5,
                  textColor:[0,0,0], valign:'middle', overflow:'linebreak' };
@@ -1581,28 +1799,45 @@ function prettyDate(iso){
 }
 
 $('#btnSave').onclick = () => {
-  if(!est.lines.length && !est.road){ toast('Pehle estimate banao, phir save karo.'); return; }
-  const defName = buildWorkName() === '—' ? (est.road || 'Estimate') : buildWorkName();
+  const hasProj = window.project && Array.isArray(window.project.subs) && window.project.subs.length >= 1;
+  if(!hasProj && !est.lines.length && !est.road){ toast('Pehle estimate banao, phir save karo.'); return; }
+  const projNm = (hasProj && typeof projName === 'function') ? projName() : '';
+  const defName = projNm || (buildWorkName() === '—' ? (est.road || 'Estimate') : buildWorkName());
   const name = prompt('Estimate ka naam (save ke liye):', currentSavedId
     ? (savedEstimates.find(s=>s.id===currentSavedId)?.name || defName)
     : defName);
   if(name === null) return;   // cancelled
-  const t = totals();
-  const snapshot = JSON.parse(JSON.stringify(est));   // deep copy
   const nm = (name || defName).trim() || defName;
 
+  /* keep the currently-being-edited est in the active project slot so
+     the snapshot below picks it up */
+  if(hasProj && typeof projSave === 'function') projSave();
+
+  const projSnap = hasProj ? JSON.parse(JSON.stringify(window.project)) : null;
+  const projAmt  = hasProj && typeof projBuildRecap === 'function' ? projBuildRecap().say : 0;
+
+  const snapshot = JSON.parse(JSON.stringify(est));   // deep copy of active est
+  const t = totals();
+  const amountForList = hasProj ? projAmt : t.say;
+
   if(currentSavedId){
-    // update existing
     const rec = savedEstimates.find(s => s.id === currentSavedId);
-    if(rec){ rec.name = nm; rec.est = snapshot; rec.updated = estStamp();
-             rec.amount = t.say; rec.workName = buildWorkName(); rec.mode = est.mode; rec.rateSource = est.rateSource;
-             persistSaved(); toast('Estimate update ho gaya: ' + nm); renderSavedTable(); return; }
+    if(rec){
+      rec.name = nm; rec.est = snapshot; rec.updated = estStamp();
+      rec.amount = amountForList; rec.workName = hasProj ? projNm : buildWorkName();
+      rec.mode = est.mode; rec.rateSource = est.rateSource;
+      if(projSnap) rec.project = projSnap; else delete rec.project;
+      persistSaved(); toast('Estimate update ho gaya: ' + nm); renderSavedTable(); return;
+    }
   }
   const id = 'e' + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
-  savedEstimates.unshift({
+  const rec = {
     id, name: nm, est: snapshot, created: estStamp(), updated: estStamp(),
-    amount: t.say, workName: buildWorkName(), mode: est.mode, rateSource: est.rateSource
-  });
+    amount: amountForList, workName: hasProj ? projNm : buildWorkName(),
+    mode: est.mode, rateSource: est.rateSource
+  };
+  if(projSnap) rec.project = projSnap;
+  savedEstimates.unshift(rec);
   currentSavedId = id;
   persistSaved();
   toast('Estimate save ho gaya: ' + nm);
@@ -1622,6 +1857,23 @@ function loadSaved(id){
   if(!Array.isArray(est.workDescList)){
     est.workDescList = (est.workDesc && est.workDesc.trim()) ? [est.workDesc.trim()] : [];
   }
+  /* restore parent project if it was saved along with this record */
+  if(rec.project){
+    window.project = JSON.parse(JSON.stringify(rec.project));
+    if(!Array.isArray(window.project.subs)) window.project.subs = [];
+    if(typeof window.project.active !== 'number') window.project.active = 0;
+    /* sync the active sub's est with the freshly-loaded est */
+    if(window.project.subs[window.project.active]){
+      window.project.subs[window.project.active].est = JSON.parse(JSON.stringify(est));
+    }
+    store.set('rnb_project', window.project);
+  } else {
+    /* record has no project → clear any lingering project so single-est
+       mode is honoured */
+    window.project = { active:0, subs:[], meta: (window.project && window.project.meta) ||
+                       { face:{}, gd:{}, performa:{buildings:[],spec:{},landAvailability:{},recoverable:{}}, rcc:{concreteMix:[]}, recap:{extras:[],lumpSum:[]} } };
+    store.set('rnb_project', window.project);
+  }
   currentSavedId = id;
   save();
   // repopulate inputs
@@ -1629,6 +1881,7 @@ function loadSaved(id){
   $('#prepBy').value = est.prepBy || '';
   $('#chkBy').value = est.chkBy || '';
   applyModeUI(); refreshHints(); refreshWorkName(); renderItemBlocks(); renderPreview();
+  if(typeof renderProject === 'function') renderProject();
   $$('nav.tabs button')[0].click();
   toast('Loaded: ' + rec.name);
 }

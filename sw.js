@@ -1,7 +1,7 @@
-const CACHE = 'rnb-estimate-v41';
+const CACHE = 'rnb-estimate-v42';
 const CORE = [
   './', './index.html', './app.js', './data.js', './ra-data.js', './ra-engine.js',
-  './auth.js', './letter.js', './manifest.json',
+  './auth.js', './letter.js', './project.js', './manifest.json',
   './icon-192.png', './icon-512.png',
   'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js',
