@@ -59,7 +59,36 @@ const DISTRICT_RA_LIBRARY = {
                     "unit": "Sqm",
                     "qty": 6.3,
                     "rate": 186.24,
-                    "cpApply": false
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 2.0,
+                            "l": 2.0,
+                            "b": 2.4,
+                            "d": 0.25,
+                            "qty": 2.4,
+                            "unit": ""
+                        },
+                        {
+                            "label": "",
+                            "nos": 2.0,
+                            "l": 2.0,
+                            "b": 2.1,
+                            "d": 0.25,
+                            "qty": 2.1,
+                            "unit": ""
+                        },
+                        {
+                            "label": "",
+                            "nos": 2.0,
+                            "l": 2.0,
+                            "b": 1.8,
+                            "d": 0.25,
+                            "qty": 1.8,
+                            "unit": ""
+                        }
+                    ]
                 },
                 {
                     "sr": "A2",
@@ -76,7 +105,37 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "RCC",
             "longDesc": "Providing and laying controlled cement concrete M.250 and curing complete including the cost of formwork and excluding reinforcement for reinforced concrete work in (A) Foundations, footings, and Mass concrete.",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 2.4,
+                    "b": 2.4,
+                    "d": 0.25,
+                    "qty": 1.44,
+                    "unit": ""
+                },
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 2.1,
+                    "b": 2.1,
+                    "d": 0.25,
+                    "qty": 1.1,
+                    "unit": ""
+                },
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 1.8,
+                    "b": 1.8,
+                    "d": 0.25,
+                    "qty": 0.81,
+                    "unit": ""
+                }
+            ],
+            "basisNote": "Considering Column footing Quantity"
         },
         {
             "id": "lib_2",
@@ -99,7 +158,27 @@ const DISTRICT_RA_LIBRARY = {
                     "unit": "Sqm",
                     "qty": 6.62,
                     "rate": 323.29,
-                    "cpApply": false
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": "",
+                            "l": 2.0,
+                            "b": 0.3,
+                            "d": 3.15,
+                            "qty": 1.89,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "",
+                            "nos": "",
+                            "l": 2.0,
+                            "b": 0.75,
+                            "d": 3.15,
+                            "qty": 4.73,
+                            "unit": "Sqm"
+                        }
+                    ]
                 },
                 {
                     "sr": "A2",
@@ -116,7 +195,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "RCC",
             "longDesc": "Providing and laying controlled cement concrete M-250 and curing complete including the cost of form work but excluding the cost of reinforcement for reinforced concrete work in (d) columns Up to Plinth level.",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 0.3,
+                    "b": 0.75,
+                    "d": 3.15,
+                    "qty": 0.71,
+                    "unit": ""
+                }
+            ],
+            "basisNote": "Considering quantity of concrete as under"
         },
         {
             "id": "lib_3",
@@ -161,7 +252,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "RCC",
             "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete including the cost of form work but excluding the cost of reinforcement for reinforced concrete work in Columns, pillars posts and struts G.FLOOR",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 0.3,
+                    "b": 0.75,
+                    "d": 4.5,
+                    "qty": 1.01,
+                    "unit": ""
+                }
+            ],
+            "basisNote": "Considering quantity of concrete as under"
         },
         {
             "id": "lib_4",
@@ -184,7 +287,27 @@ const DISTRICT_RA_LIBRARY = {
                     "unit": "Sqm",
                     "qty": 7.95,
                     "rate": 209.95,
-                    "cpApply": false
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": "",
+                            "l": 2.0,
+                            "b": 5.0,
+                            "d": 0.75,
+                            "qty": 7.5,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "",
+                            "nos": "",
+                            "l": 2.0,
+                            "b": 0.3,
+                            "d": 0.75,
+                            "qty": 0.45,
+                            "unit": "Sqm"
+                        }
+                    ]
                 },
                 {
                     "sr": "A2",
@@ -201,7 +324,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "RCC",
             "longDesc": "Providing and laying controlled cement concrete M-250 and curing complete including the cost of form work but excluding the cost of reinforcement for reinforced concrete work in Ground & Plinth BEAMS",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 5.0,
+                    "b": 0.3,
+                    "d": 0.75,
+                    "qty": 1.13,
+                    "unit": ""
+                }
+            ],
+            "basisNote": "Considering quantity of concrete as under"
         },
         {
             "id": "lib_5",
@@ -224,7 +359,18 @@ const DISTRICT_RA_LIBRARY = {
                     "unit": "Sqm",
                     "qty": 0.4,
                     "rate": 270.9,
-                    "cpApply": false
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 2.0,
+                            "l": 2.0,
+                            "b": 1.0,
+                            "d": 0.1,
+                            "qty": 0.4,
+                            "unit": "Sqm"
+                        }
+                    ]
                 },
                 {
                     "sr": "A2",
@@ -241,7 +387,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "RCC",
             "longDesc": "Providing and laying controlled cement concrete M-150 and curing complete including the cost of form work but excluding the cost of reinforcement for reinforced concrete work in plinth Slab",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 1.0,
+                    "b": 1.0,
+                    "d": 0.1,
+                    "qty": 0.1,
+                    "unit": ""
+                }
+            ],
+            "basisNote": "Considering quantity of concrete as under"
         },
         {
             "id": "lib_6",
@@ -286,7 +444,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "RCC",
             "longDesc": "Providing and laying controlled cement concrete M.200 and curing complete including the cost of formwork and excluding reinforcement for reinforced concrete work in (C) Ground floor Beams,",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 4.0,
+                    "b": 0.3,
+                    "d": 0.6,
+                    "qty": 0.72,
+                    "unit": ""
+                }
+            ],
+            "basisNote": "Considering quantity of concrete as under"
         },
         {
             "id": "lib_7",
@@ -331,7 +501,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "RCC",
             "longDesc": "Providing and laying controlled cement concrete M.200 and curing complete including the cost of formwork and excluding reinforcement for reinforced concrete work in (C) Ground floor Slab",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 3.0,
+                    "b": 3.0,
+                    "d": 0.15,
+                    "qty": 1.35,
+                    "unit": ""
+                }
+            ],
+            "basisNote": "Considering quantity of concrete as under"
         },
         {
             "id": "lib_8",
@@ -376,7 +558,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "RCC",
             "longDesc": "Providing and laying controlled cement concrete M.200 and curing complete including the cost of formwork but excluding reinforcement for reinforced concrete work in (c) Chhajja for Ground floor",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 2.0,
+                    "b": 0.45,
+                    "d": 0.1,
+                    "qty": 0.09,
+                    "unit": ""
+                }
+            ],
+            "basisNote": "Considering quantity of concrete as under"
         },
         {
             "id": "lib_9",
@@ -421,7 +615,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "RCC",
             "longDesc": "Providing and laying controlled cement concrete M-200 and curing etc. complete including the cost of form work and reinforcement for reinforced concrete work in (c) Lintal for Ground floor",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 1.2,
+                    "b": 0.23,
+                    "d": 0.15,
+                    "qty": 0.0414,
+                    "unit": ""
+                }
+            ],
+            "basisNote": "Considering quantity of concrete as under"
         },
         {
             "id": "lib_10",
@@ -466,7 +672,18 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "RCC",
             "longDesc": "Providing and laying controlled cement concrete M-200 and curing etc. complete including the cost of form work and excluding the cost of reinforcement etc. complete in (E) Stair case for Ground Floor to first floor",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.63,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_10A",
@@ -500,13 +717,44 @@ const DISTRICT_RA_LIBRARY = {
                     "unit": "Sqm",
                     "qty": 13.65,
                     "rate": 254.1,
-                    "cpApply": false
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Form work req",
+                            "nos": "",
+                            "l": 2.0,
+                            "b": 2.5,
+                            "d": 2.5,
+                            "qty": 12.5,
+                            "unit": ""
+                        },
+                        {
+                            "label": "",
+                            "nos": "",
+                            "l": 2.0,
+                            "b": 2.5,
+                            "d": 0.23,
+                            "qty": 1.15,
+                            "unit": ""
+                        }
+                    ]
                 }
             ],
             "topic": "RCC",
             "longDesc": "Providing and laying controlled cement concrete M.200 and curing complete excluding the cost of formwork and reinforcement for reinforced concrete work in (B) Walls, from top of foundation level upto floor two level",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.44,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_11",
@@ -590,7 +838,18 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "SS railing",
             "longDesc": "Providing and fixing 90 cm high Stainless steel railing made from anticorrocive 304 grade S S pipe of 50 mm dia (16Gauge) as hand rail with S S 304 grade Baluster of 38 mm dia (16Gauge) as a vertical support fixed in RCC slab at 1.2m c/c including three horizontal S S pipes of 25 mm dia (16Gauge) at eqal distance fixed by 18.75 mm dia (16Gauge) S S pipe",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 3.5,
+                    "unit": "Rmt"
+                }
+            ]
         },
         {
             "id": "lib_12",
@@ -630,7 +889,18 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "RCC",
             "longDesc": "Providing TMT Bar 500D reinforcement for R.C.C. work including bending, binding and placing in position etc complete for All floor",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Kg"
+                }
+            ]
         },
         {
             "id": "lib_13",
@@ -675,7 +945,18 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Plaster",
             "longDesc": "Providing 20 mm thick double coat mala cement plaster on interior brick / concrete work for plastering comprising of base coat of 12 mm thick cement plaster in cement mortar (1 Cement : 4 coarse sand) in rough finishing and 8 mm thick top coat of cement mortar 1:2 (1 Cement : 2 Coarse sand) finished with trovel including scaffolding curing etc. complete.",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_14",
@@ -731,7 +1012,18 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Plaster",
             "longDesc": "Providing 10 mm. Thick smooth cement plaster in single coat for plastering on ceiling and soffits of stairs and finished even and smooth in : (I) Cement mortar 1:4 (1 cement : 4 sand) with floting coat of neat cement slurry etc. complete. Ground Floor",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_15",
@@ -782,7 +1074,18 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Filling",
             "longDesc": "Providing And filling with good quality cinder(steam coal) as directed by engineer in charge in sunks in layers of 15 cm thick,including watering,placing ,ramming well etc as directed, for all floor.",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 10.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_16",
@@ -827,7 +1130,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "RCC",
             "longDesc": "Providing and laying controlled cement concrete M-200 for RCC work and curing complete including the cost of form work but excluding the cost of reinforced concrete work in coping on Ground Floor",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisNote": "Assume copping size 0.30 x 0.15",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_17",
@@ -900,7 +1215,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Windows",
             "longDesc": "Providing and fixing Jindal E(30mm) series Four track alluminium window standerd extruded colour anodized aliminium section with Frame having frame bottom member Jindal Section no: 21198 @ wt. Of 3.197 Kg/Rmt , frame Side and top member Jindal Section no:21204 @ wt. Of 1.694 Kg/Rmt with sliding shutters of single glass shutter top bottom member Jindal Section no:20993 @ wt. Of 0.839 Kg/Rmt & side member Jinda Section no:20553 @ wt.of 0.731 Kg/Rmt & Inter lock member Jindal section no - 20553 @ wt.of 0.731 Kg/Rmt with 5 mm thick transparent plain float glass in shutter including fitting, fixtures, rubber gasket and transparent silicon sealant as per drawing and instruction of Engineer - in - charge etc. completed for window four track",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "consider window size",
+                    "nos": "",
+                    "l": 1.0,
+                    "b": 1.8,
+                    "d": 1.2,
+                    "qty": 2.16,
+                    "unit": ""
+                }
+            ],
+            "basisNote": "consider window size 1.0 1.80 1.2 2.16 sq"
         },
         {
             "id": "lib_18",
@@ -973,7 +1300,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Windows",
             "longDesc": "Providing and fixing Jindal E(30mm) series Three track alluminium window standerd extruded colour anodized aliminium section with Frame having frame bottom member Jindal Section no: 21203 @ wt. Of 1.223 Kg/Rmt , frame Side and top member Jindal Section no:20837 @ wt. Of 1.685 Kg/Rmt with sliding shutters of single glass shutter top bottom member Jindal Section no:20993 @ wt. Of 0.839 Kg/Rmt & side member Jinda Section no:20553 @ wt.of 0.731 Kg/Rmt & Inter lock member Jindal section no - 20553 @ wt.of 0.731 Kg/Rmt with 5 mm thick transparent plain float glass in shutter including fitting, fixtures, rubber gasket and transparent silicon sealant as per drawing and instruction of Engineer - in - charge etc. completed for window three track",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "consider window size",
+                    "nos": "",
+                    "l": 1.0,
+                    "b": 1.35,
+                    "d": 1.2,
+                    "qty": 1.62,
+                    "unit": "sqm"
+                }
+            ],
+            "basisNote": "consider window size 1.0 1.35 1.2 1.62 sqmt"
         },
         {
             "id": "lib_19",
@@ -1046,7 +1385,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Windows",
             "longDesc": "Providing and fixing Jindal E(30mm) series Two track alluminium window standerd extruded colour anodized aliminium section with Frame having frame bottom member Jindal Section no: 21217 @ wt. Of 1.502 Kg/Rmt , frame Side and top member Jindal Section no:20835 @ wt. Of 0.904 Kg/Rmt with sliding shutters of single glass shutter top bottom member Jindal Section no:20993 @ wt. Of 0.839 Kg/Rmt & side member Jinda Section no:20553 @ wt.of 0.731 Kg/Rmt & Inter lock member Jindal section no - 20553 @ wt.of 0.731 Kg/Rmt with 5 mm thick transparent plain float glass in shutter including fitting, fixtures, rubber gasket and transparent silicon sealant as per drawing and instruction of Engineer - in - charge etc. completed for window two track",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "consider window size",
+                    "nos": "",
+                    "l": 1.0,
+                    "b": 1.2,
+                    "d": 1.1,
+                    "qty": 1.32,
+                    "unit": "sqm"
+                }
+            ],
+            "basisNote": "consider window size 1.0 1.20 1.1 1.32 sqmt"
         },
         {
             "id": "lib_20",
@@ -1080,7 +1431,18 @@ const DISTRICT_RA_LIBRARY = {
                     "unit": "Sqm",
                     "qty": 1.26,
                     "rate": 144.07,
-                    "cpApply": true
+                    "cpApply": true,
+                    "rows": [
+                        {
+                            "label": "louvers =",
+                            "nos": "",
+                            "l": 21.0,
+                            "b": 0.6,
+                            "d": 0.1,
+                            "qty": 1.26,
+                            "unit": ""
+                        }
+                    ]
                 },
                 {
                     "sr": "3",
@@ -1097,7 +1459,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Windows",
             "longDesc": "Providing & Fixing in position standard extruded approved colour anodised Aluminum Ventilator with outer frame 63.50 x 38.10 x 1.95 mm (of Jindal Section No.4605,@ Wt 1.094 kg/Rmt ) with 3mm thick Bajari figure adgesteble tinted louvers glass fixed to alluminium strip blade including fixtures, fastenning, labours and equipments as per detailed drawing as directed. For Ventilators",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisNote": "Considering alluminium ventilation size 1.8 x 0.75Mt.",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.35,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_21",
@@ -1258,7 +1632,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Doors",
             "longDesc": "Providing and fixing 50mm thick wooden door specially designed hollow two flush door shutter made from teak wood frame of size 7.5cm x 3.8cm with top, middle,bottom rails & vertical two styles & both side water proof ply wood of 6 mm thick. Pivoted the double shutter with requires teakwood batten with 1mm thick lamination on both side, one coat of primer & 77 two coats of enamel paints on frame & edges, design of which is to be approved by the architect. Door shall be providing with floor spring and 60cm long stainless steel handle and necessary Locking system of Godrej, fixtures & fastenings etc. directed by engineer in charge.",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Door size",
+                    "nos": "",
+                    "l": "",
+                    "b": 2.4,
+                    "d": 2.4,
+                    "qty": 5.76,
+                    "unit": "SqM"
+                }
+            ],
+            "basisNote": "Door size 2.4 2.4 5.76 SqM"
         },
         {
             "id": "lib_22",
@@ -1419,7 +1805,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Doors",
             "longDesc": "Providing and fixing Factory made stamped IS 12623 grad one 35 mm thick Flush door Single shutters , solid core finished with requires teakwood batten around door including 1mm thick lamination on both side, one coat of primer & two coats of enamel paints on frame & edges, design of which is to be approved by the architect. Door shall be providing with S.S. Aldrop, Hinges , stainless steel handle 15cm long , stopper and necessary Locking system of Godrej, fixtures & fastenings etc. directed by engineer in charge.",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Considering size of",
+                    "nos": "",
+                    "l": "",
+                    "b": 1.0,
+                    "d": 2.1,
+                    "qty": 2.1,
+                    "unit": "SqM"
+                }
+            ],
+            "basisNote": "Considering size of 1.00 2.10 2.10 SqM"
         },
         {
             "id": "lib_23",
@@ -1470,7 +1868,18 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Doors",
             "longDesc": "Providing and fixing FRP frame size 100 x 50 mm and 35 mm thick FRP depress panel single/Double shutter having extra reinforcement on sides & edges in Gel coat finish.The core of the shutter & frame is to be filed up with injected fire retradat grade polyurethene foam done in situ along with embeded wooden pieces for stiffening & also taking hinges & fintures.The whole FRP frame & shutter is to be waterproof, weatherproof ,termite proof & resistance to mild acid/alkali.Rates are to be inclusive of S.S hinges with necessary screws & alluminum fixtures & fastenings & fartener sleeve.Colour and Shade approved by Engineer-In-Charge.D5,",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_24",
@@ -1493,7 +1902,18 @@ const DISTRICT_RA_LIBRARY = {
                     "unit": "Sqm",
                     "qty": 1.0,
                     "rate": 1401.75,
-                    "cpApply": false
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Rate for",
+                            "nos": "",
+                            "l": "",
+                            "b": 1.0,
+                            "d": 1.0,
+                            "qty": 1.0,
+                            "unit": "SqM"
+                        }
+                    ]
                 },
                 {
                     "sr": "2",
@@ -1521,7 +1941,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Flooring",
             "longDesc": "Providing And Placing G.V.T 600mm x 600mm vitrified 9mm to 10mm thick tile for flooring over 20 mm (average) base of cement mortar 1:6 ( 1 cement: 6 coarse sand) and jointed with by adhesive materials including colour cement slurry including finished with flush pointing & cleaning the surface etc. complete for including two colour pattant colour approved by directed.",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisNote": "Rate for 1.00 1.00 1.00 SqM",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_25",
@@ -1544,7 +1976,18 @@ const DISTRICT_RA_LIBRARY = {
                     "unit": "Sqm",
                     "qty": 1.0,
                     "rate": 1109.27,
-                    "cpApply": false
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Rate for",
+                            "nos": "",
+                            "l": "",
+                            "b": 1.0,
+                            "d": 1.0,
+                            "qty": 1.0,
+                            "unit": ""
+                        }
+                    ]
                 },
                 {
                     "sr": "2",
@@ -1572,7 +2015,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Flooring",
             "longDesc": "Providing And Placing G.V.T 600mm x 600mm vitrified 8 mm thick tile for Skirting or dedo laid on a bed of 12mm thick cement mortar 1:3 (1-cement : 3-coarse sand ) and jointed with by adhesive materials including colour cement slurry including finished with flush pointing & cleaning the surface etc. complete for including two colour pattant colour approved by directed.",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": 1.0,
+                    "d": 1.0,
+                    "qty": 1.0,
+                    "unit": ""
+                }
+            ],
+            "basisNote": "Rate for 1.00 1.00 1.00"
         },
         {
             "id": "lib_26",
@@ -1634,7 +2089,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Flooring",
             "longDesc": "Providing and Placing 300mm x 300mm Matt Finished Glazed tiles 9mm to 10mm thick tile for flooring over 20 mm (average) base of cement mortar 1:6 ( 1 cement: 6 coarse sand) including 3mm groove epoxy grouting filling ,jointed with by adhesive materials including colour cement slurry including finished with flush pointing & cleaning the surface etc. complete for including two colour pattant colour approved by directed.",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": 1.0,
+                    "d": 1.0,
+                    "qty": 1.0,
+                    "unit": ""
+                }
+            ],
+            "basisNote": "Rate for 1.00 1.00 1.00"
         },
         {
             "id": "lib_27",
@@ -1696,7 +2163,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Flooring",
             "longDesc": "Providing And Placing 300mm x 900mm Matt Finished Glazed tiles 9mm to 10mm thick tile for Skirting or dedo of laid on a bed of 12mm thick cement mortar 1:3 (1-cement : 3-coarse sand )and including 3mm groove epoxy grouting filling jointed with by adhesive materials including colour cement slurry including finished with flush pointing & cleaning the surface etc. complete for including two colour pattant colour approved by directed.",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": 1.0,
+                    "d": 1.0,
+                    "qty": 1.0,
+                    "unit": ""
+                }
+            ],
+            "basisNote": "Rate for 1.00 1.00 1.00"
         },
         {
             "id": "lib_28",
@@ -1730,7 +2209,18 @@ const DISTRICT_RA_LIBRARY = {
                     "unit": "Cum",
                     "qty": 0.09,
                     "rate": 3533.05,
-                    "cpApply": true
+                    "cpApply": true,
+                    "rows": [
+                        {
+                            "label": "Rate for",
+                            "nos": "",
+                            "l": "",
+                            "b": 0.71,
+                            "d": 0.12,
+                            "qty": 0.09,
+                            "unit": "Cmt"
+                        }
+                    ]
                 },
                 {
                     "sr": "3",
@@ -1758,7 +2248,28 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Stone work",
             "longDesc": "Providing and laying machine cut free edge machine polished Granite 18mm thick finished treads and risers 1cm projecting, nozing rounded moulding in tread laid over 12 mm (av.) thick bases of cement mortar 1:3 (1-cement : 3-coarse sand) jointed with grey or colour cement slurry including rubbing and polishing incl. making Three No.s of grooves of size 3mm X 3mm along the length of treads etc. complete",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": 1.5,
+                    "d": 0.3,
+                    "qty": 0.45,
+                    "unit": ""
+                },
+                {
+                    "label": "",
+                    "nos": "",
+                    "l": "",
+                    "b": 1.5,
+                    "d": 0.15,
+                    "qty": 0.23,
+                    "unit": ""
+                }
+            ],
+            "basisNote": "Rate for 1.50 0.30 0.45"
         },
         {
             "id": "lib_29",
@@ -1814,7 +2325,27 @@ const DISTRICT_RA_LIBRARY = {
                     "unit": "Rmt",
                     "qty": 8.4,
                     "rate": 85.0,
-                    "cpApply": true
+                    "cpApply": true,
+                    "rows": [
+                        {
+                            "label": "=",
+                            "nos": "",
+                            "l": "",
+                            "b": 2.0,
+                            "d": 3.0,
+                            "qty": 6.0,
+                            "unit": ""
+                        },
+                        {
+                            "label": "Vertical =",
+                            "nos": "",
+                            "l": "",
+                            "b": 2.0,
+                            "d": 1.2,
+                            "qty": 2.4,
+                            "unit": ""
+                        }
+                    ]
                 },
                 {
                     "sr": "5",
@@ -1831,7 +2362,18 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Stone work",
             "longDesc": "Providing and fixing mirror polished 16 mm to 18 mm thick Granite stone with full round edge and polished of approved quality in clading on sill and around the doors/ windows/ ventilation with 20 mm thick cement plaster CM (1:3) and fixing with cement slurry & adhesive including moulding of exposed edges as directed by engineering in charge etc. complete.",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 2.52,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_30",
@@ -1854,7 +2396,18 @@ const DISTRICT_RA_LIBRARY = {
                     "unit": "Kg",
                     "qty": 20.0,
                     "rate": 109.22,
-                    "cpApply": false
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "[ ] Cost of Grill Rs /",
+                            "nos": 1.0,
+                            "l": 20.0,
+                            "b": 109.22,
+                            "d": 2184.4,
+                            "qty": 20.0,
+                            "unit": "Kg"
+                        }
+                    ]
                 },
                 {
                     "sr": "2",
@@ -1882,7 +2435,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Steel work",
             "longDesc": "Providing and fixing Safty grills of required pattern for windows/ Door using necessary 16mm dia M.S pipe, M.S flats and other structural steel at required spacing including cutting, welding and fabriction etc. including one coat of primer of approved quality and two coats of oil painting as per detail drawing etc complete.",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisNote": "Assume 20.00 Kg/Sq m. Weight",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 20.0,
+                    "unit": "Kg"
+                }
+            ]
         },
         {
             "id": "lib_31",
@@ -1933,7 +2498,18 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Drainage",
             "longDesc": "Providing, laying and jointing in true line and level 75 mm dia. UPVC SWRType B pipe conforming to IS 13592-1992 with one end plain and other end socketed with rubbering and fitting conforming to ISI 14735-1999 of approved make for drainage system pipe line, pipe shall be jointed with each other with rubber lubricant, pipe shall be fixed on wall using of PVC clamp at every 2000 mm c/c or shall be conceled in walss as directed including necessary fittings such as bends, shoes etc. including testing of pipes and joints and jointed with adhesive solvent cement including cost of all materials. (F) 75mm Details of Cost of 1 RMT",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Rmt"
+                }
+            ]
         },
         {
             "id": "lib_32",
@@ -1973,7 +2549,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Drainage",
             "longDesc": "Providing and fixing in PVC SWR cowel went 75mm dia to pipes.(B) 75mm dia.",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisNote": "Consider 1.00 Nos",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_33",
@@ -2013,7 +2601,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Drainage",
             "longDesc": "Providing and fixing in PVC SWR cowel went 110mm dia to pipes.(B) 110mm dia.",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisNote": "Consider For 1.00 Nos",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_34",
@@ -2086,7 +2686,18 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Sanitary",
             "longDesc": "Providing and fixing wash down water closet (European type W C pan) with integral P and S trap including jointing the trap with soil pipe in cement mortar 1:1 (1 cement five sand) including providing and fixing plastic seat cover for wash down WC with CP brass hinges and rubber buffers back plastic seat and including providing and fixing PVC flushing tank with a pair of C I or MS bracket with complete fitting such as lead valve siphon 15 mm dia brass ball valve with polythene float CP brass handle unions and couplings for connection with inlet out let and over flow pipes 40 mm dia porcelain enameled flush bend including cutting holes in walls and making good the same connection the flush bend with cistern and closet vitreous china.",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_35",
@@ -2159,7 +2770,18 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Sanitary",
             "longDesc": "Provision and fixing water closet squatting orissa type W.C. pan size 580mm integral footrest and No. 100 mm P or S trap and in cluding 25 mm dia CP brass flush valve and GI inlet connection etc. comp. (A) Vitreous china long pattern white or color",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_36",
@@ -2221,7 +2843,18 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Sanitary",
             "longDesc": "Providing and fixing ceramic table top or wall mount wash basin size 450 × 400 × 135 mm selected by directed engineer incharge, including polyamide braided connection pipe 12 mm dia, 450 mm length, 32 mm dia waste coupling with ceramic pop-up push type (full thread), complete with all inlet",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_37",
@@ -2261,7 +2894,18 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Sanitary",
             "longDesc": "Providing and fixing Wall Mixer (3-in-1), chrome plated, including all fittings, fixtures, labour charges,",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_38",
@@ -2301,7 +2945,18 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Sanitary",
             "longDesc": "Providing and fixing Angle Cock with wall flange, including all fittings, fixtures, labour charges, and all",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_39",
@@ -2357,7 +3012,36 @@ const DISTRICT_RA_LIBRARY = {
                     "unit": "Rmt",
                     "qty": 7.65,
                     "rate": 85.0,
-                    "cpApply": false
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Hori =",
+                            "nos": "",
+                            "l": "",
+                            "b": 1.0,
+                            "d": 3.75,
+                            "qty": 3.75,
+                            "unit": ""
+                        },
+                        {
+                            "label": "Hori =",
+                            "nos": "",
+                            "l": "",
+                            "b": 2.0,
+                            "d": 0.75,
+                            "qty": 1.5,
+                            "unit": ""
+                        },
+                        {
+                            "label": "Vertical =",
+                            "nos": "",
+                            "l": 1.0,
+                            "b": 2.0,
+                            "d": 1.2,
+                            "qty": 2.4,
+                            "unit": ""
+                        }
+                    ]
                 },
                 {
                     "sr": "5",
@@ -2368,13 +3052,36 @@ const DISTRICT_RA_LIBRARY = {
                     "unit": "Sqm",
                     "qty": 1.5,
                     "rate": 650.0,
-                    "cpApply": false
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Hori =",
+                            "nos": "",
+                            "l": "",
+                            "b": 2.0,
+                            "d": 0.75,
+                            "qty": 1.5,
+                            "unit": ""
+                        }
+                    ]
                 }
             ],
             "topic": "Stone platform",
             "longDesc": "Providing and fixing Wash Basin Platform with 15–18 mm thick polished Black Granite top, supported on 25 mm thick one-side polished Kota stone bottom slab and 25 mm thick vertical Kota stone supports at maximum 600 mm c/c, fixed with approved cement mortar/adhesive including making necessary grooves in walls, matching polished granite fascia/patti to conceal the supports, full moulded round front edge to the granite top, cutting, jointing with grey cement slurry, rubbing, polishing, edge finishing and all labour, materials, tools and incidentals, complete in all respects for all floors as directed by the Engineer-in- Charge.",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": 2.0,
+                    "d": 0.75,
+                    "qty": 1.5,
+                    "unit": ""
+                }
+            ],
+            "basisNote": "Rate for 2.00 x 0.75 = 1.5"
         },
         {
             "id": "lib_40",
@@ -2425,7 +3132,18 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Drainage",
             "longDesc": "Constructing brick masonry chamber for underground C.I. Inspection chamber and bends with briocks having croshing strength not less than 35Kg. Cm2 in C.M. 1:5 precast RCC cover 455mm x 610mm intenal dimensions with frame (R.C.C. top slabe with 1:2:4 mix (1-cement :2- coarse sand :4-graded stone aggregate 20mm size) foundation concrete 1:5:10 inside plaster 15mm thick with cement mortar 1:3 finished smooth with a floating coat of neat cement on walls and bed concrete etc. complete (i) Inside dimensions 455mmx 610mm and 450mm deep for single pipe line.",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_41",
@@ -2476,7 +3194,18 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Drainage",
             "longDesc": "Constructing brick masonry chamber for underground C.I. Inspection C.I. Inspection chamber and bends with briocks having croshing strength not less than 35Kg. Cm2 in C.M. 1:5 precast RCC cover 500mmx 700mm intenal dimensions with frame (R.C.C. top slabe with 1:2:4 mix (1-cement :2- coarse sand :4-graded stone aggregate 20mm size) foundation concrete 1:5:10 inside plaster 15mm thick with cement mortar 1:3 finished smooth with a floating coat of neat cement on walls and bed concrete etc. complete (i) Inside dimensions 500mmx 700mm and 450mm deep for single pipe line.",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_42",
@@ -2527,7 +3256,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Steel work",
             "longDesc": "Providing and fixing MS Ladder of required pattern with MS flats(30x3mm) or round or square bars (12mm) at required spacing & with round headed bolts and nuts or screws or welding including primer coat of approved quality and two coats of oil paintas as directed by engineer in charge",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisNote": "Rate for 25.00 Kg 3005.32",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 25.0,
+                    "unit": "Kg"
+                }
+            ]
         },
         {
             "id": "lib_43",
@@ -2600,7 +3341,18 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Sanitary",
             "longDesc": "Providing and fixing Kitchen SS Sink Glosy ASIS 316 Grade x 1mm thick with over all size 610x460 mm & bowl size 560x410x200 including cutting holes in walls and making good the same including necessary fittings with 32mm dia C.P brass waste , 32mm dia M.I fisher union and Rubber plug Etc. completed",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_44",
@@ -2673,7 +3425,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Stone platform",
             "longDesc": "Constructing Sandwitch Platform of 15mm-18 mm thick Polished Black Granite at top and 25 mm thick Kota stone slab one side polished at bottom with cementing Materials / adhsives including makeing necessary grooves in walls with Vertical sandwich two Kotastone 25 mm support every 60 cm centre to centre covered with granite patti or as required including all labour material of approved quality incl. full moulded round front edge granite strip of one side polished and jointed with grey cement slurry including rubbing and polishing etc. complete for all floors L B",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": 3.75,
+                    "d": 0.75,
+                    "qty": 2.81,
+                    "unit": ""
+                }
+            ],
+            "basisNote": "Rate for 3.75 x 0.75 = 2.81"
         },
         {
             "id": "lib_45",
@@ -2702,7 +3466,18 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Dewatering",
             "longDesc": "Providing, installing, operating, maintaining and removing dewatering arrangements for keeping excavation, foundation trenches, pits and work areas free from rainwater, groundwater and seepage during the entire construction period, using minimum 5 HP (or higher as required) submersible/centrifugal dewatering pumps complete with suction and delivery hoses, HDPE/GI pipes, standby pump, labour, fuel/electricity, shifting, maintenance, safe disposal of pumped water, dismantling and all incidental works, complete as directed by the Engineer-in-Charge.",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Day"
+                }
+            ]
         },
         {
             "id": "lib_45A",
@@ -2808,7 +3583,19 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Kitchen fittings",
             "longDesc": "Providing and fixing kitchen platform trolley having three drawers of SS (IS 304) of required size like thali, katleri, perforated, partition, cupsosar type in kitchen platform having drawer front side and backside by using 19mm thick all proof plywood of ISI quality all side laminated etc. as directed. The size of SS (IS 304) basket of size 4\" to 18\" for thali, dish, katleri, perforated, partition, cupsosar type as directed including necessary S.S. fittings, handles, nobs, telescopic channels, etc. as directed",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "=",
+                    "nos": "",
+                    "l": "",
+                    "b": 0.6,
+                    "d": 0.75,
+                    "qty": 0.45,
+                    "unit": "Sqm"
+                }
+            ],
+            "basisNote": "Considering size of one shutters with three basket"
         },
         {
             "id": "lib_46",
@@ -2848,7 +3635,18 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Gates",
             "longDesc": "Item Providing and fixing decorative entrance gate made out of cast iron No. and various mild steel tabular section combination , the Ornamental entrance gate should be fixed at compound wall including pattern and die making , cutting , welding , grinding, fabrication , fixing in position at compound wall with necessary pedestal, bearing block and other locking arrangement. The entrance gate should be painted with two coats of priming coat of paint, and two coat of oil paint etc complete. As per detail design and instruction of architect. No Qty Unit Amount",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Kg"
+                }
+            ]
         },
         {
             "id": "lib_47",
@@ -2910,7 +3708,18 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Fencing",
             "longDesc": "Providing and fixing concertina coil fencing with punched tape concertina coil 600 mm dia 10 mt openable length having 50 no rounds per 6 mt length, upto 3mt height of wall with existing angle iron (50mm x50mm x5mm )requird shaped As per Directed Engeenier in charge. placed 2.4mt or 3.00mt apart and with 4 horizontal R.B.T. reinforced barbed wire(3 mm) , stud tied with G.I. staples and G.I. clips to retain horizontal, including necessary bolts or G.I.barbed wire tied to angle iron, all complete as per direction of Engineer-in-charge, with reinforced barbed tape (R.B.T.)/Spring core (2.5 mm thick) and weight 43.478 gm/meter at compound wall for ESR M4/ intakewell.",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 103.0,
+                    "unit": "Rmt"
+                }
+            ]
         },
         {
             "id": "lib_48",
@@ -2994,7 +3803,18 @@ const DISTRICT_RA_LIBRARY = {
             "topic": "Fencing",
             "longDesc": "Constructing providing and fabricating cattle guard using channel section frame of size ISMC series 100 mm x 50 mm (Weight 9.20 kg/Rmt) and ISMC section 100 mm x 75mm (weight 11.50 kg/Rmt) intermediate support for welding G.I.pipe at 12 Cm C/C of size 50 mm in a frame made of Channel section size 100 mm x 50 mm all round including fixing the unit on prepared chamber of masonary wall using MS hold fast embeded in masonary wall top as directed by Engineer in charge and as per drawing and necessary required arrangement etc complete.",
             "source": " | Description as per E-2 Type (Principal Judge Family Court, Dahod) estimate",
-            "origin": "E-2 Type Family Court"
+            "origin": "E-2 Type Family Court",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 9.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_49",
@@ -3034,7 +3854,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying brick work in super structure above plinth level up to floor two level using common burnt clay conventional building bricks having crushing strength not less than 35 kg/Sq.Cm. in cement mortar 1:6 (1 cement : 6 fine sand), including raking out joints, scaffolding, curing, all labour, materials, tools and plants, complete as per specification and direction of the Engineer-in-Charge.",
-            "origin": "Vet. Polyclinic RA-15"
+            "origin": "Vet. Polyclinic RA-15",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_50",
@@ -3074,7 +3905,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying half brick masonry in super structure above plinth level using common burnt clay conventional building bricks having crushing strength not less than 35 kg/Sq.Cm. in cement mortar 1:4 (1 cement : 4 coarse sand), including scaffolding, curing, raking out joints and making good, complete as per specification and direction of the Engineer-in-Charge.",
-            "origin": "Vet. Polyclinic RA-16"
+            "origin": "Vet. Polyclinic RA-16",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_51",
@@ -3103,7 +3945,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing 150 mm wide G.I. chicken wire mesh of approved gauge over the junctions of brick masonry and R.C.C. members before plastering, fixed with galvanised nails / staples at required spacing, including cutting the mesh to required width, scaffolding and all labour, complete as directed by the Engineer-in-Charge.",
-            "origin": "Vet. Polyclinic RA-17"
+            "origin": "Vet. Polyclinic RA-17",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_52",
@@ -3154,7 +4007,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying broken china mosaic water proofing treatment over terrace using 12 mm to 20 mm broken pieces of glazed tiles laid over 40 mm average thick cement concrete 1:2:4 bedding mixed with approved water proofing compound at 1 kg per bag of cement, laid to required slope and tamped to bring cement creme to the surface, jointed with white cement, including rounding off junctions and extending 15 cm along the wall, cleaning with water and oxalic acid, curing and ponding test, complete as directed by the Engineer-in-Charge.",
-            "origin": "Vet. Polyclinic RA-20"
+            "origin": "Vet. Polyclinic RA-20",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_53",
@@ -3205,7 +4069,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying plinth protection with 60 mm thick inter-locking concrete paver blocks of approved shape, shade and strength, laid over 75 mm thick sand bed on 100 mm thick brick bat soling, edged with pre-cast cement concrete kerb stone of size 30 cm x 30 cm x 15 cm of M-250 grade, including excavation, levelling, dressing, compaction, filling the joints with fine sand and cement mortar 1:3, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "Vet. Polyclinic RA-21"
+            "origin": "Vet. Polyclinic RA-21",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_54",
@@ -3234,7 +4109,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing in position frameless toughened glass door of 12 mm to 18 mm thickness of approved make and quality, complete with stainless steel AISI 304 grade patch fittings, floor spring of approved make with cover plate, top and bottom patches, pivots, lock with strike plate, D-type handles, gaskets, all necessary hardware, cutting and making good the floor and walls, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "Vet. Polyclinic RA-24"
+            "origin": "Vet. Polyclinic RA-24",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_55",
@@ -3274,7 +4160,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing in position double shutter door comprising 38 mm thick solid core factory made flush door shutters of non-decorative type with block board core, fixed to polished granite door frame of approved shade and section, including anodised aluminium butt hinges, mortice lock, tower bolts, handles, door stopper, necessary screws and hold fasts, priming and painting / polishing of exposed surfaces, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "Vet. Polyclinic RA-25"
+            "origin": "Vet. Polyclinic RA-25",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_56",
@@ -3314,7 +4211,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing in position single shutter door comprising 38 mm thick solid core factory made flush door shutter of non-decorative type with block board core, fixed to polished granite door frame of approved shade and section, including anodised aluminium butt hinges, mortice lock, tower bolts, handles, door stopper, necessary screws and hold fasts, priming and painting / polishing of exposed surfaces, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "Vet. Polyclinic RA-26"
+            "origin": "Vet. Polyclinic RA-26",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_57",
@@ -3376,7 +4284,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing 25 mm thick polished Kota stone shelf of approved shade, set in cement mortar 1:3 (1 cement : 3 fine sand), including cutting grooves in the wall for bearing, moulding and rounding of exposed edges, jointing with matching pigment, polishing at site, cleaning with oxalic acid, curing and scaffolding, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "Vet. Polyclinic RA-39"
+            "origin": "Vet. Polyclinic RA-39",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_58",
@@ -3416,7 +4335,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in walls, from top of foundation level up to floor two level, including cost of form work of ordinary timber planking for vertical surfaces such as walls of any thickness, partitions and the like including attached buttresses and string course, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)",
-            "origin": "Vet. Polyclinic RA-42"
+            "origin": "Vet. Polyclinic RA-42",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_59",
@@ -3500,7 +4430,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing, fabricating and fixing in position 120 cm high stainless steel railing of AISI 316 grade, comprising 50 mm dia. top hand rail, 38 mm dia. vertical balusters, 25 mm dia. horizontal members and 18.75 mm dia. supporting pipes, with decorative stainless steel ball at ends, all pipes of approved gauge, cut to size, welded / joined with concealed joints, welds ground smooth and buffed to mirror finish, including base plates, anchor fasteners, grouting, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "Vet. Polyclinic RA-14"
+            "origin": "Vet. Polyclinic RA-14",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 3.5,
+                    "unit": "Rmt"
+                }
+            ]
         },
         {
             "id": "lib_60",
@@ -3545,7 +4486,18 @@ const DISTRICT_RA_LIBRARY = {
                 "rate": 24.22
             },
             "longDesc": "Providing 15 mm thick mala cement plaster in cement mortar 1:4 (1 cement : 4 coarse sand) on interior brick / concrete surfaces, finished with trowel to an even and smooth surface, including neat cement floating, scaffolding, curing, raking of joints and making good around openings, at all floors, complete as per specification and direction of the Engineer-in-Charge.",
-            "origin": "Vet. Polyclinic RA-18"
+            "origin": "Vet. Polyclinic RA-18",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_61",
@@ -3618,7 +4570,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing white vitreous china wash-down type European water closet of approved make with P or S trap, complete with I.S.I. marked P.V.C. flushing tank with fittings, solid plastic seat and cover with C.P. hinges, health faucet / jet spray with stainless steel flexible hose and wall hook, C.P. angle cock, connection pipes, bolts, nuts, rubber gasket, cutting and making good the walls and floors, testing and commissioning, complete as per direction of the Engineer-in-Charge.",
-            "origin": "Vet. Polyclinic RA-34"
+            "origin": "Vet. Polyclinic RA-34",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_62",
@@ -3669,7 +4632,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing, fabricating and fixing in position G.I. ladder made of G.I. flats and round bars of required section and spacing, welded joints ground smooth, fixed to wall with clamps and anchor fasteners, and given one coat of red oxide zinc chromate primer and two coats of approved synthetic enamel paint of desired shade, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "Vet. Polyclinic RA-37"
+            "origin": "Vet. Polyclinic RA-37",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 25.0,
+                    "unit": "Kg"
+                }
+            ]
         },
         {
             "id": "lib_63",
@@ -3742,7 +4716,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing service platform comprising 18 mm thick machine cut mirror polished black granite top supported on 25 mm thick polished Kota stone vertical supports, set in cement mortar 1:3 (1 cement : 3 fine sand), including cutting the slab to required size and shape, necessary cut-outs, moulding on exposed edges, jointing with matching pigment, polishing at site, cleaning with oxalic acid and curing, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "Vet. Polyclinic RA-38"
+            "origin": "Vet. Polyclinic RA-38",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_64",
@@ -3793,7 +4778,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing, fabricating and fixing in position foldable steel entrance gate made of M.S. hollow rectangular / square sections for frame and bracing, with M.S. sheet infill panels as required, including one integrated hinged wicket gate (single leaf type) of size approximately 1.0 M width. The gate shall be of bi-fold type with two folding leaves on either side of the central existing R.C.C. column, making a total of four panels, complete with all necessary hardware such as hinges, pivot rollers, top and bottom guide rails, stoppers, locking arrangements, tower bolts, handles and latches. The entire surface shall be cleaned, welded joints ground smooth, and given a coat of red oxide zinc chromate primer and two or more coats of approved synthetic enamel paint of desired shade. All work shall be completed as per drawing, manufacturer’s specification and direction of the Engineer-in-Charge.",
-            "origin": "Vet. Polyclinic RA-41"
+            "origin": "Vet. Polyclinic RA-41",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_65",
@@ -3833,7 +4829,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing 1.20 metre high fencing with 2.0 metre long M.S. angle posts of size 40 mm x 40 mm x 6 mm, oil painted in three coats and fixed at 2.5 M centre to centre, with five horizontal lines and two diagonals of galvanised steel barbed wire weighing 9.38 kg per 100 metre, strained and fixed to posts with G.I. staples, including fixing the posts in ground in 0.5 M x 0.5 M x 0.5 M block of cement concrete 1:5:10, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "Vet. Polyclinic RA-41A"
+            "origin": "Vet. Polyclinic RA-41A",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Rmt"
+                }
+            ]
         },
         {
             "id": "lib_66",
@@ -3873,7 +4880,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying controlled cement concrete M-150 and curing complete, for reinforced concrete work in foundations, footings, bases of columns and mass concrete, including cost of form work of ordinary timber planking for foundations, footings, bases of columns and mass concrete, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)",
-            "origin": "ANS Garbada — School RA-1"
+            "origin": "ANS Garbada — School RA-1",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_67",
@@ -3913,7 +4931,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying controlled cement concrete M-250 and curing complete, for reinforced concrete work in foundations, footings, bases of columns and mass concrete, including cost of form work of ordinary timber planking for foundations, footings, bases of columns and mass concrete, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)",
-            "origin": "ANS Garbada — School RA-2"
+            "origin": "ANS Garbada — School RA-2",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_68",
@@ -3953,7 +4982,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying controlled cement concrete M-250 and curing complete, for reinforced concrete work in columns, pillars, posts and struts up to floor two level, including cost of form work of ordinary timber planking for columns, pillars, posts and struts, square/rectangular/polygonal in plan, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)",
-            "origin": "ANS Garbada — School RA-3"
+            "origin": "ANS Garbada — School RA-3",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_69",
@@ -3993,7 +5033,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying cement concrete 1:4:8 (1 Cement : 4 coarse sand : 8 hand broken stone aggregate 40 mm nominal size) and curing complete, in foundation and plinth, including cost of form work of ordinary timber planking for foundations, footings, bases of columns and mass concrete, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)",
-            "origin": "ANS Garbada — School RA-4"
+            "origin": "ANS Garbada — School RA-4",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_70",
@@ -4033,7 +5084,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying controlled cement concrete M-250 and curing complete, for reinforced concrete work in slabs, landings, shelves, balconies, lintels, beams, girders and cantilever up to floor two level, including cost of form work of ordinary timber planking for sides and soffits of beams, beam haunchings, cantilevers, girders, bressumers and lintels not exceeding 1 M in depth, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)",
-            "origin": "ANS Garbada — School RA-5"
+            "origin": "ANS Garbada — School RA-5",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_71",
@@ -4073,7 +5135,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in columns, pillars, posts and struts up to floor two level, including cost of form work of ordinary timber planking for columns, pillars, posts and struts, square/rectangular/polygonal in plan, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)",
-            "origin": "ANS Garbada — School RA-6"
+            "origin": "ANS Garbada — School RA-6",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_72",
@@ -4113,7 +5186,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in slabs, landings, shelves, balconies, lintels, beams, girders and cantilever up to floor two level, including cost of form work of ordinary timber planking for sides and soffits of beams, beam haunchings, cantilevers, girders, bressumers and lintels not exceeding 1 M in depth, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)",
-            "origin": "ANS Garbada — School RA-7"
+            "origin": "ANS Garbada — School RA-7",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_73",
@@ -4153,7 +5237,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in slabs, landings, shelves, balconies, lintels, beams, girders and cantilever up to floor two level, including cost of form work of ordinary timber planking for sides and soffits of beams, beam haunchings, cantilevers, girders, bressumers and lintels not exceeding 1 M in depth, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)",
-            "origin": "ANS Garbada — School RA-8"
+            "origin": "ANS Garbada — School RA-8",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_74",
@@ -4193,7 +5288,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in slabs, landings, shelves, balconies, lintels, beams, girders and cantilever up to floor two level, including cost of form work of ordinary timber planking for chullah hoods, weather shades, chhajjas, corbels etc. including edges, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)",
-            "origin": "ANS Garbada — School RA-9"
+            "origin": "ANS Garbada — School RA-9",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_75",
@@ -4233,7 +5339,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying controlled cement concrete M-250 and curing complete, for reinforced concrete work in walls, from top of foundation level up to floor two level, including cost of form work of ordinary timber planking for vertical fins and vertical sun breakers, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)",
-            "origin": "ANS Garbada — School RA-10"
+            "origin": "ANS Garbada — School RA-10",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_76",
@@ -4273,7 +5390,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in slabs, landings, shelves, balconies, lintels, beams, girders and cantilever up to floor two level, including cost of form work of ordinary timber planking for flat surfaces such as soffits of suspended floor/roof slabs and landings up to 200 mm in thickness, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)",
-            "origin": "ANS Garbada — School RA-11"
+            "origin": "ANS Garbada — School RA-11",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_77",
@@ -4313,7 +5441,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying controlled cement concrete M-200 and curing complete, for reinforced concrete work in staircases excluding landing, up to floor two level, including cost of form work of ordinary timber planking for staircase with sloping or stepped soffits including risers and stringers, excluding landing, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)",
-            "origin": "ANS Garbada — School RA-12"
+            "origin": "ANS Garbada — School RA-12",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_78",
@@ -4353,7 +5492,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing TMT bar Fe-500D reinforcement of approved make conforming to IS 1786 for R.C.C. work, including straightening, cutting, bending, binding with 18 gauge annealed binding wire, providing cover blocks and placing in position at all levels and all floors, including extra lift above floor two level, complete as per bar bending schedule, drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-13"
+            "origin": "ANS Garbada — School RA-13",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Kg"
+                }
+            ]
         },
         {
             "id": "lib_79",
@@ -4393,7 +5543,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying brick work in super structure above plinth level up to floor two level using common burnt clay conventional building bricks having crushing strength not less than 35 kg/Sq.Cm. in cement mortar 1:6 (1 cement : 6 fine sand), including raking out joints, scaffolding, curing, all labour, materials, tools and plants, complete as per specification and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-14"
+            "origin": "ANS Garbada — School RA-14",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_80",
@@ -4433,7 +5594,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying half brick masonry in super structure above plinth level using common burnt clay conventional building bricks having crushing strength not less than 35 kg/Sq.Cm. in cement mortar 1:4 (1 cement : 4 coarse sand), including scaffolding, curing, raking out joints and making good, complete as per specification and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-15"
+            "origin": "ANS Garbada — School RA-15",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_81",
@@ -4473,7 +5645,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing 20 mm thick double coat mala cement plaster on interior brick / concrete surfaces comprising base coat of 12 mm thick cement plaster in cement mortar 1:4 (1 cement : 4 coarse sand) in rough finish and 8 mm thick top coat of cement mortar 1:2 (1 cement : 2 coarse sand) finished with trowel, including floating coat, scaffolding, curing, raking of joints and making good around openings, complete as per specification and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-16"
+            "origin": "ANS Garbada — School RA-16",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_82",
@@ -4524,7 +5707,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing 10 mm thick cement plaster in single coat in cement mortar 1:3 (1 cement : 3 sand) on ceilings and soffits of stairs, finished even and smooth with neat cement floating coat, including scaffolding, curing and making good, complete as per specification and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-17"
+            "origin": "ANS Garbada — School RA-17",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_83",
@@ -4564,7 +5758,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing water proofing treatment to sunken portions of toilets / bathrooms by laying cement concrete 1:2:4 (1 cement : 2 coarse sand : 4 graded stone aggregate 20 mm nominal size) of 50 mm average thickness mixed with approved water proofing compound, laid to required slope, including surface preparation, cleaning, brick bat coba where directed, curing and ponding test, complete as per specification and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-18"
+            "origin": "ANS Garbada — School RA-18",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_84",
@@ -4604,7 +5809,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing 20 mm thick sand faced cement plaster on external walls up to a height of 10 metres above ground level, consisting of 12 mm thick backing coat of cement mortar 1:3 (1 cement : 3 sand) and 8 mm thick finishing coat of cement mortar 1:1 (1 cement : 1 sand), with 1 cm x 1 cm grooves formed at required locations as per drawing, including scaffolding, curing, raking of joints and making good, complete as per specification and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-19"
+            "origin": "ANS Garbada — School RA-19",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_85",
@@ -4633,7 +5849,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing, fabricating and fixing in position M.S. factory fabricated double shutter entrance door made of M.S. hollow rectangular / square sections for frame and bracing with M.S. sheet infill panels of approved gauge, welded joints ground smooth, complete with all necessary hardware such as hinges, pivot rollers, guide rails, stoppers, locking arrangement, tower bolts and handles, and given one coat of red oxide zinc chromate primer and two coats of approved synthetic enamel paint of desired shade, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-20"
+            "origin": "ANS Garbada — School RA-20",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_86",
@@ -4662,7 +5889,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing in position anodised aluminium single shutter door comprising 35 mm thick flush shutter with aluminium framing of approved section and shade, including anodised aluminium hinges, mortice lock, handles, tower bolts, door stopper, gaskets, screws, hold fasts, weather-proof sealant, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-21"
+            "origin": "ANS Garbada — School RA-21",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_87",
@@ -4691,7 +5929,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing in position circular window with three track powder coated aluminium frame and shutters of approved section and shade, including 5 mm thick plain glass panes, EPDM gaskets, PVC wool pile, nylon rollers, locking arrangement, handles, screws, hold fasts, weather-proof sealant, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-22"
+            "origin": "ANS Garbada — School RA-22",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_88",
@@ -4720,7 +5969,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing in position two track anodised / powder coated aluminium sliding window with fixed glazing panel, of approved section and shade, including 5 mm thick plain glass panes, EPDM gaskets, PVC wool pile, nylon rollers, locking arrangement, handles, screws, hold fasts, weather-proof sealant, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-23"
+            "origin": "ANS Garbada — School RA-23",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_89",
@@ -4782,7 +6042,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing 18 mm thick machine cut both side mirror polished black granite slab of approved shade on window sills and jambs, set in cement mortar 1:3 (1 cement : 3 fine sand), including cutting to required size and shape, moulding on exposed edges, jointing with matching pigment, polishing at site, cleaning with oxalic acid, curing and scaffolding, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-24"
+            "origin": "ANS Garbada — School RA-24",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_90",
@@ -4833,7 +6104,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing, fabricating and fixing in position safety grill made of M.S. square / round bars at required spacing with C.R.C. frame all round, fixed with round headed bolts and nuts or screws, welded joints ground smooth, and given one coat of red oxide zinc chromate primer and two coats of approved synthetic enamel paint of desired shade, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-25"
+            "origin": "ANS Garbada — School RA-25",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 20.0,
+                    "unit": "Kg"
+                }
+            ]
         },
         {
             "id": "lib_91",
@@ -4884,7 +6166,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying broken china mosaic water proofing treatment over terrace using 12 mm to 20 mm broken pieces of glazed tiles laid over 50 mm average thick cement concrete 1:2:4 bedding mixed with approved water proofing compound, laid to required slope and tamped to bring cement creme to the surface, jointed with white cement, including rounding off junctions and extending 15 cm along the wall, cleaning with water and oxalic acid, curing and ponding test, complete as directed by the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-26"
+            "origin": "ANS Garbada — School RA-26",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_92",
@@ -4924,7 +6217,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing 18 mm thick machine cut double side mirror polished granite slab of approved shade as partition, fixed in position with stainless steel / M.S. framing, anchor fasteners and adhesive as required, including cutting to size and shape, moulding on exposed edges, jointing with matching pigment, polishing at site, cleaning with oxalic acid, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-27"
+            "origin": "ANS Garbada — School RA-27",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_93",
@@ -4953,7 +6257,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing, fabricating and fixing in position 90 cm high stainless steel railing of AISI 304 grade comprising top hand rail, vertical balusters and horizontal members of approved dia. and gauge, cut to size, welded / joined with concealed joints, welds ground smooth and buffed to mirror finish, including base plates, anchor fasteners, grouting, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-28"
+            "origin": "ANS Garbada — School RA-28",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Rmt"
+                }
+            ]
         },
         {
             "id": "lib_94",
@@ -4982,7 +6297,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing white vitreous china table top wash basin of size 610 mm x 450 mm of approved make, including C.P. pillar cock, pop-up waste, bottle trap, C.P. connection pipes with angle cock, brackets / clamps, cutting and making good the walls, testing and commissioning, complete as per direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-29"
+            "origin": "ANS Garbada — School RA-29",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_95",
@@ -5011,7 +6337,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing stainless steel AISI 304 grade kitchen sink of size 610 mm x 460 mm of approved make, including waste coupling, bottle trap, C.P. connection pipes with angle cock, brackets / clamps, cutting and making good the walls, testing and commissioning, complete as per direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-30"
+            "origin": "ANS Garbada — School RA-30",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_96",
@@ -5040,7 +6377,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing white vitreous china wall hung European type water closet of approved make, complete with concealed cistern and push valve / flush plate of approved make, wall mounting frame and brackets, solid plastic seat and cover with C.P. hinges, health faucet with flexible hose, C.P. angle cock, connection pipes, bolts, nuts, rubber gasket, cutting and making good the walls and floors, testing and commissioning, complete as per direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-31"
+            "origin": "ANS Garbada — School RA-31",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_97",
@@ -5069,7 +6417,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing complete set of sanitary fittings for handicap / divyang toilet of approved make (CERA Cruise set or equivalent), comprising wall hung water closet with concealed cistern, wash basin with fittings, stainless steel grab bars, folding support rails, mirror, health faucet, C.P. fittings and all accessories, including cutting and making good the walls and floors, testing and commissioning, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-32"
+            "origin": "ANS Garbada — School RA-32",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_98",
@@ -5098,7 +6457,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing white vitreous china wall hung urinal of approved make, complete with flush valve / sensor flushing arrangement, C.P. spreader, waste coupling, bottle trap, connection pipes with angle cock, brackets / clamps, cutting and making good the walls, testing and commissioning, complete as per direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-33"
+            "origin": "ANS Garbada — School RA-33",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_99",
@@ -5127,7 +6497,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing sandwich type platform comprising machine cut mirror polished granite top supported on polished Kota stone vertical supports, set in cement mortar 1:3 (1 cement : 3 fine sand), including cutting the slab to required size and shape, necessary cut-outs, moulding on exposed edges, jointing with matching pigment, polishing at site, cleaning with oxalic acid and curing, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-34"
+            "origin": "ANS Garbada — School RA-34",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_100",
@@ -5156,7 +6537,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing, fabricating and fixing in position railing made of M.S. square pipe sections of approved size and gauge for hand rail, balusters and horizontal members, welded joints ground smooth, fixed with base plates and anchor fasteners, and given one coat of red oxide zinc chromate primer and two coats of approved synthetic enamel paint of desired shade, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-35"
+            "origin": "ANS Garbada — School RA-35",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_101",
@@ -5185,7 +6577,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying glossy glazed vitrified tile (GVT) flooring using 600 mm x 600 mm tiles of approved make, shade and first quality, laid over 20 mm thick base of cement mortar 1:4 (1 cement : 4 coarse sand), jointed with white cement slurry mixed with matching pigment, including cutting, rubbing, cleaning with oxalic acid, curing and removal of debris, complete as per specification and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-36"
+            "origin": "ANS Garbada — School RA-36",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_102",
@@ -5214,7 +6617,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing glazed vitrified tile (GVT) skirting, risers and dado of approved make, shade and first quality, set over 12 mm thick backing of cement mortar 1:3 (1 cement : 3 fine sand), jointed with white cement slurry mixed with matching pigment, including cutting, rubbing, cleaning with oxalic acid, curing and scaffolding, complete as per specification and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-37"
+            "origin": "ANS Garbada — School RA-37",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_103",
@@ -5243,7 +6657,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing wall signage made of 1.5 mm thick stainless steel AISI 304 grade laser cut letters / symbols of approved font, size and finish, fixed to wall with concealed studs, spacers and adhesive as required, including drilling, making good the wall surface, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-38"
+            "origin": "ANS Garbada — School RA-38",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_104",
@@ -5272,7 +6697,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Constructing soak pit of 2.28 metre internal diameter and 6.5 metre depth, including excavation in all kinds of soil, brick masonry honey comb lining in cement mortar, filling with graded brick bats and stone metal, R.C.C. cover slab with frame, inlet arrangement, backfilling and disposal of surplus excavated material, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-39"
+            "origin": "ANS Garbada — School RA-39",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_105",
@@ -5301,7 +6737,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Constructing septic tank of internal size 4.95 m x 1.98 m x 2.5 m including excavation in all kinds of soil, cement concrete foundation bed, brick masonry walls in cement mortar, internal and external plastering with water proofing compound, R.C.C. top slab with manhole covers and frames, baffle walls, inlet and outlet arrangement with pipes and tees, vent pipe with cowl, backfilling and disposal of surplus excavated material, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-40"
+            "origin": "ANS Garbada — School RA-40",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_106",
@@ -5330,7 +6777,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing, fabricating and fixing in position stainless steel AISI 304 grade hand railing of 32 mm diameter pipe of approved gauge, cut to size, welded / joined with concealed joints, welds ground smooth and buffed to mirror finish, fixed to wall / floor with brackets, base plates and anchor fasteners, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-41"
+            "origin": "ANS Garbada — School RA-41",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_107",
@@ -5359,7 +6817,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing G.I. chicken wire mesh of approved width and gauge over the junctions of brick masonry and R.C.C. members before plastering, fixed with galvanised nails / staples at required spacing, including cutting the mesh to required width, scaffolding and all labour, complete as directed by the Engineer-in-Charge.",
-            "origin": "ANS Garbada — School RA-44"
+            "origin": "ANS Garbada — School RA-44",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_108",
@@ -5388,7 +6857,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing in position anodised aluminium ventilator of size approximately 65 cm x 25 cm of approved section and shade, fitted with glass / aluminium louvres, including louvre clips, frame, screws, hold fasts, weather-proof sealant, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — Hostel RA-42"
+            "origin": "ANS Garbada — Hostel RA-42",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_109",
@@ -5417,7 +6897,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing 114 mm wide G.I. louvers of 0.55 mm thickness of approved make and profile, fixed to frame with necessary clips, screws and supporting members, including cutting to required size, priming and painting where directed, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — Hostel RA-43"
+            "origin": "ANS Garbada — Hostel RA-43",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_110",
@@ -5457,7 +6948,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying controlled cement concrete M-250 and curing complete, for reinforced concrete work in columns, pillars, posts and struts up to floor two level, including cost of form work of ordinary timber planking for columns, pillars, posts and struts, square/rectangular/polygonal in plan, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)",
-            "origin": "ANS Garbada — Hostel RA-3"
+            "origin": "ANS Garbada — Hostel RA-3",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_111",
@@ -5497,7 +6999,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying controlled cement concrete M-250 and curing complete, for reinforced concrete work in slabs, landings, shelves, balconies, lintels, beams, girders and cantilever up to floor two level, including cost of form work of ordinary timber planking for sides and soffits of beams, beam haunchings, cantilevers, girders, bressumers and lintels not exceeding 1 M in depth, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)",
-            "origin": "ANS Garbada — Hostel RA-5"
+            "origin": "ANS Garbada — Hostel RA-5",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_112",
@@ -5537,7 +7050,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and laying controlled cement concrete M-250 and curing complete, for reinforced concrete work in walls, from top of foundation level up to floor two level, including cost of form work of ordinary timber planking for vertical surfaces such as walls of any thickness, partitions and the like including attached buttresses and string course, with centering, shuttering, strutting, propping and removal of the same, including curing, scaffolding, hire and running charges of machinery, all labour, materials, tools and plants, complete as per drawing, relevant IS specification and direction of the Engineer-in-Charge. (Cost of reinforcement to be paid separately.)",
-            "origin": "ANS Garbada — Hostel RA-10"
+            "origin": "ANS Garbada — Hostel RA-10",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_113",
@@ -5566,7 +7090,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing in position single shutter door with green marble door frame of approved shade and section, with 38 mm thick solid core flush shutter, including anodised aluminium butt hinges, mortice lock, tower bolts, handles, door stopper, necessary screws and hold fasts, priming and painting / polishing of exposed surfaces, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — Hostel RA-21"
+            "origin": "ANS Garbada — Hostel RA-21",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_114",
@@ -5595,7 +7130,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing in position circular window with three track anodised / powder coated aluminium frame and shutters of approved section and shade, including 5 mm thick plain glass panes, EPDM gaskets, PVC wool pile, nylon rollers, locking arrangement, handles, screws, hold fasts, weather-proof sealant, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — Hostel RA-22"
+            "origin": "ANS Garbada — Hostel RA-22",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_115",
@@ -5624,7 +7170,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing in position two track anodised / powder coated aluminium sliding window of approved section and shade, including 5 mm thick plain glass panes, EPDM gaskets, PVC wool pile, nylon rollers, locking arrangement, handles, screws, hold fasts, weather-proof sealant, all hardware and labour, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — Hostel RA-23"
+            "origin": "ANS Garbada — Hostel RA-23",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_116",
@@ -5653,7 +7210,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "longDesc": "Providing and fixing 18 mm thick machine cut polished green marble slab of approved shade on window sills and jambs, set in cement mortar 1:3 (1 cement : 3 fine sand), including cutting to required size and shape, moulding on exposed edges, jointing with matching pigment, polishing at site, cleaning with oxalic acid, curing and scaffolding, complete as per drawing and direction of the Engineer-in-Charge.",
-            "origin": "ANS Garbada — Hostel RA-24"
+            "origin": "ANS Garbada — Hostel RA-24",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_117",
@@ -5693,7 +7261,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "origin": "E-2 Type Family Court RA-49"
+            "origin": "E-2 Type Family Court RA-49",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Rmt"
+                }
+            ]
         },
         {
             "id": "lib_118",
@@ -5755,7 +7334,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "E-2 Type Family Court RA-50"
+            "origin": "E-2 Type Family Court RA-50",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_119",
@@ -5829,7 +7419,18 @@ const DISTRICT_RA_LIBRARY = {
                     ]
                 }
             ],
-            "origin": "Vet. Polyclinic"
+            "origin": "Vet. Polyclinic",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 0.35,
+                    "b": 0.75,
+                    "d": 2.5,
+                    "qty": 0.66,
+                    "unit": "Cmt"
+                }
+            ]
         },
         {
             "id": "lib_120",
@@ -5908,7 +7509,18 @@ const DISTRICT_RA_LIBRARY = {
                 "page": "",
                 "rate": 39.68
             },
-            "origin": "Vet. Polyclinic"
+            "origin": "Vet. Polyclinic",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 0.35,
+                    "b": 0.75,
+                    "d": 2.0,
+                    "qty": 0.53,
+                    "unit": "Cmt"
+                }
+            ]
         },
         {
             "id": "lib_121",
@@ -5982,7 +7594,18 @@ const DISTRICT_RA_LIBRARY = {
                     ]
                 }
             ],
-            "origin": "Vet. Polyclinic"
+            "origin": "Vet. Polyclinic",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 1.0,
+                    "b": 0.3,
+                    "d": 0.75,
+                    "qty": 0.23,
+                    "unit": "Cmt"
+                }
+            ]
         },
         {
             "id": "lib_122",
@@ -6047,7 +7670,18 @@ const DISTRICT_RA_LIBRARY = {
                     ]
                 }
             ],
-            "origin": "Vet. Polyclinic"
+            "origin": "Vet. Polyclinic",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 1.0,
+                    "b": 1.0,
+                    "d": 0.1,
+                    "qty": 0.1,
+                    "unit": "Cmt"
+                }
+            ]
         },
         {
             "id": "lib_123",
@@ -6126,7 +7760,18 @@ const DISTRICT_RA_LIBRARY = {
                 "page": "",
                 "rate": 39.68
             },
-            "origin": "Vet. Polyclinic"
+            "origin": "Vet. Polyclinic",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 1.0,
+                    "b": 0.3,
+                    "d": 0.75,
+                    "qty": 0.23,
+                    "unit": "Cmt"
+                }
+            ]
         },
         {
             "id": "lib_124",
@@ -6205,7 +7850,18 @@ const DISTRICT_RA_LIBRARY = {
                 "page": "",
                 "rate": 39.68
             },
-            "origin": "Vet. Polyclinic"
+            "origin": "Vet. Polyclinic",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 1.2,
+                    "b": 0.52,
+                    "d": 0.15,
+                    "qty": 0.09,
+                    "unit": "Cmt"
+                }
+            ]
         },
         {
             "id": "lib_125",
@@ -6284,7 +7940,18 @@ const DISTRICT_RA_LIBRARY = {
                 "page": "",
                 "rate": 39.68
             },
-            "origin": "Vet. Polyclinic"
+            "origin": "Vet. Polyclinic",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 1.2,
+                    "b": 0.23,
+                    "d": 0.15,
+                    "qty": 0.04,
+                    "unit": "Cmt"
+                }
+            ]
         },
         {
             "id": "lib_126",
@@ -6381,7 +8048,27 @@ const DISTRICT_RA_LIBRARY = {
                 "page": "",
                 "rate": 39.68
             },
-            "origin": "Vet. Polyclinic"
+            "origin": "Vet. Polyclinic",
+            "basisRows": [
+                {
+                    "label": "Waist slab",
+                    "nos": 1,
+                    "l": 14.0,
+                    "b": 2.5,
+                    "d": 0.2,
+                    "qty": 7.0,
+                    "unit": "Cmt"
+                },
+                {
+                    "label": "Steps",
+                    "nos": 11,
+                    "l": 2.5,
+                    "b": 0.3,
+                    "d": 0.15,
+                    "qty": 1.24,
+                    "unit": "Cmt"
+                }
+            ]
         },
         {
             "id": "lib_127",
@@ -6451,7 +8138,18 @@ const DISTRICT_RA_LIBRARY = {
                 "page": "",
                 "rate": 39.68
             },
-            "origin": "Vet. Polyclinic"
+            "origin": "Vet. Polyclinic",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 4.2,
+                    "b": 0.23,
+                    "d": 0.15,
+                    "qty": 0.14,
+                    "unit": "Cmt"
+                }
+            ]
         },
         {
             "id": "lib_128",
@@ -6603,7 +8301,18 @@ const DISTRICT_RA_LIBRARY = {
                     ]
                 }
             ],
-            "origin": "Vet. Polyclinic"
+            "origin": "Vet. Polyclinic",
+            "basisRows": [
+                {
+                    "label": "One flight",
+                    "nos": 1,
+                    "l": 3.5,
+                    "b": 0.9,
+                    "d": "",
+                    "qty": 3.5,
+                    "unit": "Rmt"
+                }
+            ]
         },
         {
             "id": "lib_129",
@@ -6650,7 +8359,18 @@ const DISTRICT_RA_LIBRARY = {
                 "page": "104",
                 "rate": 24.22
             },
-            "origin": "Vet. Polyclinic"
+            "origin": "Vet. Polyclinic",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_130",
@@ -6731,18 +8451,7 @@ const DISTRICT_RA_LIBRARY = {
                     "unit": "Sqmt",
                     "qty": 0.38,
                     "rate": 161.02,
-                    "cpApply": true,
-                    "rows": [
-                        {
-                            "label": "Louvers",
-                            "nos": 9,
-                            "l": 0.1,
-                            "b": 0.4,
-                            "d": "",
-                            "qty": 0.36,
-                            "unit": "Sqmt"
-                        }
-                    ]
+                    "cpApply": true
                 },
                 {
                     "sr": "4",
@@ -6767,7 +8476,18 @@ const DISTRICT_RA_LIBRARY = {
                     ]
                 }
             ],
-            "origin": "Vet. Polyclinic"
+            "origin": "Vet. Polyclinic",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 0.9,
+                    "b": 0.45,
+                    "d": "",
+                    "qty": 0.405,
+                    "unit": "Sqmt"
+                }
+            ]
         },
         {
             "id": "lib_131",
@@ -6820,7 +8540,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "Vet. Polyclinic"
+            "origin": "Vet. Polyclinic",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_132",
@@ -6915,7 +8646,18 @@ const DISTRICT_RA_LIBRARY = {
                     ]
                 }
             ],
-            "origin": "Vet. Polyclinic"
+            "origin": "Vet. Polyclinic",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 2.5,
+                    "l": 0.3,
+                    "b": "",
+                    "d": "",
+                    "qty": 0.75,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_133",
@@ -7059,7 +8801,27 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "origin": "Vet. Polyclinic"
+            "origin": "Vet. Polyclinic",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 2,
+                    "l": 1.2,
+                    "b": 0.28,
+                    "d": "",
+                    "qty": 0.34,
+                    "unit": "Sqm"
+                },
+                {
+                    "label": "",
+                    "nos": 2,
+                    "l": 2.0,
+                    "b": 0.28,
+                    "d": "",
+                    "qty": 0.56,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_134",
@@ -7146,7 +8908,18 @@ const DISTRICT_RA_LIBRARY = {
                 }
             ],
             "tailNote": "Note: source PDF shows Say Rs. 105.00; its own component total works out to Rs. 114.42 per Kg — verify before use.",
-            "origin": "Vet. Polyclinic"
+            "origin": "Vet. Polyclinic",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 20.0,
+                    "unit": "Kg"
+                }
+            ]
         },
         {
             "id": "lib_135",
@@ -7265,7 +9038,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "origin": "Vet. Polyclinic"
+            "origin": "Vet. Polyclinic",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 12.0,
+                    "unit": "Rmt"
+                }
+            ]
         },
         {
             "id": "lib_136",
@@ -7318,7 +9102,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "Vet. Polyclinic"
+            "origin": "Vet. Polyclinic",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_137",
@@ -7371,7 +9166,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "Vet. Polyclinic"
+            "origin": "Vet. Polyclinic",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_138",
@@ -7457,7 +9263,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "origin": "Vet. Polyclinic"
+            "origin": "Vet. Polyclinic",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_139",
@@ -7584,7 +9401,36 @@ const DISTRICT_RA_LIBRARY = {
                     ]
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "Base of column",
+                    "nos": 1,
+                    "l": 3.2,
+                    "b": 3.2,
+                    "d": 0.35,
+                    "qty": 3.58,
+                    "unit": "Cum"
+                },
+                {
+                    "label": "",
+                    "nos": 1,
+                    "l": 2.7,
+                    "b": 2.7,
+                    "d": 0.3,
+                    "qty": 2.19,
+                    "unit": "Cum"
+                },
+                {
+                    "label": "",
+                    "nos": 1,
+                    "l": 2.2,
+                    "b": 2.2,
+                    "d": 0.3,
+                    "qty": 1.45,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_140",
@@ -7657,7 +9503,18 @@ const DISTRICT_RA_LIBRARY = {
                     ]
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 0.3,
+                    "b": 0.75,
+                    "d": 1.7,
+                    "qty": 0.38,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_141",
@@ -7721,7 +9578,18 @@ const DISTRICT_RA_LIBRARY = {
                     ]
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 3.5,
+                    "b": 3.5,
+                    "d": 0.15,
+                    "qty": 1.84,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_142",
@@ -7799,7 +9667,18 @@ const DISTRICT_RA_LIBRARY = {
                 "page": "40",
                 "rate": 39.68
             },
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 0.35,
+                    "b": 0.75,
+                    "d": 3.6,
+                    "qty": 0.95,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_143",
@@ -7877,7 +9756,18 @@ const DISTRICT_RA_LIBRARY = {
                 "page": "40",
                 "rate": 39.68
             },
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 3.0,
+                    "b": 0.23,
+                    "d": 0.15,
+                    "qty": 0.104,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_144",
@@ -7964,7 +9854,18 @@ const DISTRICT_RA_LIBRARY = {
                 "page": "40",
                 "rate": 39.68
             },
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 1.2,
+                    "b": 0.45,
+                    "d": 0.13,
+                    "qty": 0.07,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_145",
@@ -8060,7 +9961,27 @@ const DISTRICT_RA_LIBRARY = {
                 "page": "40",
                 "rate": 39.68
             },
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "Waist slab",
+                    "nos": 1.0,
+                    "l": 5.03,
+                    "b": 1.5,
+                    "d": 0.2,
+                    "qty": 1.51,
+                    "unit": "Cum"
+                },
+                {
+                    "label": "Steps",
+                    "nos": 0.5,
+                    "l": 12.0,
+                    "b": 0.3,
+                    "d": 0.15,
+                    "qty": 0.27,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_166",
@@ -8124,7 +10045,18 @@ const DISTRICT_RA_LIBRARY = {
                     ]
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 0.35,
+                    "b": 2.5,
+                    "d": "",
+                    "qty": 0.875,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_147",
@@ -8182,7 +10114,18 @@ const DISTRICT_RA_LIBRARY = {
                 "page": "104",
                 "rate": 24.22
             },
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_148",
@@ -8279,7 +10222,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 10.0,
+                    "b": 1.2,
+                    "d": "",
+                    "qty": 12.0,
+                    "unit": "Sqmt"
+                }
+            ]
         },
         {
             "id": "lib_149",
@@ -8449,7 +10403,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "Door size",
+                    "nos": 1,
+                    "l": 3.0,
+                    "b": 2.45,
+                    "d": "",
+                    "qty": 7.35,
+                    "unit": "Sqmt"
+                }
+            ]
         },
         {
             "id": "lib_165",
@@ -8619,7 +10584,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "Door size",
+                    "nos": 1,
+                    "l": 1.2,
+                    "b": 2.1,
+                    "d": "",
+                    "qty": 2.52,
+                    "unit": "Sqmt"
+                }
+            ]
         },
         {
             "id": "lib_158",
@@ -8763,7 +10739,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "W4",
+                    "nos": 1,
+                    "l": 0.45,
+                    "b": 0.9,
+                    "d": "",
+                    "qty": 0.405,
+                    "unit": "Sqmt"
+                }
+            ]
         },
         {
             "id": "lib_159",
@@ -8929,7 +10916,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "Window size",
+                    "nos": 1,
+                    "l": 1.8,
+                    "b": 1.5,
+                    "d": "",
+                    "qty": 2.7,
+                    "unit": "Sqmt"
+                }
+            ]
         },
         {
             "id": "lib_160",
@@ -9066,7 +11064,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "Window size",
+                    "nos": 1,
+                    "l": 1.2,
+                    "b": 1.5,
+                    "d": "",
+                    "qty": 1.8,
+                    "unit": "Sqmt"
+                }
+            ]
         },
         {
             "id": "lib_150",
@@ -9183,7 +11192,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 0.3,
+                    "b": 1.2,
+                    "d": "",
+                    "qty": 0.36,
+                    "unit": "Sqmt"
+                }
+            ]
         },
         {
             "id": "lib_151",
@@ -9278,7 +11298,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 2.0,
+                    "b": 0.33,
+                    "d": "",
+                    "qty": 0.66,
+                    "unit": "Sqmt"
+                }
+            ]
         },
         {
             "id": "lib_162",
@@ -9373,7 +11404,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1.0,
+                    "l": 2.5,
+                    "b": 0.6,
+                    "d": "",
+                    "qty": 1.5,
+                    "unit": "Sqmt"
+                }
+            ]
         },
         {
             "id": "lib_156",
@@ -9544,7 +11586,18 @@ const DISTRICT_RA_LIBRARY = {
                     ]
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "",
+                    "nos": 1,
+                    "l": 5.2,
+                    "b": 0.75,
+                    "d": 0.75,
+                    "qty": 3.9,
+                    "unit": "Sqmt"
+                }
+            ]
         },
         {
             "id": "lib_152",
@@ -9641,7 +11694,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "One flight",
+                    "nos": 1,
+                    "l": 3.5,
+                    "b": "",
+                    "d": "",
+                    "qty": 3.5,
+                    "unit": "Rmt"
+                }
+            ]
         },
         {
             "id": "lib_153",
@@ -9716,7 +11780,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_154",
@@ -9769,7 +11844,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_155",
@@ -9844,7 +11930,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_163",
@@ -9930,7 +12027,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_161",
@@ -9983,7 +12091,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Sqm"
+                }
+            ]
         },
         {
             "id": "lib_164",
@@ -10124,7 +12243,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_170",
@@ -10232,7 +12362,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_171",
@@ -10307,7 +12448,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_172",
@@ -10437,7 +12589,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "No"
+                }
+            ]
         },
         {
             "id": "lib_167",
@@ -10523,7 +12686,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_168",
@@ -10576,7 +12750,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "Rate for",
+                    "nos": "",
+                    "l": "",
+                    "b": "",
+                    "d": "",
+                    "qty": 1.0,
+                    "unit": "Cum"
+                }
+            ]
         },
         {
             "id": "lib_169",
@@ -10618,7 +12803,18 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": false
                 }
             ],
-            "origin": "ANS Garbada (quarters/road)"
+            "origin": "ANS Garbada (quarters/road)",
+            "basisRows": [
+                {
+                    "label": "Length of kerb",
+                    "nos": 1,
+                    "l": 100.0,
+                    "b": "",
+                    "d": "",
+                    "qty": 100.0,
+                    "unit": "Rmt"
+                }
+            ]
         }
     ],
     marketRates: [

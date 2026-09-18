@@ -198,6 +198,21 @@
   }
 
   /* ----------------------------------------------------------- edit view */
+  function basisRowsHtml(rows) {
+    const nb = v => (v === undefined || v === null) ? '' : v;
+    if (!rows.length) return '<p style="margin:0;font-size:11.5px;color:#789">Koi row nahi — "+ row" se jodo.</p>';
+    return '<table style="width:100%;border-collapse:collapse;font-size:11.5px">' +
+      rows.map((m, j) => `<tr>
+        <td style="padding:1px 3px"><input data-rb="${j}" data-rbk="label" value="${esc(nb(m.label))}" placeholder="label" style="width:100%;padding:2px 4px;border:1px solid #dde;border-radius:3px;font:inherit;font-size:11.5px"></td>
+        <td style="padding:1px 3px;width:62px"><input type="number" step="0.01" data-rb="${j}" data-rbk="nos" value="${nb(m.nos)}" placeholder="nos" style="width:100%;padding:2px 4px;border:1px solid #dde;border-radius:3px;font:inherit;font-size:11.5px;text-align:right"></td>
+        <td style="padding:1px 3px;width:66px"><input type="number" step="0.001" data-rb="${j}" data-rbk="l" value="${nb(m.l)}" placeholder="L" style="width:100%;padding:2px 4px;border:1px solid #dde;border-radius:3px;font:inherit;font-size:11.5px;text-align:right"></td>
+        <td style="padding:1px 3px;width:66px"><input type="number" step="0.001" data-rb="${j}" data-rbk="b" value="${nb(m.b)}" placeholder="B" style="width:100%;padding:2px 4px;border:1px solid #dde;border-radius:3px;font:inherit;font-size:11.5px;text-align:right"></td>
+        <td style="padding:1px 3px;width:66px"><input type="number" step="0.001" data-rb="${j}" data-rbk="d" value="${nb(m.d)}" placeholder="H" style="width:100%;padding:2px 4px;border:1px solid #dde;border-radius:3px;font:inherit;font-size:11.5px;text-align:right"></td>
+        <td style="padding:1px 6px;width:80px;text-align:right;font-weight:bold">${money(m.qty || 0)}</td>
+        <td style="padding:1px;width:24px;text-align:center"><button class="btn ghost" data-rbdel="${j}" style="padding:0 5px;font-size:11px;color:#b3402a">✕</button></td>
+      </tr>`).join('') + '</table>';
+  }
+
   function measRowsHtml(ci, rows) {
     if (!rows.length) return '';
     const nb = (v) => (v === undefined || v === null) ? '' : v;
@@ -243,6 +258,15 @@
               style="width:78px;padding:2px 5px;border:1px solid #ccd;border-radius:4px" placeholder="0.00"></span>
         </span>
       </label>
+    </div>
+
+    <div style="padding:10px 12px;border-bottom:1px solid #eef">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+        <b style="font-size:13px">Basis measurement (jis quantity par RA bani hai)</b>
+        <button class="btn ghost" id="raBasisAdd" style="padding:2px 10px;font-size:11px">+ row</button>
+        <span style="font-size:10.5px;color:#789">label · nos · L · B · H — sab rows ka jod Basis Qty ban jayega</span>
+      </div>
+      ${basisRowsHtml(draft.basisRows || [])}
     </div>
 
     <div style="padding:10px 12px;border-bottom:1px solid #eef">
@@ -528,6 +552,38 @@
       if (el.tagName === 'TEXTAREA') el.oninput = () => { const c = draft.components[i]; if (c) c[k] = el.value; };
     });
 
+    /* ---------- basis measurement rows ---------- */
+    const reBasis = () => {
+      const rows = draft.basisRows || [];
+      let tot = 0;
+      rows.forEach(m => {
+        const parts = ['nos', 'l', 'b', 'd'].map(k2 => numv(m[k2])).filter(v => v > 0);
+        m.qty = parts.length ? Math.round(parts.reduce((a, b2) => a * b2, 1) * 1000) / 1000 : numv(m.qty);
+        tot += Number(m.qty) || 0;
+      });
+      if (rows.some(m => m.nos || m.l || m.b || m.d)) draft.basisQty = Math.round(tot * 1000) / 1000;
+    };
+    qq('[data-rb]', p).forEach(el => {
+      const j = +el.dataset.rb, k = el.dataset.rbk;
+      el.onchange = () => {
+        const m = (draft.basisRows || [])[j]; if (!m) return;
+        m[k] = (k === 'label') ? el.value : numv(el.value);
+        reBasis(); render();
+      };
+    });
+    const bAdd = q('#raBasisAdd', p);
+    if (bAdd) bAdd.onclick = () => {
+      draft.basisRows = draft.basisRows || [];
+      draft.basisRows.push({ label: '', nos: 1, l: '', b: '', d: '', qty: 0 });
+      reBasis(); render();
+    };
+    qq('[data-rbdel]', p).forEach(b => b.onclick = () => {
+      const j = +b.dataset.rbdel;
+      if (!draft.basisRows) return;
+      draft.basisRows.splice(j, 1);
+      reBasis(); render();
+    });
+
     /* ---------- measurement rows (nos x L x B x H) ---------- */
     const reQty = (c) => {
       if (!c.rows || !c.rows.length) return;
@@ -656,9 +712,14 @@
     L.push({ t: 'title', text: '(As per RA)-' + (ra.libNo || serial) });
     if (ra.itemNo) L.push({ t: 'itemno', text: 'It. No.  ' + ra.itemNo });
     L.push({ t: 'para', text: fullDesc(ra) });
+    const brs = (ra.basisRows || []).filter(r => r && (r.nos || r.l || r.b || r.d));
     if (ra.basisNote) L.push({ t: 'note', text: ra.basisNote });
-    L.push({ t: 'note', text: 'The rate for  ' + c.basisQty + '  ' + U });
-    (ra.basisRows || []).forEach(r => L.push({ t: 'meas', ...r }));
+    if (brs.length) {
+      brs.forEach(r => L.push({ t: 'meas', ...r }));
+      L.push({ t: 'meastot', qty: c.basisQty, unit: U });
+    } else {
+      L.push({ t: 'note', text: 'The rate for  ' + c.basisQty + '  ' + U });
+    }
 
     c.rows.forEach(row => {
       L.push({ t: 'gap' });
