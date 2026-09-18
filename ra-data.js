@@ -7318,6 +7318,3135 @@ const DISTRICT_RA_LIBRARY = {
                     "cpApply": true
                 }
             ]
+        },
+        {
+            "id": "lib_139",
+            "libNo": "139",
+            "itemNo": "1",
+            "topic": "RCC",
+            "desc": "RCC — CC M-250 for mass concrete, foundations & footings (Garbada)",
+            "longDesc": "For Mass Concrete M -250 Providing and laying Controlled cement concrete M 250 and curing complete including the cost of form work but excluding the cost of reinforcement.(a) Foundations, Footing Bases of columns and the like and Mass Concrete.",
+            "unit": "Cum",
+            "basis": "Considering quantity of base of columns = 7.22 Cum",
+            "basisNote": "Considering quantity of base of columns = 7.22 Cum",
+            "basisQty": 7.22,
+            "cp": 0,
+            "pdfRate": 4473.0,
+            "sayRate": 4473.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05025AA",
+                    "page": "42",
+                    "label": "Cost of concrete M-250",
+                    "unit": "Cum",
+                    "qty": 7.22,
+                    "rate": 4205.16,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Base of column",
+                            "nos": 1,
+                            "l": 3.2,
+                            "b": 3.2,
+                            "d": 0.35,
+                            "qty": 3.58,
+                            "unit": "Cum"
+                        },
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 2.7,
+                            "b": 2.7,
+                            "d": 0.3,
+                            "qty": 2.19,
+                            "unit": "Cum"
+                        },
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 2.2,
+                            "b": 2.2,
+                            "d": 0.3,
+                            "qty": 1.45,
+                            "unit": "Cum"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001A",
+                    "page": "60",
+                    "label": "Form work of ordinary timber planking incl. centering, shuttering, strutting, propping and removal",
+                    "unit": "Sqm",
+                    "qty": 10.36,
+                    "rate": 186.24,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 3.2,
+                            "b": "",
+                            "d": 0.35,
+                            "qty": 2.24,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 3.2,
+                            "b": "",
+                            "d": 0.35,
+                            "qty": 2.24,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 2.7,
+                            "b": "",
+                            "d": 0.3,
+                            "qty": 1.62,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 2.7,
+                            "b": "",
+                            "d": 0.3,
+                            "qty": 1.62,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 2.2,
+                            "b": "",
+                            "d": 0.3,
+                            "qty": 1.32,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 2.2,
+                            "b": "",
+                            "d": 0.3,
+                            "qty": 1.32,
+                            "unit": "Sqm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "lib_140",
+            "libNo": "140",
+            "itemNo": "2",
+            "topic": "RCC",
+            "desc": "RCC — CC M-250 for columns upto plinth (Garbada)",
+            "longDesc": "For Column M -250 Providing and laying Controlled cement concrete M 250 and curing complete including the cost of form work but excluding the cost of reinforcement.(C) Column up to plinth",
+            "unit": "Cum",
+            "basis": "Considering 1 × 0.30 × 0.75 × 1.70 = 0.38 Cum",
+            "basisNote": "Considering 1 × 0.30 × 0.75 × 1.70 = 0.38 Cum",
+            "basisQty": 0.38,
+            "cp": 0,
+            "pdfRate": 7609.0,
+            "sayRate": 7609.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05025DA",
+                    "page": "42",
+                    "label": "Cost of concrete M-250",
+                    "unit": "Cum",
+                    "qty": 0.38,
+                    "rate": 4590.29,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Column",
+                            "nos": 1,
+                            "l": 0.3,
+                            "b": 0.75,
+                            "d": 1.7,
+                            "qty": 0.38,
+                            "unit": "Cum"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001G1A",
+                    "page": "60",
+                    "label": "Form work of ordinary timber planking incl. centering, shuttering, strutting, propping and removal",
+                    "unit": "Sqm",
+                    "qty": 3.57,
+                    "rate": 323.39,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 0.3,
+                            "b": "",
+                            "d": 1.7,
+                            "qty": 1.02,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 0.75,
+                            "b": "",
+                            "d": 1.7,
+                            "qty": 2.55,
+                            "unit": "Sqm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "lib_141",
+            "libNo": "141",
+            "itemNo": "4",
+            "topic": "RCC",
+            "desc": "RCC — CC M-150 for plinth slab (Garbada)",
+            "longDesc": "Providing & laying controlled cement concrete M150 for curing comp. including cost of form work but excluding cost of reinforcement for reinforced conrete work in PLINTH SLAB",
+            "unit": "Cum",
+            "basis": "Considering 1 × 3.50 × 3.50 × 0.15 = 1.84 Cum",
+            "basisNote": "Considering 1 × 3.50 × 3.50 × 0.15 = 1.84 Cum",
+            "basisQty": 1.84,
+            "cp": 0,
+            "pdfRate": 4414.0,
+            "sayRate": 4414.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05023CA",
+                    "page": "41",
+                    "label": "Cost of concrete M-150",
+                    "unit": "Cum",
+                    "qty": 1.84,
+                    "rate": 4103.92,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 3.5,
+                            "b": 3.5,
+                            "d": 0.15,
+                            "qty": 1.84,
+                            "unit": "Cum"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001B1A",
+                    "page": "60",
+                    "label": "Form work of ordinary timber planking incl. centering, shuttering, strutting, propping and removal",
+                    "unit": "Sqm",
+                    "qty": 2.1,
+                    "rate": 270.9,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 4,
+                            "l": 3.5,
+                            "b": "",
+                            "d": 0.15,
+                            "qty": 2.1,
+                            "unit": "Sqm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "lib_142",
+            "libNo": "142",
+            "itemNo": "5",
+            "topic": "RCC",
+            "desc": "RCC — CC M-200 for columns, pillars, posts & struts (Garbada)",
+            "longDesc": "For Column M -200 Providing and laying controlled cement concrete M.200 and curing complete including the cost of formwork but excluding reinforcement for reinforced concrete work in (D) Columns, Pillars posts and struts",
+            "unit": "Cum",
+            "basis": "Considering column 1 × 0.35 × 0.75 × 3.60 = 0.95 Cum",
+            "basisNote": "Considering column 1 × 0.35 × 0.75 × 3.60 = 0.95 Cum",
+            "basisQty": 0.95,
+            "cp": 0,
+            "pdfRate": 7256.0,
+            "sayRate": 7256.0,
+            "floors": true,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05024DA",
+                    "page": "42",
+                    "label": "Cost of concrete M-200",
+                    "unit": "Cum",
+                    "qty": 0.95,
+                    "rate": 4544.94,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Size of column",
+                            "nos": 1,
+                            "l": 0.35,
+                            "b": 0.75,
+                            "d": 3.6,
+                            "qty": 0.95,
+                            "unit": "Cum"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001G1A",
+                    "page": "60",
+                    "label": "Form work of ordinary timber planking incl. centering, shuttering, strutting, propping and removal",
+                    "unit": "Sqm",
+                    "qty": 7.92,
+                    "rate": 323.39,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 0.35,
+                            "b": "",
+                            "d": 3.6,
+                            "qty": 2.52,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 0.75,
+                            "b": "",
+                            "d": 3.6,
+                            "qty": 5.4,
+                            "unit": "Sqm"
+                        }
+                    ]
+                }
+            ],
+            "liftExtra": {
+                "sorCode": "05015A",
+                "page": "40",
+                "rate": 39.68
+            }
+        },
+        {
+            "id": "lib_143",
+            "libNo": "143",
+            "itemNo": "7",
+            "topic": "RCC",
+            "desc": "RCC — CC M-200 for lintels (Garbada)",
+            "longDesc": "Providing and laying controlled cement concrete M.200 and curing complete including the cost of formwork but Excluding reinforcement for reinforced concrete work in Lintels",
+            "unit": "Cum",
+            "basis": "Considering 1 × 3.00 × 0.23 × 0.15 = 0.104 Cum",
+            "basisNote": "Considering 1 × 3.00 × 0.23 × 0.15 = 0.104 Cum",
+            "basisQty": 0.104,
+            "cp": 0,
+            "pdfRate": 7666.0,
+            "sayRate": 7666.0,
+            "floors": true,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05024CA",
+                    "page": "42",
+                    "label": "Cost of concrete M-200",
+                    "unit": "Cum",
+                    "qty": 0.104,
+                    "rate": 4440.58,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 3.0,
+                            "b": 0.23,
+                            "d": 0.15,
+                            "qty": 0.104,
+                            "unit": "Cum"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001H1A",
+                    "page": "61",
+                    "label": "Form work of ordinary timber planking incl. centering, shuttering, strutting, propping and removal",
+                    "unit": "Sqm",
+                    "qty": 1.59,
+                    "rate": 209.95,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 3.0,
+                            "b": 0.23,
+                            "d": "",
+                            "qty": 0.69,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 3.0,
+                            "b": "",
+                            "d": 0.15,
+                            "qty": 0.9,
+                            "unit": "Sqm"
+                        }
+                    ]
+                }
+            ],
+            "liftExtra": {
+                "sorCode": "05015A",
+                "page": "40",
+                "rate": 39.68
+            }
+        },
+        {
+            "id": "lib_144",
+            "libNo": "144",
+            "itemNo": "8",
+            "topic": "RCC",
+            "desc": "RCC — CC M-200 for chhajja, all floors (Garbada)",
+            "longDesc": "For chajja M - 200 Providing and laying controlled cement concrete M.200 and curing complete including the cost of formwork but Excluding reinforcement for reinforced concrete work in Chhajja for all floor",
+            "unit": "Cum",
+            "basis": "Considering 1 × 1.20 × 0.45 × 0.13 = 0.070 Cum",
+            "basisNote": "Considering 1 × 1.20 × 0.45 × 0.13 = 0.070 Cum",
+            "basisQty": 0.07,
+            "cp": 0,
+            "pdfRate": 7578.0,
+            "sayRate": 7578.0,
+            "floors": true,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05024CA",
+                    "page": "42",
+                    "label": "Cost of concrete M-200",
+                    "unit": "Cum",
+                    "qty": 0.07,
+                    "rate": 4440.58,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 1.2,
+                            "b": 0.45,
+                            "d": 0.13,
+                            "qty": 0.07,
+                            "unit": "Cum"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001B1A",
+                    "page": "60",
+                    "label": "Form work of ordinary timber planking incl. centering, shuttering, strutting, propping and removal",
+                    "unit": "Sqm",
+                    "qty": 0.81,
+                    "rate": 270.9,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Bottom",
+                            "nos": 1,
+                            "l": 1.2,
+                            "b": 0.45,
+                            "d": "",
+                            "qty": 0.54,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "Side",
+                            "nos": 2,
+                            "l": 0.45,
+                            "b": "",
+                            "d": 0.13,
+                            "qty": 0.12,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "Face",
+                            "nos": 1,
+                            "l": 1.2,
+                            "b": "",
+                            "d": 0.13,
+                            "qty": 0.16,
+                            "unit": "Sqm"
+                        }
+                    ]
+                }
+            ],
+            "liftExtra": {
+                "sorCode": "05015A",
+                "page": "40",
+                "rate": 39.68
+            }
+        },
+        {
+            "id": "lib_145",
+            "libNo": "145",
+            "itemNo": "11",
+            "topic": "RCC",
+            "desc": "RCC — CC M-200 for staircase (Garbada)",
+            "longDesc": "For Stair Case Providing and laying Controlled cement concrete M 200 and curing complete including the cost of form work but excluding the cost of reinforcement. Staircase",
+            "unit": "Cum",
+            "basis": "Considering waist slab + steps = 1.779 Cum",
+            "basisNote": "Considering waist slab + steps = 1.779 Cum",
+            "basisQty": 1.779,
+            "cp": 0,
+            "pdfRate": 7164.0,
+            "sayRate": 7164.0,
+            "floors": true,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05024EA",
+                    "page": "42",
+                    "label": "Cost of concrete M-200",
+                    "unit": "Cum",
+                    "qty": 1.779,
+                    "rate": 5492.62,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Waist slab",
+                            "nos": 1.0,
+                            "l": 5.03,
+                            "b": 1.5,
+                            "d": 0.2,
+                            "qty": 1.51,
+                            "unit": "Cum"
+                        },
+                        {
+                            "label": "Steps",
+                            "nos": 0.5,
+                            "l": 12.0,
+                            "b": 0.3,
+                            "d": 0.15,
+                            "qty": 0.27,
+                            "unit": "Cum"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001MA",
+                    "page": "62",
+                    "label": "Form work of ordinary timber planking incl. centering, shuttering, strutting, propping and removal",
+                    "unit": "Sqm",
+                    "qty": 11.25,
+                    "rate": 264.13,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Waist slab",
+                            "nos": 1.0,
+                            "l": 5.03,
+                            "b": 1.5,
+                            "d": "",
+                            "qty": 7.55,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "Side",
+                            "nos": 1.0,
+                            "l": 5.03,
+                            "b": "",
+                            "d": 0.2,
+                            "qty": 1.01,
+                            "unit": "Sqm"
+                        },
+                        {
+                            "label": "Steps",
+                            "nos": 12.0,
+                            "l": 1.5,
+                            "b": "",
+                            "d": 0.15,
+                            "qty": 2.7,
+                            "unit": "Sqm"
+                        }
+                    ]
+                }
+            ],
+            "liftExtra": {
+                "sorCode": "05015A",
+                "page": "40",
+                "rate": 39.68
+            }
+        },
+        {
+            "id": "lib_166",
+            "libNo": "166",
+            "itemNo": "4",
+            "topic": "RCC",
+            "desc": "RCC — CC M-250 for reinforced concrete walls (Garbada sump & pump room)",
+            "longDesc": "M-250 Rinforced concrete walls Providing and laying controlled cement concrete M.250 for curing complete including cost of formwork and reinforcement for reinforced concrete work in (B) Walls, from top of foundation level upto floor two level",
+            "unit": "Cum",
+            "basis": "Size 1.00 × 0.35 × 2.50 = 0.875 Cum",
+            "basisNote": "Size 1.00 × 0.35 × 2.50 = 0.875 Cum",
+            "basisQty": 0.875,
+            "cp": 0,
+            "pdfRate": 5925.0,
+            "sayRate": 5925.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "05025BA",
+                    "page": "42",
+                    "label": "Cost of C.C. M-250",
+                    "unit": "Cum",
+                    "qty": 0.875,
+                    "rate": 4512.29,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1.0,
+                            "l": 0.35,
+                            "b": "",
+                            "d": 2.5,
+                            "qty": 0.875,
+                            "unit": "Cum"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "09001CA",
+                    "page": "60",
+                    "label": "Form work of ordinary timber planking incl. centering, shuttering, strutting, propping and removal",
+                    "unit": "Sqm",
+                    "qty": 5.0,
+                    "rate": 247.2,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 2.0,
+                            "l": 1.0,
+                            "b": "",
+                            "d": 2.5,
+                            "qty": 5.0,
+                            "unit": "Sqm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "lib_147",
+            "libNo": "147",
+            "itemNo": "13",
+            "topic": "Waterproofing",
+            "desc": "Waterproofing — 20 mm waterproof cement plaster in sunk (Garbada)",
+            "longDesc": "Water Proofing Plaster in Sunk Providing 20 mm thick waterproof cement plaster fo sunk in single coat on bick/concrete walls for interior plastering finished even and smooth in cement mortar 1:3 (1 cement : 3 sand) and mixing water proofing materials of approved brand and manufacture in C.M. in proportion recommnded by the manufacture and finished with a floating coat of neat cement slurry for all floor.",
+            "unit": "Sqm",
+            "basis": "Per 1.00 Sqmt",
+            "basisNote": "Per 1.00 Sqmt",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 318.2,
+            "sayRate": 318.2,
+            "floors": true,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "17003A",
+                    "page": "103",
+                    "label": "20 mm thick cement plaster in C.M. 1:3",
+                    "unit": "Sqmt",
+                    "qty": 1.0,
+                    "rate": 255.67,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "17005",
+                    "page": "103",
+                    "label": "Add water proofing material in cement mortar — 11.42 Kg/Sqmt = 0.23 bag",
+                    "unit": "Bag",
+                    "qty": 0.23,
+                    "rate": 48.77,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "17004A",
+                    "page": "103",
+                    "label": "Floating coat of neat cement slurry",
+                    "unit": "Sqmt",
+                    "qty": 1.0,
+                    "rate": 51.31,
+                    "cpApply": false
+                }
+            ],
+            "liftExtra": {
+                "sorCode": "17007A",
+                "page": "104",
+                "rate": 24.22
+            }
+        },
+        {
+            "id": "lib_148",
+            "libNo": "148",
+            "itemNo": "51",
+            "topic": "Plinth protection",
+            "desc": "Plinth protection — Paver block plinth protection with CC 1:4:8 base & kerb stone (Garbada)",
+            "longDesc": "Plinth Protection Providing plinth protection to building including excavation in ordinary soil and laying cement concrete 1:4:8 using stone aggregates of 40mm nominal size in foundation layer 0.10 mt. thick below pre-cast Rubber Dye inter locking concrete block 60mm thick with grade of concrete M200 pneumatic compressed by mechanically pressed and as per approved design including 75mm Sand layer for levelling and filling the joint with sand in proper line and level etc. complete, Including Providing and fixing pre-cast concrete kerb stone of grey cement based concrete block 30cm length,30cm height and 15cm thick of M250 grade concrete as per approved design and including excavation for fixing in proper line and level, filling the joint with C:M 1:3 (1cement:3fine sand) etc. complete.",
+            "unit": "Sqm",
+            "basis": "Consider 1 × 10.00 × 1.20 = 12.00 Sqmt",
+            "basisNote": "Consider 1 × 10.00 × 1.20 = 12.00 Sqmt",
+            "basisQty": 12.0,
+            "cp": 0,
+            "pdfRate": 1319.0,
+            "sayRate": 1319.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "4001A",
+                    "page": "",
+                    "label": "Excavation in ordinary soil",
+                    "unit": "Cmt",
+                    "qty": 1.8,
+                    "rate": 124.61,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 10.0,
+                            "b": 1.2,
+                            "d": 0.15,
+                            "qty": 1.8,
+                            "unit": "Cmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "5004A",
+                    "page": "",
+                    "label": "Cement concrete 1:4:8 in foundation layer 0.10 m thick",
+                    "unit": "Cmt",
+                    "qty": 1.2,
+                    "rate": 2653.39,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 10.0,
+                            "b": 1.2,
+                            "d": 0.1,
+                            "qty": 1.2,
+                            "unit": "Cmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "14033",
+                    "page": "",
+                    "label": "Pre-cast rubber dye inter-locking concrete paver block 60 mm thick, M-200",
+                    "unit": "Sqmt",
+                    "qty": 12.0,
+                    "rate": 695.07,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 10.0,
+                            "b": 1.2,
+                            "d": "",
+                            "qty": 12.0,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "4",
+                    "kind": "SOR",
+                    "code": "14023A",
+                    "page": "",
+                    "label": "Pre-cast concrete kerb stone 30 × 30 × 15 cm, M-250",
+                    "unit": "Rmt",
+                    "qty": 10.0,
+                    "rate": 408.05,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_149",
+            "libNo": "149",
+            "itemNo": "31",
+            "topic": "Doors",
+            "desc": "Doors — Double shutter door with green marble frame & 35 mm flush shutter (Garbada)",
+            "longDesc": "35 Item No 31 Providing and fixing door Double shutter Door Having Green Marble Frame With All Open Edges Machine Cut & Machine Polished, Fixed By Zinc Coated Hinges With Double Shutter Of Factory Made & Stamped I.S 12823 Grade One, Type One 35 Mm Th Solid Core, Melamine Faced, Three Layred Resin, Flushed Door , Having Decorative Lamination On Both Sides & 12 Mm Th T.W. Beading Fixed Around The Door, From \"Novapan\" Or Equivalent Company Holding Licence For Minimum 5 Years Mortice lock, SS Aldrop 30cm long, SS Handle size 60 Cm Long, Tower Bolt size 20 cm etc. as per detail colour & pattern apporoved by this office including necessary anodized alluminum fixtures and fastenings.",
+            "unit": "Sqm",
+            "basis": "Consider door size 1 × 3.00 × 2.45 = 7.35 Sqmt",
+            "basisNote": "Consider door size 1 × 3.00 × 2.45 = 7.35 Sqmt",
+            "basisQty": 7.35,
+            "cp": 0,
+            "pdfRate": 6092.0,
+            "sayRate": 6092.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Frame — green marble (Sor 14009BA + M390 less M145 = Rs. 1442.11/Sqmt)",
+                    "unit": "Sqmt",
+                    "qty": 2.49,
+                    "rate": 1442.11,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Vertical",
+                            "nos": 2,
+                            "l": 1.0,
+                            "b": 0.3,
+                            "d": 2.45,
+                            "qty": 1.47,
+                            "unit": "Sqmt"
+                        },
+                        {
+                            "label": "Horizontal",
+                            "nos": 1,
+                            "l": 1.0,
+                            "b": 0.3,
+                            "d": 3.0,
+                            "qty": 0.9,
+                            "unit": "Sqmt"
+                        },
+                        {
+                            "label": "Add wastage",
+                            "nos": "",
+                            "l": "",
+                            "b": "",
+                            "d": "",
+                            "qty": 0.12,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "M423",
+                    "page": "17",
+                    "label": "Flush door shutter, factory made (incl. 10% wastage)",
+                    "unit": "Sqmt",
+                    "qty": 8.085,
+                    "rate": 1059.32,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "M788",
+                    "page": "25",
+                    "label": "Laminated sheet 1.00 mm thick",
+                    "unit": "Sqmt",
+                    "qty": 14.7,
+                    "rate": 296.61,
+                    "cpApply": false
+                },
+                {
+                    "sr": "4",
+                    "kind": "SOR",
+                    "code": "M325",
+                    "page": "14",
+                    "label": "T.W. beading for shutter",
+                    "unit": "Cum",
+                    "qty": 0.015,
+                    "rate": 50850.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "5",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "S.S. pipe handle 60 cm long, both sides",
+                    "unit": "No",
+                    "qty": 4,
+                    "rate": 1550.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "6",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "S.S. hinges for double shutter 8\" × 1.5\" × 1.5\"",
+                    "unit": "No",
+                    "qty": 10,
+                    "rate": 200.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "7",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "S.S. aldrop 60 cm long",
+                    "unit": "No",
+                    "qty": 2,
+                    "rate": 900.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "8",
+                    "kind": "SOR",
+                    "code": "M706",
+                    "page": "",
+                    "label": "S.S. stopper 30 cm long",
+                    "unit": "No",
+                    "qty": 2,
+                    "rate": 180.51,
+                    "cpApply": false
+                },
+                {
+                    "sr": "9",
+                    "kind": "SOR",
+                    "code": "M704",
+                    "page": "",
+                    "label": "Floor spring, heavy duty",
+                    "unit": "No",
+                    "qty": 2,
+                    "rate": 1800.85,
+                    "cpApply": false
+                },
+                {
+                    "sr": "10",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charges @ 30% of material cost",
+                    "unit": "LS",
+                    "qty": 1,
+                    "rate": 9375.65,
+                    "cpApply": false
+                },
+                {
+                    "sr": "11",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Add 15% C.P. on non-SOR / basic rate items (3+4+5+6)",
+                    "unit": "LS",
+                    "qty": 1,
+                    "rate": 4149.52,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_165",
+            "libNo": "165",
+            "itemNo": "27",
+            "topic": "Doors",
+            "desc": "Doors — Double shutter aluminium door, Jindal 19552 frame with 38 mm flush shutter (Garbada)",
+            "longDesc": "Item No 27 Providing and fixing door Double shutter having factory fabricated std. Extruded aluminium colour anodized hollow section19552 weight is not less than 1.1 kg/mtr {Section 63.50 x 38 mm x 2.50 mm thick } for door frame, hollow portion of door frame shall be filled with wood to be insert for durable grip of door hinges, with factory made 38 mm.thick Double Shutter Pivoted flush door With Floor Spring with both side pre 1mm laminated sheet with 6 Lever Mortice lock, SS Aldrop 30cm long, SS Handle size 60 Cm Long, Tower Bolt size 20 cm etc. as per detail colour & pattern apporoved by this office including necessary anodized alluminum fixtures and fastenings.",
+            "unit": "Sqm",
+            "basis": "Consider door size 1 × 1.20 × 2.10 = 2.52 Sqmt",
+            "basisNote": "Consider door size 1 × 1.20 × 2.10 = 2.52 Sqmt",
+            "basisQty": 2.52,
+            "cp": 0,
+            "pdfRate": 8243.0,
+            "sayRate": 8243.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "M881",
+                    "page": "28",
+                    "label": "Anodised aluminium section 63.50 × 38 mm @ 1.116 kg/Rmt for frame (incl. 5% wastage)",
+                    "unit": "Kg",
+                    "qty": 6.33,
+                    "rate": 211.86,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Vertical",
+                            "nos": 2,
+                            "l": 1.0,
+                            "b": 1.0,
+                            "d": 2.1,
+                            "qty": 4.2,
+                            "unit": "Rmt"
+                        },
+                        {
+                            "label": "Horizontal",
+                            "nos": 1,
+                            "l": 1.0,
+                            "b": 1.0,
+                            "d": 1.2,
+                            "qty": 1.2,
+                            "unit": "Rmt"
+                        },
+                        {
+                            "label": "Add 5% wastage",
+                            "nos": "",
+                            "l": "",
+                            "b": "",
+                            "d": "",
+                            "qty": 0.27,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "M324",
+                    "page": "14",
+                    "label": "Indian teak wood insert in frame (incl. 5% wastage)",
+                    "unit": "Cmt",
+                    "qty": 0.023,
+                    "rate": 46610.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "M423",
+                    "page": "24",
+                    "label": "Flush door shutter, factory made (incl. 10% wastage)",
+                    "unit": "Sqmt",
+                    "qty": 2.772,
+                    "rate": 1059.32,
+                    "cpApply": false
+                },
+                {
+                    "sr": "4",
+                    "kind": "SOR",
+                    "code": "M788",
+                    "page": "25",
+                    "label": "Laminated sheet 1.00 mm thick",
+                    "unit": "Sqmt",
+                    "qty": 6.3,
+                    "rate": 296.61,
+                    "cpApply": false
+                },
+                {
+                    "sr": "5",
+                    "kind": "SOR",
+                    "code": "M906",
+                    "page": "29",
+                    "label": "Aluminium beading for shutter",
+                    "unit": "Kg",
+                    "qty": 1.08,
+                    "rate": 211.86,
+                    "cpApply": false
+                },
+                {
+                    "sr": "6",
+                    "kind": "SOR",
+                    "code": "M714",
+                    "page": "24",
+                    "label": "S.S. pipe handle 60 cm long, both sides",
+                    "unit": "No",
+                    "qty": 4,
+                    "rate": 1004.24,
+                    "cpApply": false
+                },
+                {
+                    "sr": "7",
+                    "kind": "SOR",
+                    "code": "M735",
+                    "page": "24",
+                    "label": "S.S. hinges for double shutter 4\" × 1\" × 1\"",
+                    "unit": "No",
+                    "qty": 8,
+                    "rate": 54.24,
+                    "cpApply": false
+                },
+                {
+                    "sr": "8",
+                    "kind": "SOR",
+                    "code": "M710",
+                    "page": "23",
+                    "label": "S.S. aldrop 30 cm long",
+                    "unit": "No",
+                    "qty": 2,
+                    "rate": 396.61,
+                    "cpApply": false
+                },
+                {
+                    "sr": "9",
+                    "kind": "SOR",
+                    "code": "M706",
+                    "page": "23",
+                    "label": "S.S. stopper 30 cm long",
+                    "unit": "No",
+                    "qty": 2,
+                    "rate": 180.51,
+                    "cpApply": false
+                },
+                {
+                    "sr": "10",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charges",
+                    "unit": "Sqmt",
+                    "qty": 2.52,
+                    "rate": 2000.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "11",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Add 15% C.P. on non-SOR / basic rate items",
+                    "unit": "LS",
+                    "qty": 1,
+                    "rate": 2679.5,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_158",
+            "libNo": "158",
+            "itemNo": "36",
+            "topic": "Windows",
+            "desc": "Windows — 114 mm GI louvers with mosquito net, W4 (Garbada)",
+            "longDesc": "Providing and fix Lours 114 mm Wide G.I. Sheet having Thickness Of 0.55 mm & Weight Not Less Than 490 gm./mtr. Roll formed to create 84 mm Wide Louvers Snap Fixed On Special Shapped G.I. Channel . Fix Louvers & Channels Shall Finished With Poweder Coating Of 55 micron, Mosqute Net Fitting Oute Side Per Deatiled Drawing, And Directed By Engineer In Charge etc Complete",
+            "unit": "Sqm",
+            "basis": "Consider window size W4 = 1 × 0.45 × 0.90 = 0.405 Sqmt",
+            "basisNote": "Consider window size W4 = 1 × 0.45 × 0.90 = 0.405 Sqmt",
+            "basisQty": 0.405,
+            "cp": 15,
+            "pdfRate": 8642.0,
+            "sayRate": 8642.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "M904",
+                    "page": "29",
+                    "label": "Anodised aluminium outer frame section @ 1.094 kg/Rmt (incl. 5% wastage)",
+                    "unit": "Kg",
+                    "qty": 6.2,
+                    "rate": 211.86,
+                    "cpApply": true,
+                    "rows": [
+                        {
+                            "label": "Top",
+                            "nos": 2,
+                            "l": 0.45,
+                            "b": "",
+                            "d": "",
+                            "qty": 0.9,
+                            "unit": "Rmt"
+                        },
+                        {
+                            "label": "Sides",
+                            "nos": 2,
+                            "l": 0.9,
+                            "b": "",
+                            "d": "",
+                            "qty": 1.8,
+                            "unit": "Rmt"
+                        },
+                        {
+                            "label": "Mosquito net top",
+                            "nos": 2,
+                            "l": 0.45,
+                            "b": "",
+                            "d": "",
+                            "qty": 0.9,
+                            "unit": "Rmt"
+                        },
+                        {
+                            "label": "Sides",
+                            "nos": 2,
+                            "l": 0.9,
+                            "b": "",
+                            "d": "",
+                            "qty": 1.8,
+                            "unit": "Rmt"
+                        },
+                        {
+                            "label": "Add 5% wastage",
+                            "nos": "",
+                            "l": "",
+                            "b": "",
+                            "d": "",
+                            "qty": 0.27,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Strip for adjustable glass louvers",
+                    "unit": "No",
+                    "qty": 8.0,
+                    "rate": 60.0,
+                    "cpApply": true
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "M258",
+                    "page": "20",
+                    "label": "Glass 5 mm thick (incl. 5% wastage)",
+                    "unit": "Sqmt",
+                    "qty": 1.32,
+                    "rate": 245.76,
+                    "cpApply": true
+                },
+                {
+                    "sr": "4",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "S.S. mosquito net (incl. 5% wastage)",
+                    "unit": "Sqmt",
+                    "qty": 0.4253,
+                    "rate": 800.0,
+                    "cpApply": true
+                },
+                {
+                    "sr": "5",
+                    "kind": "SOR",
+                    "code": "M688",
+                    "page": "36",
+                    "label": "Rubber gasket (incl. 5% wastage)",
+                    "unit": "Rmt",
+                    "qty": 25.2,
+                    "rate": 7.63,
+                    "cpApply": true
+                },
+                {
+                    "sr": "6",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Hardware, fastener, silicon sealant, air strip, lock (L.S.)",
+                    "unit": "LS",
+                    "qty": 1,
+                    "rate": 300.0,
+                    "cpApply": true
+                },
+                {
+                    "sr": "7",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charges",
+                    "unit": "Sqmt",
+                    "qty": 0.41,
+                    "rate": 230.0,
+                    "cpApply": true
+                }
+            ]
+        },
+        {
+            "id": "lib_159",
+            "libNo": "159",
+            "itemNo": "46",
+            "topic": "Windows",
+            "desc": "Windows — Three track window (3 shutter + mosquito net), Jindal E-30 (Garbada)",
+            "longDesc": "It.N RA Description of Item o No No L B H/D Total Unit Rate Amount Providing and fixingThree track (3 shutter +1 mosquitonet shutter) Extruded Colour Anodised Aluminium Section Equivalent To Jindal Series E (30mm) Sections Numbered: Frame-Bottom With Weep Holes- 20928, Frame Top & Side - 20837; Shutter Top & Bottom- 20993, Shutter Inter Lock - 20550, Shutter Side (Handle) - 20549, With 5 Mm Thick Transparent Tinted Float Glass, With Epdm Rubber Gasket, Air Lock Strip And Finishing Joints With Silicon Sealant, With Powder Coated Standard Alluminium Fittings. Fittings, Fixtures,Rubber Gasket and transparent silicon sealant glass fixing to frame as per drawing and instruction of Engineer - in - charge etc. complete.",
+            "unit": "Sqm",
+            "basis": "Consider window size 1 × 1.80 × 1.50 = 2.70 Sqmt",
+            "basisNote": "Consider window size 1 × 1.80 × 1.50 = 2.70 Sqmt",
+            "basisQty": 2.7,
+            "cp": 0,
+            "pdfRate": 5478.0,
+            "sayRate": 5478.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "M881",
+                    "page": "28",
+                    "label": "Outer frame section 20928 @ 2.032 kg/Rmt — basic 211.86 + 15% C.P.",
+                    "unit": "Kg",
+                    "qty": 14.08,
+                    "rate": 243.64,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Top",
+                            "nos": 2,
+                            "l": 1.8,
+                            "b": "",
+                            "d": "",
+                            "qty": 3.6,
+                            "unit": "Rmt"
+                        },
+                        {
+                            "label": "Sides",
+                            "nos": 2,
+                            "l": 1.5,
+                            "b": "",
+                            "d": "",
+                            "qty": 3.0,
+                            "unit": "Rmt"
+                        },
+                        {
+                            "label": "Add 5% wastage",
+                            "nos": "",
+                            "l": "",
+                            "b": "",
+                            "d": "",
+                            "qty": 0.33,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "M881",
+                    "page": "28",
+                    "label": "Shutter section 20837 @ 1.197 kg/Rmt — basic 211.86 + 15% C.P.",
+                    "unit": "Kg",
+                    "qty": 15.84,
+                    "rate": 243.64,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Top & bottom (3 shutter)",
+                            "nos": 2,
+                            "l": 3,
+                            "b": 0.6,
+                            "d": "",
+                            "qty": 3.6,
+                            "unit": "Rmt"
+                        },
+                        {
+                            "label": "Sides vertical",
+                            "nos": 2,
+                            "l": 3,
+                            "b": 1.5,
+                            "d": "",
+                            "qty": 9.0,
+                            "unit": "Rmt"
+                        },
+                        {
+                            "label": "Add 5% wastage",
+                            "nos": "",
+                            "l": "",
+                            "b": "",
+                            "d": "",
+                            "qty": 0.63,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "3",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "304 stainless steel evenly woven wire mesh — basic 850.00 + 15% C.P.",
+                    "unit": "Sqm",
+                    "qty": 0.96,
+                    "rate": 977.5,
+                    "cpApply": false
+                },
+                {
+                    "sr": "4",
+                    "kind": "SOR",
+                    "code": "M881",
+                    "page": "28",
+                    "label": "Shutter inter-lock section 20550 @ 0.994 kg/Rmt — basic 211.86 + 15% C.P.",
+                    "unit": "Kg",
+                    "qty": 6.26,
+                    "rate": 243.64,
+                    "cpApply": false
+                },
+                {
+                    "sr": "5",
+                    "kind": "SOR",
+                    "code": "M258",
+                    "page": "12",
+                    "label": "Glass 5 mm thick (incl. 5% wastage) — basic 245.76 + 15% C.P.",
+                    "unit": "Sqmt",
+                    "qty": 2.835,
+                    "rate": 282.62,
+                    "cpApply": false
+                },
+                {
+                    "sr": "6",
+                    "kind": "SOR",
+                    "code": "M688",
+                    "page": "23",
+                    "label": "Rubber gasket (incl. 5% wastage) — basic 13.23 + 15% C.P.",
+                    "unit": "Rmt",
+                    "qty": 13.23,
+                    "rate": 15.21,
+                    "cpApply": false
+                },
+                {
+                    "sr": "7",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Hardware (L.S.)",
+                    "unit": "LS",
+                    "qty": 1,
+                    "rate": 200.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "8",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charges @ 35% of material cost",
+                    "unit": "LS",
+                    "qty": 1,
+                    "rate": 3834.53,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_160",
+            "libNo": "160",
+            "itemNo": "47",
+            "topic": "Windows",
+            "desc": "Windows — Two track window (2 shutter + mosquito net), Jindal E-30 (Garbada)",
+            "longDesc": "Providing and fixing Two track (2 shutter +1 mosquitonet shutter) Standard Extruded Colour Anodised Aluminium Section Equivalent To Jindal Series E (30 Mm) Sections Numbered: Frame-Bottom With Weep Holes- 20928, Frame Top & Side - 20837; Shutter Top & Bottom- 20993, Shutter Inter Lock - 20550, Shutter Side (Handle) - 20549, With Mm Thick Transparent Tinted Float Glass, With Epdm Rubber Gasket, Air Lock Strip And Finishing Joints With Silicon Sealant, With Powder Coated Standard Alluminium Fittings. Fittings. Fittings, Fixtures,Rubber Gasket and transparent silicon sealant glass fixing to frame as per drawing and instruction of Engineer - in - charge etc. complete.",
+            "unit": "Sqm",
+            "basis": "Consider window size 1 × 1.20 × 1.50 = 1.80 Sqmt",
+            "basisNote": "Consider window size 1 × 1.20 × 1.50 = 1.80 Sqmt",
+            "basisQty": 1.8,
+            "cp": 0,
+            "pdfRate": 4944.0,
+            "sayRate": 4944.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "M881",
+                    "page": "28",
+                    "label": "Outer frame section 20928 @ 2.032 kg/Rmt — basic 211.86 + 15% C.P.",
+                    "unit": "Kg",
+                    "qty": 11.52,
+                    "rate": 243.64,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Top",
+                            "nos": 2,
+                            "l": 1.2,
+                            "b": "",
+                            "d": "",
+                            "qty": 2.4,
+                            "unit": "Rmt"
+                        },
+                        {
+                            "label": "Sides",
+                            "nos": 2,
+                            "l": 1.5,
+                            "b": "",
+                            "d": "",
+                            "qty": 3.0,
+                            "unit": "Rmt"
+                        },
+                        {
+                            "label": "Add 5% wastage",
+                            "nos": "",
+                            "l": "",
+                            "b": "",
+                            "d": "",
+                            "qty": 0.27,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "M881",
+                    "page": "28",
+                    "label": "Shutter section 20837 @ 1.197 kg/Rmt — basic 211.86 + 15% C.P.",
+                    "unit": "Kg",
+                    "qty": 5.28,
+                    "rate": 243.64,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "304 stainless steel evenly woven wire mesh — basic 850.00 + 15% C.P.",
+                    "unit": "Sqm",
+                    "qty": 0.96,
+                    "rate": 977.5,
+                    "cpApply": false
+                },
+                {
+                    "sr": "4",
+                    "kind": "SOR",
+                    "code": "M881",
+                    "page": "28",
+                    "label": "Shutter inter-lock section 20550 @ 0.994 kg/Rmt — basic 211.86 + 15% C.P.",
+                    "unit": "Kg",
+                    "qty": 3.13,
+                    "rate": 243.64,
+                    "cpApply": false
+                },
+                {
+                    "sr": "5",
+                    "kind": "SOR",
+                    "code": "M258",
+                    "page": "12",
+                    "label": "Glass 5 mm thick (incl. 5% wastage) — basic 245.76 + 15% C.P.",
+                    "unit": "Sqmt",
+                    "qty": 1.8774,
+                    "rate": 282.62,
+                    "cpApply": false
+                },
+                {
+                    "sr": "6",
+                    "kind": "SOR",
+                    "code": "M688",
+                    "page": "23",
+                    "label": "Rubber gasket (incl. 5% wastage)",
+                    "unit": "Rmt",
+                    "qty": 8.778,
+                    "rate": 7.63,
+                    "cpApply": false
+                },
+                {
+                    "sr": "7",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Hardware (L.S.)",
+                    "unit": "LS",
+                    "qty": 1,
+                    "rate": 200.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "8",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charges @ 35% of material cost",
+                    "unit": "LS",
+                    "qty": 1,
+                    "rate": 2307.09,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_150",
+            "libNo": "150",
+            "itemNo": "37",
+            "topic": "Stone work",
+            "desc": "Stone work — Green marble 18 mm on door/window sills, jambs & cladding (Garbada)",
+            "longDesc": "Item No 37 Providing and Fixing Machine Cut free edges,Pre Mirror Polished Green Marble Stone slab 18 mm thick in single peace) for For Doors & windows sill,jambs & Cledding as per design incl. full moulded round front edge and 1cm both side nosing on 20 mm thick cement mortar 1:6 (1 -cement : 6 coarse sand) jointed with grey cement slurry including rubbing, polishing & Finishing etc. complete",
+            "unit": "Sqm",
+            "basis": "Consider for 1 × 0.30 × 1.20 = 0.36 Sqmt",
+            "basisNote": "Consider for 1 × 0.30 × 1.20 = 0.36 Sqmt",
+            "basisQty": 0.36,
+            "cp": 0,
+            "pdfRate": 2103.0,
+            "sayRate": 2103.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "M390",
+                    "page": "16",
+                    "label": "Green marble slab — basic 594.07 + 15% C.P.",
+                    "unit": "Sqmt",
+                    "qty": 0.36,
+                    "rate": 683.18,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 0.3,
+                            "b": 1.2,
+                            "d": "",
+                            "qty": 0.36,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "M392",
+                    "page": "",
+                    "label": "Mirror polish — basic 168.64 + 15% C.P.",
+                    "unit": "Sqmt",
+                    "qty": 0.72,
+                    "rate": 193.94,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 0.36,
+                            "b": "",
+                            "d": "",
+                            "qty": 0.72,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "M727",
+                    "page": "",
+                    "label": "Full round moulded edge — basic 51.00 + 15% C.P.",
+                    "unit": "Rmt",
+                    "qty": 3.0,
+                    "rate": 58.65,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 0.3,
+                            "b": "",
+                            "d": "",
+                            "qty": 0.6,
+                            "unit": "Rmt"
+                        },
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 1.2,
+                            "b": "",
+                            "d": "",
+                            "qty": 2.4,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "4",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour cost of fixing — basic 250.00 + 15% C.P.",
+                    "unit": "Sqmt",
+                    "qty": 0.36,
+                    "rate": 287.5,
+                    "cpApply": false
+                },
+                {
+                    "sr": "5",
+                    "kind": "SOR",
+                    "code": "17003A",
+                    "page": "",
+                    "label": "Cement mortar 1:3 (20 mm thick)",
+                    "unit": "Sqmt",
+                    "qty": 0.36,
+                    "rate": 255.67,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_151",
+            "libNo": "151",
+            "itemNo": "39",
+            "topic": "Stone work",
+            "desc": "Stone work — Granite 18 mm for stair treads, steps & landing (Garbada)",
+            "longDesc": "Item No 39 Providing and laying Machine Cut free edges, Machine polished Granite Stone slab 18 mm thick single peace For Stair,Steps,landing as per design incl. full moulded round front edge and 1cm nosing and necessary groove on trade of steps laid on 20 mm thick cement mortar 1:6 (1 -cement : 6 coarse sand ) jointed with grey cement slurry including rubbing, polishing & Finishing etc. complete",
+            "unit": "Sqm",
+            "basis": "Consider for 1 × 2.00 × 0.33 = 0.66 Sqmt",
+            "basisNote": "Consider for 1 × 2.00 × 0.33 = 0.66 Sqmt",
+            "basisQty": 0.66,
+            "cp": 0,
+            "pdfRate": 2347.0,
+            "sayRate": 2347.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "M253",
+                    "page": "12",
+                    "label": "Granite stone slab of approved colour — basic 1347.46 + 15% C.P.",
+                    "unit": "Sqmt",
+                    "qty": 0.66,
+                    "rate": 1549.58,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 2.0,
+                            "b": 0.33,
+                            "d": "",
+                            "qty": 0.66,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "M724",
+                    "page": "24",
+                    "label": "Round moulded edge — basic 85.00 + 15% C.P.",
+                    "unit": "Rmt",
+                    "qty": 2.66,
+                    "rate": 97.75,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 1,
+                            "b": 2.0,
+                            "d": "",
+                            "qty": 2.0,
+                            "unit": "Rmt"
+                        },
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 2,
+                            "b": 0.33,
+                            "d": "",
+                            "qty": 0.66,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "3",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour cost of fixing — basic 250.00 + 15% C.P.",
+                    "unit": "Sqmt",
+                    "qty": 0.66,
+                    "rate": 287.5,
+                    "cpApply": false
+                },
+                {
+                    "sr": "4",
+                    "kind": "SOR",
+                    "code": "17003A",
+                    "page": "",
+                    "label": "Cement mortar 1:3 (20 mm thick)",
+                    "unit": "Sqmt",
+                    "qty": 0.3,
+                    "rate": 255.67,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_162",
+            "libNo": "162",
+            "itemNo": "39",
+            "topic": "Stone work",
+            "desc": "Stone work — Both side double polished granite 18 mm partition slab (Garbada)",
+            "longDesc": "ITEM NO. 39 Providing and laying Both Side machine Double Side Polished Granite Stone slab 18 mm thick average thick of approved quality incl. full moulded round front edge fixed in wall for Partition and jointed with white cement slurry including rubbing,polishing & Finishing 26 etc. complete",
+            "unit": "Sqm",
+            "basis": "Top of base 1 × 2.50 × 0.60 = 1.50 Sqmt",
+            "basisNote": "Top of base 1 × 2.50 × 0.60 = 1.50 Sqmt",
+            "basisQty": 1.5,
+            "cp": 0,
+            "pdfRate": 1687.0,
+            "sayRate": 1687.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "M253",
+                    "page": "12",
+                    "label": "Granite stone slab 18 mm thick",
+                    "unit": "Sqmt",
+                    "qty": 1.5,
+                    "rate": 1347.46,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Top of base",
+                            "nos": 1,
+                            "l": 2.5,
+                            "b": 0.6,
+                            "d": "",
+                            "qty": 1.5,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "M724",
+                    "page": "24",
+                    "label": "Round moulding on exposed edge",
+                    "unit": "Rmt",
+                    "qty": 3.7,
+                    "rate": 85.0,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 2,
+                            "l": 0.6,
+                            "b": "",
+                            "d": "",
+                            "qty": 1.2,
+                            "unit": "Rmt"
+                        },
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 2.5,
+                            "b": "",
+                            "d": "",
+                            "qty": 2.5,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "3",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "For making groove",
+                    "unit": "Sqmt",
+                    "qty": 1.5,
+                    "rate": 30.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "4",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "For cutting hole for outlet",
+                    "unit": "No",
+                    "qty": 3,
+                    "rate": 50.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_156",
+            "libNo": "156",
+            "itemNo": "76",
+            "topic": "Stone platform",
+            "desc": "Stone platform — Sandwich platform 18 mm granite on 25 mm kota, 75 cm height (Garbada)",
+            "longDesc": "Item no. 76 Constructing Sandwich Platform of 18 mm thick Polished Black or selected Granite at top and 25 mm thick Kota stone slab With 75CM height with necessary Support using 20mm thick cement mortar 1:3 for sandwich and fitting at bottom & edges with waterproof rigid adhesives including making necessary grooves in walls with Vertical support of double Kota stone sandwich every 60 cm centre to centre including all labour material of approved quality including full moulded round front edge fixed in wall for partition and jointed with grey cement slurry including rubbing and polishing etc. complete",
+            "unit": "Sqm",
+            "basis": "Consider size 1 × 5.20 × 0.75 × 0.75 = 3.90 Sqmt",
+            "basisNote": "Consider size 1 × 5.20 × 0.75 × 0.75 = 3.90 Sqmt",
+            "basisQty": 3.9,
+            "cp": 0,
+            "pdfRate": 3630.0,
+            "sayRate": 3630.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "M490",
+                    "page": "18",
+                    "label": "Kota stone slab 25 mm thick — basic 198.31 + 15% C.P.",
+                    "unit": "Sqmt",
+                    "qty": 13.35,
+                    "rate": 228.06,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 5.2,
+                            "b": 0.75,
+                            "d": "",
+                            "qty": 3.9,
+                            "unit": "Sqmt"
+                        },
+                        {
+                            "label": "Vertical supports",
+                            "nos": 14,
+                            "l": 0.75,
+                            "b": 0.9,
+                            "d": "",
+                            "qty": 9.45,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "M253",
+                    "page": "12",
+                    "label": "Granite stone slab of approved colour — basic 1347.46 + 15% C.P.",
+                    "unit": "Sqmt",
+                    "qty": 6.16,
+                    "rate": 1549.58,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "Top",
+                            "nos": 1,
+                            "l": 5.2,
+                            "b": 0.75,
+                            "d": "",
+                            "qty": 3.9,
+                            "unit": "Sqmt"
+                        },
+                        {
+                            "label": "Patti",
+                            "nos": 1,
+                            "l": 5.2,
+                            "b": 0.1,
+                            "d": "",
+                            "qty": 0.52,
+                            "unit": "Sqmt"
+                        },
+                        {
+                            "label": "Patti",
+                            "nos": 7,
+                            "l": 0.75,
+                            "b": 0.075,
+                            "d": "",
+                            "qty": 0.39,
+                            "unit": "Sqmt"
+                        },
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 0.9,
+                            "b": 1.5,
+                            "d": "",
+                            "qty": 1.35,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "17003A",
+                    "page": "",
+                    "label": "Cement mortar 1:3 (20 mm thick)",
+                    "unit": "Sqmt",
+                    "qty": 4.81,
+                    "rate": 255.67,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 5.2,
+                            "b": 0.75,
+                            "d": "",
+                            "qty": 3.9,
+                            "unit": "Sqmt"
+                        },
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 5.2,
+                            "b": 0.1,
+                            "d": "",
+                            "qty": 0.52,
+                            "unit": "Sqmt"
+                        },
+                        {
+                            "label": "",
+                            "nos": 7,
+                            "l": 0.75,
+                            "b": 0.075,
+                            "d": "",
+                            "qty": 0.39,
+                            "unit": "Sqmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "4",
+                    "kind": "SOR",
+                    "code": "M726",
+                    "page": "",
+                    "label": "Labour for round moulding edge — basic 43.00 + 15% C.P.",
+                    "unit": "Rmt",
+                    "qty": 6.7,
+                    "rate": 49.45,
+                    "cpApply": false,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": "",
+                            "l": 5.2,
+                            "b": "",
+                            "d": "",
+                            "qty": 5.2,
+                            "unit": "Rmt"
+                        },
+                        {
+                            "label": "",
+                            "nos": "",
+                            "l": 1.5,
+                            "b": "",
+                            "d": "",
+                            "qty": 1.5,
+                            "unit": "Rmt"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "lib_152",
+            "libNo": "152",
+            "itemNo": "48",
+            "topic": "SS railing",
+            "desc": "SS railing — 90 cm high SS 304 railing with 32 mm balusters (Garbada)",
+            "longDesc": "Item No 48 Providing and fixing 90 cm high Stainless steel railing 304 Grade made from anticorrocive S S pipe of 50 mm dia (16Gauge) as hand rail with S S 32 mm dia (16Gauge) as a vertical support fixed in RCC slab at 1.2m c/c including three horizontal S S pipes of 16 mm dia (16Gauge) at eqal distance fixed by 18.75 mm dia (16Gauge) S S pipe including accessories as per detailed drawing as directed etc. complete. 1 50 mm dia pipe Sor M714 1004.24 Qty:- 3.50 TOTAL 3.50 3.50 x 1004.24 Rs./ Rmt. = 3514.84 …[1] 2 32 mm dia s s pipe for supoorts at 1.2 mt Sor M715 454.24 Qty:- 4 supoorts 4 x 0.90 3.60 TOTAL 3.60 3.60 x 454.24 Rs./ Rmt. = 1635.26 …[2] 3 16 mm s s pipe Horizontal 3 Nos. Sor M716 366.10 10.50 x 366.10 Rs./ Rmt. = 3844.05 …[3] Round ball at Top Market Rate 1.00 x 200.00 Rs./ No. = 200.00 …[5] Labour carhges for preparation and fixing Market Rate 3.50 x 250.00 Rs./ Rmt. = 875.00 …[6] Total 1 to 6 = 10069.15 / 3.50 Rmt. Rate per Rmt. = 2876.90 15% CP 431.54 Total = 3308.44 / Rmt. Say 3308.00 Rs/Rmt Deputy Executive Engineer Executive Engineer R & B sub Division, Dahod R & B Division, Dahod Page 21 of 35",
+            "unit": "Rmt",
+            "basis": "Rate analysis for one flight of 3.50 mt. long",
+            "basisNote": "Rate analysis for one flight of 3.50 mt. long",
+            "basisQty": 3.5,
+            "cp": 15,
+            "pdfRate": 3308.0,
+            "sayRate": 3308.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "M714",
+                    "page": "",
+                    "label": "50 mm dia S.S. pipe hand rail",
+                    "unit": "Rmt",
+                    "qty": 3.5,
+                    "rate": 1004.24,
+                    "cpApply": true,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 1,
+                            "l": 3.5,
+                            "b": "",
+                            "d": "",
+                            "qty": 3.5,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "M715",
+                    "page": "",
+                    "label": "32 mm dia S.S. pipe for supports at 1.2 mt c/c",
+                    "unit": "Rmt",
+                    "qty": 3.6,
+                    "rate": 454.24,
+                    "cpApply": true,
+                    "rows": [
+                        {
+                            "label": "",
+                            "nos": 4,
+                            "l": 0.9,
+                            "b": "",
+                            "d": "",
+                            "qty": 3.6,
+                            "unit": "Rmt"
+                        }
+                    ]
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "M716",
+                    "page": "",
+                    "label": "16 mm dia S.S. pipe horizontal, 3 nos.",
+                    "unit": "Rmt",
+                    "qty": 10.5,
+                    "rate": 366.1,
+                    "cpApply": true
+                },
+                {
+                    "sr": "4",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Round ball at top",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 200.0,
+                    "cpApply": true
+                },
+                {
+                    "sr": "5",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charges for preparation and fixing",
+                    "unit": "Rmt",
+                    "qty": 3.5,
+                    "rate": 250.0,
+                    "cpApply": true
+                }
+            ]
+        },
+        {
+            "id": "lib_153",
+            "libNo": "153",
+            "itemNo": "56",
+            "topic": "Sanitary",
+            "desc": "Sanitary — Table top wash basin 610 × 450 mm with C.P. fittings (Garbada)",
+            "longDesc": "ITEM NO 56 Providing and fixing Table top wash basin of Size 610x450mm with C.P. brass waste for washbasin or sink. & 32mm pillar tap, Bottal trap capstan head, screw down high pressure with screws, shanks and back nuts. (i) 32mm dia. Providing and fixing brass screw down stop tap. (A) 32mm dia..",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisNote": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 6138.0,
+            "sayRate": 6138.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Table top wash basin",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 4500.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Pillar tap",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 1200.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "23020A",
+                    "page": "",
+                    "label": "C.P. brass waste (A) 32 mm dia",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 67.24,
+                    "cpApply": false
+                },
+                {
+                    "sr": "4",
+                    "kind": "SOR",
+                    "code": "23036",
+                    "page": "",
+                    "label": "C.P. brass bottle trap",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 292.87,
+                    "cpApply": false
+                },
+                {
+                    "sr": "5",
+                    "kind": "SOR",
+                    "code": "23021A",
+                    "page": "",
+                    "label": "M.I. fisher union 32 mm dia",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 77.97,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_154",
+            "libNo": "154",
+            "itemNo": "57",
+            "topic": "Sanitary",
+            "desc": "Sanitary — SS 304 kitchen sink 610 × 460 mm, Nirali or equivalent (Garbada)",
+            "longDesc": "Item no. 57 Providing & Fixing stainless steel sink Glossy ASIS 304 Grade and 1 mm thick with with over all size 610x460 mm & bowl size 560x410x200 of Nirali brand or Equivalent with all fitting C I Or M.S Brackets painted white /or fixing on stone base including cutting holes and making good the same brass wastw and M I fisher union fitting including all necessary fitting.",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisNote": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 2321.0,
+            "sayRate": 2321.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "M729",
+                    "page": "",
+                    "label": "Stainless steel kitchen sink, Nirali or equivalent — basic 1525.42 + 15% C.P.",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 1754.23,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "23020A",
+                    "page": "",
+                    "label": "C.P. brass waste (A) 32 mm dia",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 67.24,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charge for fixing",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 500.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_155",
+            "libNo": "155",
+            "itemNo": "59",
+            "topic": "Sanitary",
+            "desc": "Sanitary — Wall hung European WC with 50 mm Metropol push valve (Garbada)",
+            "longDesc": "Item no. 59 Providing and fixing water closet squatting pan Wall Hung ( Uropian type W.C. Pan equivalent size 580 mm including, 50 mm Dia Metropol push valve 100mm size P or S trap for water closet squatting pan including jointing the trap with the pan and soil pipe in cement mortar 1:1 etc.complete.",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisNote": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 8268.0,
+            "sayRate": 8268.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Wall hung European type W.C. pan (Hindustan / Cera / Parryware / Hindware) — basic 4500.00 + 15% C.P.",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 5175.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "M620",
+                    "page": "",
+                    "label": "White vitreous china 100 mm 'P' or 'S' trap — basic 73.73 + 15% C.P.",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 84.79,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "50 mm dia Metropol push valve — basic 1500.00 + 15% C.P.",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 1725.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "4",
+                    "kind": "SOR",
+                    "code": "M097",
+                    "page": "",
+                    "label": "Plastic seat with cover, C.P. brass hinges — basic 246.61 + 15% C.P.",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 283.6,
+                    "cpApply": false
+                },
+                {
+                    "sr": "5",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charge for fixing",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 1000.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_163",
+            "libNo": "163",
+            "itemNo": "53",
+            "topic": "Sanitary",
+            "desc": "Sanitary — Wall hung wash-down WC with Metropole flush valve, soft-close seat (Garbada D-type)",
+            "longDesc": "Providing and fixing wash down water closet Wall Hung W.C. Pan with integral P or S trap and Metropole Flush Valve with complete fittings including cutting holes in walls and making good the same connecting the flush bend with cistern and closet etc. complete including plastic seat cover 29 and including jointing trap with Waste pipe overall size as per the selection of the Model by E.I.C. or as approved}",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisNote": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 10,
+            "pdfRate": 18149.0,
+            "sayRate": 18149.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Wall hung European toilet",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 6500.0,
+                    "cpApply": true
+                },
+                {
+                    "sr": "2",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Metropole flush valve",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 2500.0,
+                    "cpApply": true
+                },
+                {
+                    "sr": "3",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Soft close seat cover (Cat. No. B1520118)",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 1935.0,
+                    "cpApply": true
+                },
+                {
+                    "sr": "4",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "288 mm long bottle trap (Cat. No. F8060301)",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 1657.0,
+                    "cpApply": true
+                },
+                {
+                    "sr": "5",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Toilet paper holder (Cat. No. F5001109)",
+                    "unit": "No",
+                    "qty": 1,
+                    "rate": 1157.0,
+                    "cpApply": true
+                },
+                {
+                    "sr": "6",
+                    "kind": "Manual",
+                    "code": "",
+                    "page": "",
+                    "label": "Add labour charges with all materials @ 20%",
+                    "unit": "LS",
+                    "qty": 1,
+                    "rate": 2749.8,
+                    "cpApply": true
+                }
+            ]
+        },
+        {
+            "id": "lib_161",
+            "libNo": "161",
+            "itemNo": "36",
+            "topic": "Flooring",
+            "desc": "Flooring — GVT glossy 60 × 60 cm tile in flooring, treads & landing (Garbada)",
+            "longDesc": "Item No 36 Providing and laying 60 x 60cm & 10mm thick G.V.T Glossy Tiles in flooring treads of steps and landing laid over 20mm (Average) 23 thick base of cement mortar 1:6 (1-cement : 6-coarse sand) laid over and jointed with whitw cement slurry incluiding finishing with flush pointing and cleaning the surface etc.complete.",
+            "unit": "Sqm",
+            "basis": "Per 1.00 Sqmt",
+            "basisNote": "Per 1.00 Sqmt",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 1734.0,
+            "sayRate": 1734.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "14022A",
+                    "page": "97",
+                    "label": "Providing and laying vitrified tiles in flooring over 20 mm thick bed of C.M. 1:6, finished with flush pointing in white cement",
+                    "unit": "Sqmt",
+                    "qty": 1.0,
+                    "rate": 1420.54,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "M599",
+                    "page": "21",
+                    "label": "Deduct cost of vitrified tiles",
+                    "unit": "Sqmt",
+                    "qty": -1.0,
+                    "rate": 296.61,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Add cost of GVT matt finish tiles",
+                    "unit": "Sqmt",
+                    "qty": 1.0,
+                    "rate": 610.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_164",
+            "libNo": "164",
+            "itemNo": "77",
+            "topic": "Drainage",
+            "desc": "Drainage — Sock pit 2.28 m inner dia × 6.50 m deep (Garbada D-type)",
+            "longDesc": "Item no. 77 Providing and construction 2.28 mt inner dia and 6.50mt deep sock pit including excavation BBCC, Brick masonary work at bottom and top including RCC Slab at top in honey combica masonary in mud goober as directed.",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisNote": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 60954.0,
+            "sayRate": 60954.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "A",
+                    "kind": "SOR",
+                    "code": "4001A",
+                    "page": "33",
+                    "label": "Excavation for 0.0 to 1.5 m foundation depth",
+                    "unit": "Cum",
+                    "qty": 3.82,
+                    "rate": 124.61,
+                    "cpApply": false
+                },
+                {
+                    "sr": "B",
+                    "kind": "SOR",
+                    "code": "4002A",
+                    "page": "33",
+                    "label": "Excavation for 1.5 to 3.00 m foundation depth",
+                    "unit": "Cum",
+                    "qty": 3.82,
+                    "rate": 138.16,
+                    "cpApply": false
+                },
+                {
+                    "sr": "C",
+                    "kind": "SOR",
+                    "code": "04003A",
+                    "page": "33",
+                    "label": "Excavation for 3.00 to 5.00 m foundation depth",
+                    "unit": "Cum",
+                    "qty": 5.09,
+                    "rate": 151.69,
+                    "cpApply": false
+                },
+                {
+                    "sr": "D",
+                    "kind": "SOR",
+                    "code": "04004A",
+                    "page": "43",
+                    "label": "Excavation for 5.00 to 7.00 m foundation depth",
+                    "unit": "Cum",
+                    "qty": 5.09,
+                    "rate": 196.29,
+                    "cpApply": false
+                },
+                {
+                    "sr": "E",
+                    "kind": "SOR",
+                    "code": "6002BA",
+                    "page": "53",
+                    "label": "Brick masonry in C.M. 1:6 (honey combed)",
+                    "unit": "Cum",
+                    "qty": 12.82,
+                    "rate": 3815.08,
+                    "cpApply": false
+                },
+                {
+                    "sr": "F",
+                    "kind": "SOR",
+                    "code": "6002BA",
+                    "page": "53",
+                    "label": "Brick masonry in C.M. 1:6 (solid masonry)",
+                    "unit": "Cum",
+                    "qty": 0.87,
+                    "rate": 3815.08,
+                    "cpApply": false
+                },
+                {
+                    "sr": "G",
+                    "kind": "SOR",
+                    "code": "05026B",
+                    "page": "43",
+                    "label": "Slab cover M-1:2:4 (less deduction for manhole cover)",
+                    "unit": "Cum",
+                    "qty": 0.27,
+                    "rate": 7401.59,
+                    "cpApply": false
+                },
+                {
+                    "sr": "H",
+                    "kind": "SOR",
+                    "code": "05014C",
+                    "page": "40",
+                    "label": "Providing TMT steel @ 55 kg/Cmt",
+                    "unit": "Kg",
+                    "qty": 16.79,
+                    "rate": 76.52,
+                    "cpApply": false
+                },
+                {
+                    "sr": "I",
+                    "kind": "SOR",
+                    "code": "23005B",
+                    "page": "133",
+                    "label": "C.I. pipe 75 mm dia",
+                    "unit": "Rmt",
+                    "qty": 1.8,
+                    "rate": 733.67,
+                    "cpApply": false
+                },
+                {
+                    "sr": "J",
+                    "kind": "SOR",
+                    "code": "23006B",
+                    "page": "133",
+                    "label": "Cowl vent 75 mm dia",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 389.15,
+                    "cpApply": false
+                },
+                {
+                    "sr": "K",
+                    "kind": "SOR",
+                    "code": "23038",
+                    "page": "136",
+                    "label": "Manhole cover",
+                    "unit": "No",
+                    "qty": 1.0,
+                    "rate": 948.68,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_170",
+            "libNo": "170",
+            "itemNo": "5",
+            "topic": "Drainage",
+            "desc": "Drainage — Filter chamber 2.06 × 1.21 × 1.20 m (Garbada)",
+            "longDesc": "Providing and constructing filter chamber of size 2.06 x 1.21 x 1.20 mt. as directed including Excavation, Cement concrete 1:2:4,Brick work C.M a:6,Half brick masonary C.M - 1:4,15mm thick plaster C.M.1:4 & Cement concrete flooring connection rainwater pipes as per detailed as directed by Engineer in charge including cost of labour and material.",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisNote": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 11473.0,
+            "sayRate": 11473.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "04001B",
+                    "page": "33",
+                    "label": "Excavation for foundation upto 1.50 m depth",
+                    "unit": "Cum",
+                    "qty": 3.49,
+                    "rate": 159.3,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "05010AA",
+                    "page": "38",
+                    "label": "Providing and laying cement concrete 1:2:4 — bed and cover",
+                    "unit": "Cum",
+                    "qty": 0.57,
+                    "rate": 3617.44,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "06002BA",
+                    "page": "54",
+                    "label": "Brick masonry in common burnt clay bricks in C.M. 1:6",
+                    "unit": "Cum",
+                    "qty": 1.54,
+                    "rate": 3815.08,
+                    "cpApply": false
+                },
+                {
+                    "sr": "4",
+                    "kind": "SOR",
+                    "code": "06008A2A",
+                    "page": "55",
+                    "label": "Half brick masonry in C.M. 1:4",
+                    "unit": "Sqm",
+                    "qty": 0.9,
+                    "rate": 584.17,
+                    "cpApply": false
+                },
+                {
+                    "sr": "5",
+                    "kind": "SOR",
+                    "code": "17002B",
+                    "page": "103",
+                    "label": "Providing 15 mm thick cement plaster in C.M. 1:4",
+                    "unit": "Sqm",
+                    "qty": 9.6,
+                    "rate": 177.78,
+                    "cpApply": false
+                },
+                {
+                    "sr": "6",
+                    "kind": "SOR",
+                    "code": "09001QA",
+                    "page": "62",
+                    "label": "Providing form work of ordinary planking",
+                    "unit": "Sqm",
+                    "qty": 1.2,
+                    "rate": 411.43,
+                    "cpApply": false
+                },
+                {
+                    "sr": "7",
+                    "kind": "SOR",
+                    "code": "26012B+26012C",
+                    "page": "147",
+                    "label": "Supplying of kapachi 25 mm to 40 mm (supply and spreading)",
+                    "unit": "Cum",
+                    "qty": 0.2,
+                    "rate": 676.21,
+                    "cpApply": false
+                },
+                {
+                    "sr": "8",
+                    "kind": "SOR",
+                    "code": "26015+26020A",
+                    "page": "147",
+                    "label": "Supplying of coarse sand (supply and spreading)",
+                    "unit": "Cum",
+                    "qty": 0.6,
+                    "rate": 197.27,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_171",
+            "libNo": "171",
+            "itemNo": "4",
+            "topic": "Drainage",
+            "desc": "Drainage — Junction chamber 0.35 × 0.35 × 0.60 m for rain water pipe (Garbada)",
+            "longDesc": "Providing and Construction of Junction chambers of size 0.35 x 0.35 x 0.60 mt. including Excavation, Cement concrete 1:2:4,Half brick masonary a:4,15mm thick plaster C.M.1:4 & Cement concrete flooring connecting of rainwater pipe as per detailed drawing and as directed by Engineer in charge",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisNote": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 1411.0,
+            "sayRate": 1411.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "04001B",
+                    "page": "33",
+                    "label": "Excavation for foundation",
+                    "unit": "Cum",
+                    "qty": 0.25,
+                    "rate": 159.3,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "05010AA",
+                    "page": "38",
+                    "label": "Providing and laying cement concrete 1:2:4",
+                    "unit": "Cum",
+                    "qty": 0.04,
+                    "rate": 3617.44,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "06008A2A",
+                    "page": "55",
+                    "label": "Half brick masonry in C.M. 1:4",
+                    "unit": "Sqm",
+                    "qty": 1.12,
+                    "rate": 584.17,
+                    "cpApply": false
+                },
+                {
+                    "sr": "4",
+                    "kind": "SOR",
+                    "code": "17002B",
+                    "page": "103",
+                    "label": "Providing 15 mm thick cement plaster in C.M. 1:4",
+                    "unit": "Sqm",
+                    "qty": 0.84,
+                    "rate": 177.78,
+                    "cpApply": false
+                },
+                {
+                    "sr": "5",
+                    "kind": "SOR",
+                    "code": "14015BA",
+                    "page": "96",
+                    "label": "Providing and laying cement concrete flooring 50 mm thick",
+                    "unit": "Sqm",
+                    "qty": 1.2,
+                    "rate": 352.17,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_172",
+            "libNo": "172",
+            "itemNo": "6",
+            "topic": "Drainage",
+            "desc": "Drainage — Water harvesting pit 2.00 × 2.00 × 4.00 m with 250 mm bore (Garbada)",
+            "longDesc": "Providing water harvesting pit of 2.00 mt x 2.00mt x 4.00 mt. size for water logging with excavation in any strata upto four meter depth, filling the pit with B.T.Metal 40 mm in 0.60 mt. depth with 25-40mm kapachi, 0.30 mt. depth and 2.0 mt. depth with coarse sand in layers including making P.V.C. line for water inlet etc. as directed with 250mm dia bore 35 mt. depth and 150mm dia P.V.C. pipe of 10 Kg. f/Cm2 casing with gravel packing or as directed. Sr. Item of Work Quantity Rate Per Amount 1 2 3 4 5 6 Excavation for Foundation upto 1.50 mt. depth 6.00 159.30 Cu.M. 955.80 2.00 x 2.00 x 1.50 = 6.00 Cu.M. {S.O.R. P. No. 33 It. No.04001B } Excavation for foundation from 1.50 mt. to 6.00 172.83 Cu.M. 1036.98 3.00 mt. depth 2.00 x 2.00 x 1.50 = 6.00 Cu.M. {S.O.R. P. No. 33 It. No.04002B } Excavation for foundation from 3.00 mt. to 4.00 151.69 Cu.M. 606.76 4.00 mt. depth 2.00 x 2.00 x 1.00 = 4.00 Cu.M. {S.O.R. P. No. 33 It. No.04003A} Filling plinth with BT Metal 40mm size (supply 2.40 646.38 Cu.M. 1551.31 and Speding (it no 26012B+ 26018A =380.55+265.83 /P-190/91)) 2.00 x 2.00 x 0.60 = 2.40 Cu.M. Supplying of Kapachi 25mm to 40mm 1.20 676.21 Cu.M. 811.45 (it no (26012B+26012C)/2 + 26018B =(380.55+440.21)/2+265.83 /P-147/48) 2.00 x 2.00 x 0.30 = 1.20 Cu.M. Supply of B.T. Kapachi {10mm to 20mm size}. 1.20 757.65 Cu.M. 909.17 (it no (26012D+26012E)/2 + 26018B =(499.88+483.75)/2+265.83 /P-147/48) 2.00 x 2.00 x 0.30 = 1.20 Cu.M. Supplying of coarse sand 8.00 197.27 Cu.M. 1578.16 (supply and Speding (it no 26015 + 26020A =(237.58+156.96)/2 /P-147/148)) 2.00 x 2.00 x 2.00 = 8.00 Cu.M. Drilling 250mm dia Bore hole 35.00 1111.00 Rmt. 38885.00 35.00 Rmt. 963+148 (GWSSB SOR Rate 2022-23 approved Rate Page No. 11 Section-A )",
+            "unit": "No",
+            "basis": "Per 1 No",
+            "basisNote": "Per 1 No",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 99875.0,
+            "sayRate": 99875.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "04001B",
+                    "page": "33",
+                    "label": "Excavation for foundation upto 1.50 m depth",
+                    "unit": "Cum",
+                    "qty": 6.0,
+                    "rate": 159.3,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "04002B",
+                    "page": "33",
+                    "label": "Excavation for foundation from 1.50 m to 3.00 m depth",
+                    "unit": "Cum",
+                    "qty": 6.0,
+                    "rate": 172.83,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "SOR",
+                    "code": "04003A",
+                    "page": "33",
+                    "label": "Excavation for foundation from 3.00 m to 4.00 m depth",
+                    "unit": "Cum",
+                    "qty": 4.0,
+                    "rate": 151.69,
+                    "cpApply": false
+                },
+                {
+                    "sr": "4",
+                    "kind": "SOR",
+                    "code": "26012B+26018A",
+                    "page": "190",
+                    "label": "Filling pit with B.T. metal 40 mm size (supply and spreading)",
+                    "unit": "Cum",
+                    "qty": 2.4,
+                    "rate": 646.38,
+                    "cpApply": false
+                },
+                {
+                    "sr": "5",
+                    "kind": "SOR",
+                    "code": "26012B+26012C",
+                    "page": "147",
+                    "label": "Supplying of kapachi 25 mm to 40 mm",
+                    "unit": "Cum",
+                    "qty": 1.2,
+                    "rate": 676.21,
+                    "cpApply": false
+                },
+                {
+                    "sr": "6",
+                    "kind": "SOR",
+                    "code": "26012D+26012E",
+                    "page": "147",
+                    "label": "Supply of B.T. kapachi 10 mm to 20 mm size",
+                    "unit": "Cum",
+                    "qty": 1.2,
+                    "rate": 757.65,
+                    "cpApply": false
+                },
+                {
+                    "sr": "7",
+                    "kind": "SOR",
+                    "code": "26015+26020A",
+                    "page": "147",
+                    "label": "Supplying of coarse sand",
+                    "unit": "Cum",
+                    "qty": 8.0,
+                    "rate": 197.27,
+                    "cpApply": false
+                },
+                {
+                    "sr": "8",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "Drilling 250 mm dia bore hole (GWSSB SOR 2022-23 approved rate)",
+                    "unit": "Rmt",
+                    "qty": 35.0,
+                    "rate": 1111.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "9",
+                    "kind": "Quotation",
+                    "code": "",
+                    "page": "",
+                    "label": "Providing P.V.C. casing pipe 200 mm dia 10 kgf/Cm2 including lowering (GWSSB SOR 2022-23)",
+                    "unit": "Rmt",
+                    "qty": 35.0,
+                    "rate": 1444.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "10",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Labour charges for filling kapachi, grit, brick bats etc. complete (L.S.)",
+                    "unit": "Job",
+                    "qty": 1,
+                    "rate": 3000.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_167",
+            "libNo": "167",
+            "itemNo": "2",
+            "topic": "Road",
+            "desc": "Road — Compacted W.B.M. 150 mm thick with 45–63 mm B.T. metal (Garbada)",
+            "longDesc": "Providing and laying compacted W.B.M. 150 mm thick of machine crushed B.T. metal of size 45 mm to 63 mm with using 0.12/ cmt./10 Smt stone screenings as filler and binding material 0.06 cum./ 10 Smt. including spreading, watering & consolidation by vibratory roller etc complete.",
+            "unit": "Cum",
+            "basis": "For 1 Cum.",
+            "basisNote": "For 1 Cum.",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 2192.0,
+            "sayRate": 2192.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "B.T. metal 45 to 63 mm",
+                    "unit": "Cum",
+                    "qty": 1.21,
+                    "rate": 1238.22,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Stone screening 11.2 mm",
+                    "unit": "Cum",
+                    "qty": 0.16,
+                    "rate": 1375.22,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Stone dust",
+                    "unit": "Cum",
+                    "qty": 0.08,
+                    "rate": 1016.17,
+                    "cpApply": false
+                },
+                {
+                    "sr": "4",
+                    "kind": "SOR",
+                    "code": "26018A",
+                    "page": "149",
+                    "label": "Spreading B.T. metal",
+                    "unit": "Cum",
+                    "qty": 1.21,
+                    "rate": 265.83,
+                    "cpApply": false
+                },
+                {
+                    "sr": "5",
+                    "kind": "SOR",
+                    "code": "26020A",
+                    "page": "150",
+                    "label": "Spreading stone screening & binding material murrum",
+                    "unit": "Cum",
+                    "qty": 0.24,
+                    "rate": 156.96,
+                    "cpApply": false
+                },
+                {
+                    "sr": "6",
+                    "kind": "SOR",
+                    "code": "26118",
+                    "page": "201",
+                    "label": "Rolling & consolidation",
+                    "unit": "Cum",
+                    "qty": 1.0,
+                    "rate": 32.76,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_168",
+            "libNo": "168",
+            "itemNo": "4",
+            "topic": "Road",
+            "desc": "Road — Ready mix M-300 with ironite and trimix process (Garbada)",
+            "longDesc": "Providing and laying in position Ready Mix M-300 grade Controll concrete with ironite material 4 Kg. / Sqm for reinforced cement concrete work, using cement content as per approved design Mix manufactured in fully aautomatic batching plant and transported to site of work in transit mixer for lead up to 10 kkms having continous agitated mixer, manufactured as per mix design of specified grade for reinforced cement concrete work including pumping of R.M.C. from transit mixer to site of laying, excluding the cost of centering shuttering finishing and reinforcement including cost of admixtures in recommanded prportions as per IS : 9103 to accelerate/ retard setting of concrete, improve workability without impairing strength and durability as per direction of the Engineer in charge Without Fly Ash (Min cement level as per latest IS 456 shall be maintained) including labour charges for Trimix process,it is flooter,surface vibrator,Vacume etc complete.",
+            "unit": "Cum",
+            "basis": "Per 1 Cmt",
+            "basisNote": "Per 1 Cmt",
+            "basisQty": 1.0,
+            "cp": 0,
+            "pdfRate": 5977.0,
+            "sayRate": 5977.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "5057",
+                    "page": "51",
+                    "label": "Ready mix M-300 grade controlled concrete",
+                    "unit": "Cmt",
+                    "qty": 1.0,
+                    "rate": 5077.03,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Add ironite material 4 kg/Cum",
+                    "unit": "Kg",
+                    "qty": 4.0,
+                    "rate": 150.0,
+                    "cpApply": false
+                },
+                {
+                    "sr": "3",
+                    "kind": "MR",
+                    "code": "",
+                    "page": "",
+                    "label": "Add cost of trimix vibrator / vacuum / flooter — 5.00 Smt covered by 0.20 m thickness",
+                    "unit": "Smt",
+                    "qty": 5.0,
+                    "rate": 60.0,
+                    "cpApply": false
+                }
+            ]
+        },
+        {
+            "id": "lib_169",
+            "libNo": "169",
+            "itemNo": "9",
+            "topic": "Road",
+            "desc": "Road — Pre-cast concrete kerb stone M-250 with three-coat epoxy paint (Garbada)",
+            "longDesc": "Providing and fixing pre-cast concrete kerb stone of gray cement based concrete block 30cm length,30cm height and 15cm thick of M250 grade concret as per approved design and including excavation for fixing in proper line and level,filling the joint with C:M 1:3 (1cement:3fine sand) etc complete.(upto 10 ton) with oil paint colour to It. No. 9 Kerb by Yellow/white and Black patta (Three Coat) one coat of priming & two coat of oil Paint including cost of material required for paint and all labour worketc complete as per direction, detailed drawing and instruction of engineer incharge .(Including Epoxy Piant of Approved Quality)(R.A.-3)",
+            "unit": "Rmt",
+            "basis": "Considering 30 mt length of kerb — 100 Rmt basis",
+            "basisNote": "Considering 30 mt length of kerb — 100 Rmt basis",
+            "basisQty": 100.0,
+            "cp": 0,
+            "pdfRate": 413.0,
+            "sayRate": 413.0,
+            "floors": false,
+            "source": "ANS Garbada merged estimate — school / hostel / kitchen / quarters / road (SOR 2024-25)",
+            "components": [
+                {
+                    "sr": "1",
+                    "kind": "SOR",
+                    "code": "14032",
+                    "page": "98",
+                    "label": "Cost of kerbing — pre-cast concrete kerb stone 30 × 30 × 15 cm, M-250",
+                    "unit": "Rmt",
+                    "qty": 100.0,
+                    "rate": 371.21,
+                    "cpApply": false
+                },
+                {
+                    "sr": "2",
+                    "kind": "SOR",
+                    "code": "19001+19007",
+                    "page": "110",
+                    "label": "Applying prime coat (35.56) + painting one coat excluding priming coat (101.85)",
+                    "unit": "Smt",
+                    "qty": 30.0,
+                    "rate": 137.41,
+                    "cpApply": false
+                }
+            ]
         }
     ],
     marketRates: [
