@@ -115,9 +115,11 @@ function addDivision(divName, subName){
 
 let office    = store.get('rnb_office', null)     || {...OFFICE_DEFAULT};
 let est       = store.get('rnb_est', null) ||
-             { mode:'', rateSource:'', road:'', roadList:[], workDesc:'', prepBy:'', chkBy:'', qc:1, lc:0, lines:[] };
+             { mode:'', rateSource:'', road:'', roadList:[], workDesc:'', prepBy:'', chkBy:'', qc:1, lc:0, gst:0, lines:[] };
 if(est.mode === undefined) est.mode = '';
 if(est.rateSource === undefined) est.rateSource = '';
+if(est.gst === undefined) est.gst = 0;
+if(est.lc  === undefined) est.lc  = 0;
 /* migrate old single-road fields → roadList array */
 if(!Array.isArray(est.roadList)) est.roadList = [];
 if(est.roadList.length === 0 && est.mode === 'road' && (est.road || est.roadKm || est.wcFrom || est.wcTo)){
@@ -425,6 +427,14 @@ const blankRow = () => ({ ch:'', nos:'', len:'', wid:'', thk:'', den:'' });
 
 /* ------------------------------- name of work ------------------------------- */
 function buildWorkName(){
+  /* project mode: har sub-estimate ka "Name of Work" parent project se
+     aata hai (Project tab → Name of Work). Sub ka apna naam titleSuffix
+     ke roop me alag se lagta hai. */
+  if(window.project && Array.isArray(window.project.subs) && window.project.subs.length){
+    const ov = window.project.meta && window.project.meta.performa &&
+               window.project.meta.performa.projectNameOverride;
+    if(ov && String(ov).trim()) return String(ov).trim();
+  }
   if(est.mode === 'building'){
     if(!est.road) return '—';
     return String(est.road).trim();
@@ -446,14 +456,25 @@ function buildWorkName(){
 const refreshWorkName = () => $('#workName').textContent = buildWorkName();
 
 /* ------------------------------- totals ------------------------------- */
-function lineTotal(line){
+function lineTotal(line, lcPctArg, gstPctArg){
   const kind = unitKind(line.unit);
   const div = unitDivisor(line.unit);
   const measured = line.rows.reduce((a,r) => a + rowQty(r, kind), 0);  // in base measured unit (e.g. sqm)
   const q = measured / div;                                            // converted to output unit (e.g. hectare)
   const autoSay = Math.ceil(r2(q) * 10) / 10;                          // R&B round-up: 111.09 -> 111.10
   const say = (line.sayOverride == null || line.sayOverride === '') ? autoSay : n(line.sayOverride);
-  return { measured:r2(measured), qty:r2(q), autoSay, say:r2(say), amount:r2(say * n(line.rate)) };
+  /* Rate loadings — E2 format: approved rate = base rate + GST% + LC%, and
+     amount is on the loaded approved rate. lcPctArg / gstPctArg let
+     project.js roll up a non-active sub with that sub's own est.lc/est.gst. */
+  const baseRate = n(line.rate);
+  const gstPct   = (gstPctArg != null) ? n(gstPctArg) : (n(est.gst) || 0);
+  const lcPct    = (lcPctArg  != null) ? n(lcPctArg)  : (n(est.lc)  || 0);
+  const gstAmt   = r2(baseRate * gstPct / 100);
+  const lcAmt    = r2(baseRate * lcPct / 100);
+  const apprRate = r2(baseRate + gstAmt + lcAmt);
+  return { measured:r2(measured), qty:r2(q), autoSay, say:r2(say),
+           baseRate:r2(baseRate), gstPct, gstAmt, lcPct, lcAmt, apprRate,
+           amount:r2(say * apprRate) };
 }
 function totals(){
   const total = r2(est.lines.reduce((a,l) => a + lineTotal(l).amount, 0));
@@ -1008,7 +1029,7 @@ $('#btnResetData').onclick = () => {
 
 /* ------------------------------- bind form ------------------------------- */
 $('#qcPct').value = est.qc; $('#qcPct').oninput = e => { est.qc = n(e.target.value); save(); refreshTotals(); };
-$('#lcRate').value = est.lc; $('#lcRate').oninput = e => { est.lc = n(e.target.value); save(); };
+$('#lcRate').value = est.lc; $('#lcRate').oninput = e => { est.lc = n(e.target.value); save(); refreshTotals(); if(typeof renderPreview==='function') renderPreview(); };
 $('#roadInput').value = est.road || '';
 $('#btnAddRoadEntry').onclick = () => {
   est.roadList.push({ name:'', km:'', wcFrom:'', wcTo:'' });
@@ -1093,14 +1114,23 @@ const previewData = () => ({ name: buildWorkName(), t: totals(),
   lines: est.lines.map((l, i) => ({ ...l, itemNo: i + 1, ...lineTotal(l) })) });
 
 function renderPreview(){
-  if(!est.road || !est.lines.length){
+  const hasProj = window.project && Array.isArray(window.project.subs) && window.project.subs.length >= 1;
+  if((!hasProj && !est.road) || !est.lines.length){
     $('#previewBox').innerHTML = '<div class="empty">Pehle name aur item select karo.</div>'; return; }
   const p = previewData();
+  const subSay = Math.ceil(p.t.total / 1000) * 1000;
+  const totalBlock = hasProj
+    ? `<tr><td colspan="5"><b>Total</b></td><td class="num mono"><b>${fmt(p.t.total)}</b></td></tr>
+       <tr><td colspan="5" class="num"><b>Say</b></td><td class="num mono"><b>${fmt0(subSay)}</b></td></tr>`
+    : `<tr><td colspan="5"><b>Total</b></td><td class="num mono"><b>${fmt(p.t.total)}</b></td></tr>
+       <tr><td colspan="5" class="num">${est.qc} % Q C</td><td class="num mono">${fmt(p.t.qc)}</td></tr>
+       <tr><td colspan="5" class="num"><b>Total</b></td><td class="num mono"><b>${fmt(p.t.grand)}</b></td></tr>
+       <tr><td colspan="5" class="num"><b>Say</b></td><td class="num mono"><b>${fmt0(p.t.say)}</b></td></tr>`;
   $('#previewBox').innerHTML = `
     <h4>FACE</h4>
     <p><b>Name of Work :-</b> ${esc(p.name)}<br><br>
       Division : ${esc(office.div)}<br>Sub-Division : ${esc(office.sub)}<br>
-      Service Head : R &amp; B<br>Amount : <span class="mono">Rs ${fmt(p.t.say)}</span><br>
+      Service Head : R &amp; B<br>Amount : <span class="mono">Rs ${fmt(hasProj ? subSay : p.t.say)}</span><br>
       Estimate prepared by : ${esc(est.prepBy)}<br>Estimate checked by : ${esc(est.chkBy)}</p>
     <h4>abst. — Abstract</h4>
     <div class="scroll"><table class="tbl">
@@ -1108,12 +1138,9 @@ function renderPreview(){
       ${p.lines.map(l=>`<tr><td class="mono">${esc(l.itemNo)}</td>
         <td class="num mono">${fmt(l.say)} ${esc(l.unit)}</td>
         <td style="font-size:11px">${esc(l.desc.slice(0,200))}${l.desc.length>200?'…':''}</td>
-        <td class="num mono">${fmt(n(l.rate))}</td><td>${esc(l.unit)}</td>
+        <td class="num mono">${fmt(l.apprRate)}</td><td>${esc(l.unit)}</td>
         <td class="num mono">${fmt(l.amount)}</td></tr>`).join('')}
-      <tr><td colspan="5"><b>Total</b></td><td class="num mono"><b>${fmt(p.t.total)}</b></td></tr>
-      <tr><td colspan="5" class="num">${est.qc} % Q C</td><td class="num mono">${fmt(p.t.qc)}</td></tr>
-      <tr><td colspan="5" class="num"><b>Total</b></td><td class="num mono"><b>${fmt(p.t.grand)}</b></td></tr>
-      <tr><td colspan="5" class="num"><b>Say</b></td><td class="num mono"><b>${fmt0(p.t.say)}</b></td></tr>
+      ${totalBlock}
     </table></div>
     <h4>MES — Measurement</h4>
     ${p.lines.map(l => { const kind = unitKind(l.unit), f = FIELDS[kind], mUnit = measuredUnit(kind), div = unitDivisor(l.unit);
@@ -1184,8 +1211,14 @@ async function _buildOneSubSheets(wb, opts){
   const abstName     = opts.abstName    || 'abst.';
   const mesName      = opts.mesName     || 'MES ';
   const titleSuffix  = opts.titleSuffix || '';
+  const noCharges    = !!opts.noCharges;   // project mode: sub abstract me QC/WC/GST nahi — wo Recap me
   const p  = previewData();
-  const NAME = ' Name of Work : - ' + p.name + (titleSuffix ? ' — ' + titleSuffix : '') + ' ';
+  /* In project mode the "Name of Work" comes from the parent project, and a
+     sub heading (e.g. "Sub Estimate No. 1 : Main Building") sits above the
+     sheet. In single mode workName falls back to the estimate's own name. */
+  const workName = opts.workName || p.name;
+  const subLabel = opts.subLabel || '';
+  const NAME = ' Name of Work : - ' + workName + ' ';
 
   /* ---------- FACE (only in single-estimate mode) ---------- */
   let f = null;
@@ -1229,9 +1262,10 @@ async function _buildOneSubSheets(wb, opts){
       fitToPage:true, fitToWidth:1, fitToHeight:0,
       margins:{ left:0.35, right:0.35, top:0.45, bottom:0.4, header:0.2, footer:0.2 } } });
   widths(a, [5.4, 8.4, 65.5, 9.4, 5.4, 12.4]);   // desc sabse chaudi, amount utni hi jitni zaroori
-  a.getRow(1).height = 43.5; a.getRow(2).height = 9; a.getRow(3).height = 20.1;
+  a.getRow(1).height = 43.5; a.getRow(2).height = subLabel ? 18 : 9; a.getRow(3).height = 20.1;
   a.getRow(4).height = 9.75; a.getRow(5).height = 45; a.getRow(6).height = 20.1;
   a.mergeCells('A1:F1'); put(a, 'A1', NAME, ARIAL(12, true), CTRC);
+  a.mergeCells('A2:F2'); if(subLabel) put(a, 'A2', subLabel, ARIAL(12, true), CTRC);
   a.mergeCells('A3:F3'); put(a, 'A3', 'ABSTRACT ', ARIAL(16, true), CTRC);
   a.mergeCells('A4:F4');
   ['Item No.','Qty. & Unit','Item of Work','Rate','Per','Amount']
@@ -1249,7 +1283,14 @@ async function _buildOneSubSheets(wb, opts){
      Description kisi merge me nahi hai, isliye height kam padne par bhi text
      kabhi doosre item par nahi chadhta. */
   p.lines.forEach(l => {
-    const top = r, bot = r + 2;
+    /* rate loadings — only the ones that apply (E2 shows loadings present) */
+    const loadings = [];
+    if(n(l.gstPct) > 0) loadings.push({ lbl: fmt0(l.gstPct) + '% GST', pct: n(l.gstPct), amt: l.gstAmt });
+    if(n(l.lcPct)  > 0) loadings.push({ lbl: fmt0(l.lcPct)  + '% LC',  pct: n(l.lcPct),  amt: l.lcAmt  });
+    /* rows in this item block: base + each loading + approved(always) */
+    const nRows = 1 + loadings.length + 1;
+    const top = r, bot = r + nRows - 1;
+    const apprRow = bot;                              // approved-rate row = last row
     amtCells.push('F' + top); qtyRefCells.push('B' + top);
     a.mergeCells(`A${top}:A${bot}`); a.mergeCells(`E${top}:E${bot}`); a.mergeCells(`F${top}:F${bot}`);
     a.mergeCells(`B${top+1}:B${bot}`);
@@ -1261,22 +1302,30 @@ async function _buildOneSubSheets(wb, opts){
     put(a, 'B'+top, l.say,    ARIAL(11), CTRC, BOX, '0.00');
     put(a, 'B'+(top+1), l.unit, ARIAL(11), CTRC, BOX);
     put(a, 'C'+top, l.desc,   ARIAL(dFs), JUST, BOX);
-    put(a, 'D'+top, n(l.rate),ARIAL(11), CTRC, BOX, '0.00');
+    put(a, 'D'+top, l.baseRate, ARIAL(11), CTRC, BOX, '0.00');   // base (SOR) rate
     put(a, 'E'+top, l.unit,   ARIAL(11), CTRC, BOX);
-    put(a, 'F'+top, { formula:`ROUND(B${top}*D${top},2)`, result:l.amount },
+    /* amount = Say x Approved Rate (loaded) — approved rate cell = D(apprRow) */
+    put(a, 'F'+top, { formula:`ROUND(B${top}*D${apprRow},2)`, result:l.amount },
         ARIAL(11), {horizontal:'right', vertical:'center', wrapText:true}, BOX, '0.00');
 
-    put(a, 'C'+(top+1), 'L.C. included in approved rate', ARIAL(11), CTRC, BOX);
-    put(a, 'D'+(top+1), n(est.lc), ARIAL(11), CTRC, BOX, '0.00');
-    put(a, 'C'+(top+2), 'Approved Rate no ' + (l.appRateNo || l.itemNo), ARIAL(11), CTRC, BOX);
-    put(a, 'D'+(top+2), { formula:`D${top}`, result:n(l.rate) }, ARIAL(11), CTRC, BOX, '0.00');
+    /* each loading on its own row (GST, then LC) */
+    const loadCells = [];
+    loadings.forEach((ld, k) => {
+      const rw = top + 1 + k;
+      put(a, 'C'+rw, ld.lbl, ARIAL(11), CTRC, BOX);
+      put(a, 'D'+rw, { formula:`ROUND(D${top}*${ld.pct}/100,2)`, result:ld.amt }, ARIAL(11), CTRC, BOX, '0.00');
+      loadCells.push('D'+rw);
+    });
+    /* approved rate = base + all loadings */
+    const apprF = loadCells.length ? `D${top}+` + loadCells.join('+') : `D${top}`;
+    put(a, 'C'+apprRow, 'Approved Rate no ' + (l.appRateNo || l.itemNo), ARIAL(11), CTRC, BOX);
+    put(a, 'D'+apprRow, { formula:`ROUND(${apprF},2)`, result:l.apprRate }, ARIAL(11), CTRC, BOX, '0.00');
 
     /* description row ki height — 15% extra margin taki text kabhi kate nahi */
     const descH = Math.ceil(textHeight(l.desc, 65.5, dFs) * 1.04);
-    a.getRow(top).height     = Math.max(20, descH);
-    a.getRow(top+1).height   = 18;
-    a.getRow(top+2).height   = 18;
-    const blockH = a.getRow(top).height + 36;
+    a.getRow(top).height = Math.max(20, descH);
+    for(let rw = top + 1; rw <= bot; rw++) a.getRow(rw).height = 18;
+    const blockH = a.getRow(top).height + (nRows - 1) * 18;
 
     if(pageUsed > 150 && pageUsed + blockH > PAGE_PT){
       a.getRow(top - 1).addPageBreak();       // break item se THEEK pehle
@@ -1285,20 +1334,36 @@ async function _buildOneSubSheets(wb, opts){
     pageUsed += blockH;
     r = bot + 1;
   });
-  const rTot = r, rQc = r + 1, rGrand = r + 2, rSay = r + 4;
-  a.mergeCells(`A${rTot}:E${rTot}`);
   const sumF = amtCells.length ? 'ROUND(' + amtCells.join('+') + ',2)' : '0';
-  put(a, 'A'+rTot, 'Total', ARIAL(11, true), RGT, BOX);
-  put(a, 'F'+rTot, { formula:sumF, result:p.t.total }, ARIAL(11, true), RGT, BOX, '0.00');
-  put(a, 'D'+rQc, est.qc + ' % Q C', ARIAL(11, true), RGT, {top:THIN, bottom:THIN});
-  put(a, 'F'+rQc, { formula:`ROUND(F${rTot}*${n(est.qc)}/100,2)`, result:p.t.qc }, ARIAL(11, true), RGT, BOX, '0.00');
-  put(a, 'E'+rGrand, 'Total', ARIAL(11, true), RGT, {top:THIN, bottom:THIN});
-  put(a, 'F'+rGrand, { formula:`ROUND(F${rTot}+F${rQc},2)`, result:p.t.grand }, ARIAL(11, true), RGT, BOX, '0.00');
-  a.mergeCells(`A${rSay}:E${rSay}`);
-  put(a, 'A'+rSay, 'Say', ARIAL(11, true), RGT, BOX);
-  put(a, 'F'+rSay, { formula:`CEILING(F${rGrand},1000)`, result:p.t.say }, ARIAL(11, true), RGT, BOX, '0.00');
-  a.abstSayCell = 'F' + rSay;
-  for(let i = rTot; i <= rSay; i++) a.getRow(i).height = 14.25;
+  let rSay;
+  if(noCharges){
+    /* sub-estimate abstract (project mode): sirf Total -> Say. QC/WC/GST Recap me. */
+    const rTot = r; rSay = r + 2;
+    a.mergeCells(`A${rTot}:E${rTot}`);
+    put(a, 'A'+rTot, 'Total', ARIAL(11, true), RGT, BOX);
+    put(a, 'F'+rTot, { formula:sumF, result:p.t.total }, ARIAL(11, true), RGT, BOX, '0.00');
+    a.mergeCells(`A${rSay}:E${rSay}`);
+    put(a, 'A'+rSay, 'Say', ARIAL(11, true), RGT, BOX);
+    put(a, 'F'+rSay, { formula:`CEILING(F${rTot},1000)`, result:Math.ceil(p.t.total/1000)*1000 },
+        ARIAL(11, true), RGT, BOX, '0.00');
+    a.abstSayCell = 'F' + rSay;
+    for(let i = rTot; i <= rSay; i++) a.getRow(i).height = 14.25;
+  } else {
+    /* single-estimate abstract (legacy): Total -> QC% -> Grand -> Say */
+    const rTot = r, rQc = r + 1, rGrand = r + 2; rSay = r + 4;
+    a.mergeCells(`A${rTot}:E${rTot}`);
+    put(a, 'A'+rTot, 'Total', ARIAL(11, true), RGT, BOX);
+    put(a, 'F'+rTot, { formula:sumF, result:p.t.total }, ARIAL(11, true), RGT, BOX, '0.00');
+    put(a, 'D'+rQc, est.qc + ' % Q C', ARIAL(11, true), RGT, {top:THIN, bottom:THIN});
+    put(a, 'F'+rQc, { formula:`ROUND(F${rTot}*${n(est.qc)}/100,2)`, result:p.t.qc }, ARIAL(11, true), RGT, BOX, '0.00');
+    put(a, 'E'+rGrand, 'Total', ARIAL(11, true), RGT, {top:THIN, bottom:THIN});
+    put(a, 'F'+rGrand, { formula:`ROUND(F${rTot}+F${rQc},2)`, result:p.t.grand }, ARIAL(11, true), RGT, BOX, '0.00');
+    a.mergeCells(`A${rSay}:E${rSay}`);
+    put(a, 'A'+rSay, 'Say', ARIAL(11, true), RGT, BOX);
+    put(a, 'F'+rSay, { formula:`CEILING(F${rGrand},1000)`, result:p.t.say }, ARIAL(11, true), RGT, BOX, '0.00');
+    a.abstSayCell = 'F' + rSay;
+    for(let i = rTot; i <= rSay; i++) a.getRow(i).height = 14.25;
+  }
   const sg = rSay + 8;
   (typeof abstSignBlock === 'function' ? abstSignBlock() : ['Deputy Executive Engineer','R&B Sub Division','Dahod'])
     .forEach((t,i) => { a.mergeCells(`D${sg+i}:F${sg+i}`); put(a, 'D'+(sg+i), t, ARIAL(12), CTRC); });
@@ -1311,8 +1376,9 @@ async function _buildOneSubSheets(wb, opts){
   /* ---------- MES ---------- */
   const m = wb.addWorksheet(mesName, { pageSetup:{ paperSize:9, orientation:'portrait', fitToPage:true, fitToWidth:1, fitToHeight:0 } });
   widths(m, [12.14, 4.99, 12.41, 8.09, 2.56, 9.57, 2.56, 9.84, 2.43, 10.11, 3.10, 9.44, 13.08, 7.95]);
-  m.getRow(1).height = 15; m.getRow(2).height = 42; m.getRow(3).height = 21; m.getRow(4).height = 20.25;
+  m.getRow(1).height = 15; m.getRow(2).height = 42; m.getRow(3).height = subLabel ? 20 : 21; m.getRow(4).height = 20.25;
   m.mergeCells('A1:N2'); put(m, 'A1', NAME, ARIAL(16), CTR);
+  m.mergeCells('A3:N3'); if(subLabel) put(m, 'A3', subLabel, ARIAL(12, true), {horizontal:'center'});
   m.mergeCells('A4:N4'); put(m, 'A4', 'MEASUREMENT', ARIAL(16, true), {horizontal:'center'});
 
   const mesSayCells = [];
@@ -1407,6 +1473,7 @@ async function buildWorkbook(){
     if(typeof projRecapSheet === 'function') projRecapSheet(wb);
 
     /* per-sub abst + MES + RA (RA immediately after that sub's MES) */
+    const projWorkName = (typeof projName === 'function' ? projName() : '');
     for(let i = 0; i < window.project.subs.length; i++){
       const sub = window.project.subs[i];
       est = JSON.parse(JSON.stringify(sub.est));
@@ -1414,9 +1481,12 @@ async function buildWorkbook(){
       const cleanN = String(sub.name || ('Sub ' + (i+1))).replace(/[:\\/?*\[\]]/g, ' ').slice(0, 18);
       await _buildOneSubSheets(wb, {
         includeFace: false,
+        noCharges:   true,
         abstName:    ('abst.' + (i+1) + ' ' + cleanN).slice(0, 30).trim(),
         mesName:     ('MES ' + (i+1) + ' ' + cleanN).slice(0, 30).trim(),
-        titleSuffix: sub.name || ('Sub ' + (i+1))
+        titleSuffix: sub.name || ('Sub ' + (i+1)),
+        workName:    projWorkName,
+        subLabel:    'Sub Estimate No. ' + (i+1) + ' :  ' + (sub.name || ('Sub ' + (i+1)))
       });
       /* RA used in this sub — placed directly after its measurement sheet */
       if(window.RA && typeof window.RA.addUsedRASheet === 'function'){
@@ -1480,18 +1550,23 @@ $('#btnXlsx').onclick = async () => {
         existing jsPDF doc (caller manages est swap + addPage). Used by
         project-mode PDF export where each sub-estimate contributes one
         abst+MES appendix. Mirrors the abst/MES sections of btnPdf below. */
-function _drawAbstAndMesPDF(doc, subLabel){
+function _drawAbstAndMesPDF(doc, subName, workName, subNo){
   const p = previewData();
   const GRID = { font:'helvetica', fontSize:8, cellPadding:3, lineColor:[0,0,0], lineWidth:0.5,
                  textColor:[0,0,0], valign:'middle', overflow:'linebreak' };
   const HEAD = { fillColor:[255,255,255], textColor:[0,0,0], fontStyle:'bold', halign:'center',
                  lineColor:[0,0,0], lineWidth:0.5 };
+  const wName    = workName || p.name;
+  const subHead  = subNo ? ('Sub Estimate No. ' + subNo + ' :  ' + (subName || ('Sub ' + subNo)))
+                         : (subName ? String(subName) : '');
   function sheetTitle(title, W, M){
     const y0 = 46; doc.setFont('helvetica','bold'); doc.setFontSize(9);
-    const nmT = 'Name of Work : - ' + p.name + (subLabel ? '   [' + subLabel + ']' : '');
-    const nm = doc.splitTextToSize(nmT, W - 2*M);
+    const nm = doc.splitTextToSize('Name of Work : - ' + wName, W - 2*M);
     doc.text(nm, W/2, y0, {align:'center'});
-    const y1 = y0 + nm.length*11 + 6;
+    let y1 = y0 + nm.length*11 + 4;
+    if(subHead){
+      doc.setFontSize(9); doc.text(subHead, W/2, y1, {align:'center'}); y1 += 13;
+    }
     doc.setFontSize(14); doc.text(title, W/2, y1, {align:'center'});
     return y1 + 14;
   }
@@ -1509,24 +1584,44 @@ function _drawAbstAndMesPDF(doc, subLabel){
                    2:{cellWidth:309}, 3:{cellWidth:46, halign:'center'},
                    4:{cellWidth:26, halign:'center'}, 5:{cellWidth:64, halign:'right'} };
   const PH = doc.internal.pageSize.getHeight(), BOT = 60;
-  const itemRows = l => ([
-    [ { content:String(l.itemNo), rowSpan:3, styles:{halign:'center', valign:'middle'} },
+  const itemRows = l => {
+    const loads = [];
+    if(n(l.gstPct) > 0) loads.push([fmt0(l.gstPct) + '% GST', fmt(l.gstAmt)]);
+    if(n(l.lcPct)  > 0) loads.push([fmt0(l.lcPct)  + '% LC',  fmt(l.lcAmt)]);
+    const N = 1 + loads.length + 1;                 // base row + loadings + approved row
+    const rows = [];
+    rows.push([
+      { content:String(l.itemNo), rowSpan:N, styles:{halign:'center', valign:'middle'} },
       { content:fmt(l.say),       styles:{halign:'center'} },
       { content:l.desc,           styles:{halign:'left', valign:'top'} },
-      { content:fmt(n(l.rate)),   styles:{halign:'center', valign:'middle'} },
-      { content:l.unit, rowSpan:3, styles:{halign:'center', valign:'middle'} },
-      { content:fmt(l.amount), rowSpan:3, styles:{halign:'right', valign:'middle'} } ],
-    [ { content:l.unit, rowSpan:2, styles:{halign:'center', valign:'middle'} },
-      { content:'L.C. included in approved rate', styles:{halign:'center'} },
-      { content:fmt(n(est.lc)), styles:{halign:'center'} } ],
-    [ { content:'Approved Rate no ' + (l.appRateNo || l.itemNo), styles:{halign:'center'} },
-      { content:fmt(n(l.rate)), styles:{halign:'center'} } ]
-  ]);
+      { content:fmt(l.baseRate),  styles:{halign:'center', valign:'middle'} },
+      { content:l.unit, rowSpan:N, styles:{halign:'center', valign:'middle'} },
+      { content:fmt(l.amount), rowSpan:N, styles:{halign:'right', valign:'middle'} }
+    ]);
+    const tail = loads.slice();
+    tail.push(['Approved Rate no ' + (l.appRateNo || l.itemNo), fmt(l.apprRate)]);
+    const tailCount = tail.length;                  // = N-1
+    tail.forEach((t, idx) => {
+      const row = [];
+      if(idx === 0) row.push({ content:l.unit, rowSpan:tailCount, styles:{halign:'center', valign:'middle'} });
+      row.push({ content:t[0], styles:{halign:'center'} });
+      row.push({ content:t[1], styles:{halign:'center'} });
+      rows.push(row);
+    });
+    return rows;
+  };
+  const blockRowCount = l => {
+    let c = 2;                                       // base + approved
+    if(n(l.gstPct) > 0) c++;
+    if(n(l.lcPct)  > 0) c++;
+    return c;
+  };
   const blockH = l => {
     doc.setFont('helvetica','normal'); doc.setFontSize(GRID.fontSize);
     const lines = doc.splitTextToSize(String(l.desc || ''), A_COLS[2].cellWidth - 2*GRID.cellPadding).length;
     const rowH = GRID.fontSize + 2*GRID.cellPadding + 2;
-    return Math.max(3 * rowH, lines * (GRID.fontSize * 1.15) + 2*GRID.cellPadding) + 2 * rowH;
+    const N = blockRowCount(l);
+    return Math.max(N * rowH, lines * (GRID.fontSize * 1.15) + 2*GRID.cellPadding) + (N - 1) * rowH;
   };
   const drawRows = (rows, needHead) => {
     doc.autoTable({ startY:y, margin:{left:M, right:M}, theme:'grid',
@@ -1546,11 +1641,11 @@ function _drawAbstAndMesPDF(doc, subLabel){
     needHead = false;
   });
   const B = fs => ({ fontStyle:'bold' , halign:'right', ...fs });
+  /* sub-estimate abstract (project mode): sirf Total -> Say. QC/WC/GST Recap me. */
+  const subSay = Math.ceil(p.t.total / 1000) * 1000;
   const totRows = [
     [ { content:'Total', colSpan:5, styles:B() }, { content:fmt(p.t.total), styles:B() } ],
-    [ { content:'', colSpan:3, styles:{} }, { content:est.qc + ' % Q C', colSpan:2, styles:B() }, { content:fmt(p.t.qc), styles:B() } ],
-    [ { content:'', colSpan:4, styles:{} }, { content:'Total', styles:B() }, { content:fmt(p.t.grand), styles:B() } ],
-    [ { content:'Say', colSpan:5, styles:B() }, { content:fmt0(p.t.say), styles:B() } ]
+    [ { content:'Say', colSpan:5, styles:B() }, { content:fmt0(subSay), styles:B() } ]
   ];
   if(y + 5 * (GRID.fontSize + 2*GRID.cellPadding + 2) > PH - BOT){
     doc.addPage('a4','portrait'); y = sheetTitle('ABSTRACT', W, M); needHead = true;
@@ -1617,16 +1712,16 @@ $('#btnPdf').onclick = () => {
   if(hasProj){
     const savedEst = JSON.parse(JSON.stringify(est));
     if(typeof projPDFPages === 'function') projPDFPages(doc);
+    const projWorkName = (typeof projName === 'function' ? projName() : '');
     window.project.subs.forEach((sub, idx) => {
       est = JSON.parse(JSON.stringify(sub.est));
       if(!est.lines || !est.lines.length) return;
       doc.addPage('a4','portrait');
-      _drawAbstAndMesPDF(doc, sub.name || ('Sub ' + (idx+1)));
+      _drawAbstAndMesPDF(doc, sub.name || ('Sub ' + (idx+1)), projWorkName, idx+1);
       /* RA used in this sub — right after its measurement sheet */
       if(window.RA && typeof window.RA.appendEstimateRA === 'function'){
-        const nm = (typeof projName === 'function' ? projName() : '');
         window.RA.appendEstimateRA(doc,
-          (nm ? 'Name of Work : - ' + nm : 'Rate Analysis') + '   [' + (sub.name || ('Sub ' + (idx+1))) + ']');
+          (projWorkName ? 'Name of Work : - ' + projWorkName : 'Rate Analysis') + '   [Sub Estimate No. ' + (idx+1) + ' : ' + (sub.name || ('Sub ' + (idx+1))) + ']');
       }
     });
     est = savedEst;
@@ -1704,25 +1799,44 @@ $('#btnPdf').onclick = () => {
                    4:{cellWidth:26, halign:'center'}, 5:{cellWidth:64, halign:'right'} };
   /* har item apne table me — page badalte waqt item kabhi beech se nahi katega */
   const PH = doc.internal.pageSize.getHeight(), BOT = 60;
-  const itemRows = l => ([
-    [ { content:String(l.itemNo), rowSpan:3, styles:{halign:'center', valign:'middle'} },
+  const itemRows = l => {
+    const loads = [];
+    if(n(l.gstPct) > 0) loads.push([fmt0(l.gstPct) + '% GST', fmt(l.gstAmt)]);
+    if(n(l.lcPct)  > 0) loads.push([fmt0(l.lcPct)  + '% LC',  fmt(l.lcAmt)]);
+    const N = 1 + loads.length + 1;
+    const rows = [];
+    rows.push([
+      { content:String(l.itemNo), rowSpan:N, styles:{halign:'center', valign:'middle'} },
       { content:fmt(l.say),       styles:{halign:'center'} },
       { content:l.desc,           styles:{halign:'left', valign:'top'} },
-      { content:fmt(n(l.rate)),   styles:{halign:'center', valign:'middle'} },
-      { content:l.unit, rowSpan:3, styles:{halign:'center', valign:'middle'} },
-      { content:fmt(l.amount), rowSpan:3, styles:{halign:'right', valign:'middle'} } ],
-    [ { content:l.unit, rowSpan:2, styles:{halign:'center', valign:'middle'} },
-      { content:'L.C. included in approved rate', styles:{halign:'center'} },
-      { content:fmt(n(est.lc)), styles:{halign:'center'} } ],
-    [ { content:'Approved Rate no ' + (l.appRateNo || l.itemNo), styles:{halign:'center'} },
-      { content:fmt(n(l.rate)), styles:{halign:'center'} } ]
-  ]);
+      { content:fmt(l.baseRate),  styles:{halign:'center', valign:'middle'} },
+      { content:l.unit, rowSpan:N, styles:{halign:'center', valign:'middle'} },
+      { content:fmt(l.amount), rowSpan:N, styles:{halign:'right', valign:'middle'} }
+    ]);
+    const tail = loads.slice();
+    tail.push(['Approved Rate no ' + (l.appRateNo || l.itemNo), fmt(l.apprRate)]);
+    const tailCount = tail.length;
+    tail.forEach((t, idx) => {
+      const row = [];
+      if(idx === 0) row.push({ content:l.unit, rowSpan:tailCount, styles:{halign:'center', valign:'middle'} });
+      row.push({ content:t[0], styles:{halign:'center'} });
+      row.push({ content:t[1], styles:{halign:'center'} });
+      rows.push(row);
+    });
+    return rows;
+  };
+  const blockRowCount = l => {
+    let c = 2;
+    if(n(l.gstPct) > 0) c++;
+    if(n(l.lcPct)  > 0) c++;
+    return c;
+  };
   const blockH = l => {
     doc.setFont('helvetica','normal'); doc.setFontSize(GRID.fontSize);
     const lines = doc.splitTextToSize(String(l.desc || ''), A_COLS[2].cellWidth - 2*GRID.cellPadding).length;
-    const lineH = GRID.fontSize * 1.15 + 2*GRID.cellPadding;
     const rowH = GRID.fontSize + 2*GRID.cellPadding + 2;
-    return Math.max(3 * rowH, lines * (GRID.fontSize * 1.15) + 2*GRID.cellPadding) + 2 * rowH;
+    const N = blockRowCount(l);
+    return Math.max(N * rowH, lines * (GRID.fontSize * 1.15) + 2*GRID.cellPadding) + (N - 1) * rowH;
   };
   const drawRows = (rows, needHead) => {
     doc.autoTable({ startY:y, margin:{left:M, right:M}, theme:'grid',
@@ -2003,7 +2117,7 @@ $('#fileImportSaved').onchange = e => {
 $('#btnNew').onclick = () => {
   if(!confirm('Naya estimate shuru karein? Abhi ka data clear ho jayega.')) return;
   currentSavedId = null;
-  est = { mode:'', rateSource:'', road:'', roadList:[], workDescList:[], prepBy:est.prepBy, chkBy:est.chkBy, qc:1, lc:0, lines:[] };
+  est = { mode:'', rateSource:'', road:'', roadList:[], workDescList:[], prepBy:est.prepBy, chkBy:est.chkBy, qc:1, lc:0, gst:0, lines:[] };
   save();
   ['roadInput'].forEach(id => { const el = $('#'+id); if(el) el.value = ''; });
   refreshWorkName(); renderItemBlocks(); renderPreview();

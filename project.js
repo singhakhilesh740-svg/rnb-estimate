@@ -158,6 +158,8 @@
     const rEl = document.getElementById('roadInput'); if(rEl) rEl.value = est.road || '';
     const pEl = document.getElementById('prepBy');    if(pEl) pEl.value = est.prepBy || '';
     const cEl = document.getElementById('chkBy');     if(cEl) cEl.value = est.chkBy || '';
+    const qEl = document.getElementById('qcPct');     if(qEl) qEl.value = est.qc;
+    const lEl = document.getElementById('lcRate');    if(lEl) lEl.value = est.lc || 0;
     renderProject();
     toast('Switched to sub-estimate: ' + (window.project.subs[idx].name || ('Sub ' + (idx+1))));
   }
@@ -184,7 +186,7 @@
       rateSource: est.rateSource || 'sor',
       road: '', roadList: [], workDescList: [],
       prepBy: est.prepBy || '', chkBy: est.chkBy || '',
-      qc: n(est.qc) || 1, lc: n(est.lc) || 0,
+      qc: n(est.qc) || 1, lc: n(est.lc) || 0, gst: n(est.gst) || 0,
       lines: []
     };
     window.project.subs.push({ name: (name || '').trim() || ('Sub ' + (window.project.subs.length+1)), est: blank });
@@ -235,18 +237,21 @@
     projSave(); renderProject();
   }
 
-  /* per-sub total (Say value) so recap can roll it up */
+  /* per-sub total (Say value) so recap can roll it up.
+     E2 format: sub abstract me sirf Total -> Say (koi QC nahi). QC/WC/GST
+     Recap me ek baar lagta hai. lineTotal ko sub ka apna lc% pass karte
+     hain (kyunki global est doosra sub ho sakta hai). */
   function subTotal(sub){
     if(!sub || !sub.est || !Array.isArray(sub.est.lines)) return 0;
+    const lc  = n(sub.est.lc)  || 0;
+    const gst = n(sub.est.gst) || 0;
     let total = 0;
     sub.est.lines.forEach(l => {
-      try{ total += (typeof lineTotal === 'function' ? lineTotal(l).amount : 0); }
+      try{ total += (typeof lineTotal === 'function' ? lineTotal(l, lc, gst).amount : 0); }
       catch(e){}
     });
-    const qc = total * (n(sub.est.qc) || 0) / 100;
-    const grand = total + qc;
-    /* Say = ceiling to nearest 1000 */
-    return Math.ceil(grand / 1000) * 1000;
+    /* Say = ceiling to nearest 1000 (no QC here) */
+    return Math.ceil(total / 1000) * 1000;
   }
   window.projSubTotal = subTotal;
 
@@ -867,6 +872,41 @@
     };
   }
 
+  /* Estimate tab ke top par ek banner — batata hai ki abhi kaunsa
+     sub-estimate edit ho raha hai aur Name of Work Project se aa raha hai. */
+  function syncEstBanner(){
+    const est_sec = document.getElementById('tab-est');
+    if(!est_sec) return;
+    let bn = document.getElementById('projEstBanner');
+    const hasSubs = window.project && Array.isArray(window.project.subs) && window.project.subs.length;
+    if(!hasSubs){ if(bn) bn.remove(); return; }
+    const sub = window.project.subs[window.project.active] || {};
+    const pName = (typeof projectName === 'function' ? projectName() : '') || '—';
+    if(!bn){
+      bn = document.createElement('div');
+      bn.id = 'projEstBanner';
+      bn.className = 'card';
+      bn.style.cssText = 'border-left:4px solid #c85a2e;background:#fff6f0';
+      est_sec.insertBefore(bn, est_sec.firstElementChild);
+    }
+    bn.innerHTML =
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">' +
+        '<div>' +
+          '<div style="font-size:12px;color:#8a4b2c;text-transform:uppercase;letter-spacing:.05em">Sub-estimate ' +
+            (window.project.active + 1) + ' / ' + window.project.subs.length + '</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#123a5e">' + esc(sub.name || ('Sub ' + (window.project.active+1))) + '</div>' +
+          '<div style="font-size:12px;color:#456;margin-top:2px">Name of Work: <b>' + esc(pName) + '</b> <span style="color:#888">(Project tab se — yahan likhne ki zaroorat nahi)</span></div>' +
+        '</div>' +
+        '<button class="btn ghost" id="projEstBackBtn" style="padding:5px 12px">← Project tab</button>' +
+      '</div>';
+    const back = document.getElementById('projEstBackBtn');
+    if(back) back.onclick = () => {
+      const pb = document.querySelector('nav.tabs button[data-tab="proj"]');
+      if(pb) pb.click();
+    };
+  }
+  window.syncEstBanner = syncEstBanner;
+
   function renderProject(){
     ensureTab();
     bindMeta();
@@ -877,6 +917,7 @@
     renderRecapLump();
     renderRecapPreview();
     renderSubs();
+    syncEstBanner();
   }
   window.renderProject = renderProject;
 
@@ -1561,6 +1602,7 @@
       const sec = document.getElementById('tab-proj');
       if(sec) sec.hidden = (b.dataset.tab !== 'proj');
       if(b.dataset.tab === 'proj') setTimeout(renderProject, 0);
+      if(b.dataset.tab === 'est' && typeof syncEstBanner === 'function') setTimeout(syncEstBanner, 0);
     });
   });
 
