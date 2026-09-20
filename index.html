@@ -334,14 +334,14 @@ table.ltr-tbl tr.tot td{background:#d9d9d9}
   <div class="card">
     <h2>Abstract totals</h2>
     <div class="grid g2">
-      <div><label for="qcPct">Quality control %</label><input id="qcPct" class="mono" type="number" step="0.01" value="1"></div>
+      <div id="qcFieldWrap"><label for="qcPct">Quality control %</label><input id="qcPct" class="mono" type="number" step="0.01" value="1"></div>
       <div><label for="lcRate">L.C. % (added to approved rate)</label><input id="lcRate" class="mono" type="number" step="0.01" value="0"></div>
     </div>
     <p class="hint" style="margin:6px 0 0">L.C. har item ki approved rate par load hoti hai (E2 format). GST project ke Recap me lagti hai.</p>
     <div style="margin-top:14px">
       <div class="tot"><span>Total</span><b id="tTotal">0.00</b></div>
-      <div class="tot"><span id="tQcLbl">1 % Q C</span><b id="tQc">0.00</b></div>
-      <div class="tot"><span>Total</span><b id="tGrand">0.00</b></div>
+      <div class="tot" id="qcTotRow"><span id="tQcLbl">1 % Q C</span><b id="tQc">0.00</b></div>
+      <div class="tot" id="grandTotRow"><span>Total</span><b id="tGrand">0.00</b></div>
       <div class="tot big"><span>Say</span><b id="tSay">0</b></div>
     </div>
   </div>

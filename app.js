@@ -482,13 +482,26 @@ function totals(){
   const grand = r2(total + qc);
   return { total, qc, grand, say: Math.ceil(grand/1000) * 1000 };
 }
+function subActive(){
+  return !!(window.project && Array.isArray(window.project.subs) && window.project.subs.length >= 1
+            && window.project.subs[window.project.active]);
+}
 function refreshTotals(){
   const t = totals();
+  const sub = subActive();
+  const qcWrap = $('#qcFieldWrap'), qcRow = $('#qcTotRow'), grRow = $('#grandTotRow');
+  /* Sub-estimate me QC/Grand nahi (wo Recap me) — sirf LC + Say. Standalone
+     estimate me pehle jaisa Total -> QC -> Grand -> Say. */
+  if(qcWrap) qcWrap.style.display = sub ? 'none' : '';
+  if(qcRow)  qcRow.style.display  = sub ? 'none' : '';
+  if(grRow)  grRow.style.display  = sub ? 'none' : '';
   $('#tTotal').textContent = fmt(t.total);
-  $('#tQcLbl').textContent = `${est.qc} % Q C`;
-  $('#tQc').textContent    = fmt(t.qc);
-  $('#tGrand').textContent = fmt(t.grand);
-  $('#tSay').textContent   = fmt0(t.say);
+  if(!sub){
+    $('#tQcLbl').textContent = `${est.qc} % Q C`;
+    $('#tQc').textContent    = fmt(t.qc);
+    $('#tGrand').textContent = fmt(t.grand);
+  }
+  $('#tSay').textContent = fmt0(sub ? Math.ceil(t.total / 1000) * 1000 : t.say);
 }
 
 /* ------------------------------- item blocks ------------------------------- */

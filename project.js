@@ -148,6 +148,8 @@
     }
     window.project.active = idx;
     est = JSON.parse(JSON.stringify(window.project.subs[idx].est));
+    /* sub-estimate: no QC/GST — only LC. Charges roll up in Recap. */
+    est.qc = 0; est.gst = 0;
     /* app.js state resets after swap */
     save();
     projSave();
@@ -158,8 +160,8 @@
     const rEl = document.getElementById('roadInput'); if(rEl) rEl.value = est.road || '';
     const pEl = document.getElementById('prepBy');    if(pEl) pEl.value = est.prepBy || '';
     const cEl = document.getElementById('chkBy');     if(cEl) cEl.value = est.chkBy || '';
-    const qEl = document.getElementById('qcPct');     if(qEl) qEl.value = est.qc;
     const lEl = document.getElementById('lcRate');    if(lEl) lEl.value = est.lc || 0;
+    if(typeof refreshTotals === 'function') refreshTotals();
     renderProject();
     toast('Switched to sub-estimate: ' + (window.project.subs[idx].name || ('Sub ' + (idx+1))));
   }
@@ -167,10 +169,9 @@
 
   function ensureFirstSub(){
     if(window.project.subs.length) return;
-    window.project.subs.push({
-      name: 'Main Building',
-      est:  JSON.parse(JSON.stringify(est))
-    });
+    const seed = JSON.parse(JSON.stringify(est));
+    seed.qc = 0; seed.gst = 0;              /* sub-estimate: no QC/GST — only LC */
+    window.project.subs.push({ name: 'Main Building', est: seed });
     window.project.active = 0;
     projSave();
   }
@@ -186,7 +187,7 @@
       rateSource: est.rateSource || 'sor',
       road: '', roadList: [], workDescList: [],
       prepBy: est.prepBy || '', chkBy: est.chkBy || '',
-      qc: n(est.qc) || 1, lc: n(est.lc) || 0, gst: n(est.gst) || 0,
+      qc: 0, lc: n(est.lc) || 0, gst: 0,     /* sub-estimate: no QC/GST — only LC. Charges roll up in Recap. */
       lines: []
     };
     window.project.subs.push({ name: (name || '').trim() || ('Sub ' + (window.project.subs.length+1)), est: blank });
@@ -238,19 +239,18 @@
   }
 
   /* per-sub total (Say value) so recap can roll it up.
-     E2 format: sub abstract me sirf Total -> Say (koi QC nahi). QC/WC/GST
-     Recap me ek baar lagta hai. lineTotal ko sub ka apna lc% pass karte
-     hain (kyunki global est doosra sub ho sakta hai). */
+     E2 format: sub abstract me sirf Total -> Say. Koi QC, koi GST nahi —
+     sirf LC har item ki approved rate me load hoti hai. QC/WC/GST Recap me
+     ek baar lagte hain. */
   function subTotal(sub){
     if(!sub || !sub.est || !Array.isArray(sub.est.lines)) return 0;
     const lc  = n(sub.est.lc)  || 0;
-    const gst = n(sub.est.gst) || 0;
     let total = 0;
     sub.est.lines.forEach(l => {
-      try{ total += (typeof lineTotal === 'function' ? lineTotal(l, lc, gst).amount : 0); }
+      try{ total += (typeof lineTotal === 'function' ? lineTotal(l, lc, 0).amount : 0); }
       catch(e){}
     });
-    /* Say = ceiling to nearest 1000 (no QC here) */
+    /* Say = ceiling to nearest 1000 (no QC, no GST here) */
     return Math.ceil(total / 1000) * 1000;
   }
   window.projSubTotal = subTotal;
