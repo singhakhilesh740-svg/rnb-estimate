@@ -114,6 +114,133 @@ function addDivision(divName, subName){
 }
 
 let office    = store.get('rnb_office', null)     || {...OFFICE_DEFAULT};
+
+/* ──────────────────── SEAL ENGINE ──────────────────────────────────────────
+   Each seal = { role, lines: [] }
+   role = 'dee' | 'ee' | 'ae' | 'custom'
+   lines = multiline text — each element = one printed line in the sig block.
+   Empty line = blank gap.
+   App uses the first matching role for each signature position.
+   ──────────────────────────────────────────────────────────────────────── */
+const SEAL_DEFAULTS = [
+  {
+    role: 'dee',
+    label: 'Deputy Executive Engineer (DEE)',
+    lines: [
+      'Deputy Executive Engineer',
+      'R & B Sub Division,',
+      office.sub || 'Dahod.'
+    ]
+  },
+  {
+    role: 'ee',
+    label: 'Executive Engineer (EE)',
+    lines: [
+      'Executive Engineer,',
+      '( R & B ) Division,',
+      office.div || 'Dahod.'
+    ]
+  },
+  {
+    role: 'ae',
+    label: 'Assistant Engineer / AE',
+    lines: [
+      'Assistant Engineer,',
+      'R & B Sub Division,',
+      office.sub || 'Dahod.'
+    ]
+  }
+];
+
+let seals = store.get('rnb_seals', null);
+if(!seals || !Array.isArray(seals) || !seals.length){
+  seals = SEAL_DEFAULTS.map(s => ({...s, lines: [...s.lines]}));
+  store.set('rnb_seals', seals);
+}
+
+function saveSeal(){ store.set('rnb_seals', seals); }
+
+/* Return lines[] for a given role; fallback to default if not found */
+function getSeal(role){
+  const s = seals.find(s => s.role === role);
+  if(s && s.lines && s.lines.length) return s.lines.filter(l => l !== undefined).map(String);
+  const d = SEAL_DEFAULTS.find(s => s.role === role);
+  return d ? d.lines.slice() : [];
+}
+
+/* Override the global sign functions so ALL sheets use office seals */
+window.signDEE = () => getSeal('dee');
+window.signEE  = () => getSeal('ee');
+window.signAE  = () => getSeal('ae');
+
+/* Override signBlock (auth.js) — always use DEE seal from office block */
+window.signBlock = function(){
+  const lines = getSeal('dee');
+  /* signBlock is expected to return 3 items: [post, office, place] */
+  return [lines[0]||'', lines[1]||'', lines[2]||''];
+};
+
+/* abstSignBlock forces DEE seal on abstract sheets */
+function abstSignBlock(){ return getSeal('dee'); }
+
+/* ──────────────────── SEAL UI RENDERER ──────────────────────────────────── */
+function renderSealEditor(){
+  const list = document.getElementById('sealList');
+  if(!list) return;
+  list.innerHTML = seals.map((s, si) => `
+    <div class="card" style="margin:8px 0;border:1px solid #c9d4e0;padding:10px 12px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+        <input class="seal-label-inp" style="flex:1;border:1px solid #c9d4e0;border-radius:5px;padding:5px 8px;font-size:13px;font-weight:600"
+          data-si="${si}" value="${esc(s.label)}" placeholder="Seal ka naam (jaise EE)">
+        <select class="seal-role-sel" data-si="${si}" style="border:1px solid #c9d4e0;border-radius:5px;padding:5px 8px;font-size:12px">
+          <option value="dee" ${s.role==='dee'?'selected':''}>DEE</option>
+          <option value="ee"  ${s.role==='ee' ?'selected':''}>EE</option>
+          <option value="ae"  ${s.role==='ae' ?'selected':''}>AE</option>
+          <option value="custom" ${s.role==='custom'?'selected':''}>Custom</option>
+        </select>
+        <button class="btn danger" data-del="${si}" style="padding:4px 8px;font-size:12px">✕</button>
+      </div>
+      <textarea class="seal-lines-ta" data-si="${si}" rows="4"
+        style="width:100%;border:1px solid #c9d4e0;border-radius:5px;padding:7px 10px;font-size:13px;font-family:monospace;resize:vertical"
+        placeholder="Har line alag — exactly waise jaise seal pe likhni hai">${esc(s.lines.join('\n'))}</textarea>
+      <p class="hint" style="margin:4px 0 0">Preview: ${s.lines.filter(Boolean).map(l=>`<b>${esc(l)}</b>`).join(' | ')}</p>
+    </div>`).join('');
+
+  /* wire events */
+  list.querySelectorAll('.seal-label-inp').forEach(inp => inp.oninput = e => {
+    seals[+e.target.dataset.si].label = e.target.value; saveSeal();
+  });
+  list.querySelectorAll('.seal-role-sel').forEach(sel => sel.onchange = e => {
+    seals[+e.target.dataset.si].role = e.target.value; saveSeal(); renderSealEditor();
+  });
+  list.querySelectorAll('.seal-lines-ta').forEach(ta => ta.oninput = e => {
+    seals[+e.target.dataset.si].lines = e.target.value.split('\n'); saveSeal(); renderSealEditor();
+  });
+  list.querySelectorAll('[data-del]').forEach(b => b.onclick = e => {
+    const si = +e.target.dataset.del;
+    if(!confirm('Ye seal hatana hai?')) return;
+    seals.splice(si, 1); saveSeal(); renderSealEditor();
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  /* Render seal editor whenever office block section is visible */
+  const btnDataBack6 = document.getElementById('btnDataBack6');
+  if(btnDataBack6) btnDataBack6.closest('section, div[id^="tab"]')?.addEventListener('click', () => {
+    setTimeout(renderSealEditor, 50);
+  });
+  const addSealBtn = document.getElementById('btnAddSeal');
+  if(addSealBtn) addSealBtn.onclick = () => {
+    const nm = prompt('Naye seal ka naam:', 'New Seal');
+    if(!nm) return;
+    seals.push({ role:'custom', label: nm, lines: ['', '', ''] });
+    saveSeal(); renderSealEditor();
+  };
+  /* Initial render if already on office block page */
+  renderSealEditor();
+});
+
+
 let est       = store.get('rnb_est', null) ||
              { mode:'', rateSource:'', road:'', roadList:[], workDesc:'', prepBy:'', chkBy:'', qc:1, lc:0, gst:0, lines:[] };
 if(est.mode === undefined) est.mode = '';
@@ -340,7 +467,7 @@ $$('nav.tabs button').forEach(b => b.onclick = () => {
   $$('nav.tabs button').forEach(x => x.setAttribute('aria-selected', x === b));
   ['est','prev','saved','data'].forEach(t => $('#tab-'+t).hidden = (t !== b.dataset.tab));
   if(b.dataset.tab === 'prev') renderPreview();
-  if(b.dataset.tab === 'data'){ showDataGrid(); }
+  if(b.dataset.tab === 'data'){ showDataGrid(); setTimeout(renderSealEditor, 100); }
   if(b.dataset.tab === 'saved') renderSavedTable();
   window.scrollTo(0,0);
 });
@@ -1471,6 +1598,14 @@ async function _buildOneSubSheets(wb, opts){
     put(m, 'L'+mr, 'Estimate Say', ARIAL(12, true), CTRC);
     put(m, 'M'+mr, p.t.say, ARIAL(12, true), CTRC, null, '0.00');
   }
+  /* AE signature block on Measurement Sheet */
+  const meSg = mr + 4;
+  const aeSeal = (typeof window.signAE === 'function') ? window.signAE()
+               : ['Assistant Engineer,', 'R & B Sub Division,', office.sub || 'Dahod.'];
+  aeSeal.forEach((t, i) => {
+    m.mergeCells(`L${meSg+i}:N${meSg+i}`);
+    put(m, 'L'+(meSg+i), t, ARIAL(12), {horizontal:'center', vertical:'middle'});
+  });
 }
 
 /* ---- project-aware wrapper ------------------------------------------------
@@ -1721,7 +1856,8 @@ function _drawAbstAndMesPDF(doc, subName, workName, subNo){
       head:[header], body, styles:{...GRID, fontSize:7, cellPadding:2}, headStyles:HEAD, columnStyles:colStyles });
     y = doc.lastAutoTable.finalY + 16;
   });
-  signature(y + 12, W - M - 130);
+  signature(y + 12, W - M - 130,
+    (typeof window.signAE === 'function') ? window.signAE() : null);
 }
 
 /* ------------------------------- pdf export (mirrors the Excel sheets) ------------------------------- */

@@ -650,7 +650,7 @@ table.ltr-tbl tr.tot td{background:#d9d9d9}
         <h2 class="crumb">Office Block</h2>
       </div>
       <div class="card">
-        <h2>Office block</h2>
+        <h2>Office block — Division / Sub-Division</h2>
         <div class="grid g2">
           <div><label for="divName">Division</label><input id="divName"></div>
           <div><label for="subDivName">Sub-Division</label><input id="subDivName"></div>
@@ -659,6 +659,13 @@ table.ltr-tbl tr.tot td{background:#d9d9d9}
           <label for="genDesc">General description</label>
           <textarea id="genDesc" rows="5"></textarea>
         </div>
+      </div>
+
+      <div class="card" id="sealEditorCard">
+        <h2>Signature Seals</h2>
+        <p class="hint" style="margin:0 0 10px">Har seal me jo lines likhoge wahi Excel aur PDF ke signature block me aayega. Enter dabao = nai line. Blank line chhod sakte ho space ke liye. Yahan se ready karo — baaki kaam app karega.</p>
+        <div id="sealList"></div>
+        <button class="btn ghost" id="btnAddSeal" style="margin-top:10px">+ Add seal</button>
       </div>
     </div>
 

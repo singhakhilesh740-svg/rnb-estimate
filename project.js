@@ -1054,8 +1054,8 @@
 
     /* signatures */
     r += 3;
-    const sig = (typeof signDEE === 'function' ? signDEE() : ['Deputy Executive Engineer', 'R&B Sub Division', office.sub || 'Dahod']);
-    const sigE= (typeof signEE  === 'function' ? signEE()  : ['Executive Engineer', 'R&B Division', office.div || 'Dahod']);
+    const sig = (typeof window.signDEE === 'function' ? window.signDEE() : ['Deputy Executive Engineer', 'R&B Sub Division', office.sub || 'Dahod']);
+    const sigE= (typeof window.signEE === 'function' ? window.signEE() : ['Executive Engineer', 'R&B Division', office.div || 'Dahod']);
     for(let i=0;i<3;i++){
       _put(ws, `A${r+i}`, sig[i]  || '', ExH(11, i === 0), { horizontal:'center', vertical:'middle' });
       ws.mergeCells(`A${r+i}:B${r+i}`);
@@ -1195,8 +1195,8 @@
     });
 
     r += 2;
-    const sig = (typeof signDEE === 'function' ? signDEE() : ['Deputy Executive Engineer', 'R&B Sub Division', office.sub || 'Dahod']);
-    const sigE= (typeof signEE  === 'function' ? signEE()  : ['Executive Engineer', 'R&B Division', office.div || 'Dahod']);
+    const sig = (typeof window.signDEE === 'function' ? window.signDEE() : ['Deputy Executive Engineer', 'R&B Sub Division', office.sub || 'Dahod']);
+    const sigE= (typeof window.signEE === 'function' ? window.signEE() : ['Executive Engineer', 'R&B Division', office.div || 'Dahod']);
     for(let i=0;i<3;i++){
       ws.mergeCells(`A${r+i}:B${r+i}`);
       _put(ws, `A${r+i}`, sig[i] || '',  ExH(11, i===0), { horizontal:'center', vertical:'middle' });
@@ -1285,8 +1285,8 @@
     });
 
     r += 2;
-    const sig = (typeof signDEE === 'function' ? signDEE() : ['Deputy Executive Engineer', 'R&B Sub Division', office.sub || 'Dahod']);
-    const sigE= (typeof signEE  === 'function' ? signEE()  : ['Executive Engineer', '( R & B ) Division', office.div || 'Dahod']);
+    const sig = (typeof window.signDEE === 'function' ? window.signDEE() : ['Deputy Executive Engineer', 'R&B Sub Division', office.sub || 'Dahod']);
+    const sigE= (typeof window.signEE === 'function' ? window.signEE() : ['Executive Engineer', '( R & B ) Division', office.div || 'Dahod']);
     for(let i=0;i<3;i++){
       ws.mergeCells(`A${r+i}:B${r+i}`);
       _put(ws, `A${r+i}`, sig[i] || '',  ExH(11, i===0), { horizontal:'center', vertical:'middle' });
@@ -1359,8 +1359,8 @@
     _put(ws, `C${r}`, rec.say, ExH(11, true), RGT_MID, BOX_, '#,##0.00'); r++;
 
     r += 2;
-    const sig = (typeof signDEE === 'function' ? signDEE() : ['Deputy Executive Engineer', 'R&B Sub Division', office.sub || 'Dahod']);
-    const sigE= (typeof signEE  === 'function' ? signEE()  : ['Executive Engineer', 'R&B Division', office.div || 'Dahod']);
+    const sig = (typeof window.signDEE === 'function' ? window.signDEE() : ['Deputy Executive Engineer', 'R&B Sub Division', office.sub || 'Dahod']);
+    const sigE= (typeof window.signEE === 'function' ? window.signEE() : ['Executive Engineer', 'R&B Division', office.div || 'Dahod']);
     for(let i=0;i<3;i++){
       _put(ws, `A${r+i}`, sig[i]  || '', ExH(11, i===0), { horizontal:'center', vertical:'middle' });
       ws.mergeCells(`A${r+i}:B${r+i}`);
@@ -1604,12 +1604,17 @@
 
   function pdfSignPair(doc, y, M, W){
     doc.setFont('helvetica','bold'); doc.setFontSize(11);
-    const sig = (typeof signDEE === 'function' ? signDEE() : ['Deputy Executive Engineer', 'R&B Sub Division', office.sub || 'Dahod']);
-    const sigE= (typeof signEE  === 'function' ? signEE()  : ['Executive Engineer', 'R&B Division', office.div || 'Dahod']);
-    for(let i=0;i<3;i++){
+    const sig  = (typeof window.signDEE === 'function') ? window.signDEE()
+               : (typeof signDEE === 'function') ? signDEE()
+               : ['Deputy Executive Engineer', 'R&B Sub Division', office.sub || 'Dahod'];
+    const sigE = (typeof window.signEE  === 'function') ? window.signEE()
+               : (typeof signEE  === 'function') ? signEE()
+               : ['Executive Engineer', 'R&B Division', office.div || 'Dahod'];
+    const maxLines = Math.max(sig.length, sigE.length);
+    for(let i=0; i<maxLines; i++){
       doc.setFont('helvetica', i === 0 ? 'bold' : 'normal');
-      doc.text(sig[i]  || '', M + 100,     y + i*13, { align:'center' });
-      doc.text(sigE[i] || '', W - M - 100, y + i*13, { align:'center' });
+      if(sig[i]  !== undefined) doc.text(String(sig[i]),  M + 100,     y + i*13, { align:'center' });
+      if(sigE[i] !== undefined) doc.text(String(sigE[i]), W - M - 100, y + i*13, { align:'center' });
     }
   }
   window.projPDFSignPair = pdfSignPair;

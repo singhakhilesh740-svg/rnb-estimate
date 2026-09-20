@@ -759,13 +759,13 @@
     return n.toLocaleString('en-IN', { maximumFractionDigits: 3 });
   }
 
-  /* do-column signature — left: preparing officer, right: approving officer.
-     Post hamesha Deputy Executive Engineer (profile ki post yahan use nahi hoti). */
+  /* do-column signature — left: DEE seal, right: EE seal.
+     Reads from window.signDEE/signEE (set by seal engine in app.js). */
   function signCols() {
-    const p = (typeof window !== 'undefined' && window.userProfile) || null;
-    const dist = (typeof district === 'function' && district()) || 'Dahod';
-    const left = [ 'Deputy Executive Engineer', (p && p.sub) || 'R&B Sub Division', dist ];
-    const right = ['Executive Engineer', '( R & B ) Division', dist];
+    const left  = (typeof window.signDEE === 'function') ? window.signDEE()
+                : ['Deputy Executive Engineer', 'R&B Sub Division', 'Dahod'];
+    const right = (typeof window.signEE  === 'function') ? window.signEE()
+                : ['Executive Engineer', '( R & B ) Division', 'Dahod'];
     return [left, right];
   }
 
