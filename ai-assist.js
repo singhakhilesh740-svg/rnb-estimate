@@ -56,6 +56,8 @@ const FIELD_MAP = {
   columnSize:     { id:'__info__', meta:'rcc.columnSize',    label:'Column Size' },
   slabThickness:  { id:'__info__', meta:'rcc.slabThickness', label:'Slab Thickness mm' },
   beamDepth:      { id:'__info__', meta:'rcc.beamDepth',     label:'Beam Depth' },
+  maxBeamSpan:    { id:'__info__', meta:'rcc.maxBeamSpan',   label:'Max Beam Span (m)' },
+  maxBeamSpan:    { id:'__info__', meta:'rcc.maxBeamSpan',   label:'Max Beam Span (m)' },
 };
 
 /* ──────────────────────── system prompt ──────────────────────── */
@@ -95,6 +97,8 @@ When the user says "fill karo", "extract karo", "auto-fill", "data nikal do", "f
   "columnSize": "<e.g. 300x450 mm>",
   "slabThickness": <mm>,
   "beamDepth": "<e.g. 300x600 mm>",
+  "maxBeamSpan": <largest beam span in meters, e.g. 5.0 — measure the longest span between columns>,
+  "maxBeamSpan": <largest beam span in the drawing, in meters, e.g. 5.0 — IMPORTANT for GR member-size rules>,
   "buildings": [{"name":"<name>","area":<sqm>}],
   "buildingDetails": "<summary>",
   "workDetails": "<structural system>",
@@ -564,7 +568,9 @@ function showExtracted(data){
         const k = chk.dataset.aik;
         if(dataCopy[k] !== undefined) filled += applyField(k, dataCopy[k]);
       });
+      window._aiLastExtract = dataCopy;   // remember for GR auto-calc
       addMsg('bot', `✅ <b>${filled}</b> fields auto-fill ho gaye! Project tab check karo.`);
+      offerGRCalc(dataCopy);
       if(typeof window.renderProject === 'function') window.renderProject();
       if(typeof window.projSave === 'function') window.projSave();
     };
@@ -572,6 +578,72 @@ function showExtracted(data){
     if(allBtn) allBtn.onclick = () => msg.querySelectorAll('.chk').forEach(c => c.checked = true);
     const noneBtn = document.getElementById(uid + '_none');
     if(noneBtn) noneBtn.onclick = () => msg.querySelectorAll('.chk').forEach(c => c.checked = false);
+  }, 50);
+}
+
+/* ──────────────────────── GR Auto-Calc from chatbot ──────────────────────── */
+function offerGRCalc(data){
+  if(!window.GR || typeof window.GR.applyToSheet !== 'function'){
+    return; /* gr-rules.js not loaded */
+  }
+  const N  = data.floors, A = data.floorArea, NC = data.totalColumns;
+  const span = data.maxBeamSpan || '';
+  if(!N || !A || !NC){
+    addMsg('bot', 'ℹ️ GR Auto-Calc ke liye N, A, NC drawing se chahiye — wo poore extract nahi hue. Manually RCC card me daal do.');
+    return;
+  }
+
+  const uid = 'grq_' + Date.now();
+  const html = `<span class="tag">GR Auto-Calc</span> Drawing se <b>N=${N}, A=${A}, NC=${NC}${span?`, Span=${span}m`:''}</b> mil gaya.<br>
+    Sirf 2 cheezein daalo jo drawing me nahi hoti — phir QC, column/beam/slab size, concrete grade &amp; steel <b>GR circular se auto</b> aa jayega:
+    <div class="ai-key-form" style="margin-top:8px">
+      <div style="display:flex;gap:6px">
+        <div style="flex:1"><label style="font-size:11px;color:#456">SBC (T/m²) — soil report</label>
+          <input id="${uid}_sbc" type="number" step="0.5" placeholder="e.g. 25" style="width:100%"></div>
+        <div style="flex:1"><label style="font-size:11px;color:#456">Foundation Depth (m)</label>
+          <input id="${uid}_df" type="number" step="0.1" placeholder="e.g. 1.5" style="width:100%"></div>
+      </div>
+      <div style="display:flex;gap:6px">
+        <div style="flex:1"><label style="font-size:11px;color:#456">Beam Span (m)</label>
+          <input id="${uid}_span" type="number" step="0.1" value="${span}" placeholder="e.g. 5.0" style="width:100%"></div>
+        <div style="flex:1"><label style="font-size:11px;color:#456">Exposure</label>
+          <select id="${uid}_exp" style="width:100%;border:1px solid #c5d0dc;border-radius:6px;padding:7px">
+            <option value="moderate">Moderate</option><option value="mild">Mild</option><option value="extreme">Extreme</option>
+          </select></div>
+      </div>
+      <button id="${uid}_go" class="ai-btn">⚙ Compute &amp; Fill RCC Sheet</button>
+    </div>`;
+
+  const m = addMsg('bot', html);
+  setTimeout(() => {
+    const go = document.getElementById(uid + '_go');
+    if(go) go.onclick = () => {
+      const sbc = document.getElementById(uid + '_sbc').value;
+      const df  = document.getElementById(uid + '_df').value;
+      const sp  = document.getElementById(uid + '_span').value;
+      if(!parseFloat(sbc) || !parseFloat(sp)){
+        addMsg('err', 'SBC aur Beam Span zaroori hain GR calc ke liye.');
+        return;
+      }
+      const r = window.GR.applyToSheet({
+        N, A, NC, IL: 2.1,
+        SBC: sbc, DF: df, span: sp,
+        exposure: document.getElementById(uid + '_exp').value,
+        zone: 'III', I: 1.0
+      });
+      addMsg('bot', `✅ <b>GR rules apply ho gaye!</b> RCC sheet me bhar diya:
+        <ul class="ai-fill-list">
+          <li><span class="k">QC (footing/col)</span><span class="v">${r.QC} m³ <small>(Table 6)</small></span></li>
+          <li><span class="k">Column size</span><span class="v">${r.columnSize} mm <small>(Table 7)</small></span></li>
+          <li><span class="k">Beam size</span><span class="v">${r.beamSize} mm <small>(Table 9)</small></span></li>
+          <li><span class="k">Slab thickness</span><span class="v">${r.slabThickness} mm <small>(Table 8)</small></span></li>
+          <li><span class="k">Total PCC</span><span class="v">${r.PCC} m³</span></li>
+          <li><span class="k">Excavation</span><span class="v">${r.EXC} m³</span></li>
+          <li><span class="k">Steel (kg/m³)</span><span class="v">F:${r.steel.footing} C:${r.steel.columns} B:${r.steel.beams} S:${r.steel.slabs}</span></li>
+        </ul>
+        Project tab → RCC Calculation me sab bhar gaya. ✅`);
+      if(typeof window.renderProject === 'function') window.renderProject();
+    };
   }, 50);
 }
 
