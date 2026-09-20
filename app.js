@@ -1328,6 +1328,7 @@ const CTR  = { horizontal:'center', vertical:'top',    wrapText:true };
 const CTRC = { horizontal:'center', vertical:'center', wrapText:true };
 const JUST = { horizontal:'justify', vertical:'top',   wrapText:true };
 const RGT  = { horizontal:'right',   vertical:'top',   wrapText:true };
+const LFT  = { horizontal:'left',    vertical:'top',   wrapText:true };
 const THIN = { style:'thin' };
 const BOX  = { top:THIN, left:THIN, bottom:THIN, right:THIN };
 const RS_FMT = '_("Rs"* #,##0.00_);_("Rs"* \\(#,##0.00\\);_("Rs"* "-"??_);_(@_)';
