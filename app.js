@@ -1427,8 +1427,8 @@ async function _buildOneSubSheets(wb, opts){
   /* ---------- abst. ---------- */
   const a = wb.addWorksheet(abstName, { pageSetup:{ paperSize:9, orientation:'portrait',
       fitToPage:true, fitToWidth:1, fitToHeight:0,
-      margins:{ left:0.35, right:0.35, top:0.45, bottom:0.4, header:0.2, footer:0.2 } } });
-  widths(a, [5.4, 8.4, 65.5, 9.4, 5.4, 12.4]);   // desc sabse chaudi, amount utni hi jitni zaroori
+      margins:{ left:0.75, right:0.75, top:0.75, bottom:0.75, header:0.3, footer:0.3 } } });
+  widths(a, [5.11, 14.78, 39.56, 9.33, 6.78, 11.89]);   // A 27.6pt B 79.8 C 213.6 D 50.4 E 36.6 F 64.2pt
   a.getRow(1).height = 43.5; a.getRow(2).height = subLabel ? 18 : 9; a.getRow(3).height = 20.1;
   a.getRow(4).height = 9.75; a.getRow(5).height = 45; a.getRow(6).height = 20.1;
   a.mergeCells('A1:F1'); put(a, 'A1', NAME, ARIAL(12, true), CTRC);
@@ -1541,64 +1541,95 @@ async function _buildOneSubSheets(wb, opts){
   }
 
   /* ---------- MES ---------- */
-  const m = wb.addWorksheet(mesName, { pageSetup:{ paperSize:9, orientation:'portrait', fitToPage:true, fitToWidth:1, fitToHeight:0 } });
-  widths(m, [12.14, 4.99, 12.41, 8.09, 2.56, 9.57, 2.56, 9.84, 2.43, 10.11, 3.10, 9.44, 13.08, 7.95]);
-  m.getRow(1).height = 15; m.getRow(2).height = 42; m.getRow(3).height = subLabel ? 20 : 21; m.getRow(4).height = 20.25;
-  m.mergeCells('A1:N2'); put(m, 'A1', NAME, ARIAL(16), CTR);
-  m.mergeCells('A3:N3'); if(subLabel) put(m, 'A3', subLabel, ARIAL(12, true), {horizontal:'center'});
-  m.mergeCells('A4:N4'); put(m, 'A4', 'MEASUREMENT', ARIAL(16, true), {horizontal:'center'});
+  const m = wb.addWorksheet(mesName, { pageSetup:{ paperSize:9, orientation:'portrait',
+      fitToPage:true, fitToWidth:1, fitToHeight:0,
+      horizontalCentered:true,
+      margins:{ left:0.748, right:0.551, top:0.512, bottom:0.512, header:0.512, footer:0 } } });
+  /* A=It.No  B=Description  C=No  D=No  E=L  F=B  G=H/D  H=Total  I=Unit  J=(spare)  K=(spare)  L=(spare)
+     Widths from reference: A 24.6pt B 142.2 C 22.2 D 22.2 E 33.6 F 24 G 45.6 H 41.4 I 45.6 J 52.2 K 34.8 L 40.8 */
+  widths(m, [4.56, 26.33, 4.11, 4.11, 6.22, 4.44, 8.44, 7.67, 8.44, 9.67, 6.44, 7.56]);
+  /* Row 1: Name of work */
+  m.getRow(1).height = 18; m.getRow(2).height = 36;
+  m.mergeCells('A1:B1'); put(m, 'A1', 'Name of work :-', ARIAL(12, true), LFT);
+  m.mergeCells('C1:L1'); /* empty — or project name at row 2 */
+  m.mergeCells('A2:L2'); put(m, 'A2', '        ' + NAME, ARIAL(12), {horizontal:'center', vertical:'middle', wrapText:true});
+  /* Row 3: MEASUREMENT */
+  m.getRow(3).height = 20;
+  m.mergeCells('A3:L3'); put(m, 'A3', 'MEASUREMENT', ARIAL(14, true), {horizontal:'center'});
+  /* Row 4: Sub estimate label (right-aligned) */
+  m.getRow(4).height = subLabel ? 18 : 12;
+  if(subLabel){
+    m.mergeCells('H4:L4'); put(m, 'H4', subLabel, ARIAL(11, true), {horizontal:'right'});
+  }
+  /* Row 5: Header row */
+  m.getRow(5).height = 30;
+  const MH = {font:ARIAL(11, true).font, alignment:{horizontal:'center', vertical:'middle', wrapText:true},
+              border:{top:BOX.border.top, bottom:BOX.border.bottom, left:BOX.border.left, right:BOX.border.right}};
+  [['A','It.\nNo'],['B','Description'],['C','No'],['D','No'],['E','L'],['F','B'],['G','H/D'],['H','Total'],['I','Unit']]
+    .forEach(([c,t]) => { const cl = m.getCell(c+'5'); cl.value = t; cl.font = MH.font; cl.alignment = MH.alignment; cl.border = MH.border; });
+  m.getRow(6).height = 6;  /* thin gap row */
 
   const mesSayCells = [];
-  const COLS = { nos:'D', len:'F', wid:'H', thk:'J', den:'L' };
-  const XCOL = { nos:'E', len:'G', wid:'I', thk:'K' };
-  const mesWide = 108.27;   // A:N total width units
-  let mr = 6;
+  /* New column mapping: C=Nos(1), D=Nos(2 — always 2nd nos col), E=L, F=B(wid), G=H/D(thk) */
+  const MCOLS = { nos:'C', len:'E', wid:'F', thk:'G' };
+  const mesWide = 97.0;   // A:L total width units
+  let mr = 7;
   p.lines.forEach(l => {
     const kind = unitKind(l.unit), fl = FIELDS[kind], mUnit = measuredUnit(kind), div = unitDivisor(l.unit);
-    put(m, 'A'+mr, 'Item No.', ARIAL(12, true), {horizontal:'center'});
-    put(m, 'B'+mr, l.itemNo,   ARIAL(12, true), {horizontal:'center'});
-    mr++;
-    m.mergeCells(`A${mr}:N${mr}`); put(m, 'A'+mr, l.desc, ARIAL(12), JUST);
-    fitRow(m, mr, l.desc, mesWide, 12, 18); mr++;
-    put(m, 'A'+mr, 'Chainage ', ARIAL(12, true), {horizontal:'center'});
-    fl.forEach(k => put(m, COLS[k] + mr, FLABEL[k], ARIAL(12, true), {horizontal:'center'}));
-    mr++;
-    m.mergeCells(`A${mr}:E${mr}`);
-    if(fl.includes('thk')) put(m, 'J'+mr, 'Avg.', ARIAL(12), {horizontal:'center'});
-    mr++;
+    /* Item heading row */
+    put(m, 'A'+mr, l.itemNo || '', ARIAL(11, true), {horizontal:'center', vertical:'top'});
+    m.mergeCells(`B${mr}:L${mr}`); put(m, 'B'+mr, l.desc, ARIAL(11), {horizontal:'left', vertical:'top', wrapText:true});
+    fitRow(m, mr, l.desc, mesWide - 5, 11, 18); mr++;
+    /* Sub-heading (building/section label from chainage of first row, if any) */
+    const firstCh = (l.rows[0] && l.rows[0].ch) ? l.rows[0].ch : '';
+    if(firstCh && l.rows.length > 1 && !n(firstCh)){
+      put(m, 'B'+mr, firstCh, ARIAL(11, true), {horizontal:'left'});
+      mr++;
+    }
+    /* Measurement rows */
     const qtyCells = [];
-    l.rows.forEach(row => {
-      m.mergeCells(`A${mr}:C${mr}`);
-      put(m, 'A'+mr, row.ch, ARIAL(12), CTRC);
-      fl.forEach((k, i) => {
-        put(m, COLS[k] + mr, n(row[k]), ARIAL(12), CTRC);
-        if(i < fl.length - 1) put(m, XCOL[k] + mr, 'x', ARIAL(12), CTRC);
-      });
-      /* Qty = Nos x Length x Width x Thick … (formula) */
-      const prod = fl.map(k => COLS[k] + mr).join('*');
-      qtyCells.push('M' + mr);
-      put(m, 'M'+mr, { formula:`ROUND(${prod},2)`, result:r2(rowQty(row, kind)) }, ARIAL(12), CTRC, null, '0.00');
-      put(m, 'N'+mr, mUnit, ARIAL(12), CTRC);
-      fitRow(m, mr, row.ch || '', 29.5, 12, 18); mr++;   // fit chainage text, min 18pt
+    l.rows.forEach((row, ri) => {
+      /* skip the first row if it was used as sub-heading above */
+      if(ri === 0 && firstCh && l.rows.length > 1 && !n(firstCh)) return;
+      put(m, 'B'+mr, row.ch || '', ARIAL(11), {horizontal:'left', vertical:'top', wrapText:true});
+      /* Nos col C — some items have two "No" columns (Nos x Nos) but we use C=first, D=second */
+      if(n(row.nos)){ put(m, 'C'+mr, n(row.nos), ARIAL(11), CTRC); }
+      /* If there's a den (density/2nd nos), put in D */
+      if(n(row.den)){ put(m, 'D'+mr, n(row.den), ARIAL(11), CTRC); }
+      if(n(row.len)){ put(m, 'E'+mr, n(row.len), ARIAL(11), CTRC); }
+      if(n(row.wid)){ put(m, 'F'+mr, n(row.wid), ARIAL(11), CTRC); }
+      if(n(row.thk)){ put(m, 'G'+mr, n(row.thk), ARIAL(11), CTRC); }
+      /* Total = product of filled measurement fields */
+      const parts = [];
+      if(n(row.nos)) parts.push('C'+mr);
+      if(n(row.den)) parts.push('D'+mr);
+      if(n(row.len)) parts.push('E'+mr);
+      if(n(row.wid)) parts.push('F'+mr);
+      if(n(row.thk)) parts.push('G'+mr);
+      const prod = parts.length ? parts.join('*') : '0';
+      qtyCells.push('H' + mr);
+      put(m, 'H'+mr, { formula:`ROUND(${prod},2)`, result:r2(rowQty(row, kind)) }, ARIAL(11), CTRC, null, '0.00');
+      put(m, 'I'+mr, mUnit, ARIAL(11), CTRC);
+      fitRow(m, mr, row.ch || '', 26, 11, 16); mr++;
     });
+    /* Total row */
     const sumQ = qtyCells.length ? `ROUND(SUM(${qtyCells[0]}:${qtyCells[qtyCells.length-1]}),2)` : '0';
-    put(m, 'L'+mr, div !== 1 ? 'Total ('+mUnit+')' : 'Total', ARIAL(12, true), CTRC);
-    put(m, 'M'+mr, { formula:sumQ, result:l.measured }, ARIAL(12, true), CTRC, null, '0.00');
-    put(m, 'N'+mr, mUnit, ARIAL(12, true), CTRC);
+    put(m, 'G'+mr, 'Total', ARIAL(11, true), {horizontal:'right'});
+    put(m, 'H'+mr, { formula:sumQ, result:l.measured }, ARIAL(11, true), CTRC, null, '0.00');
+    put(m, 'I'+mr, mUnit, ARIAL(11, true), CTRC);
     const measRow = mr; mr++;
     let qtyRow = measRow;
     if(div !== 1){
-      put(m, 'L'+mr, '÷ '+fmt0(div), ARIAL(12, true), CTRC);
-      put(m, 'M'+mr, { formula:`ROUND(M${measRow}/${div},4)`, result:l.qty }, ARIAL(12, true), CTRC, null, '0.0000');
-      put(m, 'N'+mr, l.unit, ARIAL(12, true), CTRC); qtyRow = mr; mr++;
+      put(m, 'G'+mr, '÷ '+fmt0(div), ARIAL(11, true), {horizontal:'right'});
+      put(m, 'H'+mr, { formula:`ROUND(H${measRow}/${div},4)`, result:l.qty }, ARIAL(11, true), CTRC, null, '0.0000');
+      put(m, 'I'+mr, l.unit, ARIAL(11, true), CTRC); qtyRow = mr; mr++;
     }
-    put(m, 'L'+mr, 'Say', ARIAL(12, true), CTRC);
-    put(m, 'M'+mr, (l.sayOverride == null || l.sayOverride === '')
-        ? { formula:`CEILING(M${qtyRow},0.1)`, result:l.say } : l.say,
-        ARIAL(12, true), CTRC, null, '0.00');
-    put(m, 'N'+mr, l.unit, ARIAL(12, true), CTRC);
-    mesSayCells.push('M' + mr);
-    if(p.lines.length === 1) put(m, 'P'+mr, p.t.say, ARIAL(12, true), CTRC, null, '0.00');
+    put(m, 'G'+mr, 'Say', ARIAL(11, true), {horizontal:'right'});
+    put(m, 'H'+mr, (l.sayOverride == null || l.sayOverride === '')
+        ? { formula:`CEILING(H${qtyRow},0.1)`, result:l.say } : l.say,
+        ARIAL(11, true), CTRC, null, '0.00');
+    put(m, 'I'+mr, l.unit, ARIAL(11, true), CTRC);
+    mesSayCells.push('H' + mr);
     mr += 2;
   });
   /* abstract ki Qty = MES ka Say (formula) */
@@ -1609,16 +1640,16 @@ async function _buildOneSubSheets(wb, opts){
   });
 
   if(p.lines.length > 1){
-    put(m, 'L'+mr, 'Estimate Say', ARIAL(12, true), CTRC);
-    put(m, 'M'+mr, p.t.say, ARIAL(12, true), CTRC, null, '0.00');
+    put(m, 'G'+mr, 'Estimate Say', ARIAL(11, true), {horizontal:'right'});
+    put(m, 'H'+mr, p.t.say, ARIAL(11, true), CTRC, null, '0.00');
   }
   /* AE signature block on Measurement Sheet */
   const meSg = mr + 4;
   const aeSeal = (typeof window.signAE === 'function') ? window.signAE()
                : ['Assistant Engineer,', 'R & B Sub Division,', office.sub || 'Dahod.'];
   aeSeal.forEach((t, i) => {
-    m.mergeCells(`L${meSg+i}:N${meSg+i}`);
-    put(m, 'L'+(meSg+i), t, ARIAL(12), {horizontal:'center', vertical:'middle'});
+    m.mergeCells(`J${meSg+i}:L${meSg+i}`);
+    put(m, 'J'+(meSg+i), t, ARIAL(12), {horizontal:'center', vertical:'middle'});
   });
 }
 
