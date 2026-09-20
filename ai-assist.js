@@ -609,9 +609,21 @@ function setNested(obj, path, value){
 }
 
 /* ──────────────────────── init ──────────────────────── */
-document.addEventListener('DOMContentLoaded', () => {
-  injectCSS();
-  injectHTML();
-});
+function boot(){
+  try{
+    injectCSS();
+    injectHTML();
+    console.log('[ai-assist] AI Drawing Assistant ready 🤖');
+  }catch(e){
+    console.error('[ai-assist] init failed:', e);
+  }
+}
+/* DOM already ready ho to turant chalao, warna DOMContentLoaded ka wait karo.
+   (Regular script body ke end me ho to bhi ye dono case cover karta hai.) */
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', boot);
+} else {
+  boot();
+}
 
 })();
