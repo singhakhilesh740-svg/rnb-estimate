@@ -1300,7 +1300,7 @@ async function _buildOneSubSheets(wb, opts){
   a.abstSayCell = 'F' + rSay;
   for(let i = rTot; i <= rSay; i++) a.getRow(i).height = 14.25;
   const sg = rSay + 8;
-  (typeof signBlock === 'function' ? signBlock() : ['Deputy Executive Engineer','R&B Sub Division','Dahod'])
+  (typeof abstSignBlock === 'function' ? abstSignBlock() : ['Deputy Executive Engineer','R&B Sub Division','Dahod'])
     .forEach((t,i) => { a.mergeCells(`D${sg+i}:F${sg+i}`); put(a, 'D'+(sg+i), t, ARIAL(12), CTRC); });
 
   /* FACE ka amount abstract ke Say se juda rahe */
@@ -1403,7 +1403,10 @@ async function buildWorkbook(){
     if(typeof projPerformaSheet === 'function') projPerformaSheet(wb);
     if(typeof projRCCSheet      === 'function') projRCCSheet(wb);
 
-    /* per-sub abst + MES */
+    /* Recap sits right after RCC calc — before the first sub-estimate */
+    if(typeof projRecapSheet === 'function') projRecapSheet(wb);
+
+    /* per-sub abst + MES + RA (RA immediately after that sub's MES) */
     for(let i = 0; i < window.project.subs.length; i++){
       const sub = window.project.subs[i];
       est = JSON.parse(JSON.stringify(sub.est));
@@ -1415,12 +1418,18 @@ async function buildWorkbook(){
         mesName:     ('MES ' + (i+1) + ' ' + cleanN).slice(0, 30).trim(),
         titleSuffix: sub.name || ('Sub ' + (i+1))
       });
+      /* RA used in this sub — placed directly after its measurement sheet */
+      if(window.RA && typeof window.RA.addUsedRASheet === 'function'){
+        const nm = (typeof projName === 'function' ? projName() : '');
+        window.RA.addUsedRASheet(
+          wb,
+          ('RA ' + (i+1) + ' ' + cleanN).slice(0, 30).trim(),
+          (nm ? 'Name of Work : - ' + nm : '') + '   [' + (sub.name || ('Sub ' + (i+1))) + ']'
+        );
+      }
     }
     /* restore */
     est = savedEst;
-
-    /* recap at the end */
-    if(typeof projRecapSheet === 'function') projRecapSheet(wb);
   } else {
     await _buildOneSubSheets(wb, { includeFace: true });
   }
@@ -1428,6 +1437,16 @@ async function buildWorkbook(){
   return wb;
 }
 
+/* Abstract sheet ka signature hamesha Deputy Executive Engineer ka —
+   chahe logged-in profile ka post kuch bhi ho (AE, DEE, etc). Sub-division
+   aur place profile se aate hain. */
+function abstSignBlock(){
+  let b = (typeof signBlock === 'function')
+        ? signBlock().slice()
+        : ['Deputy Executive Engineer', 'R & B Sub Division,', 'Dahod.'];
+  b[0] = 'Deputy Executive Engineer';
+  return b;
+}
 function safeName(){
   if(window.project && Array.isArray(window.project.subs) && window.project.subs.length >= 1 && typeof projName === 'function'){
     const pn = String(projName() || 'Project').replace(/[^\w\- ]+/g,'').replace(/\s+/g,'_').slice(0,60);
@@ -1476,9 +1495,9 @@ function _drawAbstAndMesPDF(doc, subLabel){
     doc.setFontSize(14); doc.text(title, W/2, y1, {align:'center'});
     return y1 + 14;
   }
-  function signature(y, xCenter){
+  function signature(y, xCenter, forceBlock){
     doc.setFont('helvetica','normal'); doc.setFontSize(9);
-    const sb = (typeof signBlock === 'function' ? signBlock()
+    const sb = forceBlock || (typeof signBlock === 'function' ? signBlock()
                 : ['Deputy Executive Engineer','R & B Sub Division,','Dahod.']);
     sb.forEach((t,i) => { if(t) doc.text(String(t), xCenter, y + i*12, {align:'center'}); });
   }
@@ -1537,7 +1556,7 @@ function _drawAbstAndMesPDF(doc, subLabel){
     doc.addPage('a4','portrait'); y = sheetTitle('ABSTRACT', W, M); needHead = true;
   }
   drawRows(totRows, needHead);
-  signature(doc.lastAutoTable.finalY + 44, M + 390);
+  signature(doc.lastAutoTable.finalY + 44, M + 390, (typeof abstSignBlock === 'function' ? abstSignBlock() : null));
 
   /* ------- MES ------- */
   doc.addPage('a4','portrait');
@@ -1603,6 +1622,12 @@ $('#btnPdf').onclick = () => {
       if(!est.lines || !est.lines.length) return;
       doc.addPage('a4','portrait');
       _drawAbstAndMesPDF(doc, sub.name || ('Sub ' + (idx+1)));
+      /* RA used in this sub — right after its measurement sheet */
+      if(window.RA && typeof window.RA.appendEstimateRA === 'function'){
+        const nm = (typeof projName === 'function' ? projName() : '');
+        window.RA.appendEstimateRA(doc,
+          (nm ? 'Name of Work : - ' + nm : 'Rate Analysis') + '   [' + (sub.name || ('Sub ' + (idx+1))) + ']');
+      }
     });
     est = savedEst;
     doc.save(safeName() + '.pdf');
@@ -1626,9 +1651,9 @@ $('#btnPdf').onclick = () => {
     doc.setFontSize(14); doc.text(title, W/2, y1, {align:'center'});
     return y1 + 14;
   }
-  function signature(y, xCenter){
+  function signature(y, xCenter, forceBlock){
     doc.setFont('helvetica','normal'); doc.setFontSize(9);
-    const sb = (typeof signBlock === 'function' ? signBlock()
+    const sb = forceBlock || (typeof signBlock === 'function' ? signBlock()
                 : ['Deputy Executive Engineer','R & B Sub Division,','Dahod.']);
     sb.forEach((t,i) => { if(t) doc.text(String(t), xCenter, y + i*12, {align:'center'}); });
   }
@@ -1729,7 +1754,7 @@ $('#btnPdf').onclick = () => {
   }
   drawRows(totRows, needHead);
 
-  signature(doc.lastAutoTable.finalY + 44, M + 390);   // right side (under Rate/Per/Amount block)
+  signature(doc.lastAutoTable.finalY + 44, M + 390, (typeof abstSignBlock === 'function' ? abstSignBlock() : null));   // right side (under Rate/Per/Amount block)
 
   /* ================= MES (portrait, gridded) ================= */
   doc.addPage('a4','portrait');

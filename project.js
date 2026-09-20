@@ -254,8 +254,8 @@
   function buildRecapRows(){
     const m = window.project.meta.recap;
     const civil = [];
-    (window.project.subs || []).forEach(s => {
-      civil.push({ name: (s.name || 'Sub'), amount: subTotal(s), sub: true });
+    (window.project.subs || []).forEach((s, i) => {
+      civil.push({ name: (s.name || 'Sub'), amount: subTotal(s), sub: true, subIdx: i });
     });
     (m.extras || []).forEach(x => {
       civil.push({ name: x.name || '', amount: n(x.amount) * (x.sign === -1 ? -1 : 1) });
@@ -723,28 +723,40 @@
     if(!box) return;
     const r = buildRecapRows();
     box.innerHTML =
-      '<div class="scroll"><table class="tbl" style="min-width:620px">' +
-      '<tr><th style="width:6%">S No.</th><th style="width:72%">Description</th><th class="num" style="width:22%">Amount in Rs.</th></tr>' +
-      '<tr><td colspan="3" style="background:#eef2f7"><b>(A) Civil Works;</b></td></tr>' +
+      '<div class="scroll"><table class="tbl" style="min-width:660px">' +
+      '<tr><th style="width:6%">S No.</th><th style="width:56%">Description</th><th class="num" style="width:20%">Amount in Rs.</th><th style="width:18%">Estimate</th></tr>' +
+      '<tr><td colspan="4" style="background:#eef2f7"><b>(A) Civil Works;</b></td></tr>' +
       r.civil.map((c,i) => `<tr>
         <td class="mono">${i+1}</td>
         <td>${esc(c.name)}${c.sub?' <span class="pill" style="padding:1px 6px">sub</span>':''}</td>
         <td class="num mono">${fmt(c.amount)}</td>
+        <td>${c.sub ? `<button class="btn ghost" style="padding:3px 8px" data-rcprep="${c.subIdx}">Prepare ✎</button>` : ''}</td>
       </tr>`).join('') +
-      `<tr><td></td><td class="num"><b>Total A</b></td><td class="num mono"><b>${fmt(r.totalA)}</b></td></tr>` +
-      `<tr><td></td><td class="num">Quality control Charge ${fmt(window.project.meta.recap.qcPct)}%</td><td class="num mono">${fmt(r.qc)}</td></tr>` +
-      `<tr><td></td><td class="num">Work charge &amp; Contingency Charge ${fmt(window.project.meta.recap.wcPct)}%</td><td class="num mono">${fmt(r.wc)}</td></tr>` +
-      `<tr><td></td><td class="num">GST ${fmt(window.project.meta.recap.gstPct)}% on A</td><td class="num mono">${fmt(r.gst)}</td></tr>` +
-      `<tr><td></td><td class="num"><b>Sub Total</b></td><td class="num mono"><b>${fmt(r.subTot)}</b></td></tr>` +
-      '<tr><td colspan="3" style="background:#eef2f7"><b>(B) Lump Sum Provision Including GST;</b></td></tr>' +
+      `<tr><td></td><td class="num"><b>Total A</b></td><td class="num mono"><b>${fmt(r.totalA)}</b></td><td></td></tr>` +
+      `<tr><td></td><td class="num">Quality control Charge ${fmt(window.project.meta.recap.qcPct)}%</td><td class="num mono">${fmt(r.qc)}</td><td></td></tr>` +
+      `<tr><td></td><td class="num">Work charge &amp; Contingency Charge ${fmt(window.project.meta.recap.wcPct)}%</td><td class="num mono">${fmt(r.wc)}</td><td></td></tr>` +
+      `<tr><td></td><td class="num">GST ${fmt(window.project.meta.recap.gstPct)}% on A</td><td class="num mono">${fmt(r.gst)}</td><td></td></tr>` +
+      `<tr><td></td><td class="num"><b>Sub Total</b></td><td class="num mono"><b>${fmt(r.subTot)}</b></td><td></td></tr>` +
+      '<tr><td colspan="4" style="background:#eef2f7"><b>(B) Lump Sum Provision Including GST;</b></td></tr>' +
       r.lumpSum.map((l,i) => `<tr>
         <td class="mono">${r.civil.length + 1 + i}</td>
         <td>${esc(l.name)}</td>
         <td class="num mono">${fmt(n(l.amount))}</td>
+        <td></td>
       </tr>`).join('') +
-      `<tr><td></td><td class="num"><b>Total</b></td><td class="num mono"><b>${fmt(r.total)}</b></td></tr>` +
-      `<tr><td></td><td class="num"><b>Say</b></td><td class="num mono"><b>${fmt(r.say)}</b></td></tr>` +
-      '</table></div>';
+      `<tr><td></td><td class="num"><b>Total</b></td><td class="num mono"><b>${fmt(r.total)}</b></td><td></td></tr>` +
+      `<tr><td></td><td class="num"><b>Say</b></td><td class="num mono"><b>${fmt(r.say)}</b></td><td></td></tr>` +
+      '</table></div>' +
+      '<p class="hint">Har sub-estimate ke saamne <b>Prepare ✎</b> dabao — us sub ka Abstract + Measurement Sheet Estimate tab me khul jayega.</p>';
+
+    /* Prepare button → activate that sub and jump to the Estimate tab */
+    box.querySelectorAll('[data-rcprep]').forEach(b => b.onclick = () => {
+      const idx = +b.dataset.rcprep;
+      if(typeof activateSub === 'function') activateSub(idx);
+      const estBtn = document.querySelector('nav.tabs button[data-tab="est"]');
+      if(estBtn) estBtn.click();
+      window.scrollTo(0, 0);
+    });
   }
 
   function renderRecapExtras(){
@@ -1539,10 +1551,16 @@
   document.addEventListener('DOMContentLoaded', () => {
     /* create the tab immediately so users can find it */
     ensureTab();
-    /* if the app's tab-switch controller uses aria-selected, hook in */
+    /* keep tab-proj in sync: any nav click that isn't the Project tab
+       hides the Project section (mirrors how letter.js manages tab-ltr).
+       Delegated on document so it also catches the dynamically-added
+       Project button and the tab buttons bound before it existed. */
     document.addEventListener('click', e => {
-      const b = e.target.closest && e.target.closest('nav.tabs [data-tab="proj"]');
-      if(b) setTimeout(renderProject, 0);
+      const b = e.target.closest && e.target.closest('nav.tabs button');
+      if(!b) return;
+      const sec = document.getElementById('tab-proj');
+      if(sec) sec.hidden = (b.dataset.tab !== 'proj');
+      if(b.dataset.tab === 'proj') setTimeout(renderProject, 0);
     });
   });
 

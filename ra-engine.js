@@ -770,8 +770,8 @@
   }
 
   /* ======================================================== EXPORT: EXCEL */
-  function raSheet(wb, entries, titleNote) {
-    const ws = wb.addWorksheet('RA', {
+  function raSheet(wb, entries, titleNote, sheetName) {
+    const ws = wb.addWorksheet(sheetName || 'RA', {
       pageSetup: { paperSize: 9, orientation: 'portrait', fitToPage: true, fitToWidth: 1, fitToHeight: 0,
                    margins: { left: 0.5, right: 0.4, top: 0.5, bottom: 0.5, header: 0.2, footer: 0.2 } }
     });
@@ -906,15 +906,13 @@
   }
 
   /* ========================================================== EXPORT: PDF */
-  function exportPdf(ras, title) {
-    if (!window.jspdf) { toastMsg('jsPDF load nahi hua.'); return; }
-    const entries = ras.map((ra, i) => ({ serial: i + 1, ra }));
-    if (!entries.length) { toastMsg('Koi RA nahi hai.'); return; }
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ unit: 'pt', format: 'a4', orientation: 'portrait' });
+  /* Core painter — draws the given RA entries into `doc`.
+     appendMode=false → first entry starts on the current (fresh) page.
+     appendMode=true  → first entry starts on a NEW page (for appending
+                        after an estimate's abstract+MES).                */
+  function paintRA(doc, entries, title, appendMode) {
     const W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight(), M = 42;
     const TW = W - 2 * M;
-    /* column x positions: tag | label | nos | L | B | H | qty | amount */
     const X = { tag: M, lab: M + 14, nos: M + 214, l: M + 262, b: M + 310, d: M + 358, qty: M + 420, amt: W - M };
     let y = 0;
 
@@ -931,7 +929,7 @@
     function need(h) { if (y + h > H - 120) { newPage(false); } }
 
     entries.forEach(({ serial, ra }, idx) => {
-      newPage(idx === 0);
+      newPage(idx === 0 && !appendMode);
       const d = raDoc(ra, serial);
 
       d.lines.forEach(ln => {
@@ -1017,9 +1015,35 @@
         if (pR[k]) doc.text(String(pR[k]), xR, y + k * 13, { align: 'center' });
       }
     });
+  }
 
+  function exportPdf(ras, title) {
+    if (!window.jspdf) { toastMsg('jsPDF load nahi hua.'); return; }
+    const entries = ras.map((ra, i) => ({ serial: i + 1, ra }));
+    if (!entries.length) { toastMsg('Koi RA nahi hai.'); return; }
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'pt', format: 'a4', orientation: 'portrait' });
+    paintRA(doc, entries, title, false);
     doc.save((title || 'Rate_Analysis').replace(/[^\w\- ]+/g, '').replace(/\s+/g, '_').slice(0, 60) + '.pdf');
     toastMsg('PDF ban gaya.');
+  }
+
+  /* Append the CURRENT est's used-RA pages into an existing jsPDF doc
+     (each on a fresh page). Returns true if anything was drawn.        */
+  function appendEstimateRA(doc, title) {
+    const used = usedInEstimate();
+    if (!used.length) return false;
+    paintRA(doc, used, title || 'Rate Analysis', true);
+    return true;
+  }
+
+  /* Add the CURRENT est's used-RA as a worksheet into an existing wb,
+     with a caller-supplied (unique) sheet name. Returns true if added. */
+  function addUsedRASheet(wb, sheetName, titleNote) {
+    const used = usedInEstimate();
+    if (!used.length) return false;
+    raSheet(wb, used, titleNote || '', sheetName || 'RA');
+    return true;
   }
 
   function dl(blob, name) {
@@ -1093,6 +1117,7 @@
   window.RA = {
     all: raAll, byId: raById, calc, pickerEntries, usedInEstimate,
     exportExcel, exportPdf, exportEstimateRAExcel, exportEstimateRAPdf,
+    appendEstimateRA, addUsedRASheet,
     render, district
   };
 
