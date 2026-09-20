@@ -293,7 +293,7 @@ function showWelcome(){
 <b>Kaise use karo:</b>
 1️⃣ 📎 se drawing ya AA letter upload karo
 2️⃣ Sawal puchho — "kitne columns?", "AA amount kitna hai?", "heads kya hain?"
-3️⃣ Jab bharna ho: <b>"fill karo"</b> bolo → checkboxes se choose → Auto-Fill
+3️⃣ Jab bharna ho: <b>"fill karo"</b> bolo → <b>seedha form me bhar deta hoon</b>
 
 📌 <b>Sab memory me rehta hai</b> — drawing + AA letter dono ek saath rakh sakte ho.
 ⚠️ Pehli baar — 🔑 se Anthropic API key daalo.`);
@@ -312,7 +312,7 @@ function showQuickButtons(){
     ['Beam sizes batao', 'Drawing me saare beam sizes list karo — label + dimensions.'],
     ['AA letter padho', 'AA/sanction letter se work name, saare budget heads (fund/major/minor/department), AA sanctioned amount aur budget provision batao.'],
     ['Room details', 'Har floor pe kaun kaun se rooms hain? Size ke saath batao.'],
-    ['Fill karo ✅', 'Jo bhi drawing aur AA letter upload kiye hain, un sab se saara data extract karke auto-fill ke liye JSON me do.'],
+    ['Fill karo ✅', 'Jo bhi drawing aur AA letter upload kiye hain, un sab se saara data extract karo aur seedha form me fill kar do.'],
   ];
   btns.forEach(([label, txt]) => {
     const b = document.createElement('button');
@@ -529,7 +529,7 @@ async function sendMessage(){
     } catch(e){ /* not JSON — fine */ }
 
     if(extracted && extracted.summary){
-      showExtracted(extracted);
+      autoFillDirectly(extracted);
     } else {
       /* regular conversation — render as HTML */
       const html = reply
@@ -553,7 +553,63 @@ async function sendMessage(){
   }
 }
 
-/* ──────────────────────── show extracted data ──────────────────────── */
+/* ──────────────────────── direct auto-fill (no checkbox step) ──────────────────────── */
+function autoFillDirectly(data){
+  const summary = data.summary || '';
+  const dataCopy = Object.assign({}, data);
+  delete dataCopy.summary;
+  delete dataCopy['// AA / SANCTION LETTER FIELDS —'];
+
+  /* fill everything immediately */
+  let filled = 0;
+  const filledList = [];
+  for(const [key, val] of Object.entries(dataCopy)){
+    if(val === null || val === undefined || val === '') continue;
+    const fm = FIELD_MAP[key];
+    if(!fm) continue;
+    if(applyField(key, val)){
+      filled++;
+      const display = typeof val === 'object' ? JSON.stringify(val) : String(val);
+      filledList.push({ label: fm.label, val: display.length > 60 ? display.slice(0,57)+'…' : display });
+    }
+  }
+
+  if(typeof window.renderProject === 'function') window.renderProject();
+  if(typeof window.projSave === 'function') window.projSave();
+
+  /* compact summary message */
+  let html = `<span class="tag">✅ Filled</span> <b>${filled} fields</b> seedha bhar diye.<br>`;
+  if(summary) html += `<small style="color:#456">${esc(summary)}</small><br>`;
+  if(filledList.length){
+    html += '<ul class="ai-fill-list" style="margin-top:6px">';
+    filledList.forEach(f => {
+      html += `<li><span class="k">${esc(f.label)}</span><span class="v">${esc(f.val)}</span></li>`;
+    });
+    html += '</ul>';
+  }
+
+  /* undo / review option */
+  const uid = 'undo_' + Date.now();
+  html += `<div style="margin-top:6px;display:flex;gap:6px">
+    <button class="ai-btn sec" id="${uid}_rev">🔍 Review / Undo</button>
+  </div>`;
+
+  const msg = addMsg('bot', html);
+
+  /* GR auto-calc offer if drawing data present */
+  offerGRCalc(dataCopy);
+
+  /* wire review button — shows checkbox UI */
+  setTimeout(() => {
+    const rv = document.getElementById(uid + '_rev');
+    if(rv) rv.onclick = () => {
+      rv.style.display = 'none';
+      showExtracted(data);
+    };
+  }, 50);
+}
+
+/* ──────────────────────── show extracted data (review / undo mode) ──────────────────────── */
 function showExtracted(data){
   const summary = data.summary || 'Data extract ho gaya.';
   const dataCopy = Object.assign({}, data);
