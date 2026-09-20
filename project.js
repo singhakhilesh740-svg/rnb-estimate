@@ -148,12 +148,14 @@
     }
     window.project.active = idx;
     est = JSON.parse(JSON.stringify(window.project.subs[idx].est));
-    /* sub-estimate: no QC/GST — only LC. Charges roll up in Recap. */
-    est.qc = 0; est.gst = 0;
+    /* sub-estimate: no QC/GST — only LC. Charges roll up in Recap.
+       Rate source hamesha SOR + RA (chapter-wise). */
+    est.qc = 0; est.gst = 0; est.rateSource = 'sor';
     /* app.js state resets after swap */
     save();
     projSave();
     if(typeof applyModeUI    === 'function') applyModeUI();
+    if(typeof applyRateSourceUI === 'function') applyRateSourceUI();
     if(typeof renderItemBlocks === 'function') renderItemBlocks();
     if(typeof refreshWorkName  === 'function') refreshWorkName();
     if(typeof renderPreview    === 'function') renderPreview();
@@ -161,6 +163,7 @@
     const pEl = document.getElementById('prepBy');    if(pEl) pEl.value = est.prepBy || '';
     const cEl = document.getElementById('chkBy');     if(cEl) cEl.value = est.chkBy || '';
     const lEl = document.getElementById('lcRate');    if(lEl) lEl.value = est.lc || 0;
+    if(typeof applySubModeUI === 'function') applySubModeUI();
     if(typeof refreshTotals === 'function') refreshTotals();
     renderProject();
     toast('Switched to sub-estimate: ' + (window.project.subs[idx].name || ('Sub ' + (idx+1))));
@@ -170,7 +173,7 @@
   function ensureFirstSub(){
     if(window.project.subs.length) return;
     const seed = JSON.parse(JSON.stringify(est));
-    seed.qc = 0; seed.gst = 0;              /* sub-estimate: no QC/GST — only LC */
+    seed.qc = 0; seed.gst = 0; seed.rateSource = 'sor';  /* sub: no QC/GST, SOR+RA */
     window.project.subs.push({ name: 'Main Building', est: seed });
     window.project.active = 0;
     projSave();
@@ -184,7 +187,7 @@
     }
     const blank = {
       mode: est.mode || 'building',
-      rateSource: est.rateSource || 'sor',
+      rateSource: 'sor',                     /* sub-estimate: SOR + RA (chapter-wise) */
       road: '', roadList: [], workDescList: [],
       prepBy: est.prepBy || '', chkBy: est.chkBy || '',
       qc: 0, lc: n(est.lc) || 0, gst: 0,     /* sub-estimate: no QC/GST — only LC. Charges roll up in Recap. */
@@ -304,16 +307,8 @@
             <div><label for="prjDeptHead">Department Head</label> <input id="prjDeptHead"></div>
           </div>
           <p class="hint">Parent-level fields Face Sheet, G.D., Performa – C, RCC calc aur Recap — sab me use hote hain.
-            Sub-estimates individual abstract + MES rakhte hain. Recap unhe apne aap roll-up karta hai.</p>
-        </div>
-
-        <div class="card">
-          <h2>Sub-Estimates</h2>
-          <div id="prjSubs"></div>
-          <div class="row-actions" style="margin-top:8px">
-            <button class="btn accent" id="prjAddSub">+ Add sub-estimate</button>
-          </div>
-          <p class="hint">Har sub-estimate ka apna abstract + MES rehta hai. Currently active sub-estimate hi Estimate tab me edit hota hai — <b>Switch</b> se change karo.</p>
+            Sub-estimates individual abstract + MES rakhte hain. Recap unhe apne aap roll-up karta hai —
+            neeche <b>Recapitulation</b> me hi sub-estimate add/edit/open karo.</p>
         </div>
 
         <div class="card">
@@ -455,6 +450,10 @@
 
         <div class="card">
           <h2>Recapitulation</h2>
+          <p class="hint" style="margin:0 0 8px">Yahin se sub-estimate add karo, naam badlo, order change karo ya <b>Prepare ✎</b> se uska Abstract + Measurement kholo. QC/WC/GST + Lump Sum yahi ek baar lagte hain.</p>
+          <div class="row-actions" style="margin:0 0 10px">
+            <button class="btn accent" id="rcpAddSub">+ Add sub-estimate</button>
+          </div>
           <div id="recapPreview"></div>
 
           <h3 style="margin-top:12px">Additional Civil Rows (deducts, credits, extras)</h3>
@@ -727,15 +726,22 @@
     const box = document.getElementById('recapPreview');
     if(!box) return;
     const r = buildRecapRows();
+    const nSub = (window.project.subs || []).length;
     box.innerHTML =
-      '<div class="scroll"><table class="tbl" style="min-width:660px">' +
-      '<tr><th style="width:6%">S No.</th><th style="width:56%">Description</th><th class="num" style="width:20%">Amount in Rs.</th><th style="width:18%">Estimate</th></tr>' +
+      '<div class="scroll"><table class="tbl" style="min-width:720px">' +
+      '<tr><th style="width:6%">S No.</th><th style="width:40%">Description</th><th class="num" style="width:18%">Amount in Rs.</th><th style="width:36%">Actions</th></tr>' +
       '<tr><td colspan="4" style="background:#eef2f7"><b>(A) Civil Works;</b></td></tr>' +
-      r.civil.map((c,i) => `<tr>
+      (nSub ? '' : '<tr><td></td><td colspan="3" class="empty" style="padding:8px">Abhi tak koi sub-estimate nahi — upar <b>+ Add sub-estimate</b> dabao.</td></tr>') +
+      r.civil.map((c,i) => `<tr${(c.sub && window.project.active === c.subIdx) ? ' style="background:#fff3e0"' : ''}>
         <td class="mono">${i+1}</td>
-        <td>${esc(c.name)}${c.sub?' <span class="pill" style="padding:1px 6px">sub</span>':''}</td>
+        <td>${esc(c.name)}${c.sub?` <span class="pill" style="padding:1px 6px">sub</span>${window.project.active === c.subIdx ? ' <span class="pill" style="padding:1px 6px">active</span>' : ''}`:''}</td>
         <td class="num mono">${fmt(c.amount)}</td>
-        <td>${c.sub ? `<button class="btn ghost" style="padding:3px 8px" data-rcprep="${c.subIdx}">Prepare ✎</button>` : ''}</td>
+        <td>${c.sub ? `
+          <button class="btn accent" style="padding:3px 8px" data-rcprep="${c.subIdx}">Prepare ✎</button>
+          <button class="btn ghost" style="padding:3px 8px" data-rcren="${c.subIdx}">Rename</button>
+          <button class="btn ghost" style="padding:3px 8px" data-rcup="${c.subIdx}">↑</button>
+          <button class="btn ghost" style="padding:3px 8px" data-rcdn="${c.subIdx}">↓</button>
+          <button class="btn danger" style="padding:3px 8px" data-rcdel="${c.subIdx}">×</button>` : ''}</td>
       </tr>`).join('') +
       `<tr><td></td><td class="num"><b>Total A</b></td><td class="num mono"><b>${fmt(r.totalA)}</b></td><td></td></tr>` +
       `<tr><td></td><td class="num">Quality control Charge ${fmt(window.project.meta.recap.qcPct)}%</td><td class="num mono">${fmt(r.qc)}</td><td></td></tr>` +
@@ -752,9 +758,9 @@
       `<tr><td></td><td class="num"><b>Total</b></td><td class="num mono"><b>${fmt(r.total)}</b></td><td></td></tr>` +
       `<tr><td></td><td class="num"><b>Say</b></td><td class="num mono"><b>${fmt(r.say)}</b></td><td></td></tr>` +
       '</table></div>' +
-      '<p class="hint">Har sub-estimate ke saamne <b>Prepare ✎</b> dabao — us sub ka Abstract + Measurement Sheet Estimate tab me khul jayega.</p>';
+      '<p class="hint"><b>Prepare ✎</b> = us sub ka Abstract + Measurement (SOR + RA, chapter-wise) Estimate tab me khulta hai. Sub me sirf L.C. lagti hai; QC/WC/GST yahan Recap me.</p>';
 
-    /* Prepare button → activate that sub and jump to the Estimate tab */
+    /* Prepare → activate that sub and jump to the Estimate tab */
     box.querySelectorAll('[data-rcprep]').forEach(b => b.onclick = () => {
       const idx = +b.dataset.rcprep;
       if(typeof activateSub === 'function') activateSub(idx);
@@ -762,6 +768,28 @@
       if(estBtn) estBtn.click();
       window.scrollTo(0, 0);
     });
+    box.querySelectorAll('[data-rcren]').forEach(b => b.onclick = () => renameSub(+b.dataset.rcren));
+    box.querySelectorAll('[data-rcup]').forEach(b => b.onclick = () => moveSub(+b.dataset.rcup, -1));
+    box.querySelectorAll('[data-rcdn]').forEach(b => b.onclick = () => moveSub(+b.dataset.rcdn,  1));
+    box.querySelectorAll('[data-rcdel]').forEach(b => b.onclick = () => deleteSub(+b.dataset.rcdel));
+  }
+
+  /* + Add sub-estimate (from Recap) */
+  function wireRecapAddSub(){
+    const btn = document.getElementById('rcpAddSub');
+    if(!btn) return;
+    btn.onclick = () => {
+      if(!window.project.subs.length){
+        ensureFirstSub();
+        renderProject();
+        toast('Current estimate ko pehla sub-estimate bana diya. Ab + Add se aur add karo.');
+        return;
+      }
+      const nm = prompt('Naye sub-estimate ka naam (jaise "Compound Wall", "Internal Road", "Sump"):', '');
+      if(nm === null) return;
+      addSub(nm);
+      toast('Sub-estimate add ho gaya — Prepare ✎ se uska abstract + measurement kholo.');
+    };
   }
 
   function renderRecapExtras(){
@@ -916,7 +944,7 @@
     renderRecapExtras();
     renderRecapLump();
     renderRecapPreview();
-    renderSubs();
+    wireRecapAddSub();
     syncEstBanner();
   }
   window.renderProject = renderProject;

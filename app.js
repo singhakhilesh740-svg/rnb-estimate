@@ -486,6 +486,17 @@ function subActive(){
   return !!(window.project && Array.isArray(window.project.subs) && window.project.subs.length >= 1
             && window.project.subs[window.project.active]);
 }
+/* Sub-estimate prep me sirf zaroori cheezein: rate source hamesha SOR+RA
+   (ARC card hidden). Standalone estimate me sab pehle jaisa. */
+function applySubModeUI(){
+  const sub = subActive();
+  const card = $('#rateSrcCard');
+  if(card) card.style.display = sub ? 'none' : '';
+  if(sub && est.rateSource !== 'sor'){
+    est.rateSource = 'sor';
+    if(typeof applyRateSourceUI === 'function') applyRateSourceUI();
+  }
+}
 function refreshTotals(){
   const t = totals();
   const sub = subActive();
@@ -495,6 +506,8 @@ function refreshTotals(){
   if(qcWrap) qcWrap.style.display = sub ? 'none' : '';
   if(qcRow)  qcRow.style.display  = sub ? 'none' : '';
   if(grRow)  grRow.style.display  = sub ? 'none' : '';
+  const card = $('#rateSrcCard');
+  if(card) card.style.display = sub ? 'none' : '';
   $('#tTotal').textContent = fmt(t.total);
   if(!sub){
     $('#tQcLbl').textContent = `${est.qc} % Q C`;
@@ -2033,6 +2046,7 @@ function loadSaved(id){
   $('#prepBy').value = est.prepBy || '';
   $('#chkBy').value = est.chkBy || '';
   applyModeUI(); refreshHints(); refreshWorkName(); renderItemBlocks(); renderPreview();
+  if(typeof applySubModeUI === 'function') applySubModeUI();
   if(typeof renderProject === 'function') renderProject();
   $$('nav.tabs button')[0].click();
   toast('Loaded: ' + rec.name);
@@ -2144,6 +2158,7 @@ store.set('rnb_buildings', buildings); store.set('rnb_workdescs', workDescs); st
 $('#prepBy').value = est.prepBy || '';
 $('#chkBy').value = est.chkBy || '';
 refreshHints(); refreshWorkName(); renderItemBlocks(); applyModeUI();
+if(typeof applySubModeUI === 'function') applySubModeUI();
 if(!est.mode || !est.rateSource) openGate('based');
 
 
