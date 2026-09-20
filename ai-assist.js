@@ -52,26 +52,42 @@ const FIELD_MAP = {
   buildingDetails:{ id:'gdBuildingDetails', meta:'gd.buildingDetails', label:'Building Details' },
   workDetails:    { id:'gdWorkDetails',     meta:'gd.workDetails',     label:'Work Details' },
   sorYear:        { id:'gdSorYear',         meta:'gd.sorYear',         label:'SOR Year' },
+
+  /* ── Administrative Approval (AA) letter fields ── */
+  workName:       { id:'prjName',      meta:'performa.projectNameOverride', label:'Name of Work' },
+  circle:         { id:'prjCircle',    meta:'face.circle',         label:'Circle' },
+  fundHead:       { id:'prjFundHead',  meta:'face.fundHead',       label:'Fund Head' },
+  majorHead:      { id:'prjMajorHead', meta:'face.majorHead',      label:'Major Head' },
+  minorHead:      { id:'prjMinorHead', meta:'face.minorHead',      label:'Minor Head' },
+  departmentHead: { id:'prjDeptHead',  meta:'face.departmentHead', label:'Department Head' },
+  admApproval:    { id:'gdAdmApproval',    meta:'gd.admApproval',      label:'Administrative Approval (ref + amount)' },
+  budgetDetails:  { id:'gdBudgetDetails',  meta:'gd.budgetDetails',    label:'Budget Details' },
+  budgetProvision:{ id:'gdBudgetCostProv', meta:'gd.budgetCostProv',   label:'Budget Cost & Provision' },
+  aaAmount:       { id:'pcOverallCost',     meta:'performa.overallCost', label:'AA / Estimated Cost (Rs.)' },
+
   buildings:      { id:'__buildings__', meta:'performa.buildings', label:'Buildings (name + plinth area)' },
   columnSize:     { id:'__info__', meta:'rcc.columnSize',    label:'Column Size' },
   slabThickness:  { id:'__info__', meta:'rcc.slabThickness', label:'Slab Thickness mm' },
   beamDepth:      { id:'__info__', meta:'rcc.beamDepth',     label:'Beam Depth' },
-  maxBeamSpan:    { id:'__info__', meta:'rcc.maxBeamSpan',   label:'Max Beam Span (m)' },
   maxBeamSpan:    { id:'__info__', meta:'rcc.maxBeamSpan',   label:'Max Beam Span (m)' },
 };
 
 /* ──────────────────────── system prompt ──────────────────────── */
 const SYS_PROMPT = `You are an expert structural and civil engineering AI assistant for an Indian government R&B (Roads & Buildings) department estimate builder app.
 
-You help the user by analyzing uploaded architectural/structural drawings (floor plans, sections, column layouts, beam schedules, etc.) and answering questions about them. You maintain context across the conversation — the user may upload one or more drawings and ask questions at any time.
+You help the user by analyzing TWO kinds of uploaded documents and answering questions about them:
+1. DRAWINGS — architectural/structural (floor plans, sections, column layouts, beam schedules).
+2. ADMINISTRATIVE APPROVAL (AA) / SANCTION LETTERS — government letters that sanction a work, stating the name of work, budget heads, sanctioned amount and budget provisions. These may be in Gujarati or English.
+
+You maintain context across the conversation — the user may upload one or more documents of either kind and ask questions at any time.
 
 You have TWO response modes:
 
 MODE 1 — FREE CONVERSATION (default):
-When the user asks questions, discusses the drawing, or wants explanations — respond naturally in Hinglish (Hindi-English mix). Be specific about what you see in the drawing. Mention dimensions, counts, labels you can read. If something is unclear, say so.
+When the user asks questions or wants explanations — respond naturally in Hinglish. Be specific about what you see. If something is unclear, say so.
 
 MODE 2 — AUTO-FILL EXTRACTION:
-When the user says "fill karo", "extract karo", "auto-fill", "data nikal do", "form me daal do", or similar — return ONLY a JSON object (no markdown, no backticks, no text before/after) with these keys (include only what you can extract):
+When the user says "fill karo", "extract karo", "auto-fill", "data nikal do", "form me daal do", or similar — return ONLY a JSON object (no markdown, no backticks, no text before/after) with these keys (include only what you can extract from the document(s); skip keys you cannot determine):
 
 {
   "floors": <number of storeys, e.g. 2 for G+1>,
@@ -79,7 +95,6 @@ When the user says "fill karo", "extract karo", "auto-fill", "data nikal do", "f
   "totalColumns": <total columns>,
   "loadIntensity": <T/m², 2.0 residential, 3.0 commercial>,
   "sbc": <safe bearing capacity T/m²>,
-  "qcFooring": <avg m³ per column footing>,
   "foundationDepth": <meters>,
   "typeOfStructure": "<description>",
   "roomDetails": "<rooms list>",
@@ -97,23 +112,35 @@ When the user says "fill karo", "extract karo", "auto-fill", "data nikal do", "f
   "columnSize": "<e.g. 300x450 mm>",
   "slabThickness": <mm>,
   "beamDepth": "<e.g. 300x600 mm>",
-  "maxBeamSpan": <largest beam span in meters, e.g. 5.0 — measure the longest span between columns>,
-  "maxBeamSpan": <largest beam span in the drawing, in meters, e.g. 5.0 — IMPORTANT for GR member-size rules>,
+  "maxBeamSpan": <largest beam span in meters, e.g. 5.0 — IMPORTANT for GR member-size rules>,
   "buildings": [{"name":"<name>","area":<sqm>}],
-  "buildingDetails": "<summary>",
+  "buildingDetails": "<summary of buildings>",
   "workDetails": "<structural system>",
-  "summary": "<2-3 line Hindi summary>"
+
+  "// AA / SANCTION LETTER FIELDS —": "extract these when an Administrative Approval / sanction letter is provided",
+  "workName": "<full Name of Work exactly as written in the AA/sanction letter>",
+  "circle": "<R&B Circle name>",
+  "fundHead": "<Fund Head / source of fund, e.g. State Fund / Central Fund / Law Dept Budget>",
+  "majorHead": "<Major Head budget code, e.g. 2059 — Public Works>",
+  "minorHead": "<Minor Head budget code, e.g. 053 — Residential Buildings>",
+  "departmentHead": "<administrative department, e.g. R&B Department / Law Department>",
+  "aaAmount": <administrative-approval sanctioned amount as a NUMBER in rupees, e.g. 15000000 for Rs. 1.50 Crore>,
+  "admApproval": "<one line combining: Dept Letter No. ___ Dt. ___ Amt. Rs. ___ — exactly as in the letter>",
+  "budgetProvision": "<budget provision amount / year, e.g. Rs. 200.00 Lakh under FY 2024-25>",
+  "budgetDetails": "<budget item / page / scheme reference from the letter>",
+
+  "summary": "<2-3 line Hindi summary of what you extracted, and from which document>"
 }
 
 Rules:
 - For MODE 2, return ONLY the JSON — no other text.
 - "summary" key is REQUIRED in JSON mode.
-- Column count: count individual marks on plan or grid intersections.
-- Floor area: calculate from dimensions if given.
+- From an AA/sanction letter: read ALL budget heads (fund/major/minor/department), the sanctioned AA amount, budget provision, AA letter number+date, and the exact Name of Work. Letters may be in Gujarati — translate field VALUES to clear English for the estimate, but keep numbers/letter-refs exact.
+- aaAmount must be a plain number in rupees (convert "1.50 Crore" → 15000000, "150 Lakh" → 15000000, "200.00 Lakh" → 20000000).
+- From a drawing: count columns (individual marks or grid intersections), calculate floor area from dimensions, measure the largest beam span.
 - For residential: default IL=2.0, SBC=25 if not specified.
-- Be honest — if something is unclear, say so or estimate and note it.
-- You can reference any previously uploaded drawing in the conversation.
-- If user asks about a specific measurement, be precise about what you see.`;
+- Be honest — if something is unclear, say so or estimate and note it in summary.
+- You can reference any previously uploaded document in the conversation.`;
 
 /* ──────────────────────── state ──────────────────────── */
 let history = [];          // API messages: [{role, content}]
@@ -257,16 +284,18 @@ function injectHTML(){
 }
 
 function showWelcome(){
-  addMsg('bot', `<b>Namaste!</b> Main aapka AI Drawing Assistant hoon. 🏗️
+  addMsg('bot', `<b>Namaste!</b> Main aapka AI Assistant hoon. 🏗️
+
+<b>Kya upload kar sakte ho:</b>
+📐 <b>Drawing</b> (plan / section / column layout) → N, A, NC, member sizes, rooms
+📄 <b>A.A. / Sanction letter</b> → work name, budget heads, AA amount, provisions
 
 <b>Kaise use karo:</b>
-1️⃣ 📎 se drawing upload karo (plan / section / column layout)
-2️⃣ Sawal puchho — "kitne columns hain?", "beam size?", "floor area?"
-3️⃣ Jab fill karna ho: <b>"fill karo"</b> ya <b>"extract karo"</b> bolo
-4️⃣ Checkboxes se choose karo kya fill karna hai → Auto-Fill
+1️⃣ 📎 se drawing ya AA letter upload karo
+2️⃣ Sawal puchho — "kitne columns?", "AA amount kitna hai?", "heads kya hain?"
+3️⃣ Jab bharna ho: <b>"fill karo"</b> bolo → checkboxes se choose → Auto-Fill
 
-📌 <b>Drawings memory me rehti hain</b> — baad me bhi sawaal puchh sakte ho.
-📌 Multiple drawings upload kar sakte ho (plan + section + schedule).
+📌 <b>Sab memory me rehta hai</b> — drawing + AA letter dono ek saath rakh sakte ho.
 ⚠️ Pehli baar — 🔑 se Anthropic API key daalo.`);
 
   showQuickButtons();
@@ -278,12 +307,12 @@ function showQuickButtons(){
   const d = document.createElement('div');
   d.className = 'ai-quick';
   const btns = [
-    ['📎 Drawing upload karo', ''],
+    ['📎 Upload karo', ''],
     ['Columns count karo', 'Drawing me total kitne columns hain? Har column ka label bhi batao.'],
     ['Beam sizes batao', 'Drawing me saare beam sizes list karo — label + dimensions.'],
-    ['Floor area nikal do', 'Floor area calculate karo — length x width se, deductions ke saath.'],
+    ['AA letter padho', 'AA/sanction letter se work name, saare budget heads (fund/major/minor/department), AA sanctioned amount aur budget provision batao.'],
     ['Room details', 'Har floor pe kaun kaun se rooms hain? Size ke saath batao.'],
-    ['Fill karo ✅', 'Drawing se sab data extract karke auto-fill ke liye JSON me do.'],
+    ['Fill karo ✅', 'Jo bhi drawing aur AA letter upload kiye hain, un sab se saara data extract karke auto-fill ke liye JSON me do.'],
   ];
   btns.forEach(([label, txt]) => {
     const b = document.createElement('button');
