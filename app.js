@@ -188,55 +188,68 @@ function renderSealEditor(){
   const list = document.getElementById('sealList');
   if(!list) return;
   list.innerHTML = seals.map((s, si) => `
-    <div class="card" style="margin:8px 0;border:1px solid #c9d4e0;padding:10px 12px">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-        <input class="seal-label-inp" style="flex:1;border:1px solid #c9d4e0;border-radius:5px;padding:5px 8px;font-size:13px;font-weight:600"
-          data-si="${si}" value="${esc(s.label)}" placeholder="Seal ka naam (jaise EE)">
-        <select class="seal-role-sel" data-si="${si}" style="border:1px solid #c9d4e0;border-radius:5px;padding:5px 8px;font-size:12px">
+    <div class="seal-block" style="margin:10px 0;border:1px solid #c9d4e0;border-radius:8px;padding:12px 14px;background:#fafbfc">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <input class="seal-label-inp" style="flex:1;border:1px solid #c9d4e0;border-radius:5px;padding:6px 10px;font-size:14px;font-weight:600;outline:0"
+          data-si="${si}" value="${esc(s.label)}" placeholder="Seal ka naam">
+        <select class="seal-role-sel" data-si="${si}" style="border:1px solid #c9d4e0;border-radius:5px;padding:6px 10px;font-size:12px;outline:0">
           <option value="dee" ${s.role==='dee'?'selected':''}>DEE</option>
           <option value="ee"  ${s.role==='ee' ?'selected':''}>EE</option>
           <option value="ae"  ${s.role==='ae' ?'selected':''}>AE</option>
           <option value="custom" ${s.role==='custom'?'selected':''}>Custom</option>
         </select>
-        <button class="btn danger" data-del="${si}" style="padding:4px 8px;font-size:12px">✕</button>
+        <button class="btn danger seal-del" data-del="${si}" style="padding:5px 10px;font-size:12px" title="Delete seal">✕</button>
       </div>
-      <textarea class="seal-lines-ta" data-si="${si}" rows="4"
-        style="width:100%;border:1px solid #c9d4e0;border-radius:5px;padding:7px 10px;font-size:13px;font-family:monospace;resize:vertical"
-        placeholder="Har line alag — exactly waise jaise seal pe likhni hai">${esc(s.lines.join('\n'))}</textarea>
-      <p class="hint" style="margin:4px 0 0">Preview: ${s.lines.filter(Boolean).map(l=>`<b>${esc(l)}</b>`).join(' | ')}</p>
+      <textarea class="seal-lines-ta" data-si="${si}" rows="5"
+        style="width:100%;border:1px solid #c9d4e0;border-radius:5px;padding:8px 10px;font-size:14px;font-family:'Consolas','Courier New',monospace;line-height:1.6;resize:vertical;outline:0;white-space:pre-wrap"
+        placeholder="Har line alag likho (Shift+Enter = nai line)&#10;Jaise:&#10;Deputy Executive Engineer&#10;R &amp; B Sub Division,&#10;Dahod.">${esc(s.lines.join('\n'))}</textarea>
+      <div class="seal-preview" data-si="${si}" style="margin-top:6px;padding:8px 12px;background:#fff;border:1px dashed #c9d4e0;border-radius:5px;text-align:center;font-size:13px;line-height:1.7;min-height:40px">
+        ${s.lines.filter(Boolean).map((l,i) => `<div style="font-weight:${i===0?'700':'400'}">${esc(l)}</div>`).join('')}
+      </div>
+      <p class="hint" style="margin:4px 0 0;font-size:11px">↑ Preview — exactly aise dikhega signature block me</p>
     </div>`).join('');
 
-  /* wire events */
+  /* wire events — NO full re-render on typing (cursor safe) */
   list.querySelectorAll('.seal-label-inp').forEach(inp => inp.oninput = e => {
     seals[+e.target.dataset.si].label = e.target.value; saveSeal();
   });
   list.querySelectorAll('.seal-role-sel').forEach(sel => sel.onchange = e => {
-    seals[+e.target.dataset.si].role = e.target.value; saveSeal(); renderSealEditor();
+    seals[+e.target.dataset.si].role = e.target.value; saveSeal();
   });
-  list.querySelectorAll('.seal-lines-ta').forEach(ta => ta.oninput = e => {
-    seals[+e.target.dataset.si].lines = e.target.value.split('\n'); saveSeal(); renderSealEditor();
+  list.querySelectorAll('.seal-lines-ta').forEach(ta => {
+    /* save on every keystroke — but only update the preview div, NOT the full list */
+    ta.oninput = e => {
+      const si = +e.target.dataset.si;
+      seals[si].lines = e.target.value.split('\n');
+      saveSeal();
+      /* update just the preview for this block */
+      const preview = list.querySelector(`.seal-preview[data-si="${si}"]`);
+      if(preview){
+        preview.innerHTML = seals[si].lines.filter(Boolean)
+          .map((l,i) => `<div style="font-weight:${i===0?'700':'400'}">${esc(l)}</div>`).join('');
+      }
+    };
+    /* Shift+Enter = newline (textarea does this natively),
+       plain Enter also = newline (don't submit anything) */
   });
-  list.querySelectorAll('[data-del]').forEach(b => b.onclick = e => {
+  list.querySelectorAll('.seal-del').forEach(b => b.onclick = e => {
     const si = +e.target.dataset.del;
-    if(!confirm('Ye seal hatana hai?')) return;
+    if(!confirm(`"${seals[si].label || 'Seal'}" hatana hai?`)) return;
     seals.splice(si, 1); saveSeal(); renderSealEditor();
   });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  /* Render seal editor whenever office block section is visible */
-  const btnDataBack6 = document.getElementById('btnDataBack6');
-  if(btnDataBack6) btnDataBack6.closest('section, div[id^="tab"]')?.addEventListener('click', () => {
-    setTimeout(renderSealEditor, 50);
-  });
+  /* Add seal button */
   const addSealBtn = document.getElementById('btnAddSeal');
   if(addSealBtn) addSealBtn.onclick = () => {
-    const nm = prompt('Naye seal ka naam:', 'New Seal');
-    if(!nm) return;
-    seals.push({ role:'custom', label: nm, lines: ['', '', ''] });
+    seals.push({ role:'custom', label: 'New Seal', lines: ['', '', ''] });
     saveSeal(); renderSealEditor();
+    /* scroll to the new seal */
+    const list = document.getElementById('sealList');
+    if(list) list.lastElementChild?.scrollIntoView({behavior:'smooth', block:'center'});
   };
-  /* Initial render if already on office block page */
+  /* Render on first load */
   renderSealEditor();
 });
 
@@ -1111,6 +1124,7 @@ function showDataView(name){
   else if(name === 'buildings') renderBuildingsTable();
   else if(name === 'people') renderPeopleTable();
   else if(name === 'workdesc') renderWDTable();
+  else if(name === 'office') renderSealEditor();
   window.scrollTo(0,0);
 }
 function showRateSub(sub){
