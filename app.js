@@ -558,12 +558,12 @@ function unitDivisor(u){
 function measuredUnit(kind){
   return { MT:'MT', CUM:'Cu.m', SQM:'Sqm', RMT:'Rmt', NOS:'Nos' }[kind] || 'Cu.m';
 }
-const FIELDS = { MT:['nos','len','wid','thk','den'], CUM:['nos','len','wid','thk'],
-                 SQM:['nos','len','wid'], RMT:['nos','len'], NOS:['nos'] };
-const FLABEL = { nos:'Nos.', len:'Length', wid:'Width', thk:'Thick', den:'Density' };
+const FIELDS = { MT:['nos','nos2','len','wid','thk','den'], CUM:['nos','nos2','len','wid','thk'],
+                 SQM:['nos','nos2','len','wid'], RMT:['nos','nos2','len'], NOS:['nos','nos2'] };
+const FLABEL = { nos:'Nos.', nos2:'Nos.', len:'Length', wid:'Width', thk:'Thick', den:'Density' };
 const rowQty = (row, kind) => (FIELDS[kind] || FIELDS.CUM)
-  .reduce((a,k) => a * (n(row[k]) || (k === 'nos' ? 1 : 0)), 1);
-const blankRow = () => ({ ch:'', nos:'', len:'', wid:'', thk:'', den:'' });
+  .reduce((a,k) => a * (n(row[k]) || (k === 'nos' || k === 'nos2' ? 1 : 0)), 1);
+const blankRow = () => ({ ch:'', nos:'', nos2:'', len:'', wid:'', thk:'', den:'' });
 
 /* ------------------------------- name of work ------------------------------- */
 function buildWorkName(){
@@ -1593,21 +1593,21 @@ async function _buildOneSubSheets(wb, opts){
       /* skip the first row if it was used as sub-heading above */
       if(ri === 0 && firstCh && l.rows.length > 1 && !n(firstCh)) return;
       put(m, 'B'+mr, row.ch || '', ARIAL(11), {horizontal:'left', vertical:'top', wrapText:true});
-      /* Nos col C — some items have two "No" columns (Nos x Nos) but we use C=first, D=second */
-      if(n(row.nos)){ put(m, 'C'+mr, n(row.nos), ARIAL(11), CTRC); }
-      /* If there's a den (density/2nd nos), put in D */
-      if(n(row.den)){ put(m, 'D'+mr, n(row.den), ARIAL(11), CTRC); }
-      if(n(row.len)){ put(m, 'E'+mr, n(row.len), ARIAL(11), CTRC); }
-      if(n(row.wid)){ put(m, 'F'+mr, n(row.wid), ARIAL(11), CTRC); }
-      if(n(row.thk)){ put(m, 'G'+mr, n(row.thk), ARIAL(11), CTRC); }
-      /* Total = product of filled measurement fields */
+      /* C = first Nos, D = second Nos (No x No format), E=L, F=B, G=H/D */
+      if(n(row.nos)){  put(m, 'C'+mr, n(row.nos),  ARIAL(11), CTRC); }
+      if(n(row.nos2)){ put(m, 'D'+mr, n(row.nos2), ARIAL(11), CTRC); }
+      if(n(row.len)){  put(m, 'E'+mr, n(row.len),  ARIAL(11), CTRC); }
+      if(n(row.wid)){  put(m, 'F'+mr, n(row.wid),  ARIAL(11), CTRC); }
+      if(n(row.thk)){  put(m, 'G'+mr, n(row.thk),  ARIAL(11), CTRC); }
+      /* Total = product of filled measurement fields (density folded in for MT) */
       const parts = [];
-      if(n(row.nos)) parts.push('C'+mr);
-      if(n(row.den)) parts.push('D'+mr);
-      if(n(row.len)) parts.push('E'+mr);
-      if(n(row.wid)) parts.push('F'+mr);
-      if(n(row.thk)) parts.push('G'+mr);
-      const prod = parts.length ? parts.join('*') : '0';
+      if(n(row.nos))  parts.push('C'+mr);
+      if(n(row.nos2)) parts.push('D'+mr);
+      if(n(row.len))  parts.push('E'+mr);
+      if(n(row.wid))  parts.push('F'+mr);
+      if(n(row.thk))  parts.push('G'+mr);
+      let prod = parts.length ? parts.join('*') : '0';
+      if(kind === 'MT' && n(row.den)) prod = '(' + prod + ')*' + n(row.den);  // density multiplier for steel
       qtyCells.push('H' + mr);
       put(m, 'H'+mr, { formula:`ROUND(${prod},2)`, result:r2(rowQty(row, kind)) }, ARIAL(11), CTRC, null, '0.00');
       put(m, 'I'+mr, mUnit, ARIAL(11), CTRC);
