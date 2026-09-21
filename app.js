@@ -1564,10 +1564,9 @@ async function _buildOneSubSheets(wb, opts){
   }
   /* Row 5: Header row */
   m.getRow(5).height = 30;
-  const MH = {font:ARIAL(11, true).font, alignment:{horizontal:'center', vertical:'middle', wrapText:true},
-              border:{top:BOX.border.top, bottom:BOX.border.bottom, left:BOX.border.left, right:BOX.border.right}};
+  const MHDR = {horizontal:'center', vertical:'middle', wrapText:true};
   [['A','It.\nNo'],['B','Description'],['C','No'],['D','No'],['E','L'],['F','B'],['G','H/D'],['H','Total'],['I','Unit']]
-    .forEach(([c,t]) => { const cl = m.getCell(c+'5'); cl.value = t; cl.font = MH.font; cl.alignment = MH.alignment; cl.border = MH.border; });
+    .forEach(([c,t]) => put(m, c+'5', t, ARIAL(11, true), MHDR, BOX));
   m.getRow(6).height = 6;  /* thin gap row */
 
   const mesSayCells = [];
