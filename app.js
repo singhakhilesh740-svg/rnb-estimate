@@ -556,14 +556,27 @@ function unitDivisor(u){
 }
 /* the unit in which the measurement rows are computed (before conversion) */
 function measuredUnit(kind){
-  return { MT:'MT', CUM:'Cu.m', SQM:'Sqm', RMT:'Rmt', NOS:'Nos' }[kind] || 'Cu.m';
+  return { MT:'MT', CUM:'Cu.m', SQM:'Sqm', RMT:'Rmt', NOS:'Nos', HIRE:'Hrs' }[kind] || 'Cu.m';
 }
 const FIELDS = { MT:['nos','nos2','len','wid','thk','den'], CUM:['nos','nos2','len','wid','thk'],
-                 SQM:['nos','nos2','len','wid'], RMT:['nos','nos2','len'], NOS:['nos','nos2'] };
-const FLABEL = { nos:'Nos.', nos2:'Nos.', len:'Length', wid:'Width', thk:'Thick', den:'Density' };
+                 SQM:['nos','nos2','len','wid'], RMT:['nos','nos2','len'], NOS:['nos','nos2'],
+                 HIRE:['nos','days','hrs'] };
+const FLABEL = { nos:'Nos.', nos2:'Nos.', len:'Length', wid:'Width', thk:'Thick', den:'Density',
+                 days:'Days', hrs:'Hours' };
 const rowQty = (row, kind) => (FIELDS[kind] || FIELDS.CUM)
   .reduce((a,k) => a * (n(row[k]) || (k === 'nos' || k === 'nos2' ? 1 : 0)), 1);
-const blankRow = () => ({ ch:'', nos:'', nos2:'', len:'', wid:'', thk:'', den:'' });
+const blankRow = () => ({ ch:'', nos:'', nos2:'', len:'', wid:'', thk:'', den:'', days:'', hrs:'' });
+
+/* ---------- measurement format per item ----------
+   std  = purana L x B x H format (unit ke hisaab se)
+   hire = machinery hiring (JCB / tractor …): Nos x Days x Hours = Total Hrs,
+          saath me optional road-length table (SH / MDR / ODR km) */
+const MFMT = { std:'Standard (L × B × H)', hire:'Hiring — Nos × Days × Hours' };
+const lineKind = l => (l && l.mfmt === 'hire') ? 'HIRE' : unitKind(l && l.unit);
+const fieldLabel = (k, l) => (l && l.mfmt === 'hire' && k === 'nos') ? ('Nos ' + (l.machine || 'JCB')) : FLABEL[k];
+const looksHire = it => /\bhir(e|ing)\b/i.test(String(it.desc || '')) &&
+  /^(hr|hrs|hour|day)/i.test(String(it.unit || '').trim());
+function roadLenTotal(l){ return r2((l.roadLen || []).reduce((a,r) => a + n(r.km), 0)); }
 
 /* ------------------------------- name of work ------------------------------- */
 function buildWorkName(){
@@ -612,8 +625,8 @@ function refreshWorkName(){
 
 /* ------------------------------- totals ------------------------------- */
 function lineTotal(line, lcPctArg, gstPctArg){
-  const kind = unitKind(line.unit);
-  const div = unitDivisor(line.unit);
+  const kind = lineKind(line);
+  const div = line.mfmt === 'hire' ? 1 : unitDivisor(line.unit);
   const measured = line.rows.reduce((a,r) => a + rowQty(r, kind), 0);  // in base measured unit (e.g. sqm)
   const q = measured / div;                                            // converted to output unit (e.g. hectare)
   const autoSay = Math.ceil(r2(q) * 10) / 10;                          // R&B round-up: 111.09 -> 111.10
@@ -681,9 +694,10 @@ function renderItemBlocks(){
     refreshTotals(); return;
   }
   box.innerHTML = est.lines.map((l, li) => {
-    const kind = unitKind(l.unit), f = FIELDS[kind] || FIELDS.CUM, lt = lineTotal(l);
+    const kind = lineKind(l), f = FIELDS[kind] || FIELDS.CUM, lt = lineTotal(l);
     const mUnit = measuredUnit(kind);
-    const div = unitDivisor(l.unit);
+    const div = l.mfmt === 'hire' ? 1 : unitDivisor(l.unit);
+    const hire = l.mfmt === 'hire';
     const converted = div !== 1;
     return `<div class="itemblock">
       <h3><span>Item No. ${li + 1}</span>
@@ -698,13 +712,34 @@ function renderItemBlocks(){
           <input data-apr="${li}" value="${esc(l.appRateNo || '')}"
                  style="width:46px;display:inline-block;border:0;background:transparent;padding:3px 0;font-family:'IBM Plex Mono',monospace;font-size:11px"></span>
         ${l.cat ? `<span class="pill">${esc(l.cat)}</span>` : ''}
-        <span class="pill">${f.map(k=>FLABEL[k]).join(' × ')} → ${esc(mUnit)}</span>
+        <span class="pill">${f.map(k=>fieldLabel(k,l)).join(' × ')} → ${esc(mUnit)}</span>
         ${converted ? `<span class="pill" style="background:#fff3e0;border-color:#e2571f;color:#b3402a">Output ${esc(l.unit)} = ${esc(mUnit)} ÷ ${fmt0(div)}</span>` : ''}
       </div>
+      <div class="row-actions" style="margin-top:8px;gap:6px">
+        <span style="font-size:11px;font-weight:700;color:var(--ink-2);text-transform:uppercase;letter-spacing:.06em">Measurement format</span>
+        <select data-mfmt="${li}" style="width:auto;padding:5px 8px;font-size:12px">
+          ${Object.keys(MFMT).map(k => `<option value="${k}"${(l.mfmt||'std')===k?' selected':''}>${MFMT[k]}</option>`).join('')}
+        </select>
+        ${hire ? `<span style="font-size:11px;color:var(--ink-2)">Machine</span>
+          <input data-machine="${li}" value="${esc(l.machine || 'JCB')}" style="width:110px;padding:5px 8px;font-size:12px">` : ''}
+      </div>
+      ${hire ? `<div style="margin-top:8px">
+        <div style="font-size:11px;font-weight:700;color:var(--ink-2);text-transform:uppercase;letter-spacing:.06em">Road length (sirf jaankari — total hrs me nahi judta)</div>
+        <div class="scroll"><table class="tbl" style="margin-top:4px;min-width:320px;max-width:420px">
+          <tr><th>Road category</th><th class="num">Length (Km)</th><th></th></tr>
+          ${(l.roadLen || []).map((r, ri) => `<tr>
+            <td><input data-rl="${li}:${ri}" data-rk="name" value="${esc(r.name || '')}" list="roadCatList" placeholder="SH / MDR / ODR"></td>
+            <td><input class="num mono" type="number" step="any" inputmode="decimal" data-rl="${li}:${ri}" data-rk="km" value="${r.km ?? ''}"></td>
+            <td><button class="btn danger" style="padding:4px 8px" data-rldel="${li}:${ri}">×</button></td></tr>`).join('')}
+          <tr><td class="num"><b>Total</b></td><td class="num mono"><b data-rltot="${li}">${fmt(roadLenTotal(l))}</b> Km</td><td></td></tr>
+        </table></div>
+        <datalist id="roadCatList"><option value="SH"><option value="MDR"><option value="ODR"><option value="VR"><option value="NH"></datalist>
+        <button class="btn ghost" style="margin-top:6px;padding:5px 10px" data-rladd="${li}">+ Road category</button>
+      </div>` : ''}
       <div class="scroll"><table class="tbl" style="margin-top:8px">
-        <tr><th style="min-width:150px">Chainage</th>${f.map(k=>`<th class="num">${FLABEL[k]}</th>`).join('')}<th class="num">Qty (${esc(mUnit)})</th><th></th></tr>
+        <tr><th style="min-width:150px">${hire ? 'Particulars' : 'Chainage'}</th>${f.map(k=>`<th class="num">${fieldLabel(k,l)}</th>`).join('')}<th class="num">${hire ? 'Total Hrs' : 'Qty (' + esc(mUnit) + ')'}</th><th></th></tr>
         ${l.rows.map((r, ri) => `<tr>
-          <td><input data-l="${li}" data-r="${ri}" data-k="ch" value="${esc(r.ch)}" placeholder="(scattered length )"></td>
+          <td><input data-l="${li}" data-r="${ri}" data-k="ch" value="${esc(r.ch)}" placeholder="${hire ? '(optional)' : '(scattered length )'}"></td>
           ${f.map(k=>`<td><input class="num mono" type="number" step="any" inputmode="decimal" data-l="${li}" data-r="${ri}" data-k="${k}" value="${r[k] ?? ''}"></td>`).join('')}
           <td class="num mono">${fmt(rowQty(r, kind))}</td>
           <td><button class="btn danger" style="padding:4px 8px" data-del="${li}:${ri}">×</button></td>
@@ -725,7 +760,7 @@ function renderItemBlocks(){
 
   function refreshLine(li){
     const l = est.lines[li], lt = lineTotal(l);
-    const kind = unitKind(l.unit), mUnit = measuredUnit(kind);
+    const kind = lineKind(l), mUnit = measuredUnit(kind);
     const tp = box.querySelector(`[data-tot="${li}"]`), ap = box.querySelector(`[data-amt="${li}"]`),
           sp = box.querySelector(`[data-say="${li}"]`), mp = box.querySelector(`[data-mtot="${li}"]`);
     if(mp) mp.textContent = `Measured ${fmt(lt.measured)} ${mUnit}`;
@@ -738,7 +773,7 @@ function renderItemBlocks(){
     const li = +e.target.dataset.l, ri = +e.target.dataset.r;
     est.lines[li].rows[ri][e.target.dataset.k] = e.target.value;
     save();
-    const kind = unitKind(est.lines[li].unit);
+    const kind = lineKind(est.lines[li]);
     const tds = e.target.closest('tr').querySelectorAll('td');
     tds[FIELDS[kind].length + 1].textContent = fmt(rowQty(est.lines[li].rows[ri], kind));
     refreshLine(li);
@@ -747,6 +782,31 @@ function renderItemBlocks(){
     const li = +e.target.dataset.say;
     est.lines[li].sayOverride = e.target.value === '' ? null : e.target.value;
     save(); refreshLine(li);
+  });
+  box.querySelectorAll('select[data-mfmt]').forEach(sel => sel.onchange = e => {
+    const l = est.lines[+e.target.dataset.mfmt];
+    l.mfmt = e.target.value;
+    if(l.mfmt === 'hire' && !Array.isArray(l.roadLen)) l.roadLen = [];
+    save(); renderItemBlocks(); if(typeof renderPreview==='function') renderPreview();
+  });
+  box.querySelectorAll('input[data-machine]').forEach(inp => inp.oninput = e => {
+    est.lines[+e.target.dataset.machine].machine = e.target.value; save();
+  });
+  box.querySelectorAll('input[data-rl]').forEach(inp => inp.oninput = e => {
+    const [li, ri] = e.target.dataset.rl.split(':').map(Number);
+    est.lines[li].roadLen[ri][e.target.dataset.rk] = e.target.value; save();
+    const t = box.querySelector(`[data-rltot="${li}"]`); if(t) t.textContent = fmt(roadLenTotal(est.lines[li]));
+  });
+  box.querySelectorAll('[data-rladd]').forEach(b => b.onclick = () => {
+    const l = est.lines[+b.dataset.rladd];
+    if(!Array.isArray(l.roadLen)) l.roadLen = [];
+    const used = l.roadLen.map(r => r.name);
+    const next = ['SH','MDR','ODR','VR'].find(x => !used.includes(x)) || '';
+    l.roadLen.push({ name: next, km: '' }); save(); renderItemBlocks();
+  });
+  box.querySelectorAll('[data-rldel]').forEach(b => b.onclick = () => {
+    const [li, ri] = b.dataset.rldel.split(':').map(Number);
+    est.lines[li].roadLen.splice(ri, 1); save(); renderItemBlocks();
   });
   box.querySelectorAll('input[data-apr]').forEach(inp => inp.oninput = e => {
     est.lines[+e.target.dataset.apr].appRateNo = e.target.value; save();
@@ -1295,7 +1355,8 @@ makeCombo($('#itemInput'), $('#itemList'),
                        raId: it.ra.id, raFloor: it.floor || null, sayOverride: null, rows:[blankRow()] });
     } else {
       est.lines.push({ appRateNo: it.itemNo || '', desc: it.desc, rate: it.rate,
-                       unit: it.unit || 'MT', cat: it.cat || '', sayOverride: null, rows:[blankRow()] });
+                       unit: it.unit || 'MT', cat: it.cat || '', sayOverride: null, rows:[blankRow()],
+                       ...(looksHire(it) ? { mfmt:'hire', roadLen:[] } : {}) });
     }
     $('#itemInput').value = ''; save(); renderItemBlocks(); });
 
@@ -1333,10 +1394,14 @@ function renderPreview(){
       ${totalBlock}
     </table></div>
     <h4>MES — Measurement</h4>
-    ${p.lines.map(l => { const kind = unitKind(l.unit), f = FIELDS[kind], mUnit = measuredUnit(kind), div = unitDivisor(l.unit);
-      return `<p style="font-size:11px;margin:10px 0 4px"><b>Item No. ${esc(l.itemNo)}</b></p>
+    ${p.lines.map(l => { const kind = lineKind(l), f = FIELDS[kind], mUnit = measuredUnit(kind), div = l.mfmt==='hire' ? 1 : unitDivisor(l.unit);
+      const hire = l.mfmt === 'hire', rl = (l.roadLen || []).filter(r => r.name || n(r.km));
+      return `<p style="font-size:11px;margin:10px 0 4px"><b>Item No. ${esc(l.itemNo)}</b>${hire ? ' — <i>Hiring format</i>' : ''}</p>
+      ${hire && rl.length ? `<table class="tbl" style="min-width:0;width:auto;margin-bottom:6px">
+        ${rl.map(r => `<tr><td>${esc(r.name)}</td><td class="num mono">${fmt(n(r.km))}</td><td>Km</td></tr>`).join('')}
+        <tr><td><b>Total</b></td><td class="num mono"><b>${fmt(roadLenTotal(l))}</b></td><td><b>Km</b></td></tr></table>` : ''}
       <div class="scroll"><table class="tbl">
-        <tr><th>Chainage</th>${f.map(k=>`<th class="num">${FLABEL[k]}</th>`).join('')}<th class="num">Qty</th><th>Unit</th></tr>
+        <tr><th>${hire ? 'Particulars' : 'Chainage'}</th>${f.map(k=>`<th class="num">${fieldLabel(k,l)}</th>`).join('')}<th class="num">${hire ? 'Total Hrs' : 'Qty'}</th><th>Unit</th></tr>
         ${l.rows.map(r=>`<tr><td>${esc(r.ch)}</td>${f.map(k=>`<td class="num mono">${r[k]===''?'':n(r[k])}</td>`).join('')}
           <td class="num mono">${fmt(rowQty(r,kind))}</td><td>${esc(mUnit)}</td></tr>`).join('')}
         <tr><td class="num"><b>Total measured</b></td>${f.map(()=>'<td></td>').join('')}<td class="num mono"><b>${fmt(l.measured)}</b></td><td>${esc(mUnit)}</td></tr>
@@ -1598,11 +1663,56 @@ async function _buildOneSubSheets(wb, opts){
   const mesWide = 97.0;   // A:L total width units
   let mr = 7;
   p.lines.forEach(l => {
-    const kind = unitKind(l.unit), fl = FIELDS[kind], mUnit = measuredUnit(kind), div = unitDivisor(l.unit);
+    const kind = lineKind(l), fl = FIELDS[kind], mUnit = measuredUnit(kind), div = l.mfmt==='hire' ? 1 : unitDivisor(l.unit);
+    const hire = l.mfmt === 'hire';
     /* Item heading row */
     put(m, 'A'+mr, l.itemNo || '', ARIAL(11, true), {horizontal:'center', vertical:'top'});
     m.mergeCells(`B${mr}:L${mr}`); put(m, 'B'+mr, l.desc, ARIAL(11), {horizontal:'left', vertical:'top', wrapText:true});
     fitRow(m, mr, l.desc, mesWide - 5, 11, 18); mr++;
+    if(hire){
+      /* road length block (info) */
+      const rl = (l.roadLen || []).filter(r => r.name || n(r.km));
+      if(rl.length){
+        const rlCells = [];
+        rl.forEach(r => {
+          put(m, 'B'+mr, r.name || '', ARIAL(11), {horizontal:'left'}, BOX);
+          put(m, 'C'+mr, n(r.km), ARIAL(11), CTRC, BOX, '0.00'); m.mergeCells(`C${mr}:D${mr}`);
+          put(m, 'E'+mr, 'Km', ARIAL(11), CTRC, BOX);
+          rlCells.push('C'+mr); mr++;
+        });
+        put(m, 'B'+mr, 'Total', ARIAL(11, true), {horizontal:'left'}, BOX);
+        put(m, 'C'+mr, { formula:`SUM(${rlCells[0]}:${rlCells[rlCells.length-1]})`, result:roadLenTotal(l) }, ARIAL(11, true), CTRC, BOX, '0.00');
+        m.mergeCells(`C${mr}:D${mr}`);
+        put(m, 'E'+mr, 'Km', ARIAL(11, true), CTRC, BOX); mr += 2;
+      }
+      /* hiring table header */
+      m.getRow(mr).height = 30;
+      [['B','Particulars'],['C','Nos ' + (l.machine || 'JCB')],['E','Days'],['G','Hours'],['H','Total Hrs']]
+        .forEach(([c,t]) => put(m, c+mr, t, ARIAL(10, true), MHDR, BOX));
+      m.mergeCells(`C${mr}:D${mr}`); m.mergeCells(`E${mr}:F${mr}`);
+      mr++;
+      const hCells = [];
+      l.rows.forEach(row => {
+        put(m, 'B'+mr, row.ch || '', ARIAL(11), {horizontal:'left', vertical:'top', wrapText:true}, BOX);
+        put(m, 'C'+mr, n(row.nos) || 1, ARIAL(11), CTRC, BOX, '0.00'); m.mergeCells(`C${mr}:D${mr}`);
+        put(m, 'E'+mr, n(row.days), ARIAL(11), CTRC, BOX, '0.00'); m.mergeCells(`E${mr}:F${mr}`);
+        put(m, 'G'+mr, n(row.hrs), ARIAL(11), CTRC, BOX, '0.00');
+        put(m, 'H'+mr, { formula:`ROUND(C${mr}*E${mr}*G${mr},2)`, result:r2(rowQty(row, kind)) }, ARIAL(11), CTRC, BOX, '0.00');
+        put(m, 'I'+mr, 'Hrs', ARIAL(11), CTRC);
+        hCells.push('H'+mr); mr++;
+      });
+      put(m, 'G'+mr, 'Total', ARIAL(11, true), {horizontal:'right'});
+      put(m, 'H'+mr, { formula: hCells.length ? `ROUND(SUM(${hCells[0]}:${hCells[hCells.length-1]}),2)` : '0', result:l.measured }, ARIAL(11, true), CTRC, null, '0.00');
+      put(m, 'I'+mr, 'Hrs', ARIAL(11, true), CTRC);
+      const tRow = mr; mr++;
+      put(m, 'G'+mr, 'Say', ARIAL(11, true), {horizontal:'right'});
+      put(m, 'H'+mr, (l.sayOverride == null || l.sayOverride === '')
+          ? { formula:`CEILING(H${tRow},0.1)`, result:l.say } : l.say, ARIAL(11, true), CTRC, null, '0.00');
+      put(m, 'I'+mr, l.unit, ARIAL(11, true), CTRC);
+      mesSayCells.push('H' + mr);
+      mr += 2;
+      return;
+    }
     /* Sub-heading (building/section label from chainage of first row, if any) */
     const firstCh = (l.rows[0] && l.rows[0].ch) ? l.rows[0].ch : '';
     if(firstCh && l.rows.length > 1 && !n(firstCh)){
@@ -1775,6 +1885,40 @@ $('#btnXlsx').onclick = async () => {
   b.disabled = false; b.textContent = 'Download Excel';
 };
 
+/* ---- hiring-format MES block (PDF): road length table (left) + Nos x Days x Hours table ---- */
+function drawHirePDF(doc, l, y, W, M){
+  const HB = { lineColor:[0,0,0], lineWidth:0.6, textColor:[0,0,0], font:'helvetica', fontSize:9, cellPadding:3 };
+  doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.text('Item No. ' + l.itemNo, M, y); y += 12;
+  doc.setFont('helvetica','normal'); doc.setFontSize(8.5);
+  const d = doc.splitTextToSize(l.desc, W - 2*M); doc.text(d, M, y); y += d.length*10 + 10;
+  const rl = (l.roadLen || []).filter(r => r.name || n(r.km));
+  const usable = W - 2*M;
+  const leftW = rl.length ? 170 : 0, gap = rl.length ? 18 : 0;
+  const startY = y; let endL = y;
+  if(rl.length){
+    doc.autoTable({ startY:y, margin:{left:M}, tableWidth:leftW, theme:'grid',
+      body: rl.map(r => [r.name || '', fmt(n(r.km)), 'Km']).concat([[
+        { content:'Total', styles:{fontStyle:'bold'} },
+        { content:fmt(roadLenTotal(l)), styles:{fontStyle:'bold'} },
+        { content:'Km', styles:{fontStyle:'bold'} } ]]),
+      styles:{...HB, halign:'center'}, columnStyles:{ 0:{cellWidth:60}, 1:{cellWidth:65}, 2:{cellWidth:45} } });
+    endL = doc.lastAutoTable.finalY;
+  }
+  const hasPart = l.rows.some(r => String(r.ch || '').trim());
+  const head = (hasPart ? ['Particulars'] : []).concat(['Nos ' + (l.machine || 'JCB'), 'Days', 'Hours', 'Total Hrs']);
+  const body = l.rows.map(r => (hasPart ? [{ content:r.ch || '', styles:{halign:'left'} }] : [])
+    .concat([fmt(n(r.nos) || 1), fmt(n(r.days)), fmt(n(r.hrs)), fmt(rowQty(r, 'HIRE'))]));
+  const nC = head.length;
+  body.push([ { content:'Total', colSpan:nC-1, styles:{halign:'right', fontStyle:'bold'} },
+              { content:fmt(l.measured) + ' Hrs', styles:{fontStyle:'bold'} } ]);
+  body.push([ { content:'Say', colSpan:nC-1, styles:{halign:'right', fontStyle:'bold'} },
+              { content:fmt(l.say) + ' ' + l.unit, styles:{fontStyle:'bold'} } ]);
+  doc.autoTable({ startY:startY, margin:{left:M + leftW + gap, right:M}, theme:'grid',
+    head:[head], body, styles:{...HB, halign:'center'},
+    headStyles:{ fillColor:[255,255,255], textColor:[0,0,0], fontStyle:'bold', halign:'center', lineColor:[0,0,0], lineWidth:0.6 } });
+  return Math.max(endL, doc.lastAutoTable.finalY) + 18;
+}
+
 /* ---- helper: draws only abst.+MES pages for the CURRENT est into an
         existing jsPDF doc (caller manages est swap + addPage). Used by
         project-mode PDF export where each sub-estimate contributes one
@@ -1887,8 +2031,9 @@ function _drawAbstAndMesPDF(doc, subName, workName, subNo){
   W = doc.internal.pageSize.getWidth(); M = 34;
   y = sheetTitle('MEASUREMENT', W, M);
   p.lines.forEach(l => {
-    const kind = unitKind(l.unit), fl = FIELDS[kind], mUnit = measuredUnit(kind), div = unitDivisor(l.unit);
+    const kind = lineKind(l), fl = FIELDS[kind], mUnit = measuredUnit(kind), div = l.mfmt==='hire' ? 1 : unitDivisor(l.unit);
     if(y > doc.internal.pageSize.getHeight() - 120){ doc.addPage('a4','portrait'); y = sheetTitle('MEASUREMENT', W, M); }
+    if(l.mfmt === 'hire'){ y = drawHirePDF(doc, l, y, W, M); return; }
     doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.text('Item No. ' + l.itemNo, M, y); y += 12;
     doc.setFont('helvetica','normal'); doc.setFontSize(8);
     const d = doc.splitTextToSize(l.desc, W - 2*M); doc.text(d, M, y, {maxWidth:W - 2*M, align:'justify'}); y += d.length*9 + 6;
@@ -2106,8 +2251,9 @@ $('#btnPdf').onclick = () => {
   y = sheetTitle('MEASUREMENT', W, M);
 
   p.lines.forEach(l => {
-    const kind = unitKind(l.unit), fl = FIELDS[kind], mUnit = measuredUnit(kind), div = unitDivisor(l.unit);
+    const kind = lineKind(l), fl = FIELDS[kind], mUnit = measuredUnit(kind), div = l.mfmt==='hire' ? 1 : unitDivisor(l.unit);
     if(y > doc.internal.pageSize.getHeight() - 120){ doc.addPage('a4','portrait'); y = sheetTitle('MEASUREMENT', W, M); }
+    if(l.mfmt === 'hire'){ y = drawHirePDF(doc, l, y, W, M); return; }
     doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.text('Item No. ' + l.itemNo, M, y); y += 12;
     doc.setFont('helvetica','normal'); doc.setFontSize(8);
     const d = doc.splitTextToSize(l.desc, W - 2*M); doc.text(d, M, y, {maxWidth:W - 2*M, align:'justify'}); y += d.length*9 + 6;
