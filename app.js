@@ -575,6 +575,7 @@ function buildWorkName(){
                window.project.meta.performa.projectNameOverride;
     if(ov && String(ov).trim()) return String(ov).trim();
   }
+  if(est.wnOverride && String(est.wnOverride).trim()) return String(est.wnOverride).trim();
   if(est.mode === 'building'){
     if(!est.road) return '—';
     return String(est.road).trim();
@@ -589,11 +590,25 @@ function buildWorkName(){
     const wc = (r.wcFrom || r.wcTo) ? `(working chainage ${r.wcFrom || ''}-${r.wcTo || ''})` : '';
     return `${r.name.trim()}${km}${wc}`;
   };
-  if(list.length === 1) return `C.R. to ${part(list[0])}${wd}`;
+  const pre = workPrefix();
+  const lead = pre ? pre + ' ' : '';
+  if(list.length === 1) return `${lead}${part(list[0])}${wd}`;
   const joined = list.map((r,i) => `(${i+1}) ${part(r)}`).join('  ');
-  return `C.R. to ${joined}${wd}`;
+  return `${lead}${joined}${wd}`;
 }
-const refreshWorkName = () => $('#workName').textContent = buildWorkName();
+/* kaam ka prefix (C.R. to / CR/IR to / I.R. to …) — user editable */
+function workPrefix(){
+  return (est.wnPrefix === undefined || est.wnPrefix === null) ? 'C.R. to' : String(est.wnPrefix).trim();
+}
+function refreshWorkName(){
+  const el = $('#workName'); if(el) el.textContent = buildWorkName();
+  const ta = $('#wnManual');
+  if(ta && document.activeElement !== ta) ta.value = est.wnOverride || '';
+  const pf = $('#wnPrefix');
+  if(pf && document.activeElement !== pf) pf.value = workPrefix();
+  const st = $('#wnState');
+  if(st) st.textContent = (est.wnOverride && est.wnOverride.trim()) ? 'manual' : 'auto';
+}
 
 /* ------------------------------- totals ------------------------------- */
 function lineTotal(line, lcPctArg, gstPctArg){
@@ -1223,6 +1238,14 @@ $('#btnAddWorkDesc').onclick = () => {
   est.workDescList.push('');
   save(); renderWorkDescEntries(); refreshWorkName();
 };
+
+/* Name of Work — prefix + manual override */
+(function(){
+  const pf = $('#wnPrefix'), ta = $('#wnManual'), rs = $('#wnReset');
+  if(pf) pf.oninput = e => { est.wnPrefix = e.target.value; save(); refreshWorkName(); if(typeof renderPreview==='function') renderPreview(); };
+  if(ta) ta.oninput = e => { est.wnOverride = e.target.value; save(); refreshWorkName(); if(typeof renderPreview==='function') renderPreview(); };
+  if(rs) rs.onclick = () => { est.wnOverride = ''; save(); refreshWorkName(); if(typeof renderPreview==='function') renderPreview(); toast('Name of Work wapas auto ho gaya.'); };
+})();
 
 /* prepared-by / checked-by combos — dropdown + free text */
 freeText($('#prepBy'), 'prepBy');
@@ -2325,7 +2348,7 @@ $('#fileImportSaved').onchange = e => {
 $('#btnNew').onclick = () => {
   if(!confirm('Naya estimate shuru karein? Abhi ka data clear ho jayega.')) return;
   currentSavedId = null;
-  est = { mode:'', rateSource:'', road:'', roadList:[], workDescList:[], prepBy:est.prepBy, chkBy:est.chkBy, qc:1, lc:0, gst:0, lines:[] };
+  est = { mode:'', rateSource:'', road:'', roadList:[], workDescList:[], prepBy:est.prepBy, chkBy:est.chkBy, wnPrefix:est.wnPrefix, wnOverride:'', qc:1, lc:0, gst:0, lines:[] };
   save();
   ['roadInput'].forEach(id => { const el = $('#'+id); if(el) el.value = ''; });
   refreshWorkName(); renderItemBlocks(); renderPreview();
